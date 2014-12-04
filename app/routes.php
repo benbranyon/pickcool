@@ -56,6 +56,10 @@ Route::group([
   })->where('all', '.*');
 });
 
+Route::get('/', function() {
+  return View::make('app');
+});
+
 
 if (Config::get('database.log', false))
 {    	 
