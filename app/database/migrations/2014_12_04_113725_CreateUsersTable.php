@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration {
       $table->string('last_name');
       $table->string('gender');
       $table->string('email');
+      $table->integer('is_contributor')->nullable();
       $table->integer('created_at');
       $table->integer('updated_at');
 		});

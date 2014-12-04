@@ -8,12 +8,13 @@ angular.module('pickCoolApp', ['ezfb'])
   });  
 })
 .controller('MainCtrl', function ($scope, $http, ezfb, $window, $location) {
-  updateLoginStatus(updateApiMe);
+  updateLoginStatus();
 
+  $scope.current_user = null;
   $scope.login = function () {
    ezfb.login(function (res) {
     if (res.authResponse) {
-      updateLoginStatus(updateApiMe);
+      updateLoginStatus();
     }
    }, {
     scope: 'public_profile,email,user_likes',
@@ -23,7 +24,7 @@ angular.module('pickCoolApp', ['ezfb'])
 
   $scope.logout = function () {
    ezfb.logout(function () {
-    updateLoginStatus(updateApiMe);
+    updateLoginStatus();
    });
   };
 
@@ -44,7 +45,7 @@ angular.module('pickCoolApp', ['ezfb'])
   };
   
   $scope.vote = function(c) {
-    if($scope.is_user_logged_in)
+    if($scope.current_user)
     {
       $('.candidate').removeClass('selected');
       $('#c_'+c.id).addClass('selected');
@@ -74,33 +75,32 @@ angular.module('pickCoolApp', ['ezfb'])
   function updateLoginStatus (more) {
     ezfb.getLoginStatus(function (res) {
      $scope.loginStatus = res;
-     $http.get(API_ENDPOINT+'/auth', 
+     $scope.current_user = null;
+     if(!$scope.loginStatus.authResponse) 
+     {
+       $scope.fb_loaded = true;
+       return;
+     };
+     $http.get(API_ENDPOINT+'/user', 
        {
          'params': {
            'accessToken': $scope.loginStatus.authResponse.accessToken,
          }
        }
-     );
-     
-     (more || angular.noop)();
-    });
-  }
-
-  /**
-   * Update api('/me') result
-   */
-  function updateApiMe () {
-    ezfb.api('/me', function (res) {
-     $scope.currentUser = res;
+     ).success(function(res) {
+       $scope.fb_loaded = true;
+       if(res.status=='ok')
+       {
+         $scope.current_user = res.data;
+       }
+     });
     });
   }
   
   $scope.fb_loaded = false;
   $scope.is_user_logged_in = false;
-  $scope.$watch('loginStatus', function(newVal,oldVal,scope) {
-    $scope.fb_loaded = newVal != undefined;
-    $scope.is_user_logged_in = newVal && newVal.status == 'connected';
-    if($scope.is_user_logged_in) {
+  $scope.$watch('current_user', function(newVal,oldVal,scope) {
+    if($scope.current_user) {
       $('#login_dialog').modal('hide');
     }
   });

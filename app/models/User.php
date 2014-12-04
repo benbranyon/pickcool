@@ -36,4 +36,16 @@ class User extends EloquentBase
     }
     $v->save();
   }
+  
+  function to_json()
+  {
+    return 
+      [
+        'fb_id'=>$this->fb_id,
+        'first_name'=>$this->first_name,
+        'last_name'=>$this->last_name,
+        'email'=>$this->email,
+        'is_contributor'=>$this->is_contributor,
+      ];
+  }
 }

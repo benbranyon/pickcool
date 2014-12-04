@@ -38,9 +38,13 @@
         <div class="col-lg-6">
           <div class="fb-like" data-href="https://pick.cool" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
         </div>
-        <div class="col-lg-6" ng-if="fb_loaded">
-          <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!is_user_logged_in"><i class="fa fa-facebook-square"></i> Login</button>
-          <button class="btn btn-danger btn-xs" ng-click="logout()" ng-if="is_user_logged_in"><i class="fa fa-facebook-square"></i> Logout</button>
+        <div class="col-lg-6" ng-if="fb_loaded" style="text-align: right">
+          <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!current_user"><i class="fa fa-facebook-square"></i> Login</button>
+          <span ng-if="current_user">
+            <button class="btn btn-primary btn-xs " ng-click="login()" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</button>
+            <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="current_user.is_contributor"><i class="fa fa-th-list"></i> My Contests</button>
+            <button class="btn btn-danger btn-xs" ng-click="logout()" ng-if="current_user"><i class="fa fa-sign-out"></i> Logout</button>
+          </span>
         </div>
       </div>
 
@@ -127,7 +131,7 @@
         </div>
         <div class="col-md-6">
           <h4 class="text-info">$FB.api('/me')</h4>
-          <div >{{currentUser}}</div>
+          <div >{{current_user}}</div>
         </div>
       </div>
       <div id="status">

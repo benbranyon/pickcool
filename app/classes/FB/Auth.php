@@ -34,10 +34,6 @@ class Auth
     }
     if(!$token)
     {
-      $token = \Session::get('fb_token');
-    }
-    if(!$token)
-    {
       self::$user = null;
       return null;
     }

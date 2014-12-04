@@ -17,17 +17,16 @@ Route::group([
   'prefix' => 'api/v1',
   'before'=>'origin',
 ], function() {
-  Route::any('/auth', function() {
-    $token = \Input::get('accessToken');
-    if(!$token)
+  Route::any('/user', function() {
+    if(!Auth::user())
     {
-      $token = \Request::header('FB-Access-Token');
+      return json_encode(['status'=> 'error', 'error_code'=>1, 'error_message'=>'Authentication is required for this operation.']);
     }
-    if($token)
-    {
-      Session::put('fb_token', $token);
-    }
-    return json_encode(['status'=>'ok']);
+    return json_encode([
+      'status'=>'ok',
+      'data'=>Auth::user()->to_json()
+    ]);
+    
   });
   
   Route::any('/vote', function() {
