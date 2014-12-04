@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
-    'Bootstrapper\\' => array($vendorDir . '/patricktalmadge/bootstrapper/src/Bootstrapper'),
+    'Facebook\\' => array($vendorDir . '/facebook/php-sdk-v4/src/Facebook'),
 );

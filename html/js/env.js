@@ -1,1 +1,1 @@
-var API_ENDPOINT="//local.pick.cool/v1";
+var API_ENDPOINT="/api/v1";

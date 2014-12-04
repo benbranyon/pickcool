@@ -50,13 +50,18 @@ angular.module('pickCoolApp', ['ezfb'])
       $('#c_'+c.id).addClass('selected');
       $('#vote_step_1').modal();
       $scope.current_selection = c;
-      $('#vote_step_1 .action-vote').animate( {
-        width: '20%',
-      },1000,null,function() {
-        $('#vote_step_1 .action-share').animate( {
-          width: '40%',
-        },1000);
-      });
+      $http.get(API_ENDPOINT+'/vote', 
+        {
+          'params': {
+            'accessToken': $scope.loginStatus.authResponse.accessToken,
+            'c': c.id
+          }
+        }
+      )
+        .success(function(data) {
+          console.log(data);
+        });
+      
     } else {
      $('#login_dialog').modal();
     }
@@ -69,6 +74,14 @@ angular.module('pickCoolApp', ['ezfb'])
   function updateLoginStatus (more) {
     ezfb.getLoginStatus(function (res) {
      $scope.loginStatus = res;
+     $http.get(API_ENDPOINT+'/auth', 
+       {
+         'params': {
+           'accessToken': $scope.loginStatus.authResponse.accessToken,
+         }
+       }
+     );
+     
      (more || angular.noop)();
     });
   }

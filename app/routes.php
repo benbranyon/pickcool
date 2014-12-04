@@ -12,10 +12,33 @@
 */
 
 
+
 Route::group([
-  'prefix' => 'v1',
+  'prefix' => 'api/v1',
   'before'=>'origin',
 ], function() {
+  Route::any('/auth', function() {
+    $token = \Input::get('accessToken');
+    if(!$token)
+    {
+      $token = \Request::header('FB-Access-Token');
+    }
+    if($token)
+    {
+      Session::put('fb_token', $token);
+    }
+    return json_encode(['status'=>'ok']);
+  });
+  
+  Route::any('/vote', function() {
+    if(!Auth::user())
+    {
+      return json_encode(['status'=> 'error', 'error_code'=>1, 'error_message'=>'Authentication is required for this operation.']);
+    }
+    Auth::user()->vote_for(Input::get('c'));
+    return json_encode(['status'=>'ok']);
+  });
+  
   Route::any('/contests/featured', function() {
     $data = [
   				[	

@@ -11,6 +11,8 @@ Dotenv::required([
   'IS_MAIL_ENABLED',
   'MAIL_FROM_ADDRESS',
   'MAIL_FROM_NAME',
+  'FACEBOOK_APP_ID',
+  'FACEBOOK_SECRET',
 ]);
 
 /*

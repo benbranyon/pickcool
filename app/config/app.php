@@ -149,9 +149,9 @@ return array(
 
 	'aliases' => array(
 
+		'Auth'              => 'FB\Auth',
 		'App'               => 'Illuminate\Support\Facades\App',
 		'Artisan'           => 'Illuminate\Support\Facades\Artisan',
-		'Auth'              => 'Illuminate\Support\Facades\Auth',
 		'Blade'             => 'Illuminate\Support\Facades\Blade',
 		'Cache'             => 'Illuminate\Support\Facades\Cache',
 		'ClassLoader'       => 'Illuminate\Support\ClassLoader',
