@@ -8,4 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Facebook\\' => array($vendorDir . '/facebook/php-sdk-v4/src/Facebook'),
+    'Codesleeve\\Stapler\\' => array($vendorDir . '/codesleeve/stapler/src'),
+    'Codesleeve\\LaravelStapler\\' => array($vendorDir . '/codesleeve/laravel-stapler/src'),
 );

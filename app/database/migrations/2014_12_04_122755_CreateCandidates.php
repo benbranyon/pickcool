@@ -15,6 +15,10 @@ class CreateCandidates extends Migration {
 		Schema::create('candidates', function(Blueprint $table)
 		{
 			$table->increments('id');
+      $table->integer('contest_id');
+      $table->string('name');
+      $table->integer('image_id');
+      $table->string('amazon_url');
       $table->integer('created_at');
       $table->integer('updated_at');
 		});

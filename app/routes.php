@@ -17,6 +17,76 @@ Route::group([
   'prefix' => 'api/v1',
   'before'=>'origin',
 ], function() {
+  Route::any('/my/contests', function() {
+    if(!Auth::user())
+    {
+      return json_encode(['status'=> 'error', 'error_code'=>1, 'error_message'=>'Authentication is required for this operation.']);
+    }
+    
+    return json_encode([
+      'status'=>'ok',
+      'data'=>Auth::user()->contests()->get(),
+    ]);
+  });
+  Route::any('/my/contests/create', function() {
+    if(!Auth::user())
+    {
+      return json_encode(['status'=> 'error', 'error_code'=>1, 'error_message'=>'Authentication is required for this operation.']);
+    }
+    
+    $data = json_decode(Input::get('candidates'),true);
+    array_walk_recursive($data, function($v,$k) {
+      $v = trim($v);
+    });
+    $errors = [];
+    foreach($data as $rec)
+    {
+      if(!$rec['name']) continue;
+      $validator = Validator::make(
+          $rec,
+          [
+            'name'=>'required',
+            'image_url'=>'required',
+            'amazon_url'=>'required',
+          ]
+      );
+      if($validator->fails())
+      {
+        $errors[] = [
+          'id'=>$rec['id'],
+          'messages'=>$validator->messages()->toArray(),
+        ];
+      }
+    }
+    if($errors)
+    {
+      return json_encode([
+        'status'=>'error',
+        'error_code'=>2,
+        'error_message'=>$errors,
+      ]);
+    }
+    $contest = new Contest();
+    $contest->user_id = Auth::user()->id;
+    $contest->save();
+    foreach($data as $rec)
+    {
+      if(!$rec['name']) continue;
+      $i = new Image();
+      $i->image = $rec['image_url'];
+      $i->save();
+      $c = new Candidate();
+      $c->contest_id = $contest->id;
+      $c->name = $rec['name'];
+      $c->image_id = $i->id;
+      $c->amazon_url = $rec['amazon_url'];
+      $c->save();
+    }
+    return json_encode([
+      'status'=>'ok',
+    ]);
+    
+  });
   Route::any('/user', function() {
     if(!Auth::user())
     {

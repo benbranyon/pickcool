@@ -2,6 +2,11 @@
   
 class User extends EloquentBase
 {
+  function contests()
+  {
+    return $this->belongsTo('Contest');
+  }
+  
   static function from_fb($me)
   {
     $fb_id = $me->getId();
