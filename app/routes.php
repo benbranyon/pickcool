@@ -79,6 +79,10 @@ Route::group([
 });
 
 Route::get('/', function() {
+  return 'Coming Soon';
+});
+
+Route::get('/beta', function() {
   return View::make('app');
 });
 
