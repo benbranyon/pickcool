@@ -13,14 +13,23 @@
     <link rel="stylesheet" href="/lib/bootstrap-3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/lib/font-awesome-4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/lib/ladda-bootstrap-14.12.5/dist/ladda-themeless.min.css">
 
 
+    <!-- 
+    Core libs
+    -->
     <script src="/lib/jquery-2.1.1.min.js"></script>
     <script src="/lib/angular-1.3.5.min.js"></script>
     <script src="/lib/angular-ui-router-0.2.12.min.js"></script>
     <script src="/lib/angular-easyfb-1.2.1/angular-easyfb.js"></script>
-    <script src="/lib/swfobject-1.5.min.js"></script>
     <script src="/lib/RainbowVis-JS-14.10.26/rainbowvis.js"></script>
+    <script src="/lib/ladda-bootstrap-14.12.5/dist/spin.min.js"></script>
+    <script src="/lib/ladda-bootstrap-14.12.5/dist/ladda.min.js"></script>
+
+    <!-- 
+    Custom code
+    -->
     <script src="/js/env.js"></script>
     <script src="/js/rainbow.js"></script>
     <script src="/js/app.js"></script>

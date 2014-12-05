@@ -1,5 +1,5 @@
 <div ng-controller="CreateContestCtrl">
-  
+  <h1>Create Contest</h1>
   <form role="form">
     <table class="table">
       <tr>
@@ -37,9 +37,10 @@
         <td></td>
         <td></td>
         <td>
+          
           <button ng-click='add()'><i class="fa fa-plus"></i> Add</button>
         </td>
     </table>
-    <button class="btn btn-default" ng-click="save()">Save</button>
+    <button class="btn btn-primary ladda-button" ng-ladda ng-click="save()" data-style="expand-left"><span class="ladda-label">Save</span></button>
   </form>
 </div>

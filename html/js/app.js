@@ -59,6 +59,9 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
    $e.css('background-color', '#'+rainbow.colorAt(c.vote_count));
   };
 })
+.directive('ngLadda', function() {
+  Ladda.bind('.ladda-button');
+})
 .run(function(ezfb,$rootScope,$http) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
