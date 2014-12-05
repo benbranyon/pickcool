@@ -15,7 +15,7 @@ app.controller('CreateContestCtrl', function ($scope, $http, $state) {
     $http.get(API_ENDPOINT+'/my/contests/create', 
       {
         'params': {
-          'accessToken': $scope.loginStatus.authResponse.accessToken,
+          'accessToken': $scope.accessToken,
           'candidates': JSON.stringify($scope.candidates)
         }
       }

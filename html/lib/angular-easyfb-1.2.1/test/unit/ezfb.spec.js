@@ -484,12 +484,12 @@ describe('ezfb', function () {
 
     /**
      * Ref:
-     *   https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
+     *   https://developers.facebook.com/docs/reference/javascript/FB.get$rootScope.accessToken
      *   https://developers.facebook.com/docs/reference/javascript/FB.login
      *   https://developers.facebook.com/docs/reference/javascript/FB.logout
      */
     angular.forEach([
-      'getLoginStatus', 'login', 'logout'
+      'get$rootScope.accessToken', 'login', 'logout'
     ], function (apiName) {
 
       describe('.' + apiName, function () {

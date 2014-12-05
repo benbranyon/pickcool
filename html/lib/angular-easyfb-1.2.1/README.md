@@ -180,10 +180,10 @@ angular.module('myApp')
  */
 .controller('MainCtrl', function (ezfb) {
   /**
-   * Origin: FB.getLoginStatus
+   * Origin: FB.get$rootScope.accessToken
    */
-  ezfb.getLoginStatus(function (res) {
-    $scope.loginStatus = res;
+  ezfb.get$rootScope.accessToken(function (res) {
+    $scope.$rootScope.accessToken = res;
 
     (more || angular.noop)();
   });

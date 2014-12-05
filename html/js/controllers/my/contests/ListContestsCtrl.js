@@ -1,5 +1,5 @@
 app.controller('ListContestsCtrl', function ($scope, $http, $state) {
-  if(!$scope.fb_loaded)
+  if(!$scope.current_user)
   {
     $state.go('home');
     return; 
@@ -9,7 +9,7 @@ app.controller('ListContestsCtrl', function ($scope, $http, $state) {
   $http.get(API_ENDPOINT+'/my/contests', 
     {
       'params': {
-        'accessToken': $scope.loginStatus.authResponse.accessToken,
+        'accessToken': $scope.accessToken,
         'candidates': JSON.stringify($scope.candidates)
       }
     }

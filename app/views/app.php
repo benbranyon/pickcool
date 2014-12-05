@@ -18,7 +18,7 @@
     <script src="/lib/jquery-2.1.1.min.js"></script>
     <script src="/lib/angular-1.3.5.min.js"></script>
     <script src="/lib/angular-ui-router-0.2.12.min.js"></script>
-    <script src="/lib/angular-easyfb-1.2.1/angular-easyfb.min.js"></script>
+    <script src="/lib/angular-easyfb-1.2.1/angular-easyfb.js"></script>
     <script src="/lib/swfobject-1.5.min.js"></script>
     <script src="/lib/RainbowVis-JS-14.10.26/rainbowvis.js"></script>
     <script src="/js/env.js"></script>
@@ -40,7 +40,6 @@
 
   <body ng-controller="MainCtrl">
     <div class="container">
-
       <div class="row" style="height: 50px">
         <div class="col-lg-6">
           <ul class="nav nav-pills">
@@ -51,12 +50,12 @@
             <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('ended')}"><a ui-sref="ended">Ended</a></li>
           </ul>
         </div>
-        <div class="col-lg-6" ng-if="fb_loaded" style="text-align: right">
+        <div class="col-lg-6"  style="text-align: right">
           <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!current_user"><i class="fa fa-facebook-square"></i> Login</button>
           <span ng-if="current_user">
             <a class="btn btn-primary btn-xs " ui-sref="my-contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</a>
             <a class="btn btn-primary btn-xs" ui-sref="my-contests" ng-if="current_user.is_contributor"><i class="fa fa-th-list"></i> My Contests</a>
-            <a class="btn btn-danger btn-xs" ng-click="logout()" ng-if="current_user"><i class="fa fa-sign-out"></i> Logout</a>
+            <a class="btn btn-danger btn-xs" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</a>
             <br/>
             Hello, {{current_user.first_name}}. We're watching you.
           </span>
