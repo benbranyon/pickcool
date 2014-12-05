@@ -27,11 +27,12 @@ class Image  extends EloquentBase implements StaplerableInterface
   public static function styles()
   {
     return [
-      'large' => '640x640',
-      'featured' => '585x585',
-      'medium' => '400x400',
-      'thumb' => '180x180',
-      'admin' => '100x100',
+      'large' => '640x640#',
+      'featured' => '585x585#',
+      'medium' => '400x400#',
+      'thumb' => '180x180#',
+      'admin' => '100x100#',
+      'tiny' => '75x75#',
     ];
   }
   

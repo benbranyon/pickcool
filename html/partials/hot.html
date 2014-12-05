@@ -1,0 +1,13 @@
+<div ng-controller="HotCtrl" class="hot">
+  
+  <h2>Click to Vote. First to 1,000 votes wins</h2>
+  <div class="contest" ng-repeat="contest in contests" style="position:relative" ui-sref='contest({})'>
+    <div>
+      <img class="tl" ng-src="{{contest.candidates[0].image_url}}"/><img class="tr" ng-src="{{contest.candidates[1].image_url}}"/>
+    </div>
+    <div>
+      <img  class="bl" ng-src="{{contest.candidates[2].image_url}}"/><img class="br"  ng-src="{{contest.candidates[3].image_url}}"/>
+    </div>
+    <div class="vs">VS</div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
-app.controller('MainCtrl', function ($scope, $http, ezfb, $window, $location) {
+app.controller('MainCtrl', function ($state, $scope, $http, ezfb, $window, $location) {
+  console.log('MainCtrl');
   updateLoginStatus();
-
+  $scope.state = $state;
   $scope.current_user = null;
   $scope.login = function () {
    ezfb.login(function (res) {
@@ -66,6 +67,7 @@ app.controller('MainCtrl', function ($scope, $http, ezfb, $window, $location) {
   function updateLoginStatus (more) {
     ezfb.getLoginStatus(function (res) {
      $scope.loginStatus = res;
+     console.log("Login status known");
      $scope.current_user = null;
      if(!$scope.loginStatus.authResponse) 
      {
@@ -96,7 +98,5 @@ app.controller('MainCtrl', function ($scope, $http, ezfb, $window, $location) {
     }
   });
   $scope.candidates = [];
-  $http.get(API_ENDPOINT+'/contests/featured').success(function($data) {
-   $scope.candidates = $data.data;
-  });
-})
+});
+

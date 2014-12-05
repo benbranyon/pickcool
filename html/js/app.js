@@ -3,8 +3,9 @@ var current_user = {};
 var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
 .config(function (ezfbProvider) {
   ezfbProvider.setInitParams({
-   appId: '1497159643900204',
-   version   : 'v2.2'
+    appId: '1497159643900204',
+    version   : 'v2.2',
+    status: true,
   });  
 })
 .config(function($stateProvider, $urlRouterProvider) {
@@ -16,7 +17,27 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
   $stateProvider
     .state('home', {
       url: "/",
-      templateUrl: "partials/vote.html"
+      templateUrl: "partials/home.html"
+    })
+    .state('contests-view', {
+      url: "/contests/:id",
+      templateUrl: "partials/contests/view.html"
+    })
+    .state('hot', {
+      url: "/hot",
+      templateUrl: "partials/hot.html"
+    })
+    .state('new', {
+      url: "/new",
+      templateUrl: "partials/new.html"
+    })
+    .state('top', {
+      url: "/top",
+      templateUrl: "partials/top.html"
+    })
+    .state('ended', {
+      url: "/ended",
+      templateUrl: "partials/ended.html"
     })
     .state('my-contests', {
       url: "/my/contests",

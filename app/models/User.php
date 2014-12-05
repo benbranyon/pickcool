@@ -4,7 +4,7 @@ class User extends EloquentBase
 {
   function contests()
   {
-    return $this->belongsTo('Contest');
+    return $this->hasMany('Contest');
   }
   
   static function from_fb($me)

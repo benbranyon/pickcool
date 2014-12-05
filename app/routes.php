@@ -22,10 +22,25 @@ Route::group([
     {
       return json_encode(['status'=> 'error', 'error_code'=>1, 'error_message'=>'Authentication is required for this operation.']);
     }
-    
+    $contests = [];
+    foreach(Auth::user()->contests()->get() as $c)
+    {
+      $contest = [
+        'id'=>$c->id,
+        'candidates'=>[],
+      ];
+      foreach($c->candidates as $can)
+      {
+        $contest['candidates'][] = [
+          'name'=>$can->name,
+          'image_url'=>$can->image->image->url('admin'),
+        ];
+      }
+      $contests[] = $contest;
+    }
     return json_encode([
       'status'=>'ok',
-      'data'=>Auth::user()->contests()->get(),
+      'data'=>$contests,
     ]);
   });
   Route::any('/my/contests/create', function() {
@@ -109,37 +124,51 @@ Route::group([
   });
   
   Route::any('/contests/featured', function() {
-    $data = [
-  				[	
-            'img'=> 'http://v2.7-beta.clipbucket.com/files/photos/2014/05/16/1400228168b6b742_l.jpg',
-            'vote_count'=> 747,
-            'id'=> 1,
-            'name'=> 'Taylor Swift',
-            ],
-        
-      [      'img'=> 'http://assets-s3.usmagazine.com/uploads/assets/articles/74065-justin-bieber-apologizes-after-offensive-n-word-video-surfaces/1401970999_justin-bieber-lg.jpg',
-            'vote_count'=> 223,
-            'id'=> 2,
-            'name'=> 'Justin Beiber',
-            ],
-        
-          ['img'=> 'https://pbs.twimg.com/profile_images/426108979186384896/J3JDXvs4_400x400.jpeg',
-            'vote_count'=> 463,
-            'id'=> 3,
-            'name'=> 'Britney Spears',
-          ],
-          [
-            'img'=> 'http://www.billboard.com/files/media/justin-timberlake-2013-suite-tie-650-430.jpg',
-            'vote_count'=> 993,
-            'id'=> 4,
-            'name'=> 'Justin Timberlake',
-  				]
+    $contests = [];
+    foreach(Contest::all() as $c)
+    {
+      $contest = [
+        'id'=>$c->id,
+        'candidates'=>[],
+      ];
+      foreach($c->candidates as $can)
+      {
+        $contest['candidates'][] = [
+          'name'=>$can->name,
+          'image_url'=>$can->image->image->url('tiny'),
+          'vote_count'=>553,
+          'id'=>$can->id,
         ];
-        return [
-          'status'=>'ok',
-          'data'=>$data
-        ];
+      }
+      $contests[] = $contest;
+    }
+    return json_encode([
+      'status'=>'ok',
+      'data'=>$contests,
+    ]);
   });
+  
+  Route::any('/contests/{id}', function($id) {
+    $c = Contest::find($id);
+    $contest = [
+      'id'=>$c->id,
+      'candidates'=>[],
+    ];
+    foreach($c->candidates as $can)
+    {
+      $contest['candidates'][] = [
+        'name'=>$can->name,
+        'image_url'=>$can->image->image->url('thumb'),
+        'vote_count'=>553,
+        'id'=>$can->id,
+      ];
+    }
+    return json_encode([
+      'status'=>'ok',
+      'data'=>$contest,
+    ]);
+  });
+
   Route::any( '/', function(  ){
     return json_encode(['status'=>'ok']);
   })->where('all', '.*');
