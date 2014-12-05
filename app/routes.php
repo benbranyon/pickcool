@@ -56,7 +56,7 @@ Route::group([
     $errors = [];
     foreach($data as $rec)
     {
-      if(!$rec['name']) continue;
+      if(!isset($rec['name']) || !$rec['name']) continue;
       $validator = Validator::make(
           $rec,
           [
