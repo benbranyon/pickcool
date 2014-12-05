@@ -15,8 +15,8 @@
   },
   "autoload": {
     "classmap": [
-			"app/classes",
-			"app/traits",
+      "app/classes",
+      "app/traits",
       "app/commands",
       "app/controllers",
       "app/models",
@@ -28,9 +28,9 @@
     "pre-update-cmd": [
       "php artisan clear-compiled"
     ],
-		"pre-update-cmd": [
-			"rm -rf vendor/codesleeve/stapler"
-		],
+    "pre-update-cmd": [
+      "rm -rf vendor/codesleeve/stapler"
+    ],
     "post-install-cmd": [
       "php artisan clear-compiled",
       "php artisan optimize"
@@ -38,8 +38,9 @@
     "post-update-cmd": [
       "php artisan clear-compiled",
       "php artisan optimize",
-			"rm -rf vendor/codesleeve/stapler/.git",
-			"git apply codesleeve-stapler-rename_bugfix.patch"		
+      "rm -rf vendor/codesleeve/stapler/.git",
+      "git apply codesleeve-stapler-rename_bugfix.patch"    
+      "git apply codesleeve-stapler-curl-open-basedir-fix.patch"    
     ],
     "post-create-project-cmd": [
       "php artisan key:generate"
