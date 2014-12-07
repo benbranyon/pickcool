@@ -8,7 +8,8 @@
     "vlucas/phpdotenv": "1.0.*",
     "facebook/php-sdk-v4" : "4.0.*",
     "codesleeve/laravel-stapler": "1.0.*",
-    "benallfree/laravel-fb-auth": "dev-master@dev"
+    "benallfree/laravel-fb-auth": "dev-master",
+    "benallfree/laravel-stapler-images": "dev-master"
   },
   "require-dev": {
     "panique/laravel-sass": "dev-master"
