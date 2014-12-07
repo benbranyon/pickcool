@@ -3,11 +3,18 @@
   "description": "The Laravel Framework.",
   "keywords": ["framework", "laravel"],
   "license": "MIT",
+  "repositories": [
+      {
+          "type": "vcs",
+          "url": "https://github.com/benallfree/stapler"
+      }
+  ],
+  
   "require": {
     "laravel/framework": "4.2.*",
     "vlucas/phpdotenv": "1.0.*",
     "facebook/php-sdk-v4" : "4.0.*",
-    "codesleeve/laravel-stapler": "1.0.*",
+    "codesleeve/stapler": "dev-master as 1.0.0",
     "benallfree/laravel-fb-auth": "dev-master",
     "benallfree/laravel-stapler-images": "dev-master"
   },
@@ -23,9 +30,6 @@
       "app/database/migrations",
       "app/tests/TestCase.php"
     ]
-  },
-  "config": {
-    "preferred-install": "dist"
   },
   "minimum-stability": "stable"
 }

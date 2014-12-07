@@ -1,8 +1,0 @@
-#!/bin/bash
-rm -rf vendor/codesleeve/stapler
-composer $1 -vvv
-git apply vendor/benallfree/laravel-stapler-images/codesleeve-stapler-rename_bugfix.patch
-git apply vendor/benallfree/laravel-stapler-images/codesleeve-stapler-curl-open-basedir-fix.patch
-php artisan clear-compiled
-php artisan optimize
-find vendor -name '.git' | xargs rm -rf
