@@ -23,7 +23,6 @@
   },
   "autoload": {
     "classmap": [
-      "app/classes",
       "app/commands",
       "app/controllers",
       "app/models",
