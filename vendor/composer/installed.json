@@ -2004,61 +2004,6 @@
         ]
     },
     {
-        "name": "codesleeve/stapler",
-        "version": "v1.0.02",
-        "version_normalized": "1.0.02.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/CodeSleeve/stapler.git",
-            "reference": "6d60a8cc6ceaf20935b0ece191e2812890a3a8c0"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/CodeSleeve/stapler/zipball/6d60a8cc6ceaf20935b0ece191e2812890a3a8c0",
-            "reference": "6d60a8cc6ceaf20935b0ece191e2812890a3a8c0",
-            "shasum": ""
-        },
-        "require": {
-            "doctrine/inflector": "v1.0",
-            "imagine/imagine": "~0.5.0",
-            "php": ">=5.4",
-            "symfony/http-foundation": "~2.3"
-        },
-        "require-dev": {
-            "aws/aws-sdk-php": "2.4.*@dev",
-            "illuminate/config": "~4",
-            "illuminate/database": "~4",
-            "mockery/mockery": "0.8.0"
-        },
-        "time": "2014-09-27 19:15:58",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Codesleeve\\Stapler\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Travis Bennett",
-                "email": "tandrewbennett@hotmail.com"
-            }
-        ],
-        "description": "Elegant and simple ORM-based file upload package for php.",
-        "keywords": [
-            "aws",
-            "file",
-            "orm",
-            "paperclip",
-            "s3",
-            "upload"
-        ]
-    },
-    {
         "name": "codesleeve/laravel-stapler",
         "version": "v1.0.02",
         "version_normalized": "1.0.02.0",
@@ -2259,18 +2204,73 @@
         ]
     },
     {
+        "name": "codesleeve/stapler",
+        "version": "v1.0.02",
+        "version_normalized": "1.0.02.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CodeSleeve/stapler.git",
+            "reference": "6d60a8cc6ceaf20935b0ece191e2812890a3a8c0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CodeSleeve/stapler/zipball/6d60a8cc6ceaf20935b0ece191e2812890a3a8c0",
+            "reference": "6d60a8cc6ceaf20935b0ece191e2812890a3a8c0",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/inflector": "v1.0",
+            "imagine/imagine": "~0.5.0",
+            "php": ">=5.4",
+            "symfony/http-foundation": "~2.3"
+        },
+        "require-dev": {
+            "aws/aws-sdk-php": "2.4.*@dev",
+            "illuminate/config": "~4",
+            "illuminate/database": "~4",
+            "mockery/mockery": "0.8.0"
+        },
+        "time": "2014-09-27 19:15:58",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Codesleeve\\Stapler\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Travis Bennett",
+                "email": "tandrewbennett@hotmail.com"
+            }
+        ],
+        "description": "Elegant and simple ORM-based file upload package for php.",
+        "keywords": [
+            "aws",
+            "file",
+            "orm",
+            "paperclip",
+            "s3",
+            "upload"
+        ]
+    },
+    {
         "name": "benallfree/laravel-stapler-images",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/benallfree/laravel-stapler-images.git",
-            "reference": "9e7186722a03222f35cd523c78b7ec138fa06009"
+            "reference": "3937975fe7928ba2842bfc4e37c797d913545abf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/9e7186722a03222f35cd523c78b7ec138fa06009",
-            "reference": "9e7186722a03222f35cd523c78b7ec138fa06009",
+            "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/3937975fe7928ba2842bfc4e37c797d913545abf",
+            "reference": "3937975fe7928ba2842bfc4e37c797d913545abf",
             "shasum": ""
         },
         "require": {
@@ -2278,7 +2278,7 @@
             "illuminate/support": "4.2.*",
             "php": ">=5.4.0"
         },
-        "time": "2014-12-07 04:24:46",
+        "time": "2014-12-07 04:49:07",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
