@@ -1,0 +1,29 @@
+{
+    "name": "benallfree/laravel-fb-auth",
+    "description": "Facebook Authentication for Laravel",
+    "keywords": ["laravel", "facebook", "auth", "authentication", "fb", "login"],
+    "license": "MIT",
+    "homepage": "http://github.com/benallfree/laravel-fb-auth",
+    "authors": [
+        {
+            "name": "Ben Allfree",
+            "email": "ben@benallfree.com",
+            "homepage": "http://github.com/benallfree"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "facebook/php-sdk-v4" : "4.0.*",
+        "guzzle/guzzle": "3.9.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "BenAllfree\\FbAuth\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
