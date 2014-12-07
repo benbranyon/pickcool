@@ -4,7 +4,9 @@ This package adds Facebook authentication to Laravel. It integrates with the sta
 
 # Installation
 
-    composer require benallfree/fb-auth 1.0.*
+Update your `composer.json`:
+
+    "benallfree/laravel-fb-auth": "1.0.0"
 
 # Setup
 
