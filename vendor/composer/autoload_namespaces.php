@@ -42,4 +42,5 @@ return array(
     'ClassPreloader' => array($vendorDir . '/classpreloader/classpreloader/src'),
     'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
     'Boris' => array($vendorDir . '/d11wtq/boris/lib'),
+    'BenAllfree\\FbAuth\\' => array($vendorDir . '/benallfree/laravel-fb-auth/src'),
 );
