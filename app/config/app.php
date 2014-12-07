@@ -123,6 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
     'Codesleeve\LaravelStapler\LaravelStaplerServiceProvider',
     'BenAllfree\LaravelStaplerImages\LaravelStaplerImagesServiceProvider',
+    'BenAllfree\FbAuth\FbAuthServiceProvider',
 	),
 
 	/*
@@ -151,7 +152,7 @@ return array(
 
 	'aliases' => array(
 
-		'Auth'              => 'FB\Auth',
+		'Auth'              => 'BenAllfree\FbAuth\Auth',
 		'App'               => 'Illuminate\Support\Facades\App',
 		'Artisan'           => 'Illuminate\Support\Facades\Artisan',
 		'Blade'             => 'Illuminate\Support\Facades\Blade',

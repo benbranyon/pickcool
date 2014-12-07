@@ -20,7 +20,6 @@ class FbAuthCreateUsersTable extends Migration {
       $table->string('last_name');
       $table->string('gender');
       $table->string('email');
-      $table->integer('is_contributor')->nullable();
       $table->timestamps();
 		});
 	}

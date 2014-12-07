@@ -6,17 +6,15 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AddContestToVote' => $baseDir . '/app/database/migrations/2014_12_05_144159_AddContestToVote.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Candidate' => $baseDir . '/app/models/Candidate.php',
     'Contest' => $baseDir . '/app/models/Contest.php',
     'CreateCandidates' => $baseDir . '/app/database/migrations/2014_12_04_122755_CreateCandidates.php',
     'CreateContests' => $baseDir . '/app/database/migrations/2014_12_04_202643_CreateContests.php',
-    'CreateUsersTable' => $baseDir . '/app/database/migrations/2014_12_04_113725_CreateUsersTable.php',
+    'CreateImages' => $baseDir . '/app/database/migrations/2014_12_04_202605_CreateImages.php',
     'CreateVotes' => $baseDir . '/app/database/migrations/2014_12_04_122822_CreateVotes.php',
-    'FB\\Auth' => $baseDir . '/app/classes/FB/Auth.php',
+    'FbAuthCreateUsersTable' => $baseDir . '/app/database/migrations/2014_12_04_113725_CreateUsersTable.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
-    'Image' => $baseDir . '/app/models/Image.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
     'User' => $baseDir . '/app/models/User.php',

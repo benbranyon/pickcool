@@ -1,5 +1,5 @@
 <?php
-namespace FB;
+namespace BenAllfree\FbAuth;
   
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
@@ -25,7 +25,7 @@ class Auth
   {
     if(self::$user !== false) return self::$user;
     
-    FacebookSession::setDefaultApplication($_ENV['FACEBOOK_APP_ID'], $_ENV['FACEBOOK_SECRET']);
+    FacebookSession::setDefaultApplication(\Config::get('fb-auth::config.facebook_app_id'), \Config::get('fb-auth::config.facebook_secret'));
 
     $token = \Input::get('accessToken');
     if(!$token)
