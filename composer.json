@@ -1,10 +1,14 @@
 {
-    "name": "benallfree/fb-auth",
-    "description": "",
+    "name": "benallfree/laravel-fb-auth",
+    "description": "Facebook Authentication for Laravel",
+    "keywords": ["laravel", "facebook", "auth", "authentication", "fb", "login"],
+    "license": "MIT",
+    "homepage": "http://github.com/benallfree/laravel-fb-auth",
     "authors": [
         {
             "name": "Ben Allfree",
-            "email": "ben@benallfree.com"
+            "email": "ben@benallfree.com",
+            "homepage": "http://github.com/benallfree"
         }
     ],
     "require": {
