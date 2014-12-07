@@ -16,8 +16,7 @@ class CreateContests extends Migration {
 		{
 			$table->increments('id');
       $table->integer('user_id');
-      $table->integer('created_at');
-      $table->integer('updated_at');
+      $table->timestamps();
     });
 	}
 

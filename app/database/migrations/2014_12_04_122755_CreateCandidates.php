@@ -19,8 +19,7 @@ class CreateCandidates extends Migration {
       $table->string('name');
       $table->integer('image_id');
       $table->string('amazon_url');
-      $table->integer('created_at');
-      $table->integer('updated_at');
+      $table->timestamps();
 		});
 	}
 

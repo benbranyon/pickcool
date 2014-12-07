@@ -1,6 +1,6 @@
 <?php
   
-class User extends EloquentBase
+class User extends Eloquent
 {
   function contests()
   {

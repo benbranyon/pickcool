@@ -16,7 +16,6 @@
   "autoload": {
     "classmap": [
       "app/classes",
-      "app/traits",
       "app/commands",
       "app/controllers",
       "app/models",
@@ -39,8 +38,8 @@
       "php artisan clear-compiled",
       "php artisan optimize",
       "rm -rf vendor/codesleeve/stapler/.git",
-      "git apply codesleeve-stapler-rename_bugfix.patch"    
-      "git apply codesleeve-stapler-curl-open-basedir-fix.patch"    
+      "git apply vendor/benallfree/laravel-stapler-images/codesleeve-stapler-rename_bugfix.patch",    
+      "git apply vendor/benallfree/laravel-stapler-images/codesleeve-stapler-curl-open-basedir-fix.patch"    
     ],
     "post-create-project-cmd": [
       "php artisan key:generate"

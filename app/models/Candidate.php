@@ -1,6 +1,6 @@
 <?php
   
-class Candidate extends EloquentBase
+class Candidate extends Eloquent
 {
   function image()
   {

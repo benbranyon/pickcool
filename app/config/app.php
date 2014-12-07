@@ -122,6 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
     'Codesleeve\LaravelStapler\LaravelStaplerServiceProvider',
+    'BenAllfree\LaravelStaplerImages\LaravelStaplerImagesServiceProvider',
 	),
 
 	/*
@@ -188,7 +189,7 @@ return array(
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-
+    'Image'             => 'BenAllfree\LaravelStaplerImages\Image',
     
 	),
 

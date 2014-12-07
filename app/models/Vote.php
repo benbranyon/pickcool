@@ -1,6 +1,6 @@
 <?php
   
-class Vote extends EloquentBase
+class Vote extends Eloquent
 {
 
 }

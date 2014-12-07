@@ -16,13 +16,12 @@ class CreateImages extends Migration {
 		{
 			$table->increments('id');
       $table->string('url');
+			$table->string('sizes_md5')->nullable();
       $table->string('image_file_name')->nullable();
       $table->integer('image_file_size')->nullable();
       $table->string('image_content_type')->nullable();
-      $table->timestamp('image_updated_at')->nullable();
-			$table->string('md5')->nullable();
-      $table->integer('created_at');
-      $table->integer('updated_at');
+      $table->datetime('image_updated_at')->nullable();
+      $table->timestamps();
 		});
 	}
 
