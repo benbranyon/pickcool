@@ -2257,5 +2257,51 @@
             "laravel",
             "login"
         ]
+    },
+    {
+        "name": "benallfree/laravel-stapler-images",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/benallfree/laravel-stapler-images.git",
+            "reference": "9e7186722a03222f35cd523c78b7ec138fa06009"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/9e7186722a03222f35cd523c78b7ec138fa06009",
+            "reference": "9e7186722a03222f35cd523c78b7ec138fa06009",
+            "shasum": ""
+        },
+        "require": {
+            "codesleeve/laravel-stapler": "1.0.*",
+            "illuminate/support": "4.2.*",
+            "php": ">=5.4.0"
+        },
+        "time": "2014-12-07 04:24:46",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/migrations"
+            ],
+            "psr-0": {
+                "BenAllfree\\LaravelStaplerImages\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "authors": [
+            {
+                "name": "Ben Allfree",
+                "email": "ben@benallfree.com"
+            }
+        ],
+        "description": "Extend laravel-stapler with an Image model.",
+        "keywords": [
+            "attachment",
+            "image",
+            "laravel",
+            "stapler"
+        ]
     }
 ]
