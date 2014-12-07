@@ -60,7 +60,9 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
   };
 })
 .directive('ngLadda', function() {
-  Ladda.bind('.ladda-button');
+  return function(scope, element, attrs) {
+    Ladda.bind(element[0]);
+  };
 })
 .run(function(ezfb,$rootScope,$http) {
   $rootScope.current_user = null;
