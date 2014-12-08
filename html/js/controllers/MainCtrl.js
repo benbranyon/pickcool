@@ -1,4 +1,4 @@
-app.controller('MainCtrl', function ($state, $scope, $http, $window, $location) {
+app.controller('MainCtrl', function ($state, $scope, $window, $location, api) {
   console.log('MainCtrl');
   
   $scope.state = $state;
@@ -27,18 +27,7 @@ app.controller('MainCtrl', function ($state, $scope, $http, $window, $location) 
       $('#vote_step_1').modal();
       $scope.current_selection = c;
       c.vote_count++;
-      $http.get(API_ENDPOINT+'/vote', 
-        {
-          'params': {
-            'accessToken': $scope.accessToken,
-            'c': c.id
-          }
-        }
-      )
-        .success(function(data) {
-          console.log(data);
-        });
-      
+      api.vote(c.id);
     } else {
      $('#login_dialog').modal();
     }

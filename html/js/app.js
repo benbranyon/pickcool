@@ -8,47 +8,6 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     status: true,
   });  
 })
-.config(function($stateProvider, $urlRouterProvider) {
-  //
-  // For any unmatched url, redirect to /state1
-  $urlRouterProvider.otherwise("/");
-  //
-  // Now set up the states
-  $stateProvider
-    .state('home', {
-      url: "/",
-      templateUrl: "partials/home.html"
-    })
-    .state('contests-view', {
-      url: "/contests/:id",
-      templateUrl: "partials/contests/view.html"
-    })
-    .state('hot', {
-      url: "/hot",
-      templateUrl: "partials/hot.html"
-    })
-    .state('new', {
-      url: "/new",
-      templateUrl: "partials/new.html"
-    })
-    .state('top', {
-      url: "/top",
-      templateUrl: "partials/top.html"
-    })
-    .state('ended', {
-      url: "/ended",
-      templateUrl: "partials/ended.html"
-    })
-    .state('my-contests', {
-      url: "/my/contests",
-      templateUrl: "partials/my/contests/list.html"
-    })
-    .state('my-contests-create', {
-      url: "/my/contests/create",
-      templateUrl: "partials/my/contests/create.html"
-    })
-  ;
-})
 .directive('initCandidate', function() {
   return function(scope, element, attrs) {
    var c = scope.c;
@@ -64,11 +23,11 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     Ladda.bind(element[0]);
   };
 })
-.run(function(ezfb,$rootScope,$http) {
+.run(function(ezfb,$rootScope, api) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
-  function updateStatus(res) 
+  $rootScope.updateStatus = function(res) 
   {
     console.log("auth.statusChange",res);
     $rootScope.fb_loaded = true;
@@ -79,20 +38,12 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
       return;
     }
     $rootScope.accessToken = res.authResponse.accessToken;
-    $http.get(API_ENDPOINT+'/user', 
-      {
-        'params': {
-          'accessToken': $rootScope.accessToken,
-        }
-      }
-    ).success(function(res) {
-      if(res.status=='ok')
-      {
-        $rootScope.current_user = res.data;
-      }
+    api.getUser(function(res) {
+      $rootScope.current_user = res.data;
+      console.log("Current user is ", $rootScope.current_user);
     });
   }
-  ezfb.Event.subscribe('auth.statusChange', updateStatus);
+  ezfb.Event.subscribe('auth.statusChange', $rootScope.updateStatus);
 //  ezfb.getLoginStatus().then(updateStatus);
   
   ezfb.Event.subscribe('auth.authResponseChanged', function (statusRes) {

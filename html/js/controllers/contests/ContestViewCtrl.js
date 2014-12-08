@@ -1,6 +1,6 @@
 
-app.controller('ContestViewCtrl', function($http, $scope, $stateParams) {
-  $http.get(API_ENDPOINT+'/contests/'+$stateParams.id).success(function(res) {
-   $scope.contest = res.data;
+app.controller('ContestViewCtrl', function($scope, $stateParams, api) {
+  api.getContest($stateParams.id, function(res) {
+    $scope.contest = res.data;
   });
 });

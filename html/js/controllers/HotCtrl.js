@@ -1,6 +1,6 @@
 
-app.controller('HotCtrl', function($http, $scope) {
-  $http.get(API_ENDPOINT+'/contests/hot').success(function(res) {
-   $scope.contests = res.data;
+app.controller('HotCtrl', function(api, $scope) {
+  api.getContests('hot', function(res) {
+    $scope.contests = res.data;
   });
 });
