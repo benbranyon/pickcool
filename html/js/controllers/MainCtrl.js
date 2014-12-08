@@ -1,4 +1,4 @@
-app.controller('MainCtrl', function ($state, $scope, $http, $window, $location, api) {
+app.controller('MainCtrl', function ($state, $scope, $window, $location, api) {
   console.log('MainCtrl');
   
   $scope.state = $state;

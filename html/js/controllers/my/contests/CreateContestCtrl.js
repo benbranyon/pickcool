@@ -1,4 +1,4 @@
-app.controller('CreateContestCtrl', function ($scope, $http, $state, api) {
+app.controller('CreateContestCtrl', function ($scope, $state, api) {
   $scope.candidates = [
     {'amazon_url': 'http://www.amazon.com/s/?_encoding=UTF8&camp=1789&creative=390957&field-keywords=taylor%20swift&linkCode=ur2&tag=benallfree-20&url=search-alias%3Daps&linkId=TRUKIE3Z25IK2IHK', "image_url":"http:\/\/v2.7-beta.clipbucket.com\/files\/photos\/2014\/05\/16\/1400228168b6b742_l.jpg","vote_count":747,"id":1,"name":"Taylor Swift"},
     {'amazon_url': 'http://www.amazon.com/s/?_encoding=UTF8&camp=1789&creative=390957&field-keywords=justin%20bieber&linkCode=ur2&rh=i%3Aaps%2Ck%3Ajustin%20bieber&sprefix=justin%20bi%2Caps%2C429&tag=benallfree-20&url=search-alias%3Daps&linkId=WDZIWQQER6STSOST', "image_url":"http:\/\/assets-s3.usmagazine.com\/uploads\/assets\/articles\/74065-justin-bieber-apologizes-after-offensive-n-word-video-surfaces\/1401970999_justin-bieber-lg.jpg","vote_count":223,"id":2,"name":"Justin Beiber"},

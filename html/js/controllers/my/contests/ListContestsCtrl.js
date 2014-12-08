@@ -1,4 +1,4 @@
-app.controller('ListContestsCtrl', function ($scope, $http, $state, api) {
+app.controller('ListContestsCtrl', function ($scope, $state, api) {
   if(!$scope.current_user)
   {
     $state.go('home');

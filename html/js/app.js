@@ -23,11 +23,11 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     Ladda.bind(element[0]);
   };
 })
-.run(function(ezfb,$rootScope,$http, api) {
+.run(function(ezfb,$rootScope, api) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
-  $rootScope.updateStatus = function(res,callback) 
+  $rootScope.updateStatus = function(res) 
   {
     console.log("auth.statusChange",res);
     $rootScope.fb_loaded = true;
