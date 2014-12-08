@@ -136,7 +136,7 @@ Route::group([
         $contest['candidates'][] = [
           'name'=>$can->name,
           'image_url'=>$can->image->image->url('tiny'),
-          'vote_count'=>553,
+          'vote_count'=>$can->votes()->count(),
           'id'=>$can->id,
         ];
       }
