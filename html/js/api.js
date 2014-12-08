@@ -46,15 +46,15 @@ app.service('api', function(ezfb, $http, $rootScope) {
     api_lowevel({'name': 'getFeaturedContests', 'path': '/contests/featured', 'success': success, 'error': error});
   };
 
-  this.getContest = function(id, success, error) {
-    api_lowevel({'name': 'getContest', 'path': '/contests/'+id, 'success': success, 'error': error});
+  this.getContest = function(contest_id, success, error) {
+    api_lowevel({'name': 'getContest', 'path': '/contests/'+contest_id, 'success': success, 'error': error});
   };
   this.getContests = function(type, success, error) {
     api_lowevel({'name': 'getContests', 'path': '/contests/'+type, 'success': success, 'error': error});
   };
   
-  this.vote = function(candidate, success, error) {
-    api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate.id }, 'success': success, 'error': error});
+  this.vote = function(candidate_id, success, error) {
+    api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
   
