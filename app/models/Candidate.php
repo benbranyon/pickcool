@@ -6,4 +6,9 @@ class Candidate extends Eloquent
   {
     return $this->belongsTo('Image');
   }
+
+    public function votes()
+    {
+        return $this->hasMany('Vote');
+    }
 }
