@@ -1,4 +1,4 @@
-app.controller('ListContestsCtrl', function ($scope, $http, $state) {
+app.controller('ListContestsCtrl', function ($scope, $http, $state, api) {
   if(!$scope.current_user)
   {
     $state.go('home');
@@ -6,15 +6,7 @@ app.controller('ListContestsCtrl', function ($scope, $http, $state) {
   }
   console.log($scope.loginStatus);
   $scope.contests = [];
-  $http.get(API_ENDPOINT+'/my/contests', 
-    {
-      'params': {
-        'accessToken': $scope.accessToken,
-        'candidates': JSON.stringify($scope.candidates)
-      }
-    }
-  )
-  .success(function(res) {
+  api.getMyContests(function(res) {
     $scope.contests = res.data;
   });
 });

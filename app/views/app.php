@@ -21,11 +21,13 @@
     -->
     <script src="/lib/jquery-2.1.1.min.js"></script>
     <script src="/lib/angular-1.3.5.min.js"></script>
+    <script src="/lib/http-auth-interceptor.js"></script>
     <script src="/lib/angular-ui-router-0.2.12.min.js"></script>
     <script src="/lib/angular-easyfb-1.2.1/angular-easyfb.js"></script>
     <script src="/lib/RainbowVis-JS-14.10.26/rainbowvis.js"></script>
     <script src="/lib/ladda-bootstrap-14.12.5/dist/spin.min.js"></script>
     <script src="/lib/ladda-bootstrap-14.12.5/dist/ladda.min.js"></script>
+    <script src="/lib/ladda-bootstrap-14.12.5/dist/ladda.jquery.min.js"></script>
 
     <!-- 
     Custom code
@@ -33,6 +35,8 @@
     <script src="/js/env.js"></script>
     <script src="/js/rainbow.js"></script>
     <script src="/js/app.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/routes.js"></script>
     <script src="/js/controllers/MainCtrl.js"></script>
     <script src="/js/controllers/my/contests/CreateContestCtrl.js"></script>
     <script src="/js/controllers/my/contests/ListContestsCtrl.js"></script>
