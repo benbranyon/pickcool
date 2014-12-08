@@ -26,6 +26,7 @@ app.controller('MainCtrl', function ($state, $scope, $http, $window, $location) 
       $('#c_'+c.id).addClass('selected');
       $('#vote_step_1').modal();
       $scope.current_selection = c;
+      c.vote_count++;
       $http.get(API_ENDPOINT+'/vote', 
         {
           'params': {
