@@ -1,54 +1,47 @@
 <div ng-controller="ContestViewCtrl">
-  <h2>Click to Vote. First to 1,000 votes wins</h2>
-  <div ng-repeat="c in contest.candidates" init-candidate>
-    <div class="candidate" id="c_{{c.id}}" ng-click="vote(c)">
-      <div class="mainContain">
-        <div class="name">
-          {{c.name}}
-        </div>
-        <div class="action_bar">
-          <div class="btn-group">
-            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <span class="glyphicon glyphicon-music" aria-hidden="true"></span> Listen <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Amazon</a></li>
-              <li><a href="#">iTunes</a></li>
-            </ul>
-          </div>
-          <small>{{c.vote_count}} votes</small>
-        </div>
-        <div class="mProgressContain">
-            <div class="mProgress0"></div>
-            <div class="mProgress1"></div>
-        </div>
-        <div class="roundContainX" id="profileEditX">
-          <a href="#">
-            <img class='img-circle' ng-src="{{c.image_url}}">
-          </a>
-          <div class="overlay">
-            <h1>Click to Vote</h1>
+  <h2>Click to Vote. First to {{contest.max_votes}} votes wins.</h2>
+  <div class="row alert alert-success" ng-if="contest.current_user_candidate_id">
+    <div class="col-lg-12">
+      <p>Noice, you voted. Now hang out and watch the madness.</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div ng-repeat="c in contest.candidates" init-candidate>
+        <div id="candidate_{{c.id}}" class="candidate {{ contest.current_user_candidate_id == c.id ? 'selected' : ''}}" id="c_{{c.id}}" ng-click="vote(c)">
+          <div class="mainContain">
+            <div class="name">
+              {{c.name}}
+            </div>
+            <div class="action_bar">
+              <small>{{c.vote_count}} votes</small>
+            </div>
+            <div class="mProgressContain">
+                <div class="mProgress0"></div>
+                <div class="mProgress1"></div>
+            </div>
+            <div class="roundContainX" id="profileEditX">
+              <img class='img-circle' ng-src="{{c.image_url}}">
+              <div class="overlay">
+                <h1>Click to Vote</h1>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="clearfix"></div>
     </div>
   </div>
-  <div class="clearfix"></div>
-
-  <div id="vote_step_1" class="modal fade">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">You voted {{current_selection.name}}</h4>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Discussion</h3>
         </div>
-        <div class="modal-body">
-          <h4>Now rally your friends to vote too.</h4>
-          <div class="btn btn-primary" ng-click="share()">
-            <i class="fa fa-facebook-square"></i> Share Now
-          </div>
+        <div class="panel-body" style="padding-left: 0px; padding-right: 0px;padding-top:0px">
+          <div class="fb-comments" data-href="http://local.pick.cool" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
         </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+      </div>          
+    </div>
+  </div>
 </div>
