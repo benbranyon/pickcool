@@ -12,7 +12,37 @@
 */
 
 
-
+class ApiSerializer
+{
+  static function serialize($obj, $size='thumb')
+  {
+    if(get_class($obj)=='Contest')
+    {
+      $v = null;
+      if(Auth::check())
+      {
+        $v = Auth::user()->current_vote_for($obj);
+      }
+      $contest = [
+        'id'=>$obj->id,
+        'max_votes'=>10,
+        'current_user_candidate_id'=>$v ? $v->candidate_id : null,
+        'candidates'=>[],
+      ];
+      foreach($obj->candidates as $can)
+      {
+        $contest['candidates'][] = [
+          'name'=>$can->name,
+          'image_url'=>$can->image->image->url($size),
+          'vote_count'=>$can->votes()->count(),
+          'vote_pct'=>max(1,$can->votes->count()/floatval(10)),
+          'id'=>$can->id,
+        ];
+      }      
+      return $contest;
+    }
+  }
+}
 Route::group([
   'prefix' => 'api/v1',
   'before'=>'origin',
@@ -25,18 +55,7 @@ Route::group([
     $contests = [];
     foreach(Auth::user()->contests()->get() as $c)
     {
-      $contest = [
-        'id'=>$c->id,
-        'candidates'=>[],
-      ];
-      foreach($c->candidates as $can)
-      {
-        $contest['candidates'][] = [
-          'name'=>$can->name,
-          'image_url'=>$can->image->image->url('admin'),
-        ];
-      }
-      $contests[] = $contest;
+      $contests[] = ApiSerializer::serialize($c, 'admin');
     }
     return json_encode([
       'status'=>'ok',
@@ -119,28 +138,24 @@ Route::group([
     {
       return json_encode(['status'=> 'error', 'error_code'=>1, 'error_message'=>'Authentication is required for this operation.']);
     }
-    Auth::user()->vote_for(Input::get('c'));
-    return json_encode(['status'=>'ok']);
+    
+    $c = Candidate::find(Input::get('c'));
+    if(!$c)
+    {
+      return json_encode(['status'=>'error', 'error_code'=>3, 'error_message'=>"Candidate not found."]);
+    }
+    Auth::user()->vote_for($c->id);
+    return json_encode([
+      'status'=>'ok',
+      'data'=>ApiSerializer::serialize($c->contest),
+    ]);
   });
   
   Route::any('/contests/featured', function() {
     $contests = [];
     foreach(Contest::all() as $c)
     {
-      $contest = [
-        'id'=>$c->id,
-        'candidates'=>[],
-      ];
-      foreach($c->candidates as $can)
-      {
-        $contest['candidates'][] = [
-          'name'=>$can->name,
-          'image_url'=>$can->image->image->url('tiny'),
-          'vote_count'=>$can->votes()->count(),
-          'id'=>$can->id,
-        ];
-      }
-      $contests[] = $contest;
+      $contests[] = ApiSerializer::serialize($c,'tiny');
     }
     return json_encode([
       'status'=>'ok',
@@ -150,22 +165,9 @@ Route::group([
   
   Route::any('/contests/{id}', function($id) {
     $c = Contest::find($id);
-    $contest = [
-      'id'=>$c->id,
-      'candidates'=>[],
-    ];
-    foreach($c->candidates as $can)
-    {
-      $contest['candidates'][] = [
-        'name'=>$can->name,
-        'image_url'=>$can->image->image->url('thumb'),
-        'vote_count'=>$can->votes()->count(),
-        'id'=>$can->id,
-      ];
-    }
     return json_encode([
       'status'=>'ok',
-      'data'=>$contest,
+      'data'=>ApiSerializer::serialize($c, 'thumb'),
     ]);
   });
 

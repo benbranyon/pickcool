@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="pickCoolApp">
   <head>
+    <meta property="fb:app_id" content="<?php echo($_ENV['FACEBOOK_APP_ID'])?>"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,11 +16,11 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/lib/ladda-bootstrap-14.12.5/dist/ladda-themeless.min.css">
 
-
     <!-- 
     Core libs
     -->
     <script src="/lib/jquery-2.1.1.min.js"></script>
+    <script src="/lib/jquery-ui-1.11.2.min.js"></script>
     <script src="/lib/angular-1.3.5.min.js"></script>
     <script src="/lib/http-auth-interceptor.js"></script>
     <script src="/lib/angular-ui-router-0.2.12.min.js"></script>
@@ -53,35 +54,46 @@
 
   <body ng-controller="MainCtrl">
     <div class="container">
-      <div class="row" style="height: 50px">
-        <div class="col-lg-6">
-          <ul class="nav nav-pills">
-            <li role="presentation" ng-class="{'active': state.is('home')}"><a ui-sref="home">Home</a></li>
-            <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('hot')}"><a ui-sref="hot">Hot</a></li>
-            <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('new')}"><a ui-sref="new">New</a></li>
-            <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('top')}"><a ui-sref="top">Top</a></li>
-            <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('ended')}"><a ui-sref="ended">Ended</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-6"  style="text-align: right">
-          <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!current_user"><i class="fa fa-facebook-square"></i> Login</button>
-          <span ng-if="current_user">
-            <a class="btn btn-primary btn-xs " ui-sref="my-contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</a>
-            <a class="btn btn-primary btn-xs" ui-sref="my-contests" ng-if="current_user.is_contributor"><i class="fa fa-th-list"></i> My Contests</a>
-            <a class="btn btn-danger btn-xs" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</a>
-            <br/>
-            Hello, {{current_user.first_name}}. We're watching you.
-          </span>
+      <div class="row">
+        <div class="col-lg-10 col-offset-1">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-primary">pick.cool</div>
+              <div class="small text-muted">Vote and watch social contests in real time.</div>
+            </div>
+          </div>
+          <div class="row" style="height: 50px">
+            <div class="col-lg-6">
+              <ul class="nav nav-pills">
+                <li role="presentation" ng-class="{'active': state.is('home')}"><a ui-sref="home">Home</a></li>
+                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('hot')}"><a ui-sref="hot">Hot</a></li>
+                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('new')}"><a ui-sref="new">New</a></li>
+                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('top')}"><a ui-sref="top">Top</a></li>
+                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('ended')}"><a ui-sref="ended">Ended</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-6"  style="text-align: right">
+              <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!current_user"><i class="fa fa-facebook-square"></i> Login</button>
+              <span ng-if="current_user">
+                <a class="btn btn-primary btn-xs " ui-sref="my-contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</a>
+                <a class="btn btn-primary btn-xs" ui-sref="my-contests" ng-if="current_user.is_contributor"><i class="fa fa-th-list"></i> My Contests</a>
+                <a class="btn btn-danger btn-xs" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</a>
+                <br/>
+                Hello, {{current_user.first_name}}. We're watching you.
+              </span>
+            </div>
+          </div>
+
+          <div ui-view></div>
+
+          <div class="footer">
+            <p>&copy; pick.cool 2014</p>
+          </div>
+
+          </div> <!-- /container -->
         </div>
       </div>
-
-      <div ui-view></div>
-
-      <div class="footer">
-        <p>&copy; pick.cool 2014</p>
-      </div>
-
-    </div> <!-- /container -->
+    </div>
     
     <div id="login_dialog" class="modal fade">
       <div class="modal-dialog">

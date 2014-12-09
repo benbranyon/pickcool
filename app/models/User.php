@@ -7,6 +7,11 @@ class User extends Eloquent
     return $this->hasMany('Contest');
   }
   
+  function current_vote_for($contest)
+  {
+    return Vote::whereUserId(Auth::user()->id)->whereContestId($contest->id)->first();
+  }
+  
   static function from_fb($me)
   {
     $fb_id = $me->getId();
