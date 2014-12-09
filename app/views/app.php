@@ -20,9 +20,7 @@
     Core libs
     -->
     <script src="/lib/jquery-2.1.1.min.js"></script>
-    <script src="/lib/jquery-ui-1.11.2.min.js"></script>
     <script src="/lib/angular-1.3.5.min.js"></script>
-    <script src="/lib/http-auth-interceptor.js"></script>
     <script src="/lib/angular-ui-router-0.2.12.min.js"></script>
     <script src="/lib/angular-easyfb-1.2.1/angular-easyfb.js"></script>
     <script src="/lib/RainbowVis-JS-14.10.26/rainbowvis.js"></script>
