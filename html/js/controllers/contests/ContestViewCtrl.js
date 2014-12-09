@@ -4,7 +4,6 @@ app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api) {
     $scope.contest = res.data;
   });
   
-  
   $scope.share = function () {
     ezfb.ui(
      {

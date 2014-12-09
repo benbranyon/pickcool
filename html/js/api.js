@@ -34,8 +34,8 @@ app.service('api', function(ezfb, $http, $rootScope) {
     api_lowevel({'name': 'getUser', 'path': '/user', 'success': success, 'error': error});
   };
   
-  this.createContest = function(candidates, success, error) {
-    api_lowevel({'name': 'createContest', 'path': '/my/contests/create', 'params': {'candidates': JSON.stringify(candidates) }, 'success': success, 'error': error});
+  this.createContest = function(contest, success, error) {
+    api_lowevel({'name': 'createContest', 'path': '/my/contests/create', 'params': {'contest': JSON.stringify(contest) }, 'success': success, 'error': error});
   };
   
   this.getMyContests = function(success, error) {
