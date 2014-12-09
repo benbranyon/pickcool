@@ -13,9 +13,9 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
    var c = scope.c;
    var $e = $(element).find('.mProgress1');
    $e.animate({
-    height: ((c.vote_count/1000.0)*100.0)+'%'
+    height: ((c.vote_count/scope.contest.max_votes)*100.0)+'%'
     }, 1000);
-   $e.css('background-color', '#'+rainbow.colorAt(c.vote_count));
+   $e.css('background-color', '#'+rainbow.colorAt(c.vote_pct*1000.0));
   };
 })
 .directive('ngLadda', function() {
@@ -23,11 +23,11 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     Ladda.bind(element[0]);
   };
 })
-.run(function(ezfb,$rootScope, api) {
+.run(function(ezfb,$rootScope,$http) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
-  $rootScope.updateStatus = function(res) 
+  function updateStatus(res) 
   {
     console.log("auth.statusChange",res);
     $rootScope.fb_loaded = true;
@@ -38,12 +38,20 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
       return;
     }
     $rootScope.accessToken = res.authResponse.accessToken;
-    api.getUser(function(res) {
-      $rootScope.current_user = res.data;
-      console.log("Current user is ", $rootScope.current_user);
+    $http.get(API_ENDPOINT+'/user', 
+      {
+        'params': {
+          'accessToken': $rootScope.accessToken,
+        }
+      }
+    ).success(function(res) {
+      if(res.status=='ok')
+      {
+        $rootScope.current_user = res.data;
+      }
     });
   }
-  ezfb.Event.subscribe('auth.statusChange', $rootScope.updateStatus);
+  ezfb.Event.subscribe('auth.statusChange', updateStatus);
 //  ezfb.getLoginStatus().then(updateStatus);
   
   ezfb.Event.subscribe('auth.authResponseChanged', function (statusRes) {
