@@ -232,6 +232,10 @@ Route::group([
   
   Route::any('/contests/{id}', function($id) {
     $c = Contest::find($id);
+    if(!$c)
+    {
+      return ApiSerializer::error(API_ERR_LOOKUP);
+    }
     return ApiSerializer::ok(ApiSerializer::serialize($c, 'thumb'));
   });
 
