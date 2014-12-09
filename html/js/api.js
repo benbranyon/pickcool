@@ -1,9 +1,5 @@
 app.service('api', function(ezfb, $http, $rootScope) {
   var api_lowevel = function(args) {
-    var params = {
-      'accessToken': $rootScope.accessToken,
-    };
-    angular.extend(params, args.params);
     ezfb.getLoginStatus().then(function(res) {
       $rootScope.accssToken = null;
       if(!res.authResponse) 
@@ -13,6 +9,10 @@ app.service('api', function(ezfb, $http, $rootScope) {
       }
       $rootScope.accessToken = res.authResponse.accessToken;
       console.log("Access token is ", $rootScope.accessToken);
+      var params = {
+        'accessToken': $rootScope.accessToken,
+      };
+      angular.extend(params, args.params);
       $http.get(API_ENDPOINT+args.path, 
         {
           'params': params
