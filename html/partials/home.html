@@ -1,5 +1,5 @@
 <div ng-controller="HomeCtrl" class="home">
-  <h2>Vote in any of these contests.</h2>
+  <h2>Vote and watch social contests in real time.</h2>
   <div class="contest" ng-repeat="contest in contests" style="position:relative" ui-sref='contests-view({id: contest.id})'>
     <div>
       <img class="tl" ng-src="{{contest.candidates[0].image_url}}"/><img class="tr" ng-src="{{contest.candidates[1].image_url}}"/>
