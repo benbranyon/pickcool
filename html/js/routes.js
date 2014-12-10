@@ -11,7 +11,11 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/home.html"
     })
     .state('contests-view', {
-      url: "/est/:id/:slug",
+      url: "/est/:contest_id/:slug",
+      templateUrl: "partials/contests/view.html"
+    })
+    .state('contests-view-voted', {
+      url: "/est/:contest_id/:slug/:user_id",
       templateUrl: "partials/contests/view.html"
     })
     .state('hot', {

@@ -2,17 +2,17 @@ app.service('api', function(ezfb, $http, $rootScope) {
   var api_lowevel = function(args) {
     ezfb.getLoginStatus().then(function(res) {
       $rootScope.accssToken = null;
+      var params = {};
+      angular.extend(params, args.params);
       if(!res.authResponse) 
       {
+        console.log('User is not logged in.');
         $rootScope.current_user = null;
-        return;
+      } else {
+        $rootScope.accessToken = res.authResponse.accessToken;
+        console.log("Access token is ", $rootScope.accessToken);
+        params.accessToken = $rootScope.accessToken;
       }
-      $rootScope.accessToken = res.authResponse.accessToken;
-      console.log("Access token is ", $rootScope.accessToken);
-      var params = {
-        'accessToken': $rootScope.accessToken,
-      };
-      angular.extend(params, args.params);
       $http.get(API_ENDPOINT+args.path, 
         {
           'params': params

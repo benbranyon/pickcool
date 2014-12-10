@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="pickCoolApp">
   <head>
-    <base href="/beta">
-    <meta property="fb:app_id" content="<?php echo($_ENV['FACEBOOK_APP_ID'])?>"/>
+    <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">

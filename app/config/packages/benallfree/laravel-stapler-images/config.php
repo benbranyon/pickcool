@@ -3,6 +3,7 @@ use Imagine\Image\ImageInterface;
 
 /* Specify an array of sizes to be maintained */
 $sizes = [
+  'facebook'=>'1200x1200#',
   'large' => '640x640#',
   'featured' => '585x585#',
   'medium' => '400x400#',

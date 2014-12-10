@@ -23,7 +23,7 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     Ladda.bind(element[0]);
   };
 })
-.run(function(ezfb,$rootScope,$http) {
+.run(function(ezfb,$rootScope,$http,api) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
@@ -35,24 +35,24 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     if(!res.authResponse) 
     {
       $rootScope.current_user = null;
+      console.log('Unauthenticated');
+      $rootScope.$broadcast('go');
       return;
     }
     $rootScope.accessToken = res.authResponse.accessToken;
-    $http.get(API_ENDPOINT+'/user', 
-      {
-        'params': {
-          'accessToken': $rootScope.accessToken,
-        }
-      }
-    ).success(function(res) {
+    api.getUser(function(res) {
       if(res.status=='ok')
       {
         $rootScope.current_user = res.data;
+        console.log('Authenticated');
+        $rootScope.$broadcast('go');
+      } else {
+        console.log("API Error");
       }
     });
   }
+  
   ezfb.Event.subscribe('auth.statusChange', updateStatus);
-//  ezfb.getLoginStatus().then(updateStatus);
   
   ezfb.Event.subscribe('auth.authResponseChanged', function (statusRes) {
     console.log('xx authResponseChanged');

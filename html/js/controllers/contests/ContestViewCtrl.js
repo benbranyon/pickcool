@@ -1,17 +1,16 @@
 
 app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api) {
-  api.getContest($stateParams.id, function(res) {
+  console.log('ContestViewCtrl');
+  console.log($stateParams.contest_id);
+  api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
   });
   
   $scope.share = function () {
     ezfb.ui(
      {
-      method: 'feed',
-      name: 'angular-easyfb API demo',
-      picture: 'http://v2.7-beta.clipbucket.com/files/photos/2014/05/16/1400228168b6b742_l.jpg',
-      link: 'http://pick.cool/vote?/qclqht?p=preview',
-      description: 'Taylor Siwft is WAAAY better than Justin Beiber! Help me prove it by voting and sharing.'
+      method: 'share',
+      href: $scope.contest.canonical_url,
      },
      function (res) {
       console.log(res);
@@ -23,13 +22,14 @@ app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api) {
   $scope.vote = function(c) {
     if($scope.current_user)
     {
+      if(c.id == $scope.contest.current_user_candidate_id) return;
       $('.candidate').removeClass('selected');
       $('#c_'+c.id).addClass('selected');
-      if($scope.contest.current_user_candidate_id)
+      if($scope.contest.current_user_candidate_id )
       {
-        angular.forEach($scope.contest.candidates, function(v,k) {
-          if($scope.contest.current_user_candidate_id != v.id) return;
-          v.vote_count--;
+        angular.forEach($scope.contest.candidates, function(c,k) {
+          if($scope.contest.current_user_candidate_id != c.id) return;
+          c.vote_count--;
         });
       }
       if($scope.contest.current_user_candidate_id != c.id) c.vote_count++
