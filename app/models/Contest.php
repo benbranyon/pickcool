@@ -19,7 +19,7 @@ class Contest extends Eloquent
     return $names;
   }
   
-  function candidateNamesForHumans($exclude_id, $join = 'or') {
+  function candidateNamesForHumans($exclude_id=null, $join = 'or') {
     $names = [];
     foreach($this->candidates as $c)
     {
