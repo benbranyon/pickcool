@@ -1,5 +1,6 @@
-app.config(function($stateProvider, $urlRouterProvider) {
-  //
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+  $locationProvider.html5Mode(true).hashPrefix('!');
+  
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/");
   //
@@ -10,7 +11,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
       templateUrl: "partials/home.html"
     })
     .state('contests-view', {
-      url: "/contests/:id",
+      url: "/est/:id/:slug",
       templateUrl: "partials/contests/view.html"
     })
     .state('hot', {

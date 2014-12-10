@@ -41,6 +41,7 @@ class ApiSerializer
           'max_votes'=>10,
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
           'canonical_url'=>route('contest.view', [$obj->id, $obj->slug()]),
+          'slug'=>$obj->slug(),
           'candidates'=>[],
         ];
         foreach($obj->candidates as $can)
@@ -181,17 +182,17 @@ Route::group([
     $contest->title = $data['title']['value'];
     $contest->user_id = Auth::user()->id;
     $contest->save();
-    foreach($data['candidates'] as $rec)
+    foreach($data['candidates'] as $can)
     {
-      if(!isset($rec['name']) || !$rec['name']) continue;
+      if(!isset($can['name']) || !$can['name']) continue;
       $i = new Image();
-      $i->image = $rec['image_url']['value'];
+      $i->image = $can['image_url']['value'];
       $i->save();
       $c = new Candidate();
       $c->contest_id = $contest->id;
-      $c->name = $rec['name']['value'];
+      $c->name = $can['name']['value'];
       $c->image_id = $i->id;
-      $c->amazon_url = $rec['amazon_url']['value'];
+      $c->amazon_url = $can['amazon_url']['value'];
       $c->save();
     }
     return ApiSerializer::ok();
@@ -247,17 +248,21 @@ Route::group([
   })->where('all', '.*');
 });
 
-Route::get('/', function() {
-  return 'Coming Soon';
-});
 
-Route::get('/beta', function() {
+Route::get('/est/{contest_id}/{slug}', ['as'=>'contest.view', function($contest_id, $slug, $user_id=null) {
+  $is_facebook = preg_match("/facebookexternalhit/", Request::server('HTTP_USER_AGENT'));
+  if($is_facebook)
+  {
+    return View::make('contest.spider');
+  }
   return View::make('app');
-});
-
-Route::get('/est/{id}/{slug}', ['as'=>'contest.view', function($id, $slug) {
-  return 'hello world';
 }]);
+
+
+Route::any('{url?}', function($url) { 
+ return View::make('app');
+})->where(['url' => '[-a-z0-9/]+']);
+
 
 if (Config::get('database.log', false))
 {    	 

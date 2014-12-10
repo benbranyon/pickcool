@@ -10,7 +10,13 @@ class Contest extends Eloquent
   
   function slug()
   {
+    $names = [];
+    foreach($this->candidates as $c)
+    {
+      $names[] = $c->name;
+    }
+    $names = join(' vs ', $names);
     $slugify = new Slugify();
-    return $slugify->slugify($this->title, '_');
+    return $slugify->slugify($names, '_');
   }
 }
