@@ -1,9 +1,17 @@
 
-app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api) {
+app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api, $filter) {
   console.log('ContestViewCtrl');
   console.log($stateParams.contest_id);
   api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
+    // Fix up contest data
+    $scope.contest.highest_vote = 0;
+    $scope.contest.total_votes = 0;
+    angular.forEach($scope.contest.candidates, function(c,idx) {
+      if(c.vote_count > $scope.contest.highest_vote) $scope.contest.highest_vote = c.vote_count;
+      $scope.contest.total_votes = $scope.contest.total_votes + c.vote_count;
+    });
+    $scope.contest.candidates = $filter('orderBy')($scope.contest.candidates, 'vote_count', true);
   });
   
   $scope.share = function () {
@@ -30,19 +38,13 @@ app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api) {
         angular.forEach($scope.contest.candidates, function(c,k) {
           if($scope.contest.current_user_candidate_id != c.id) return;
           c.vote_count--;
+          $scope.updateVoteProgress($scope.contest, c);
         });
       }
-      if($scope.contest.current_user_candidate_id != c.id) c.vote_count++
-      api.vote(c.id, function(res) {
-        angular.extend($scope.contest, res.data);
-        angular.forEach($scope.contest.candidates, function(c,k) {
-          var $e = $('#candidate_'+c.id).find('.mProgress1');
-          $e.animate({
-           height: ((c.vote_count/$scope.contest.max_votes)*100.0)+'%'
-           }, 1000);
-          $e.css('background-color', '#'+rainbow.colorAt(c.vote_pct*1000.0));
-        });
-      });
+      c.vote_count++
+      $scope.contest.current_user_candidate_id = c.id;
+      $scope.updateVoteProgress($scope.contest, c);
+      api.vote(c.id);
     } else {
      $('#login_dialog').modal();
     }

@@ -38,7 +38,6 @@ class ApiSerializer
         }
         $contest = [
           'id'=>$obj->id,
-          'max_votes'=>10,
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
           'canonical_url'=>route('contest.view', [$obj->id, $obj->slug(), $v ? $v->user_id : null, $v ? $v->candidate_id : null]),
           'slug'=>$obj->slug(),
@@ -50,7 +49,6 @@ class ApiSerializer
             'name'=>$can->name,
             'image_url'=>$can->image->image->url($size),
             'vote_count'=>$can->votes()->count(),
-            'vote_pct'=>min(1,$can->votes->count()/floatval(10)),
             'id'=>$can->id,
           ];
         }      

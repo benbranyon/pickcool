@@ -8,14 +8,12 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     status: true,
   });  
 })
-.directive('initCandidate', function() {
+.directive('initProgress', function() {
   return function(scope, element, attrs) {
-   var c = scope.c;
-   var $e = $(element).find('.mProgress1');
-   $e.animate({
-    height: ((c.vote_count/scope.contest.max_votes)*100.0)+'%'
-    }, 1000);
-   $e.css('background-color', '#'+rainbow.colorAt(c.vote_pct*1000.0));
+    var $e =  $(element);
+    scope.c.$e = $e;
+    scope.updateVoteProgress(scope.contest, scope.c);
+    
   };
 })
 .directive('ngLadda', function() {
@@ -26,6 +24,19 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
 .run(function(ezfb,$rootScope,$http,api) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
+
+  $rootScope.updateVoteProgress = function(contest, candidate, $e)
+  {
+    var c = candidate
+    var scale = 900.0/contest.highest_vote;
+    var dc = c.vote_count * scale;
+    console.log("Scale is ", scale);
+    console.log("Display count is ", dc);
+    var $e = c.$e;
+    console.log($e.height());
+    $e.css('height', (dc/10)+'%');
+    $e.css('background-color', '#'+rainbow.colorAt(dc));
+  }
 
   function updateStatus(res) 
   {
