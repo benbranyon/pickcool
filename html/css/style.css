@@ -66,14 +66,18 @@ button, input, optgroup, select, textarea {
 .candidate.selected {
   border-color: green;
 }
+.candidate-wrapper {
+  float: left;
+  margin-bottom: 15px;
+}
 .candidate {
   border: 15px solid #efe6e6;
   border-radius: 20%;
   width: 175px;
   height: 175px;
   position: relative;
-  float: left;
   margin: 15px;
+  margin-bottom: 5px;
 }
 .candidate .mainContain {
   position: absolute;
@@ -169,8 +173,8 @@ button, input, optgroup, select, textarea {
   width: 150px;
   height: 150px;
   position: relative;
-  float: left;
   margin: 1px;
+  margin-bottom: 5px;
 }
 .my-contests .candidate .mainContain {
   position: absolute;

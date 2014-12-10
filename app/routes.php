@@ -50,6 +50,7 @@ class ApiSerializer
             'name'=>$can->name,
             'image_url'=>$can->image->image->url($size),
             'vote_count'=>$can->votes()->count(),
+            'amazon_url' => $can->amazon_url,
             'id'=>$can->id,
           ];
         }      

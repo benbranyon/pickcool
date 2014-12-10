@@ -14,24 +14,30 @@
     <div class="row">
       <div class="col-lg-12">
         <div ng-repeat="c in contest.candidates" init-candidate>
-          <div id="candidate_{{c.id}}" class="candidate {{ contest.current_user_candidate_id == c.id ? 'selected' : ''}}" id="c_{{c.id}}" ng-click="vote(c)">
-            <div class="mainContain">
-              <div class="name">
-                {{c.name}}
-              </div>
-              <div class="action_bar">
-                <small>{{c.vote_count}} votes</small>
-              </div>
-              <div class="mProgressContain">
-                  <div class="mProgress0"></div>
-                  <div init-progress class="mProgress1"></div>
-              </div>
-              <div class="roundContainX" id="profileEditX">
-                <img class='img-circle' ng-src="{{c.image_url}}">
-                <div class="overlay">
-                  <h1>Click to Vote</h1>
+          <div class="candidate-wrapper">
+            <div id="candidate_{{c.id}}" class="candidate {{ contest.current_user_candidate_id == c.id ? 'selected' : ''}}" id="c_{{c.id}}" ng-click="vote(c)">
+              <div class="mainContain">
+                <div class="name">
+                  {{c.name}}
+                </div>
+                <div class="action_bar">
+                  <small>{{c.vote_count}} votes</small>
+                  
+                </div>
+                <div class="mProgressContain">
+                    <div class="mProgress0"></div>
+                    <div init-progress class="mProgress1"></div>
+                </div>
+                <div class="roundContainX" id="profileEditX">
+                  <img class='img-circle' ng-src="{{c.image_url}}">
+                  <div class="overlay">
+                    <h1>Click to Vote</h1>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div class="text-center">
+              <a class="btn btn-default" type="button" href="{{c.amazon_url}}">Buy</a>
             </div>
           </div>
         </div>
