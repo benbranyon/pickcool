@@ -50,7 +50,7 @@ class ApiSerializer
             'name'=>$can->name,
             'image_url'=>$can->image->image->url($size),
             'vote_count'=>$can->votes()->count(),
-            'vote_pct'=>max(1,$can->votes->count()/floatval(10)),
+            'vote_pct'=>min(1,$can->votes->count()/floatval(10)),
             'id'=>$can->id,
           ];
         }      
