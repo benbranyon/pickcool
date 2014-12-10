@@ -59,6 +59,7 @@ class ApiSerializer
       if($class=='User')
       {
         return [
+          'id'=>$obj->id,
           'fb_id'=>$obj->fb_id,
           'first_name'=>$obj->first_name,
           'last_name'=>$obj->last_name,

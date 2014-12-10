@@ -15,7 +15,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/contests/view.html"
     })
     .state('contests-view-voted', {
-      url: "/est/:contest_id/:slug/:user_id",
+      url: "/est/:contest_id/:slug/:user_id/:candidate_id",
       templateUrl: "partials/contests/view.html"
     })
     .state('hot', {

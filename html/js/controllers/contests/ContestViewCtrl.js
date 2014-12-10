@@ -1,5 +1,5 @@
 
-app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api, $filter) {
+app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter) {
   console.log('ContestViewCtrl');
   console.log($stateParams.contest_id);
   api.getContest($stateParams.contest_id, function(res) {
@@ -43,6 +43,7 @@ app.controller('ContestViewCtrl', function(ezfb, $scope, $stateParams, api, $fil
       }
       c.vote_count++
       $scope.contest.current_user_candidate_id = c.id;
+      $scope.contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view-voted', {'contest_id': $scope.contest.id, 'slug': $scope.contest.slug, 'user_id': $scope.current_user.id, 'candidate_id': c.id});
       $scope.updateVoteProgress($scope.contest, c);
       api.vote(c.id);
     } else {
