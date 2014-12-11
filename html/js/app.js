@@ -27,7 +27,8 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
 
   $rootScope.updateVoteProgress = function(contest, candidate, $e)
   {
-    var c = candidate
+    var c = candidate;
+    if(contest.highest_vote == 0) return;
     var scale = 900.0/contest.highest_vote;
     var dc = c.vote_count * scale;
     console.log("Scale is ", scale);
