@@ -165,12 +165,12 @@ Route::group([
         [
           'name.value'=>'required',
           'image_url.value'=>'required',
-          'amazon_url.value'=>'required',
+          'buy_url.value'=>'required',
         ],
         [
           'name.value.required' => 'Candidate name is required',
           'image_url.value.required' => 'Candidate image URL is requred',
-          'amazon_url.value.required' => 'Candidate store URL is requred',
+          'buy_url.value.required' => 'Candidate buy URL is requred',
         ]
       );
       if($validator->fails())
@@ -179,7 +179,7 @@ Route::group([
         $m = $validator->messages();
         if($m->get('name.value')) $rec['name']['errors'] = $m->get('name.value');
         if($m->get('image_url.value')) $rec['image_url']['errors'] = $m->get('image_url.value');
-        if($m->get('amazon_url.value')) $rec['amazon_url']['errors'] = $m->get('amazon_url.value');
+        if($m->get('buy_url.value')) $rec['buy_url']['errors'] = $m->get('buy_url.value');
       }
     }
     if( $has_error)
@@ -200,7 +200,7 @@ Route::group([
       $c->contest_id = $contest->id;
       $c->name = $can['name']['value'];
       $c->image_id = $i->id;
-      $c->amazon_url = $can['amazon_url']['value'];
+      $c->buy_url = $can['buy_url']['value'];
       $c->save();
     }
     return ApiSerializer::ok();
@@ -318,6 +318,15 @@ Route::get('/images/{id}/{size}', ['as'=>'image.view', function($id,$size) {
     'image/jpeg'
   );
   return $response;
+}]);
+
+Route::get('/shop/{candidate_id}', ['buy', function($contest_id, $candidate_id) {
+  $candidate = Candidate::find($candidate_id);
+  if(!$candidate)
+  {
+    App::abort(404);
+  }
+  return Redirect::to($candidate->buy_url);
 }]);
 
 

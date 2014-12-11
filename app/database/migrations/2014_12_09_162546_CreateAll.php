@@ -18,7 +18,7 @@ class CreateAll extends Migration {
       $table->integer('contest_id');
       $table->string('name');
       $table->integer('image_id');
-      $table->string('amazon_url');
+      $table->string('buy_url');
       $table->timestamps();
 		});
     

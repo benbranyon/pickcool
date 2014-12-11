@@ -44,11 +44,12 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
     console.log("auth.statusChange",res);
     $rootScope.fb_loaded = true;
     $rootScope.accssToken = null;
+    $rootScope.session_started = false;
     if(!res.authResponse) 
     {
       $rootScope.current_user = null;
       console.log('Unauthenticated');
-      $rootScope.$broadcast('go');
+      $rootScope.session_started = true;
       return;
     }
     $rootScope.accessToken = res.authResponse.accessToken;
@@ -57,7 +58,7 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router'])
       {
         $rootScope.current_user = res.data;
         console.log('Authenticated');
-        $rootScope.$broadcast('go');
+        $rootScope.session_started = true;
       } else {
         console.log("API Error");
       }

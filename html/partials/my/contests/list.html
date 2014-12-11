@@ -2,21 +2,30 @@
   <h1>My Contests</h1>
   <table class="table">
     <tr ng-repeat="contest in contests">
-      <td >
-        <div class="candidate" ng-repeat="c in contest.candidates">
-          <div class="mainContain">
-            <div class="name">
-              {{c.name}}
-            </div>
-            <div class="roundContainX" id="profileEditX">
-              <img class='img-circle' ng-src="{{c.image_url}}">
-            </div>
-          </div>
-        </div>        
-        <div class="clearfix"></div>
+      <td>
+        <a href="{{contest.canonical_url}}">
+          {{contest.title}}
+        </a>
       </td>
       <td>
-        <button>Edit</button>
+        {{contest.total_votes}}
+      </td>
+      <td>
+        {{contest.candidates[0].name}} ({{contest.candidates[0].vote_count}} votes)
+      </td>
+      <td >
+        <div class="contest" style="position:relative" ui-sref='contests-view({contest_id: contest.id, slug: contest.slug})'>
+          <div>
+            <img class="tl" ng-src="{{contest.candidates[0].image('tiny')}}"/><img class="tr" ng-src="{{contest.candidates[1].image('tiny')}}"/>
+          </div>
+          <div>
+            <img  class="bl" ng-src="{{contest.candidates[2].image('tiny')}}"/><img class="br"  ng-src="{{contest.candidates[3].image('tiny')}}"/>
+          </div>
+          <div class="vs">VS</div>
+        </div>
+      </td>
+      <td>
+        <button ui-hsref="contests-edit({contest_id: contest.id})">Edit</button>
       </td>
     </tr>
   </table>

@@ -82,8 +82,8 @@
               </span>
             </div>
           </div>
-
-          <div ui-view></div>
+          
+          <div ui-view ng-if="session_started"></div>
 
           <div class="footer">
             <p>&copy; pick.cool 2014</p>

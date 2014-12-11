@@ -11,7 +11,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
     'candidates': 
     [  
          {  
-            'amazon_url': {
+            'buy_url': {
               'value': 'http://www.amazon.com/s/?_encoding=UTF8&camp=1789&creative=390957&field-keywords=taylor%20swift&linkCode=ur2&tag=benallfree-20&url=search-alias%3Daps&linkId=TRUKIE3Z25IK2IHK',
               'errors': [],
             },
@@ -25,7 +25,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
             },
          },
          {  
-            'amazon_url': {
+            'buy_url': {
               'value': 'http://www.amazon.com/s/?_encoding=UTF8&camp=1789&creative=390957&field-keywords=justin%20bieber&linkCode=ur2&rh=i%3Aaps%2Ck%3Ajustin%20bieber&sprefix=justin%20bi%2Caps%2C429&tag=benallfree-20&url=search-alias%3Daps&linkId=WDZIWQQER6STSOST',
               'errors': [],
             },
@@ -39,7 +39,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
             },
          },
          {  
-            'amazon_url': {
+            'buy_url': {
               'value': 'http://www.amazon.com/s/?_encoding=UTF8&ajr=0&camp=1789&creative=390957&field-keywords=britney%20spears&linkCode=ur2&rh=i%3Aaps%2Ck%3Abritney%20spears&sprefix=britney%20spears%2Cdigital-music%2C199&tag=benallfree-20&url=search-alias%3Daps&linkId=OIPNX5Y3XFXFRV3O',
               'errors': [],
             },
@@ -53,7 +53,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
             },
          },
          {  
-            'amazon_url': {
+            'buy_url': {
               'value': 'http://www.amazon.com/s/?_encoding=UTF8&camp=1789&creative=390957&field-keywords=justin%20timberlake&linkCode=ur2&sprefix=justin%20tim%2Cdigital-music%2C216&tag=benallfree-20&url=search-alias%3Ddigital-music&linkId=AEGQJMRSWKLBHEAD',
               'errors': [],
             },

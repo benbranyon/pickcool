@@ -14,12 +14,15 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/est/:contest_id/:slug",
       templateUrl: "partials/contests/view.html"
     })
-    .state('contests-view-voted', {
+    .state('contests-share', {
       url: "/est/:contest_id/:slug/:user_id/:candidate_id",
       templateUrl: "partials/contests/view.html"
     })
     .state('image-view', {
       url: '/images/:id/:size',
+    })
+    .state('buy', {
+      url: '/shop/:candidate_id',
     })
     .state('hot', {
       url: "/hot",

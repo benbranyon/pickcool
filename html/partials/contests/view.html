@@ -29,7 +29,7 @@
                     <div init-progress class="mProgress1"></div>
                 </div>
                 <div class="roundContainX" id="profileEditX">
-                  <img class='img-circle' ng-src="{{c.image_url}}">
+                  <img class='img-circle' ng-src="{{c.image('thumb')}}">
                   <div class="overlay">
                     <h1>Click to Vote</h1>
                   </div>
@@ -37,7 +37,7 @@
               </div>
             </div>
             <div class="text-center">
-              <a class="btn btn-default" type="button" href="{{c.amazon_url}}">Buy</a>
+              <a class="btn btn-default" type="button" href="{{c.buy_url}}">Buy</a>
             </div>
           </div>
         </div>
