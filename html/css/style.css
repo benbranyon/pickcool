@@ -272,15 +272,23 @@ button, input, optgroup, select, textarea {
 }
 .hot .contest .tl {
   border-top-left-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .hot .contest .tr {
   border-top-right-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .hot .contest .bl {
   border-bottom-left-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .hot .contest .br {
   border-bottom-right-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .hot .contest .vs {
   position: absolute;
@@ -306,15 +314,23 @@ button, input, optgroup, select, textarea {
 }
 .home .contest .tl {
   border-top-left-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .home .contest .tr {
   border-top-right-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .home .contest .bl {
   border-bottom-left-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .home .contest .br {
   border-bottom-right-radius: 7px;
+  width: 75px;
+  height: 75px;
 }
 .home .contest .vs {
   position: absolute;

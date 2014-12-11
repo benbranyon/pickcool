@@ -238,18 +238,26 @@ button, input, optgroup, select, textarea {
     .tl
     {
       border-top-left-radius: $rad;
+      width: 75px;
+      height: 75px;
     }
     .tr
     {
       border-top-right-radius: $rad;
+      width: 75px;
+      height: 75px;
     }
     .bl
     {
       border-bottom-left-radius: $rad;
+      width: 75px;
+      height: 75px;
     }
     .br
     {
       border-bottom-right-radius: $rad;
+      width: 75px;
+      height: 75px;
     }
     .vs
     {
