@@ -282,7 +282,7 @@ Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contes
         $data = [
           'title'=>"{$u->first_name} voted {$w->name} coolest? \"{$picky},\" says Picky.",
           'canonical_url'=>route('contest.view', [$c->id, $c->slug(), $user_id, $candidate_id]),
-          'image_url'=>asset($w->image->image->url('facebook')),
+          'image_url'=>route('image.view', [$w->image_id, 'facebook']),
           'description'=>"In recent news, {$u->first_name} cast a critical vote that {$w->name} really is cooler than {$c->candidateNamesForHumans($w->id, 'or')}. \"This is about to be a bad day if you're not a {$w->name} fan,\" said Picky McCool in an exclusive interview. \"But voting isn't over,\" he added. Vote now before it's too late!",
         ];
       }
@@ -292,7 +292,7 @@ Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contes
       $data = [
         'title'=>"{$w->name} voted coolest? \"{$picky},\" says Picky.",
         'canonical_url'=>route('contest.view', [$c->id, $c->slug()]),
-        'image_url'=>asset($w->image->image->url('facebook')),
+        'image_url'=>route('image.view', [$w->image_id, 'facebook']),
         'description'=>"Is {$w->name} really cooler than {$c->candidateNamesForHumans($w->id, 'or')}? \"This is about to be a bad day if you're not a {$w->name} fan,\" said Picky McCool in an exclusive interview. \"But voting isn't over,\" he added. Vote now before it's too late!",
       ];
       
