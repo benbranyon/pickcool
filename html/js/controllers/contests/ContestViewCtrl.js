@@ -19,16 +19,25 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   $scope.share = function () {
     var url = $location.protocol()+'://'+$location.host()+$state.href('contests-view-voted', {'contest_id': $scope.contest.id, 'slug': $scope.contest.slug, 'user_id': $scope.current_user.id, 'candidate_id': $scope.contest.current_user_candidate_id});
     console.log(url);
-    ezfb.ui(
-     {
-      method: 'share',
-      href: url,
-     },
-     function (res) {
-      console.log(res);
-      // res: FB.ui response
-     }
-    );        
+    var share = function(response) { 
+      console.log(response);
+      ezfb.ui(
+       {
+        method: 'share',
+        href: url,
+       },
+       function (res) {
+        console.log(res);
+        // res: FB.ui response
+       }
+      );
+    };
+    if(debug)
+    {
+      $.post('https://graph.facebook.com', {'id': url, 'scrape': true}, share);
+    } else {
+      share();
+    }
   };
   
   $scope.vote = function(c) {
