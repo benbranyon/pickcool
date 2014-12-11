@@ -32,7 +32,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
        }
       );
     };
-    if(debug)
+    if(DEBUG)
     {
       $.post('https://graph.facebook.com', {'id': url, 'scrape': true}, share);
     } else {
