@@ -19,10 +19,16 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/contests/view.html"
     })
     .state('image-view', {
-      url: '/images/:id/:size',
+      url: '/images/:id/:size'
     })
     .state('buy', {
       url: '/shop/:candidate_id',
+      'template': function() {
+        return 'Thanks for supporting pick.cool!';
+      },
+      controller: function($location) {
+        window.location.replace($location.url());
+      }
     })
     .state('hot', {
       url: "/hot",

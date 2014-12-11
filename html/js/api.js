@@ -83,7 +83,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $filter)
     api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
-  
+ 
   var init_contest = function(contest)
   {
     contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view', {'contest_id': contest.id, 'slug': contest.slug}),

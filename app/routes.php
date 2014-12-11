@@ -320,12 +320,13 @@ Route::get('/images/{id}/{size}', ['as'=>'image.view', function($id,$size) {
   return $response;
 }]);
 
-Route::get('/shop/{candidate_id}', ['buy', function($contest_id, $candidate_id) {
+Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
   $candidate = Candidate::find($candidate_id);
   if(!$candidate)
   {
     App::abort(404);
   }
+  
   return Redirect::to($candidate->buy_url);
 }]);
 
