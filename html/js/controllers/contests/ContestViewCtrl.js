@@ -9,6 +9,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     $scope.contest.highest_vote = 0;
     $scope.contest.total_votes = 0;
     angular.forEach($scope.contest.candidates, function(c,idx) {
+      c.image_url = $state.href('image-view', {'id': c.image_id, 'size': 'thumb'});
       if(c.vote_count > $scope.contest.highest_vote) $scope.contest.highest_vote = c.vote_count;
       $scope.contest.total_votes = $scope.contest.total_votes + c.vote_count;
     });

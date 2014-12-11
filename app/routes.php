@@ -58,7 +58,7 @@ class ApiSerializer
       {
         return self::serialize([
           'name'=>$obj->name,
-          'image_url'=>$obj->image_url($size),
+          'image_id'=>$obj->image_id,
           'vote_count'=>$obj->votes()->count(),
           'id'=>$obj->id,
         ]);

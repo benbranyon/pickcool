@@ -18,6 +18,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/est/:contest_id/:slug/:user_id/:candidate_id",
       templateUrl: "partials/contests/view.html"
     })
+    .state('image-view', {
+      url: '/images/:id/:size',
+    })
     .state('hot', {
       url: "/hot",
       templateUrl: "partials/hot.html"
