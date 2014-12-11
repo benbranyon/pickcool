@@ -29,6 +29,7 @@ class ApiSerializer
     if(is_object($obj))
     {
       $class = get_class($obj);
+      Log::info($class);
       if($class=='Contest')
       {
         $v = null;
@@ -41,29 +42,37 @@ class ApiSerializer
           'title'=>$obj->candidateNamesForHumans().'?',
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
           'slug'=>$obj->slug(),
-          'candidates'=>[],
+          'candidates'=>$obj->candidates,
         ];
-        foreach($obj->candidates as $can)
-        {
-          $contest['candidates'][] = [
-            'name'=>$can->name,
-            'image_url'=>$can->image_url($size),
-            'vote_count'=>$can->votes()->count(),
-            'id'=>$can->id,
-          ];
-        }      
-        return $contest;
+        return self::serialize($contest);
+      }
+      
+      if($class=='Illuminate\Database\Eloquent\Collection')
+      {
+        $items = [];
+        foreach($obj as $v) $items[] = $v;
+        return $items;
+      }
+      
+      if($class=='Candidate')
+      {
+        return self::serialize([
+          'name'=>$obj->name,
+          'image_url'=>$obj->image_url($size),
+          'vote_count'=>$obj->votes()->count(),
+          'id'=>$obj->id,
+        ]);
       }
     
       if($class=='User')
       {
-        return [
+        return self::serialize([
           'fb_id'=>$obj->fb_id,
           'first_name'=>$obj->first_name,
           'last_name'=>$obj->last_name,
           'email'=>$obj->email,
           'is_contributor'=>$obj->is_contributor,
-        ];
+        ]);
       }
           
       throw new Exception("API doesn't know how to serialize ".get_class($obj));
