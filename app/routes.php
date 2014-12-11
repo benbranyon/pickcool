@@ -48,9 +48,8 @@ class ApiSerializer
         {
           $contest['candidates'][] = [
             'name'=>$can->name,
-            'image_url'=>$can->image->image->url($size),
+            'image_url'=>$can->image_url($size),
             'vote_count'=>$can->votes()->count(),
-            'amazon_url' => $can->amazon_url,
             'id'=>$can->id,
           ];
         }      
@@ -60,7 +59,6 @@ class ApiSerializer
       if($class=='User')
       {
         return [
-          'id'=>$obj->id,
           'fb_id'=>$obj->fb_id,
           'first_name'=>$obj->first_name,
           'last_name'=>$obj->last_name,
@@ -293,6 +291,24 @@ Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contes
     return View::make('contest.spider')->with($data);
   }
   return View::make('app');
+}]);
+
+Route::get('/images/{id}/{size}', ['as'=>'image.view', function($id,$size) {
+  $image = Image::find($id);
+  if(!$image)
+  {
+    App::abort(404);
+  }
+
+  $response = Response::make(
+     File::get($image->image->path($size)), 
+     200
+  );
+  $response->header(
+    'Content-type',
+    'image/jpeg'
+  );
+  return $response;
 }]);
 
 
