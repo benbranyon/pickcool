@@ -86,11 +86,15 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $filter)
  
   var init_contest = function(contest)
   {
-    contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view', {'contest_id': contest.id, 'slug': contest.slug}),
+    contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view', {'contest_id': contest.id, 'slug': contest.slug});
     // Fix up contest data
     contest.highest_vote = 0;
     contest.total_votes = 0;
     angular.forEach(contest.candidates, function(c,idx) {
+      if (c.id == contest.current_user_candidate_id)
+      {
+        contest.current_user_candidate = c;
+      }
       c.image = function(size) {
         if(!size) size='thumb';
         return $state.href('image-view', {'id': c.image_id, 'size': size}); 

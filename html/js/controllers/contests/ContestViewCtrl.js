@@ -6,12 +6,13 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   });
   
   $scope.share = function () {
+    var url = $scope.contest.current_user_candidate.share_url();
     var share = function(response) { 
       console.log(response);
       ezfb.ui(
        {
         method: 'share',
-        href: $scope.contest.share_url($scope.contest.current_user_candidate_id),
+        href: url,
        },
        function (res) {
         console.log(res);
@@ -42,6 +43,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
         });
       }
       c.vote_count++
+      $scope.contest.current_user_candidate = c;
       $scope.contest.current_user_candidate_id = c.id;
       $scope.updateVoteProgress($scope.contest, c);
       api.vote(c.id);
