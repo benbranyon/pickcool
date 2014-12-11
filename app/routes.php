@@ -57,16 +57,17 @@ class ApiSerializer
       if($class=='Candidate')
       {
         return self::serialize([
+          'id'=>$obj->id,
           'name'=>$obj->name,
           'image_id'=>$obj->image_id,
           'vote_count'=>$obj->votes()->count(),
-          'id'=>$obj->id,
         ]);
       }
     
       if($class=='User')
       {
         return self::serialize([
+          'id'=>$obj->id,
           'fb_id'=>$obj->fb_id,
           'first_name'=>$obj->first_name,
           'last_name'=>$obj->last_name,
