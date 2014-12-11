@@ -40,7 +40,6 @@ class ApiSerializer
           'id'=>$obj->id,
           'title'=>$obj->candidateNamesForHumans().'?',
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
-          'canonical_url'=>route('contest.view', [$obj->id, $obj->slug(), $v ? $v->user_id : null, $v ? $v->candidate_id : null]),
           'slug'=>$obj->slug(),
           'candidates'=>[],
         ];
