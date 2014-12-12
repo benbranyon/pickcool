@@ -7,7 +7,7 @@
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$canonical_url}}}"/>
 <meta property="og:description" content="{{{$description}}}"/>
-<meta property="og:image" content="{{{$image_url}}}"/>
+<meta property="og:image" content="{{{$image_url}}}?cachebuster={{uniqid()}}"/>
 </head>
 <body>
   <div id="fb-root"></div>

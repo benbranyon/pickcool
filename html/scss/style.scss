@@ -228,41 +228,48 @@ button, input, optgroup, select, textarea {
 
 @mixin contest
 {
+  .contest:hover
+  {
+    cursor: pointer;
+    border-color: rgb(242, 135, 104);
+  }
+  
   .contest
   {
     position: relative;
-    width: 152px;
-    border: 1px solid black;
+    width: 180px;
+    border: 1px solid #dddddd;
     border-radius: 9px;
     $rad: 7px;
+    margin: 15px;
     .tl
     {
-      border-top-left-radius: $rad;
       width: 75px;
       height: 75px;
+      margin: 5px;
     }
     .tr
     {
-      border-top-right-radius: $rad;
       width: 75px;
       height: 75px;
+      margin: 5px;
     }
     .bl
     {
-      border-bottom-left-radius: $rad;
       width: 75px;
       height: 75px;
+      margin: 5px;
     }
     .br
     {
-      border-bottom-right-radius: $rad;
       width: 75px;
       height: 75px;
+      margin: 5px;
     }
     .vs
     {
       position: absolute;
-      top: 49px;
+      top: 62px;
       font-size: 22pt;
       color: red;
       border: 1px solid black;
@@ -273,7 +280,7 @@ button, input, optgroup, select, textarea {
       text-align: center;
       vertical-align: middle;
       border-radius: 24px;
-      left: 49px;
+      left: 62px;
       padding-top: 2px;
     }
   }

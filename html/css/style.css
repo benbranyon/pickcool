@@ -264,35 +264,40 @@ button, input, optgroup, select, textarea {
   height: 148px;
   padding: 30px;
 }
+.my-contests .contest:hover {
+  cursor: pointer;
+  border-color: #f28768;
+}
 .my-contests .contest {
   position: relative;
-  width: 152px;
-  border: 1px solid black;
+  width: 180px;
+  border: 1px solid #ddd;
   border-radius: 9px;
+  margin: 15px;
 }
 .my-contests .contest .tl {
-  border-top-left-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .my-contests .contest .tr {
-  border-top-right-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .my-contests .contest .bl {
-  border-bottom-left-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .my-contests .contest .br {
-  border-bottom-right-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .my-contests .contest .vs {
   position: absolute;
-  top: 49px;
+  top: 62px;
   font-size: 22pt;
   color: red;
   border: 1px solid black;
@@ -303,38 +308,43 @@ button, input, optgroup, select, textarea {
   text-align: center;
   vertical-align: middle;
   border-radius: 24px;
-  left: 49px;
+  left: 62px;
   padding-top: 2px;
+}
+.hot .contest:hover {
+  cursor: pointer;
+  border-color: #f28768;
 }
 .hot .contest {
   position: relative;
-  width: 152px;
-  border: 1px solid black;
+  width: 180px;
+  border: 1px solid #ddd;
   border-radius: 9px;
+  margin: 15px;
 }
 .hot .contest .tl {
-  border-top-left-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .hot .contest .tr {
-  border-top-right-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .hot .contest .bl {
-  border-bottom-left-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .hot .contest .br {
-  border-bottom-right-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .hot .contest .vs {
   position: absolute;
-  top: 49px;
+  top: 62px;
   font-size: 22pt;
   color: red;
   border: 1px solid black;
@@ -345,38 +355,43 @@ button, input, optgroup, select, textarea {
   text-align: center;
   vertical-align: middle;
   border-radius: 24px;
-  left: 49px;
+  left: 62px;
   padding-top: 2px;
+}
+.home .contest:hover {
+  cursor: pointer;
+  border-color: #f28768;
 }
 .home .contest {
   position: relative;
-  width: 152px;
-  border: 1px solid black;
+  width: 180px;
+  border: 1px solid #ddd;
   border-radius: 9px;
+  margin: 15px;
 }
 .home .contest .tl {
-  border-top-left-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .home .contest .tr {
-  border-top-right-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .home .contest .bl {
-  border-bottom-left-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .home .contest .br {
-  border-bottom-right-radius: 7px;
   width: 75px;
   height: 75px;
+  margin: 5px;
 }
 .home .contest .vs {
   position: absolute;
-  top: 49px;
+  top: 62px;
   font-size: 22pt;
   color: red;
   border: 1px solid black;
@@ -387,7 +402,7 @@ button, input, optgroup, select, textarea {
   text-align: center;
   vertical-align: middle;
   border-radius: 24px;
-  left: 49px;
+  left: 62px;
   padding-top: 2px;
 }
 .fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget iframe[style] {

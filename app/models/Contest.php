@@ -26,7 +26,10 @@ class Contest extends Eloquent
       if($c->id == $exclude_id) continue;
       $names[] = $c->name;
     }
-    $names[count($names)-1] = "{$join} {$names[count($names)-1]}";
+    if(count($names))
+    {
+      $names[count($names)-1] = "{$join} {$names[count($names)-1]}";
+    }
     $names = join(', ', $names);
     return $names;
   }
