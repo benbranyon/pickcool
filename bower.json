@@ -1,0 +1,29 @@
+{
+  "name": "pick.cool",
+  "version": "1.0.0",
+  "homepage": "https://github.com/benallfree/coolfactor",
+  "authors": [
+    "Ben Allfree <ben@benallfree.com>"
+  ],
+  "license": "Closed",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-http-auth": "witoldsz/angular-http-auth#~1.2.2",
+    "angular-ui-router": "~0.2.13",
+    "angular-flash": "git://github.com/remind101/angular-flash",
+    "angular-easyfb": "~1.2.1",
+    "angularjs": "~1.3.6",
+    "bootstrap": "~3.3.1",
+    "fontawesome": "~4.2.0",
+    "jquery": "~2.1.1",
+    "RainbowVis-JS": "https://github.com/anomal/RainbowVis-JS",
+    "ladda-bootstrap": "https://github.com/msurguy/ladda-bootstrap"
+  }
+}
