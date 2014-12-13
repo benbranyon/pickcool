@@ -92,6 +92,8 @@ button, input, optgroup, select, textarea {
   text-align: center;
   font-weight: bold;
   font-family: 'Trebuchet MS';
+  font-size: 12px;
+  margin-top: 10px;
 }
 .candidate .mainContain .action_bar {
   position: absolute;
@@ -189,6 +191,8 @@ button, input, optgroup, select, textarea {
   text-align: center;
   font-weight: bold;
   font-family: 'Trebuchet MS';
+  font-size: 12px;
+  margin-top: 10px;
 }
 .my-contests .candidate .mainContain .action_bar {
   position: absolute;
