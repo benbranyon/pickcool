@@ -39,7 +39,6 @@
     <script src="/js/routes.js"></script>
     <script src="/js/controllers/MainCtrl.js"></script>
     <script src="/js/controllers/my/contests/CreateContestCtrl.js"></script>
-    <script src="/js/controllers/my/contests/ListContestsCtrl.js"></script>
     <script src="/js/controllers/HotCtrl.js"></script>
     <script src="/js/controllers/HomeCtrl.js"></script>
     <script src="/js/controllers/contests/ContestViewCtrl.js"></script>
@@ -64,18 +63,15 @@
           <div class="row" style="height: 50px">
             <div class="col-lg-6">
               <ul class="nav nav-pills">
-                <li role="presentation" ng-class="{'active': state.is('home')}"><a ui-sref="home">Home</a></li>
-                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('hot')}"><a ui-sref="hot">Hot</a></li>
+                <li role="presentation" ng-class="{'active': state.is('home')}"><a ui-sref="home">Hot</a></li>
                 <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('new')}"><a ui-sref="new">New</a></li>
                 <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('top')}"><a ui-sref="top">Top</a></li>
-                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('ended')}"><a ui-sref="ended">Ended</a></li>
               </ul>
             </div>
             <div class="col-lg-6"  style="text-align: right">
               <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!current_user"><i class="fa fa-facebook-square"></i> Login</button>
               <span ng-if="current_user">
                 <a class="btn btn-primary btn-xs " ui-sref="my-contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</a>
-                <a class="btn btn-primary btn-xs" ui-sref="my-contests" ng-if="current_user.is_contributor"><i class="fa fa-th-list"></i> My Contests</a>
                 <a class="btn btn-danger btn-xs" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</a>
                 <br/>
                 Hello, {{current_user.first_name}}. We're watching you.

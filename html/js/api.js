@@ -90,6 +90,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $filter)
     // Fix up contest data
     contest.highest_vote = 0;
     contest.total_votes = 0;
+    contest.can_current_user_edit = $rootScope.current_user.id == contest.owner_id;
     angular.forEach(contest.candidates, function(c,idx) {
       if (c.id == contest.current_user_candidate_id)
       {

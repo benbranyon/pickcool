@@ -74,7 +74,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
       function(res) {
         if(!res.error_message)
         {
-          $state.go('my-contests');
+          $state.go('home');
           return;
         }
         angular.extend($scope.contest, res.data);

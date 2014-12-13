@@ -226,81 +226,52 @@ button, input, optgroup, select, textarea {
   }
 }
 
-@mixin contest
-{
-  .contest:hover
-  {
-    cursor: pointer;
-    border-color: rgb(242, 135, 104);
-  }
-  
-  .contest
-  {
-    position: relative;
-    width: 180px;
-    border: 1px solid #dddddd;
-    border-radius: 9px;
-    $rad: 7px;
-    margin: 15px;
-    .tl
-    {
-      width: 75px;
-      height: 75px;
-      margin: 5px;
-    }
-    .tr
-    {
-      width: 75px;
-      height: 75px;
-      margin: 5px;
-    }
-    .bl
-    {
-      width: 75px;
-      height: 75px;
-      margin: 5px;
-    }
-    .br
-    {
-      width: 75px;
-      height: 75px;
-      margin: 5px;
-    }
-    .vs
-    {
-      position: absolute;
-      top: 62px;
-      font-size: 22pt;
-      color: red;
-      border: 1px solid black;
-      background-color: white;
-      opacity: 0.8;
-      width: 48px;
-      height: 45px;
-      text-align: center;
-      vertical-align: middle;
-      border-radius: 24px;
-      left: 62px;
-      padding-top: 2px;
-    }
-  }
-}
-
-.my-contests
-{
-  @include contest;
-}
-
-.hot
-{
-  @include contest;
-}
-
-.home
-{
-  @include contest;
-}
 
 .fb_iframe_widget,
 .fb_iframe_widget span,
 .fb_iframe_widget iframe[style]  {width: 100% !important;}
+
+.list
+{
+  .contest
+  {
+    .votes-total
+    {
+      font-size: 43px;
+      color: gray;
+    }
+    .thumb
+    {
+      position: relative;
+      border: 1px solid gray;
+      border-radius: 3px;
+      margin-right: 7px;
+      width: 77px;
+      height: 77px;
+      display: inline-block;
+      img
+      {
+        border-radius: 3px;
+      }
+      .votes-count
+      {
+        position: absolute;
+        background-color: rgb(255, 233, 221);
+        width: 25px;
+        height: 25px;
+        right: -1px;
+        bottom: -1px;
+        border-radius: 3px;
+        text-align: center;
+        color: rgb(255, 107, 0);
+        border: 1px solid gray;
+      }
+      
+    }
+
+    .title
+    {
+      font-size: 26px;
+    }
+  }
+}

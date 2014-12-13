@@ -8,7 +8,7 @@ class Contest extends Eloquent
     return $this->hasMany('Candidate');
   }
   
-  function title()
+  function vs()
   {
     $names = [];
     foreach($this->candidates as $c)
@@ -37,7 +37,7 @@ class Contest extends Eloquent
   function slug()
   {
     $slugify = new Slugify();
-    return $slugify->slugify($this->title(), '_');
+    return $slugify->slugify($this->vs(), '_');
   }
   
   function current_winner()

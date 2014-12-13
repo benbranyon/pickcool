@@ -39,7 +39,8 @@ class ApiSerializer
         }
         $contest = [
           'id'=>$obj->id,
-          'title'=>$obj->candidateNamesForHumans().'?',
+          'title'=>$obj->title,
+          'owner_id'=>$obj->user_id,
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
           'slug'=>$obj->slug(),
           'candidates'=>$obj->candidates,

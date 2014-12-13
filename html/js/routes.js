@@ -8,7 +8,8 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
     .state('home', {
       url: "/",
-      templateUrl: "partials/home.html"
+      templateUrl: "partials/list.html",
+      controller: 'HomeCtrl',
     })
     .state('contests-view', {
       url: "/est/:contest_id/:slug",
@@ -32,19 +33,23 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('hot', {
       url: "/hot",
-      templateUrl: "partials/hot.html"
+      templateUrl: "partials/list.html",
+      controller: 'HomeCtrl',
     })
     .state('new', {
       url: "/new",
-      templateUrl: "partials/new.html"
+      templateUrl: "partials/list.html",
+      controller: 'HomeCtrl',
     })
     .state('top', {
       url: "/top",
-      templateUrl: "partials/top.html"
+      templateUrl: "partials/list.html",
+      controller: 'HomeCtrl',
     })
     .state('ended', {
       url: "/ended",
-      templateUrl: "partials/ended.html"
+      templateUrl: "partials/list.html",
+      controller: 'HomeCtrl',
     })
     .state('my-contests', {
       url: "/my/contests",

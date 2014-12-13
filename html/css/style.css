@@ -264,147 +264,37 @@ button, input, optgroup, select, textarea {
   height: 148px;
   padding: 30px;
 }
-.my-contests .contest:hover {
-  cursor: pointer;
-  border-color: #f28768;
-}
-.my-contests .contest {
-  position: relative;
-  width: 180px;
-  border: 1px solid #ddd;
-  border-radius: 9px;
-  margin: 15px;
-}
-.my-contests .contest .tl {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.my-contests .contest .tr {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.my-contests .contest .bl {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.my-contests .contest .br {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.my-contests .contest .vs {
-  position: absolute;
-  top: 62px;
-  font-size: 22pt;
-  color: red;
-  border: 1px solid black;
-  background-color: white;
-  opacity: 0.8;
-  width: 48px;
-  height: 45px;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 24px;
-  left: 62px;
-  padding-top: 2px;
-}
-.hot .contest:hover {
-  cursor: pointer;
-  border-color: #f28768;
-}
-.hot .contest {
-  position: relative;
-  width: 180px;
-  border: 1px solid #ddd;
-  border-radius: 9px;
-  margin: 15px;
-}
-.hot .contest .tl {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.hot .contest .tr {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.hot .contest .bl {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.hot .contest .br {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.hot .contest .vs {
-  position: absolute;
-  top: 62px;
-  font-size: 22pt;
-  color: red;
-  border: 1px solid black;
-  background-color: white;
-  opacity: 0.8;
-  width: 48px;
-  height: 45px;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 24px;
-  left: 62px;
-  padding-top: 2px;
-}
-.home .contest:hover {
-  cursor: pointer;
-  border-color: #f28768;
-}
-.home .contest {
-  position: relative;
-  width: 180px;
-  border: 1px solid #ddd;
-  border-radius: 9px;
-  margin: 15px;
-}
-.home .contest .tl {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.home .contest .tr {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.home .contest .bl {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.home .contest .br {
-  width: 75px;
-  height: 75px;
-  margin: 5px;
-}
-.home .contest .vs {
-  position: absolute;
-  top: 62px;
-  font-size: 22pt;
-  color: red;
-  border: 1px solid black;
-  background-color: white;
-  opacity: 0.8;
-  width: 48px;
-  height: 45px;
-  text-align: center;
-  vertical-align: middle;
-  border-radius: 24px;
-  left: 62px;
-  padding-top: 2px;
-}
 .fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget iframe[style] {
   width: 100% !important;
+}
+.list .contest .votes-total {
+  font-size: 43px;
+  color: gray;
+}
+.list .contest .thumb {
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin-right: 7px;
+  width: 77px;
+  height: 77px;
+  display: inline-block;
+}
+.list .contest .thumb img {
+  border-radius: 3px;
+}
+.list .contest .thumb .votes-count {
+  position: absolute;
+  background-color: #ffe9dd;
+  width: 25px;
+  height: 25px;
+  right: -1px;
+  bottom: -1px;
+  border-radius: 3px;
+  text-align: center;
+  color: #ff6b00;
+  border: 1px solid gray;
+}
+.list .contest .title {
+  font-size: 26px;
 }
