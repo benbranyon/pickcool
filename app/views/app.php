@@ -39,8 +39,6 @@
     <script src="/js/routes.js"></script>
     <script src="/js/controllers/MainCtrl.js"></script>
     <script src="/js/controllers/my/contests/CreateContestCtrl.js"></script>
-    <script src="/js/controllers/HotCtrl.js"></script>
-    <script src="/js/controllers/HomeCtrl.js"></script>
     <script src="/js/controllers/contests/ContestViewCtrl.js"></script>
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -63,9 +61,9 @@
           <div class="row" style="height: 50px">
             <div class="col-lg-6">
               <ul class="nav nav-pills">
-                <li role="presentation" ng-class="{'active': state.is('home')}"><a ui-sref="home">Hot</a></li>
-                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('new')}"><a ui-sref="new">New</a></li>
-                <li role="presentation" ng-if="current_user.is_beta" ng-class="{'active': state.is('top')}"><a ui-sref="top">Top</a></li>
+                <li role="presentation" ng-class="{'active': state.is('home') || state.is('hot')}"><a ui-sref="home">Hot</a></li>
+                <li role="presentation" ng-class="{'active': state.is('new')}"><a ui-sref="new">New</a></li>
+                <li role="presentation" ng-class="{'active': state.is('top')}"><a ui-sref="top">Top</a></li>
               </ul>
             </div>
             <div class="col-lg-6"  style="text-align: right">

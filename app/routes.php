@@ -52,7 +52,7 @@ class ApiSerializer
       {
         $items = [];
         foreach($obj as $v) $items[] = $v;
-        return $items;
+        return self::serialize($items);
       }
       
       if($class=='Candidate')
@@ -231,12 +231,30 @@ Route::group([
     return ApiSerializer::ok($c->contest);
   });
   
-  Route::any('/contests/featured', function() {
-    $contests = [];
-    foreach(Contest::all() as $c)
-    {
-      $contests[] = ApiSerializer::serialize($c,'tiny');
-    }
+  Route::any('/contests/top', function() {
+    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id', 'left outer')
+      ->groupBy('contests.id')
+      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
+      ->orderBy('rank', 'desc')
+      ->get();
+    return ApiSerializer::ok($contests);
+  });
+
+  Route::any('/contests/hot', function() {
+    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id')
+      ->whereRaw('votes.created_at > now() - interval 24 hour')
+      ->groupBy('contests.id')
+      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
+      ->orderBy('rank', 'desc')
+      ->get();
+    return ApiSerializer::ok($contests);
+  });
+
+  Route::any('/contests/new', function() {
+    $contests = Contest::query()
+      ->orderBy('created_at', 'desc')
+      ->with('candidates', 'candidates.votes')
+      ->get();
     return ApiSerializer::ok($contests);
   });
   

@@ -9,7 +9,11 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('home', {
       url: "/",
       templateUrl: "partials/list.html",
-      controller: 'HomeCtrl',
+      controller: function(api, $scope) {
+        api.getContests('hot', function(res) {
+          $scope.contests = res.data;
+        });
+      },
     })
     .state('contests-view', {
       url: "/est/:contest_id/:slug",
@@ -34,22 +38,29 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('hot', {
       url: "/hot",
       templateUrl: "partials/list.html",
-      controller: 'HomeCtrl',
+      controller: function(api, $scope) {
+        api.getContests('hot', function(res) {
+          $scope.contests = res.data;
+        });
+      },
     })
     .state('new', {
       url: "/new",
       templateUrl: "partials/list.html",
-      controller: 'HomeCtrl',
+      controller: function(api, $scope) {
+        api.getContests('new', function(res) {
+          $scope.contests = res.data;
+        });
+      },
     })
     .state('top', {
       url: "/top",
       templateUrl: "partials/list.html",
-      controller: 'HomeCtrl',
-    })
-    .state('ended', {
-      url: "/ended",
-      templateUrl: "partials/list.html",
-      controller: 'HomeCtrl',
+      controller: function(api, $scope) {
+        api.getContests('top', function(res) {
+          $scope.contests = res.data;
+        });
+      },
     })
     .state('my-contests', {
       url: "/my/contests",

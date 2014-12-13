@@ -1,4 +1,4 @@
-app.service('api', function(ezfb, $http, $rootScope, $location, $state, $filter) {
+app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
   var api_lowevel = function(args) {
     ezfb.getLoginStatus().then(function(res) {
       $rootScope.accssToken = null;
@@ -107,7 +107,6 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $filter)
       if(c.vote_count > contest.highest_vote) contest.highest_vote = c.vote_count;
       contest.total_votes = contest.total_votes + c.vote_count;
     });
-    contest.candidates = $filter('orderBy')(contest.candidates, 'vote_count', true);      
   };
   
   
