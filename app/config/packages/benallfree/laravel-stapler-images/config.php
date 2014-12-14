@@ -27,16 +27,16 @@ function fit($file, $imagine, $dw, $dh)
   $width = floor($sw * $golden_ratio);
   $height = floor($sh * $golden_ratio);
   
-    var_dump([
-      "X ratio: {$x_ratio}",
-      "Y ratio: {$y_ratio}",
-      "Golden ratio: {$golden_ratio}",
-      "Requested size: {$dw}x{$dh}",
-      "Source size: {$sw}x{$sh}",
-      "Width difference: " .($dw-$sw),
-      "Height difference: " . ($dh-$sh),
-      "Resize size: {$width}x{$height}",
-  ]);
+  //   var_dump([
+  //     "X ratio: {$x_ratio}",
+  //     "Y ratio: {$y_ratio}",
+  //     "Golden ratio: {$golden_ratio}",
+  //     "Requested size: {$dw}x{$dh}",
+  //     "Source size: {$sw}x{$sh}",
+  //     "Width difference: " .($dw-$sw),
+  //     "Height difference: " . ($dh-$sh),
+  //     "Resize size: {$width}x{$height}",
+  // ]);
   $image->resize(new Box($width, $height));
   
   return $image;
