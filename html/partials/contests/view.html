@@ -10,16 +10,16 @@
         </p>
       </div>
     </div>
-    <h2>{{contest.title}}</h2>
+    <h1>{{contest.title}}</h1>
     <div class="row">
       <div class="col-lg-12">
         <div ng-repeat="c in contest.candidates" init-candidate>
           <div class="candidate-wrapper">
             <div id="candidate_{{c.id}}" class="candidate {{ contest.current_user_candidate_id == c.id ? 'selected' : ''}}" id="c_{{c.id}}" ng-click="vote(c)">
               <div class="mainContain">
-                <div class="name">
+                <h2 class="name">
                   {{c.name}}
-                </div>
+                </h2>
                 <div class="action_bar">
                   <small>{{c.vote_count}} votes</small>
                   
