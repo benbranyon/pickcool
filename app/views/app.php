@@ -22,6 +22,8 @@
     -->
     <script src="/lib/jquery-2.1.1.min.js"></script>
     <script src="/lib/angular-1.3.5.min.js"></script>
+    <script src="/lib/angular-sanitize.min.js"></script>
+    <script src="/lib/angular-flash.min.js"></script>
     <script src="/lib/angular-ui-router-0.2.12.min.js"></script>
     <script src="/lib/angular-easyfb-1.2.1/angular-easyfb.js"></script>
     <script src="/lib/RainbowVis-JS-14.10.26/rainbowvis.js"></script>
@@ -38,7 +40,8 @@
     <script src="/js/api.js"></script>
     <script src="/js/routes.js"></script>
     <script src="/js/controllers/MainCtrl.js"></script>
-    <script src="/js/controllers/my/contests/CreateContestCtrl.js"></script>
+    <script src="/js/controllers/contests/CreateContestCtrl.js"></script>
+    <script src="/js/controllers/contests/EditContestCtrl.js"></script>
     <script src="/js/controllers/contests/ContestViewCtrl.js"></script>
     
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -69,7 +72,7 @@
             <div class="col-lg-6"  style="text-align: right">
               <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!current_user"><i class="fa fa-facebook-square"></i> Login</button>
               <span ng-if="current_user">
-                <a class="btn btn-primary btn-xs " ui-sref="my-contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</a>
+                <a class="btn btn-primary btn-xs " ui-sref="contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</a>
                 <a class="btn btn-danger btn-xs" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</a>
                 <br/>
                 Hello, {{current_user.first_name}}. We're watching you.
@@ -77,6 +80,7 @@
             </div>
           </div>
           
+          <div flash-messages></div>
           <div ui-view ng-if="session_started"></div>
 
           <div class="footer">

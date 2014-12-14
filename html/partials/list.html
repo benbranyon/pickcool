@@ -10,7 +10,7 @@
         <span class='votes-count'>{{candidate.vote_count}}</span>
       <a>
       <a class="title" ng-href="{{contest.canonical_url}}">{{contest.title}}</a>
-      <button ng-if="contest.can_current_user_edit" class="btn btn-xs btn-success" ui-hsref="contests-edit({contest_id: contest.id})">Edit</button>
+      <button ng-if="contest.can_current_user_edit" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
     </div>
   </div>
 </div>

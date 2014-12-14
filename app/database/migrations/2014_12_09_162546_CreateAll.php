@@ -60,6 +60,7 @@ class CreateAll extends Migration {
       $table->string('gender');
       $table->string('email');
       $table->integer('is_contributor')->nullable();
+      $table->integer('is_admin')->nullable();
       $table->timestamps();
 		});
 	}

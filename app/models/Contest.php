@@ -8,6 +8,17 @@ class Contest extends Eloquent
     return $this->hasMany('Candidate');
   }
   
+  function is_editable_by($user)
+  {
+    return
+      $user->id == $this->user_id || $this->is_moderator($user);
+  }
+  
+  function is_moderator($user)
+  {
+    return $user->is_admin;
+  }
+  
   function vs()
   {
     $names = [];

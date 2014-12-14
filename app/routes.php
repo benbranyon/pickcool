@@ -42,6 +42,7 @@ class ApiSerializer
           'title'=>$obj->title,
           'owner_id'=>$obj->user_id,
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
+          'is_editable'=>$obj->is_editable_by(Auth::user()),
           'slug'=>$obj->slug(),
           'candidates'=>$obj->candidates,
         ];
@@ -57,12 +58,20 @@ class ApiSerializer
       
       if($class=='Candidate')
       {
-        return self::serialize([
+        $candidate = [
           'id'=>$obj->id,
           'name'=>$obj->name,
           'image_id'=>$obj->image_id,
           'vote_count'=>$obj->votes()->count(),
-        ]);
+        ];
+        if($obj->is_editable_by(Auth::user()))
+        {
+          $candidate['original_image_url'] = $obj->image ? $obj->image->url : null;
+          $candidate['original_buy_url'] = $obj->buy_url;
+        }
+        
+        return self::serialize($candidate);
+        
       }
     
       if($class=='User')
@@ -130,7 +139,7 @@ Route::group([
     }
     return ApiSerializer::ok($contests);
   });
-  Route::any('/my/contests/create', function() {
+  Route::any('/contests/create', function() {
     if(!Auth::user())
     {
       return ApiSerializer::error(API_ERR_AUTH);
@@ -194,9 +203,7 @@ Route::group([
     foreach($data['candidates'] as $can)
     {
       if(!isset($can['name']) || !$can['name']) continue;
-      $i = new Image();
-      $i->image = $can['image_url']['value'];
-      $i->save();
+      $i = Image::from_url($can['image_url']['value']);
       $c = new Candidate();
       $c->contest_id = $contest->id;
       $c->name = $can['name']['value'];
@@ -205,6 +212,109 @@ Route::group([
       $c->save();
     }
     return ApiSerializer::ok();
+  });
+  
+  Route::any('/contests/save', function() {
+    if(!Auth::user())
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
+    
+    $has_error = false;
+    $data = json_decode(Input::get('contest'),true);
+    array_walk_recursive($data, function($v,$k) {
+      $v = trim($v);
+    });
+    
+    $contest = Contest::find($data['id']['value']);
+    if(!$contest->is_editable_by(Auth::user()))
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
+    
+    function init($rec=null) {
+      return [
+        'value'=>$rec ? $rec['value'] : null,
+        'errors'=>[],
+      ];
+    } 
+    $res = [
+      'id'=>init($data['id']),
+      'title'=>init($data['title']),
+    ];
+    $validator = Validator::make(
+      $data,
+      [
+        'title.value'=>'required',
+      ],
+      [
+        'title.value.required'=>'Contest title is required',
+      ]
+    );
+    if($validator->fails())
+    {
+      $has_error = true;
+      $res['title']['errors'] = $validator->messages()->get('title.value');
+    }
+    
+    $res['candidates'] = [];
+    foreach($data['candidates'] as $rec)
+    {
+      if(!isset($rec['name']) || !$rec['name']) continue;
+      $candidate = [
+        'id'=>init($rec['id']),
+        'name'=>init($rec['name']),
+        'image_url'=>init($rec['image_url']),
+        'buy_url'=>init($rec['buy_url']),
+      ];
+      
+      $validator = Validator::make(
+        $rec,
+        [
+          'name.value'=>'required',
+          'image_url.value'=>'required',
+          'buy_url.value'=>'required',
+        ],
+        [
+          'name.value.required' => 'Candidate name is required',
+          'image_url.value.required' => 'Candidate image URL is requred',
+          'buy_url.value.required' => 'Candidate buy URL is requred',
+        ]
+      );
+      if($validator->fails())
+      {
+        $has_error = true;
+        $m = $validator->messages();
+        if($m->get('name.value')) $candidate['name']['errors'] = $m->get('name.value');
+        if($m->get('image_url.value')) $candidate['image_url']['errors'] = $m->get('image_url.value');
+        if($m->get('buy_url.value')) $candidate['buy_url']['errors'] = $m->get('buy_url.value');
+      }
+      $res['candidates'][] = $candidate;
+    }
+    
+    if( $has_error)
+    {
+      return ApiSerializer::error(API_ERR_VALIDATION, $res);
+    }
+    $contest->title = $res['title']['value'];
+    $contest->save();
+    
+    foreach($res['candidates'] as $can)
+    {
+      $c = Candidate::find($can['id']['value']);
+      if(!isset($can['name']) || !$can['name'])
+      {
+        // Delete this candidate
+        $c->delete();
+        continue;
+      }
+      $i = Image::from_url($can['image_url']['value']);
+      $c->name = $can['name']['value'];
+      $c->image_id = $i->id;
+      $c->buy_url = $can['buy_url']['value'];
+      $c->save();
+    }
+    return ApiSerializer::ok($res);
   });
   
   Route::any('/user', function() {

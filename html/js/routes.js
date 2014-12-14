@@ -62,13 +62,13 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         });
       },
     })
-    .state('my-contests', {
-      url: "/my/contests",
-      templateUrl: "partials/my/contests/list.html"
+    .state('contests-create', {
+      url: "/contests/create",
+      templateUrl: "partials/contests/create.html"
     })
-    .state('my-contests-create', {
-      url: "/my/contests/create",
-      templateUrl: "partials/my/contests/create.html"
+    .state('contests-edit', {
+      url: "/contests/:contest_id/edit",
+      templateUrl: "partials/contests/edit.html"
     })
   ;
 })

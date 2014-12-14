@@ -1,0 +1,64 @@
+<div ng-controller="EditContestCtrl">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+      <h1>Edit Contest</h1>
+      <form role="form">
+        <div class="form-group" ng-class="{'has-error': contest.title.errors.length>0}">
+          <label for="title">Contest Title</label>
+          <input type="text" class="form-control" ng-model="contest.title.value" name="title" placeholder="Contest title">
+          <span id="helpBlock" class="help-block" ng-if="contest.title.errors.length>0">
+            <p ng-repeat="e in contest.title.errors">{{e}}</p>
+          </span>
+        </div>
+        <table class="table">
+          <tr>
+            <th>Candidate Name</th>
+            <th>Image URL</th>
+            <th>Image Preview</th>
+            <th>Buy URL</th>
+          </tr>
+          <tr ng-repeat="c in contest.candidates">
+            <td>
+              <div class='form-group' ng-class="{'has-error': c.name.errors.length>0}">
+                <input type="text" class="form-control input-sm" ng-model="c.name.value" />
+                <span id="helpBlock" class="help-block" ng-if="c.name.errors.length>0">
+                  <p ng-repeat="e in c.name.errors">{{e}}</p>
+                </span>
+              </div>
+            </td>
+            <td>
+              <div class='form-group' ng-class="{'has-error': c.image_url.errors.length>0}">
+                <input type="text"class="form-control input-sm" ng-model="c.image_url.value" />
+                <span id="helpBlock" class="help-block" ng-if="c.image_url.errors.length>0">
+                  <p ng-repeat="e in c.image_url.errors">{{e}}</p>
+                </span>
+              </div>
+            </td>
+            <td>
+              <div class="form-group">
+                <img ng-src="{{c.image_url.value}}" ng-if="c.image_url.value" width="25"/>
+              </div>
+            </td>
+            <td>
+              <div class='form-group' ng-class="{'has-error': c.buy_url.errors.length>0}">
+                <input type="text" class="form-control input-sm" ng-model="c.buy_url.value" />
+                <span id="helpBlock" class="help-block" ng-if="c.buy_url.errors.length>0">
+                  <p ng-repeat="e in c.buy_url.errors">{{e}}</p>
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><button class="btn btn-primary ladda-button" ng-ladda ng-click="save($event)" data-style="expand-left"><span class="ladda-label">Save</span></button></td>
+            <td></td>
+            <td>
+            </td>
+            <td>
+              <button class="btn btn-success" ng-click='add()'><i class="fa fa-plus"></i> Add</button>
+            </td>
+        </table>
+        
+      </form>
+    </div>
+  </div>
+</div>
