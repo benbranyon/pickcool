@@ -63,6 +63,7 @@ class ApiSerializer
           'name'=>$obj->name,
           'image_id'=>$obj->image_id,
           'vote_count'=>$obj->votes()->count(),
+          'buy_text'=>$obj->buy_text
         ];
         if($obj->is_editable_by(Auth::user()))
         {
@@ -176,11 +177,13 @@ Route::group([
           'name.value'=>'required',
           'image_url.value'=>'required',
           'buy_url.value'=>'required',
+          'buy_text.value'=>'required',
         ],
         [
           'name.value.required' => 'Candidate name is required',
-          'image_url.value.required' => 'Candidate image URL is requred',
-          'buy_url.value.required' => 'Candidate buy URL is requred',
+          'image_url.value.required' => 'Candidate image URL is required',
+          'buy_url.value.required' => 'Candidate buy URL is required',
+          'buy_text.value.required' => 'Candidate buy text is required',
         ]
       );
       if($validator->fails())
@@ -190,6 +193,7 @@ Route::group([
         if($m->get('name.value')) $rec['name']['errors'] = $m->get('name.value');
         if($m->get('image_url.value')) $rec['image_url']['errors'] = $m->get('image_url.value');
         if($m->get('buy_url.value')) $rec['buy_url']['errors'] = $m->get('buy_url.value');
+        if($m->get('buy_text.value')) $rec['buy_text']['errors'] = $m->get('buy_text.value');
       }
     }
     if( $has_error)
@@ -209,6 +213,7 @@ Route::group([
       $c->name = $can['name']['value'];
       $c->image_id = $i->id;
       $c->buy_url = $can['buy_url']['value'];
+      $c->buy_text = $can['buy_text']['value'];
       $c->save();
     }
     return ApiSerializer::ok();
@@ -266,6 +271,7 @@ Route::group([
         'name'=>init($rec['name']),
         'image_url'=>init($rec['image_url']),
         'buy_url'=>init($rec['buy_url']),
+        'buy_text'=>init($rec['buy_text']),
       ];
       
       $validator = Validator::make(
@@ -274,11 +280,13 @@ Route::group([
           'name.value'=>'required',
           'image_url.value'=>'required',
           'buy_url.value'=>'required',
+          'buy_text.value'=>'required',
         ],
         [
           'name.value.required' => 'Candidate name is required',
           'image_url.value.required' => 'Candidate image URL is requred',
           'buy_url.value.required' => 'Candidate buy URL is requred',
+          'buy_text.avlue.required' => 'Candidate buy text is reuired'
         ]
       );
       if($validator->fails())
@@ -288,6 +296,7 @@ Route::group([
         if($m->get('name.value')) $candidate['name']['errors'] = $m->get('name.value');
         if($m->get('image_url.value')) $candidate['image_url']['errors'] = $m->get('image_url.value');
         if($m->get('buy_url.value')) $candidate['buy_url']['errors'] = $m->get('buy_url.value');
+        if($m->get('buy_text.value')) $candidate['buy_text']['errors'] = $m->get('buy_text.value');
       }
       $res['candidates'][] = $candidate;
     }
@@ -312,6 +321,7 @@ Route::group([
       $c->name = $can['name']['value'];
       $c->image_id = $i->id;
       $c->buy_url = $can['buy_url']['value'];
+      $c->buy_text = $can['buy_text']['value'];
       $c->save();
     }
     return ApiSerializer::ok($res);

@@ -16,6 +16,7 @@
             <th>Image URL</th>
             <th>Image Preview</th>
             <th>Buy URL</th>
+            <th>Buy Text</th>
           </tr>
           <tr ng-repeat="c in contest.candidates">
             <td>
@@ -44,6 +45,14 @@
                 <input type="text" class="form-control input-sm" ng-model="c.buy_url.value" />
                 <span id="helpBlock" class="help-block" ng-if="c.buy_url.errors.length>0">
                   <p ng-repeat="e in c.buy_url.errors">{{e}}</p>
+                </span>
+              </div>
+            </td>
+            <td>
+              <div class='form-group' ng-class="{'has-error': c.buy_text.errors.length>0}">
+                <input type="text" class="form-control input-sm" ng-model="c.buy_text.value" />
+                <span id="helpBlock" class="help-block" ng-if="c.buy_text.errors.length>0">
+                  <p ng-repeat="e in c.buy_text.errors">{{e}}</p>
                 </span>
               </div>
             </td>

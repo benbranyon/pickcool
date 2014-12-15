@@ -19,6 +19,7 @@ class CreateAll extends Migration {
       $table->string('name');
       $table->integer('image_id');
       $table->string('buy_url');
+      $table->string('buy_text');
       $table->timestamps();
 		});
     
