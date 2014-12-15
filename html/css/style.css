@@ -274,6 +274,9 @@ button, input, optgroup, select, textarea {
 .list .contest .votes-total {
   font-size: 43px;
   color: gray;
+  text-align: right;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .list .contest .thumb {
   position: relative;

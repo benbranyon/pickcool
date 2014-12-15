@@ -17,12 +17,17 @@
         <div class="list">
           <div class="contest">
             <div class="row">
-              <div class="col-xs-4" ng-repeat="candidate in contest.candidates">
-                <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
-                  <img ng-src="{{candidate.image('tiny')}}"/>
-                  <span class='votes-count'>{{candidate.vote_count}}</span>
-                </a>
-                <h6>{{candidate.name}}</h6>
+              <div class="col-xs-12">
+                <ul class="list-inline">
+                  <li ng-repeat="candidate in contest.candidates">
+                    <a class="thumb" ng-href="{{contest.canonical_url}}"  ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
+                      <img ng-src="{{candidate.image('tiny')}}"/>
+                      <span class='votes-count'>{{candidate.vote_count}}</span>
+                    </a>
+                    <h6>{{candidate.name}}</h6>
+                  </li>
+                </ul>
+              </div>
               </div>
             </div>
           </div>

@@ -1,9 +1,9 @@
 <div class="list">
   <div ng-repeat="contest in contests" class="contest row">
-    <div class="col-xs-2">
-      <span class="votes-total">
+    <div class="col-xs-2 col-sm-1">
+      <div class="votes-total">
         {{contest.total_votes}}
-      </span>
+      </div>
       <button ng-if="contest.can_current_user_edit" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
     </div>
     <div class="col-xs-10">
@@ -15,10 +15,14 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <a class="thumb" ng-href="{{contest.canonical_url}}" ng-repeat="candidate in contest.candidates" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
-            <img ng-src="{{candidate.image('tiny')}}"/>
-            <span class='votes-count'>{{candidate.vote_count}}</span>
-          </a>
+          <ul class="list-inline">
+            <li ng-repeat="candidate in contest.candidates">
+              <a class="thumb" ng-href="{{contest.canonical_url}}"  ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
+                <img ng-src="{{candidate.image('tiny')}}"/>
+                <span class='votes-count'>{{candidate.vote_count}}</span>
+              </a>
+            </li>
+          </ul>
         </div>
       
     </div>
