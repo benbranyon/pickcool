@@ -10,12 +10,14 @@ class Contest extends Eloquent
   
   function is_editable_by($user)
   {
+    if(!$user) return false;
     return
       $user->id == $this->user_id || $this->is_moderator($user);
   }
   
   function is_moderator($user)
   {
+    if(!$user) return false;
     return $user->is_admin;
   }
   

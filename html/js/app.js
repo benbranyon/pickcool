@@ -77,6 +77,8 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash'])
     });
   }
   
+  ezfb.getLoginStatus(updateStatus);
+  
   ezfb.Event.subscribe('auth.statusChange', updateStatus);
   
   ezfb.Event.subscribe('auth.authResponseChanged', function (statusRes) {

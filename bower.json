@@ -24,6 +24,5 @@
     "fontawesome": "~4.2.0",
     "jquery": "~2.1.1",
     "RainbowVis-JS": "https://github.com/anomal/RainbowVis-JS",
-    "ladda-bootstrap": "https://github.com/msurguy/ladda-bootstrap"
   }
 }

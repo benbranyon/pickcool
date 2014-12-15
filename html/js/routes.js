@@ -3,13 +3,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   
   // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise("/");
-  //
+  
   // Now set up the states
   $stateProvider
     .state('home', {
       url: "/",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
+        console.log('StateController');
         api.getContests('hot', function(res) {
           $scope.contests = res.data;
         });
@@ -39,6 +40,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/hot",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
+        console.log('StateController');
         api.getContests('hot', function(res) {
           $scope.contests = res.data;
         });
@@ -48,6 +50,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/new",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
+        console.log('StateController');
         api.getContests('new', function(res) {
           $scope.contests = res.data;
         });
@@ -57,6 +60,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/top",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
+        console.log('StateController');
         api.getContests('top', function(res) {
           $scope.contests = res.data;
         });
