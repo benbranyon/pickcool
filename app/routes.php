@@ -237,15 +237,15 @@ Route::group([
       return ApiSerializer::error(API_ERR_AUTH);
     }
     
-    function init($rec=null) {
+    function init($rec, $name, $default=null) {
       return [
-        'value'=>$rec ? $rec['value'] : null,
+        'value'=>$rec && isset($rec[$name]) ? $rec[$name]['value'] : $default,
         'errors'=>[],
       ];
     } 
     $res = [
-      'id'=>init($data['id']),
-      'title'=>init($data['title']),
+      'id'=>init($data, 'id'),
+      'title'=>init($data, 'title'),
     ];
     $validator = Validator::make(
       $data,
@@ -265,13 +265,13 @@ Route::group([
     $res['candidates'] = [];
     foreach($data['candidates'] as $rec)
     {
-      if(!isset($rec['name']) || !$rec['name']) continue;
+      if(!isset($rec['name']) || !$rec['name']['value']) continue;
       $candidate = [
-        'id'=>init($rec['id']),
-        'name'=>init($rec['name']),
-        'image_url'=>init($rec['image_url']),
-        'buy_url'=>init($rec['buy_url']),
-        'buy_text'=>init($rec['buy_text']),
+        'id'=>init($rec, 'id'),
+        'name'=>init($rec, 'name'),
+        'image_url'=>init($rec, 'image_url'),
+        'buy_url'=>init($rec, 'buy_url'),
+        'buy_text'=>init($rec, 'buy_text'),
       ];
       
       $validator = Validator::make(
