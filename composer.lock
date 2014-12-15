@@ -265,12 +265,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/stapler.git",
-                "reference": "908d33cecdbbe5c84f65552fa5768459fb6d98cf"
+                "reference": "af3aea8dd15998fe296bfab30e6e61bd4c0cd251"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/stapler/zipball/908d33cecdbbe5c84f65552fa5768459fb6d98cf",
-                "reference": "908d33cecdbbe5c84f65552fa5768459fb6d98cf",
+                "url": "https://api.github.com/repos/benallfree/stapler/zipball/af3aea8dd15998fe296bfab30e6e61bd4c0cd251",
+                "reference": "af3aea8dd15998fe296bfab30e6e61bd4c0cd251",
                 "shasum": ""
             },
             "require": {
@@ -312,7 +312,7 @@
             "support": {
                 "source": "https://github.com/benallfree/stapler/tree/master"
             },
-            "time": "2014-12-07 05:33:59"
+            "time": "2014-12-15 21:15:21"
         },
         {
             "name": "d11wtq/boris",
