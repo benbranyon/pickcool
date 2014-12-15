@@ -72,13 +72,19 @@ button, input, optgroup, select, textarea {
   border-radius: 3px;
   margin: 5px;
   width: 130px;
+  height: 160px;
   text-align: center;
+  float: left;
 }
 .list .contest .candidate .thumb {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.list .contest .candidate .thumb.selected {
+  margin-left: auto;
+  margin-right: auto;
 }
 .list .contest .votes-total {
   font-size: 43px;
@@ -92,7 +98,6 @@ button, input, optgroup, select, textarea {
   border: 1px solid gray;
   border-radius: 3px;
   margin: 3px;
-  margin-right: 10px;
   width: 77px;
   height: 77px;
   display: block;
@@ -116,10 +121,9 @@ button, input, optgroup, select, textarea {
 }
 .list .contest .thumb.selected {
   border: 3px solid #24db24;
-  margin: 1px;
-  margin-right: 8px;
   width: 81px;
   height: 81px;
+  margin: 0px;
 }
 .list .contest .title {
   font-size: 26px;

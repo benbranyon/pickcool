@@ -115,13 +115,20 @@ button, input, optgroup, select, textarea {
       border-radius: 3px;
       margin: 5px;
       width: 130px;
+      height: 160px;
       text-align: center;
+      float: left;
       .thumb
       {
         margin-left: auto;
         margin-right: auto;
-        margin-top: 0px;
-        margin-bottom: 0px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
+      .thumb.selected
+      {
+        margin-left: auto;
+        margin-right: auto;
       }
     }
     
@@ -139,7 +146,6 @@ button, input, optgroup, select, textarea {
       border: 1px solid gray;
       border-radius: 3px;
       margin: 3px;
-      margin-right: 10px;
       width: 77px;
       height: 77px;
       display: block;
@@ -165,10 +171,9 @@ button, input, optgroup, select, textarea {
     }
     .thumb.selected {
       border: 3px solid rgb(36, 219, 36);
-      margin: 1px;
-      margin-right: 8px;
       width: 81px;
       height: 81px;
+      margin: 0px;
     }
 
     .title

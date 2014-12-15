@@ -64,12 +64,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/laravel-stapler-images.git",
-                "reference": "54cdf3aa050fe61f46827b1231cbbbc0d7173fb6"
+                "reference": "5bd86001822104d44080b56e43f2540e7ccc6295"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/54cdf3aa050fe61f46827b1231cbbbc0d7173fb6",
-                "reference": "54cdf3aa050fe61f46827b1231cbbbc0d7173fb6",
+                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/5bd86001822104d44080b56e43f2540e7ccc6295",
+                "reference": "5bd86001822104d44080b56e43f2540e7ccc6295",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +100,7 @@
                 "laravel",
                 "stapler"
             ],
-            "time": "2014-12-11 12:42:30"
+            "time": "2014-12-14 17:39:36"
         },
         {
             "name": "classpreloader/classpreloader",
