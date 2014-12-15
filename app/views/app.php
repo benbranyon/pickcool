@@ -58,46 +58,33 @@
   </head>
 
   <body ng-controller="MainCtrl">
-    <nav class="navbar navbar-default navboar-xs" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">pick.cool</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li ng-class="{active: state.is('home') || state.is('hot')}"><a ui-sref="home">Hot</a></li>
-            <li ng-class="{active: state.is('new')}"><a ui-sref="new">New</a></li>
-            <li ng-class="{active: state.is('top')}"><a ui-sref="top">Top</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li ng-if="!current_user">
-              <button class="btn btn-primary btn-xs navbar-btn" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</button>
-            </li>
-            <li ng-if="current_user">
-              <button class="btn btn-primary btn-xs navbar-btn" ui-sref="contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</button>
-            </li>
-            <li ng-if="current_user">
-              <button class="btn btn-danger btn-xs navbar-btn" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</button>
-            </li>
-          </ul>
-          <p class="navbar-text navbar-right hidden-xs" ng-if="current_user">Hello, {{current_user.first_name}}. We're watching you.</p>
-          
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
     <div class="container-fluid">
       <div class="row">
+        <div class="col-xs-12">
+          <span class="text-primary">pick.cool</span>
+          <span class="small text-muted">Vote and watch social contests in real time.</span>
+          
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <ul class="list-inline">
+            <li class="btn btn-xs {{state.is('home') || state.is('hot') ? 'btn-primary' : 'btn-default'}}" ui-sref="hot">Hot</li>
+            <li class="btn btn-xs {{state.is('new') ? 'btn-primary' : 'btn-default'}}" ui-sref="new">New</li>
+            <li class="btn btn-xs {{state.is('top') ? 'btn-primary' : 'btn-default'}} text-primary" ui-sref="top">Top</li>
+          </ul>
+        </div>
+        <div class="col-xs-6">
+          <ul class="list-inline pull-right">
+            <li ng-if="!current_user" class="pull-right btn btn-xs btn-primary" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</li>
+            <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
+            <li ng-if="current_user" class="btn btn-xs btn-danger" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-xs-10 col-offset-1">
-          <div class="small text-muted">Vote and watch social contests in real time.</div>
         </div>
       </div>
       

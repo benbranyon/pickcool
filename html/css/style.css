@@ -1,5 +1,5 @@
 /* Space out content a bit */body {
-  padding-top: 20px;
+  padding-top: 0px;
   padding-bottom: 20px;
 }
 /* Everything but the jumbotron gets side spacing for mobile first views */.header, .marketing, .footer {
@@ -327,4 +327,7 @@ button, input, optgroup, select, textarea {
   padding-top: 2px;
   padding-bottom: 2px;
   line-height: 16px;
+}
+.navbar {
+  margin-bottom: 2px;
 }

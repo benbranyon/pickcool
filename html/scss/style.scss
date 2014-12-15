@@ -1,6 +1,6 @@
 /* Space out content a bit */
 body {
-  padding-top: 20px;
+  padding-top: 00px;
   padding-bottom: 20px;
 }
 
@@ -291,3 +291,8 @@ button, input, optgroup, select, textarea {
 .navbar-xs { min-height:22px; border-radius:0} 
 .navbar-xs .navbar-brand{ padding: 2px 8px;font-size: 14px;line-height: 14px; } 
 .navbar-xs .navbar-nav > li > a { border-right:1px solid #ddd; padding-top: 2px; padding-bottom: 2px; line-height: 16px }
+
+.navbar
+{
+  margin-bottom: 2px;
+}
