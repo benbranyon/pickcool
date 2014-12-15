@@ -333,13 +333,15 @@ Route::group([
     
     foreach($res['candidates'] as $can)
     {
-      $c = Candidate::find($can['id']['value'])->first();
+      $c = Candidate::find($can['id']['value']);
+      if(!$c) continue;
       if(!isset($can['name']) || !$can['name']['value'])
       {
         // Delete this candidate
         $c->delete();
         continue;
       }
+      
       $i = Image::from_url($can['image_url']['value']);
       $c->name = $can['name']['value'];
       $c->image_id = $i->id;

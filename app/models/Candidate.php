@@ -4,12 +4,6 @@ use Cocur\Slugify\Slugify;
 class Candidate extends Eloquent
 {
   
-  function delete()
-  {
-    Vote::whereCandidateId($this->id)->delete();
-    parent::delete();
-  }
-  
   function image_url($size='thumb')
   {
     return route('image.view', [$this->image->id, $size]);
@@ -40,4 +34,11 @@ class Candidate extends Eloquent
     return $this->contest->is_moderator($user);
   }
   
+  protected static function boot() {
+    parent::boot();
+    static::deleting(function($candidate) { // called BEFORE delete()
+      $candidate->votes()->delete();
+    });
+  }
 }
+
