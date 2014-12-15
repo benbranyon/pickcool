@@ -6,7 +6,8 @@ class Candidate extends Eloquent
   
   function delete()
   {
-    $this->votes->delete();
+    Vote::whereCandidateId($this->id)->delete();
+    parent::delete();
   }
   
   function image_url($size='thumb')

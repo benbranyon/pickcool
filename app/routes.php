@@ -288,7 +288,6 @@ Route::group([
     $res['candidates'] = [];
     foreach($data['candidates'] as $rec)
     {
-      if(!isset($rec['name']) || !$rec['name']['value']) continue;
       $candidate = [
         'id'=>init($rec, 'id'),
         'name'=>init($rec, 'name'),
@@ -296,6 +295,8 @@ Route::group([
         'buy_url'=>init($rec, 'buy_url'),
         'buy_text'=>init($rec, 'buy_text'),
       ];
+      $res['candidates'][] = $candidate;
+      if(!isset($rec['name']) || !$rec['name']['value']) continue;
       
       $validator = Validator::make(
         $rec,
@@ -321,7 +322,6 @@ Route::group([
         if($m->get('buy_url.value')) $candidate['buy_url']['errors'] = $m->get('buy_url.value');
         if($m->get('buy_text.value')) $candidate['buy_text']['errors'] = $m->get('buy_text.value');
       }
-      $res['candidates'][] = $candidate;
     }
     
     if( $has_error)
@@ -333,8 +333,8 @@ Route::group([
     
     foreach($res['candidates'] as $can)
     {
-      $c = Candidate::find($can['id']['value']);
-      if(!isset($can['name']) || !$can['name'])
+      $c = Candidate::find($can['id']['value'])->first();
+      if(!isset($can['name']) || !$can['name']['value'])
       {
         // Delete this candidate
         $c->delete();
