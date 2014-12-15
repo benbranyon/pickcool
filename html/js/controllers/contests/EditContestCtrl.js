@@ -1,6 +1,6 @@
 app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api, $flash) {
   $scope.add = function() {
-    $scope.contest.candidates.push({'id': $scope.candidates.length+1});
+    $scope.contest.candidates.push({});
   };
   
   api.getContest($stateParams.contest_id, function(res) {

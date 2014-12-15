@@ -24,7 +24,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
               'errors': [],
             },
             "buy_text": {
-              'value': "Shop",
+              'value': "fa-shopping-cart",
               'errors': [],
             },
          },
@@ -42,7 +42,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
               'errors': [],
             },
             "buy_text": {
-              'value': "Shop",
+              'value': "fa-shopping-cart",
               'errors': [],
             },
          },
@@ -60,7 +60,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
               'errors': [],
             },
             "buy_text": {
-              'value': "Shop",
+              'value': "fa-shopping-cart",
               'errors': [],
             },
          },
@@ -78,7 +78,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
               'errors': [],
             },
             "buy_text": {
-              'value': "Shop",
+              'value': "fa-shopping-cart",
               'errors': [],
             },
          }
