@@ -95,5 +95,6 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash'])
 
   $rootScope.logout = function () {
    ezfb.logout();
+   window.location = '/';
   };
 });

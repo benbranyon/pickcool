@@ -247,7 +247,8 @@ button, input, optgroup, select, textarea {
       position: relative;
       border: 1px solid gray;
       border-radius: 3px;
-      margin-right: 7px;
+      margin: 3px;
+      margin-right: 10px;
       width: 77px;
       height: 77px;
       display: inline-block;
@@ -268,7 +269,13 @@ button, input, optgroup, select, textarea {
         color: rgb(255, 107, 0);
         border: 1px solid gray;
       }
-      
+    }
+    .thumb.selected {
+      border: 3px solid rgb(36, 219, 36);
+      margin: 1px;
+      margin-right: 8px;
+      width: 81px;
+      height: 81px;
     }
 
     .title

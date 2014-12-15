@@ -5,7 +5,7 @@
         {{contest.total_votes}}
       </span>
       
-      <a class="thumb" ng-href="{{contest.canonical_url}}" ng-repeat="candidate in contest.candidates">
+      <a class="thumb" ng-href="{{contest.canonical_url}}" ng-repeat="candidate in contest.candidates" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
         <img ng-src="{{candidate.image('tiny')}}"/>
         <span class='votes-count'>{{candidate.vote_count}}</span>
       <a>
