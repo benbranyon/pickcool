@@ -4,7 +4,7 @@
       <div class="votes-total">
         {{contest.total_votes}}
       </div>
-      <button ng-if="contest.can_current_user_edit" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
+      <button ng-if="contest.is_editable" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
     </div>
     <div class="col-xs-10">
       <div class="row">
