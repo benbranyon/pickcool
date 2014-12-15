@@ -26,7 +26,6 @@
     <script src="/lib/angular-flash.min.js"></script>
     <script src="/lib/angular-ui-router-0.2.12.min.js"></script>
     <script src="/lib/angular-easyfb-1.2.1/angular-easyfb.js"></script>
-    <script src="/lib/RainbowVis-JS-14.10.26/rainbowvis.js"></script>
     <script src="/lib/ladda-bootstrap-14.12.5/dist/spin.min.js"></script>
     <script src="/lib/ladda-bootstrap-14.12.5/dist/ladda.min.js"></script>
     <script src="/lib/ladda-bootstrap-14.12.5/dist/ladda.jquery.min.js"></script>
@@ -35,7 +34,6 @@
     Custom code
     -->
     <script src="/js/env.js"></script>
-    <script src="/js/rainbow.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/api.js"></script>
     <script src="/js/routes.js"></script>
@@ -49,39 +47,69 @@
       <script src="/lib/aFarkas-html5shiv-3.7.2/dist/html5shiv.min.js"></script>
       <script src="/lib/Respond-1.4.2/dest/respond.min.js"></script>
     <![endif]-->
+      <script>
+      $(document).on('click','.navbar-collapse.in',function(e) {
+          if( $(e.target).is('a, button') && ( $(e.target).attr('class') != 'dropdown-toggle' ) ) {
+              $(this).collapse('hide');
+          }
+
+      });
+      </script>
   </head>
 
   <body ng-controller="MainCtrl">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-10 col-offset-1">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="text-primary">pick.cool</div>
-              <div class="small text-muted">Vote and watch social contests in real time.</div>
-            </div>
-          </div>
-          <div class="row" style="height: 50px">
-            <div class="col-lg-6">
-              <ul class="nav nav-pills">
-                <li role="presentation" ng-class="{'active': state.is('home') || state.is('hot')}"><a ui-sref="home">Hot</a></li>
-                <li role="presentation" ng-class="{'active': state.is('new')}"><a ui-sref="new">New</a></li>
-                <li role="presentation" ng-class="{'active': state.is('top')}"><a ui-sref="top">Top</a></li>
-              </ul>
-            </div>
-            <div class="col-lg-6"  style="text-align: right">
-              <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!current_user"><i class="fa fa-facebook-square"></i> Login</button>
-              <span ng-if="current_user">
-                <a class="btn btn-primary btn-xs " ui-sref="contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</a>
-                <a class="btn btn-danger btn-xs" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</a>
-                <br/>
-                Hello, {{current_user.first_name}}. We're watching you.
-              </span>
-            </div>
-          </div>
+    <nav class="navbar navbar-default navboar-xs" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">pick.cool</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ng-class="{active: state.is('home') || state.is('hot')}"><a ui-sref="home">Hot</a></li>
+            <li ng-class="{active: state.is('new')}"><a ui-sref="new">New</a></li>
+            <li ng-class="{active: state.is('top')}"><a ui-sref="top">Top</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-if="!current_user">
+              <button class="btn btn-primary btn-xs navbar-btn" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</button>
+            </li>
+            <li ng-if="current_user">
+              <button class="btn btn-primary btn-xs navbar-btn" ui-sref="contests-create" ng-if="current_user.is_contributor"><i class="fa fa-plus"></i> Create Contest</button>
+            </li>
+            <li ng-if="current_user">
+              <button class="btn btn-danger btn-xs navbar-btn" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</button>
+            </li>
+          </ul>
+          <p class="navbar-text navbar-right hidden-xs" ng-if="current_user">Hello, {{current_user.first_name}}. We're watching you.</p>
           
-          <div flash-messages></div>
-          <div ui-view ng-if="session_started"></div>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-10 col-offset-1">
+          <div class="small text-muted">Vote and watch social contests in real time.</div>
+        </div>
+      </div>
+      
+
+      <div class="row">
+        <div class="col-xs-12 col-lg-10 col-lg-offset-1">
+          <div class="row">
+            <div class="col-xs-12">
+              <div flash-messages></div>
+              <div ui-view ng-if="session_started"></div>
+            </div>
+          </div>
 
           <div class="footer">
             <p>&copy; pick.cool 2014</p>

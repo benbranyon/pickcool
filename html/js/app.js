@@ -11,14 +11,6 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash'])
 .config(function($flashProvider) {
   $flashProvider.setRouteChangeSuccess('$stateChangeSuccess');
 })
-.directive('initProgress', function() {
-  return function(scope, element, attrs) {
-    var $e =  $(element);
-    scope.c.$e = $e;
-    scope.updateVoteProgress(scope.contest, scope.c);
-    
-  };
-})
 .directive('ngLadda', function() {
   return function(scope, element, attrs) {
     Ladda.bind(element[0]);
@@ -36,20 +28,6 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash'])
 
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
-
-  $rootScope.updateVoteProgress = function(contest, candidate, $e)
-  {
-    var c = candidate;
-    if(contest.highest_vote == 0) return;
-    var scale = 900.0/contest.highest_vote;
-    var dc = c.vote_count * scale;
-    console.log("Scale is ", scale);
-    console.log("Display count is ", dc);
-    var $e = c.$e;
-    console.log($e.height());
-    $e.css('height', (dc/10)+'%');
-    $e.css('background-color', '#'+rainbow.colorAt(dc));
-  }
 
   function updateStatus(res) 
   {

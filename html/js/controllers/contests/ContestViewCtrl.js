@@ -39,13 +39,11 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
         angular.forEach($scope.contest.candidates, function(c,k) {
           if($scope.contest.current_user_candidate_id != c.id) return;
           c.vote_count--;
-          $scope.updateVoteProgress($scope.contest, c);
         });
       }
       c.vote_count++
       $scope.contest.current_user_candidate = c;
       $scope.contest.current_user_candidate_id = c.id;
-      $scope.updateVoteProgress($scope.contest, c);
       api.vote(c.id);
     } else {
      $('#login_dialog').modal();
