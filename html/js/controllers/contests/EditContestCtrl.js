@@ -20,6 +20,7 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api, $
         id: edit(candidate.id),
         buy_url: edit(candidate.original_buy_url),
         image_url: edit(candidate.original_image_url),
+        buy_text: edit(candidate.buy_text),
         name: edit(candidate.name),
       });
     });
@@ -35,6 +36,7 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api, $
         if(!res.error_message)
         {
           $flash('Saved.', {type: 'success'});
+          $state.go('contests-view', {contest_id: $scope.contest.id, slug: $scope.contest.slug})
           return;
         }
       }

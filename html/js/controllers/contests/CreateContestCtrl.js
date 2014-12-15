@@ -5,7 +5,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
   
   $scope.contest = {
     'title': {
-      'value': '',
+      'value': 'my new contest',
       'errors': [],
     },
     'candidates': 
@@ -23,6 +23,10 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
               'value': "Taylor Swift",
               'errors': [],
             },
+            "buy_text": {
+              'value': "Shop",
+              'errors': [],
+            },
          },
          {  
             'buy_url': {
@@ -35,6 +39,10 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
             },
             "name": {
               'value': "Justin Beiber",
+              'errors': [],
+            },
+            "buy_text": {
+              'value': "Shop",
               'errors': [],
             },
          },
@@ -51,6 +59,10 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
               'value': "Britney Spears",
               'errors': [],
             },
+            "buy_text": {
+              'value': "Shop",
+              'errors': [],
+            },
          },
          {  
             'buy_url': {
@@ -65,6 +77,10 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
               'value': "Justin Timberlake",
               'errors': [],
             },
+            "buy_text": {
+              'value': "Shop",
+              'errors': [],
+            },
          }
       ]      
   };
@@ -74,7 +90,8 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
       function(res) {
         if(!res.error_message)
         {
-          $state.go('new');
+          var contest = res.data;
+          $state.go('contests-view', {contest_id: contest.id, slug: contest.slug});
           return;
         }
         angular.extend($scope.contest, res.data);

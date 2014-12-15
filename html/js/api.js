@@ -35,11 +35,22 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
   };
   
   this.createContest = function(contest, success, error) {
-    api_lowevel({'name': 'createContest', 'path': '/contests/create', 'params': {'contest': JSON.stringify(contest) }, 'success': success, 'error': error});
+    api_lowevel({'name': 'createContest', 'path': '/contests/create', 'params': {'contest': JSON.stringify(contest) },
+      'success': function(res) {
+        init_contest(res.data);
+        success(res);
+      }, 
+      'error': error
+    });
   };
 
   this.saveContest = function(contest, success, error) {
-    api_lowevel({'name': 'saveContest', 'path': '/contests/save', 'params': {'contest': JSON.stringify(contest) }, 'success': success, 'error': error});
+    api_lowevel({'name': 'saveContest', 'path': '/contests/save', 'params': {'contest': JSON.stringify(contest) }, 
+    'success': function(res) {
+      init_contest(res.data);
+      success(res);
+    }, 
+    'error': error});
   };
   
   this.getMyContests = function(success, error) {

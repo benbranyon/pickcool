@@ -1,6 +1,11 @@
 <div ng-controller="ContestViewCtrl">
   <div ng-if="contest">
-    <h1>{{contest.title}}</h1>
+    <h1>
+      {{contest.title}}
+      <button ng-if="contest.is_editable" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
+      
+    </h1>
+    
     <div class="row">
       <div class="col-lg-12">
         <div class="list">
@@ -8,12 +13,12 @@
             <div class="row">
               <div class="col-xs-12">
                 <ul class="list-inline">
-                  <li ng-repeat="candidate in contest.candidates">
+                  <li class="candidate" ng-repeat="candidate in contest.candidates">
                     <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
                       <img ng-src="{{candidate.image('tiny')}}"/>
                       <span class='votes-count'>{{candidate.vote_count}}</span>
                     </a>
-                    <h6><a href="{{candidate.buy_url}}">{{candidate.name}}</a></h6>
+                    <h6><a href="{{candidate.buy_url}}"><i class="fa {{candidate.buy_text}}"></i> {{candidate.name}}</a></h6>
                   </li>
                 </ul>
               </div>

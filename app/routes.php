@@ -152,6 +152,17 @@ Route::group([
       $v = trim($v);
     });
     
+    function init($rec, $name, $default=null) {
+      return [
+        'value'=>$rec && isset($rec[$name]['value']) ? $rec[$name]['value'] : $default,
+        'errors'=>[],
+      ];
+    } 
+    $res = [
+      'id'=>init($data, 'id'),
+      'title'=>init($data, 'title'),
+    ];
+    
     $validator = Validator::make(
       $data,
       [
@@ -164,13 +175,21 @@ Route::group([
     if($validator->fails())
     {
       $has_error = true;
-      $data['title']['errors'] = $validator->messages()->get('title.value');
+      $res['title']['errors'] = $validator->messages()->get('title.value');
     }
     
+    $res['candidates'] = [];
     foreach($data['candidates'] as &$rec)
     {
-      $rec['errors'] = [];
-      if(!isset($rec['name']) || !$rec['name']) continue;
+      if(!isset($rec['name']) || !$rec['name']['value']) continue;
+      $candidate = [
+        'id'=>init($rec, 'id'),
+        'name'=>init($rec, 'name'),
+        'image_url'=>init($rec, 'image_url'),
+        'buy_url'=>init($rec, 'buy_url'),
+        'buy_text'=>init($rec, 'buy_text'),
+      ];
+
       $validator = Validator::make(
         $rec,
         [
@@ -190,21 +209,24 @@ Route::group([
       {
         $has_error = true;
         $m = $validator->messages();
-        if($m->get('name.value')) $rec['name']['errors'] = $m->get('name.value');
-        if($m->get('image_url.value')) $rec['image_url']['errors'] = $m->get('image_url.value');
-        if($m->get('buy_url.value')) $rec['buy_url']['errors'] = $m->get('buy_url.value');
-        if($m->get('buy_text.value')) $rec['buy_text']['errors'] = $m->get('buy_text.value');
+        if($m->get('name.value')) $candidate['name']['errors'] = $m->get('name.value');
+        if($m->get('image_url.value')) $candidate['image_url']['errors'] = $m->get('image_url.value');
+        if($m->get('buy_url.value')) $candidate['buy_url']['errors'] = $m->get('buy_url.value');
+        if($m->get('buy_text.value')) $candidate['buy_text']['errors'] = $m->get('buy_text.value');
       }
+      $res['candidates'][] = $candidate;
+      
     }
     if( $has_error)
     {
-      return ApiSerializer::error(API_ERR_VALIDATION, $data);
+      return ApiSerializer::error(API_ERR_VALIDATION, $res);
     }
     $contest = new Contest();
     $contest->title = $data['title']['value'];
     $contest->user_id = Auth::user()->id;
     $contest->save();
-    foreach($data['candidates'] as $can)
+    $res['id']['value'] = $contest->id;
+    foreach($res['candidates'] as $can)
     {
       if(!isset($can['name']) || !$can['name']) continue;
       $i = Image::from_url($can['image_url']['value']);
@@ -215,8 +237,9 @@ Route::group([
       $c->buy_url = $can['buy_url']['value'];
       $c->buy_text = $can['buy_text']['value'];
       $c->save();
+      $can['id']['value'] = $c->id;
     }
-    return ApiSerializer::ok();
+    return ApiSerializer::ok($contest);
   });
   
   Route::any('/contests/save', function() {
@@ -239,7 +262,7 @@ Route::group([
     
     function init($rec, $name, $default=null) {
       return [
-        'value'=>$rec && isset($rec[$name]) ? $rec[$name]['value'] : $default,
+        'value'=>$rec && isset($rec[$name]['value']) ? $rec[$name]['value'] : $default,
         'errors'=>[],
       ];
     } 
@@ -324,7 +347,7 @@ Route::group([
       $c->buy_text = $can['buy_text']['value'];
       $c->save();
     }
-    return ApiSerializer::ok($res);
+    return ApiSerializer::ok($contest);
   });
   
   Route::any('/user', function() {
