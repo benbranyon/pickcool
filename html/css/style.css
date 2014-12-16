@@ -128,6 +128,74 @@ button, input, optgroup, select, textarea {
 .list .contest .title {
   font-size: 26px;
 }
+ul.nav {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.nav > li {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+}
+.view .contest {
+  text-align: center;
+}
+.view .contest .candidate {
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+  margin: 5px;
+  text-align: center;
+  max-width: 24%;
+}
+@media (min-width: 0px) {
+  .view .contest .candidate {
+    max-width: 100%;
+  }
+}
+@media (min-width: 480px) {
+  .view .contest .candidate {
+    max-width: 47%;
+    display: inline-block;
+  }
+}
+@media (min-width: 768px) {
+  .view .contest .candidate {
+    max-width: 31%;
+  }
+}
+@media (min-width: 992px) {
+  .view .contest .candidate {
+    max-width: 23%;
+  }
+}
+.view .contest .candidate .thumb {
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin: 3px;
+  display: block;
+}
+.view .contest .candidate .thumb img {
+  border-radius: 3px;
+  width: 100%;
+}
+.view .contest .candidate .thumb.selected {
+  border: 3px solid #24db24;
+}
+.view .contest .candidate .even {
+  width: 70px;
+  padding: 6px 2px;
+}
+.view .contest .votes-total {
+  font-size: 43px;
+  color: gray;
+  text-align: right;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.view .contest .title {
+  font-size: 26px;
+}
 .navbar-xs {
   min-height: 22px;
   border-radius: 0;

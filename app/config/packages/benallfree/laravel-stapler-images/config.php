@@ -71,6 +71,9 @@ $sizes = [
     $image = letterbox($image, $imagine, 1200, 630);
     return $image;
   },
+  'mobile' => function($file, $imagine) {
+    return frameit($file, $imagine, 820,820);
+  },
   'thumb' => function($file, $imagine) {
     return frameit($file, $imagine, 180,180);
   },
