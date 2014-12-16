@@ -13,11 +13,8 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
         console.log("Access token is ", $rootScope.accessToken);
         params.accessToken = $rootScope.accessToken;
       }
-      $http.get(API_ENDPOINT+args.path, 
-        {
-          'params': params
-        }
-      )
+      console.log('Posting to ', API_ENDPOINT+args.path);
+      $http.post(API_ENDPOINT+args.path, params) 
       .success(function(data, status, headers, config) {
         console.log(args.name + " responded with ", data);
         if (args.success) args.success(data);
