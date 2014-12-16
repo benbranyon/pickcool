@@ -3,6 +3,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
     $scope.contest.candidates.push({'id': $scope.candidates.length+1});
   };
   
+  $scope.operation = 'Create';
   $scope.contest = {
     'title': {
       'value': 'my new contest',

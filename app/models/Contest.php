@@ -21,17 +21,6 @@ class Contest extends Eloquent
     return $user->is_admin;
   }
   
-  function vs()
-  {
-    $names = [];
-    foreach($this->candidates as $c)
-    {
-      $names[] = $c->name;
-    }
-    $names = join(' vs ', $names);
-    return $names;
-  }
-  
   function candidateNamesForHumans($exclude_id=null, $join = 'or') {
     $names = [];
     foreach($this->candidates as $c)
@@ -50,7 +39,7 @@ class Contest extends Eloquent
   function slug()
   {
     $slugify = new Slugify();
-    return $slugify->slugify($this->vs(), '_');
+    return $slugify->slugify($this->title, '_');
   }
   
   function current_winner()

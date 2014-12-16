@@ -68,10 +68,12 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     })
     .state('contests-create', {
       url: "/contests/create",
-      templateUrl: "partials/contests/create.html"
+      controller: 'CreateContestCtrl',
+      templateUrl: "partials/contests/edit.html"
     })
     .state('contests-edit', {
       url: "/contests/:contest_id/edit",
+      controller: 'EditContestCtrl',
       templateUrl: "partials/contests/edit.html"
     })
   ;

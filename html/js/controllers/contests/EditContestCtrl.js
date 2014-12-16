@@ -3,6 +3,8 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api, $
     $scope.contest.candidates.push({});
   };
   
+  $scope.operation = 'Edit';
+  
   api.getContest($stateParams.contest_id, function(res) {
     function edit(val) {
       return {
