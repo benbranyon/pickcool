@@ -18,7 +18,7 @@
             <th>Buy URL</th>
             <th>Buy Text</th>
           </tr>
-          <tr ng-repeat="c in contest.candidates">
+          <tr ng-repeat="c in contest.candidates"  ng-if="!c.should_delete.value">
             <td>
               <div class='form-group' ng-class="{'has-error': c.name.errors.length>0}">
                 <input type="text" class="form-control input-sm" ng-model="c.name.value" />
@@ -55,6 +55,9 @@
                   <p ng-repeat="e in c.buy_text.errors">{{e}}</p>
                 </span>
               </div>
+            </td>
+            <td>
+              <button class="btn btn-danger" ng-click="c.should_delete.value=true">remove</button>
             </td>
           </tr>
           <tr>
