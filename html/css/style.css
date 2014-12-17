@@ -182,6 +182,9 @@ ul.nav {
 .view .contest .candidate .thumb.selected {
   border: 3px solid #24db24;
 }
+.view .contest .candidate .btn {
+  font-size: 11px;
+}
 .view .contest .candidate .even {
   width: 70px;
   padding: 6px 2px;
