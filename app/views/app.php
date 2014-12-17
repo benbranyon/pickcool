@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="pickCoolApp">
   <head>
+    <script>
+      var CP_DEBUG=<?php echo($_ENV['JS_DEBUG'] ? 'true' : 'false') ?>;
+    </script>
     <base href="/">
     <meta property="fb:app_id" content="1497159643900204"/>
     <meta charset="utf-8">
