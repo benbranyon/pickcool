@@ -215,7 +215,8 @@ class ApiSerializer
           'name'=>$obj->name,
           'image_id'=>$obj->image_id,
           'vote_count'=>$obj->votes()->count(),
-          'buy_text'=>$obj->buy_text
+          'buy_text'=>$obj->buy_text,
+          'canonical_url'=>route('contest.candidate.view', [$obj->contest_id, $obj->contest->slug(), $obj->id, $obj->slug()]),
         ];
         if($obj->is_editable_by(Auth::user()))
         {
@@ -324,6 +325,22 @@ Route::group([
     return ApiSerializer::ok($c->contest);
   });
   
+  Route::any('/unvote', function() {
+    if(!Auth::user())
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
+    
+    $c = Candidate::find(Input::get('c'));
+    if(!$c)
+    {
+      return ApiSerializer::error(API_ERR_LOOKUP);
+    }
+    Auth::user()->unvote_for($c->id);
+    return ApiSerializer::ok($c->contest);
+  });
+  
+  
   Route::any('/contests/top', function() {
     $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id', 'left outer')
       ->groupBy('contests.id')
@@ -369,38 +386,44 @@ Route::group([
 });
 
 
-Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contest.view', function($contest_id, $slug, $user_id=null, $candidate_id=null) {
-  $is_facebook = preg_match("/facebookexternalhit/", Request::server('HTTP_USER_AGENT')) || Input::get('f');
-  if($is_facebook)
-  {
-    if($user_id)
-    {
-      $u = User::find($user_id);
-      if($u)
-      {
-        $c = Contest::find($contest_id);
-        $w = Candidate::find($candidate_id);
-        $data = [
-          'title'=>"{$u->first_name} voted for {$w->name} in {$c->title}",
-          'canonical_url'=>route('contest.view', [$c->id, $c->slug(), $user_id, $candidate_id]),
-          'image_url'=>route('image.view', [$w->image_id, 'facebook']),
-          'description'=>"Cast your vote and watch the contest at pick.cool.",
-        ];
-      }
-    } else {
-      $c = Contest::find($contest_id);
-      $w = $c->current_winner();
-      $data = [
-        'title'=>"Vote in {$c->title}",
-        'canonical_url'=>route('contest.view', [$c->id, $c->slug()]),
-        'image_url'=>route('image.view', [$w->image_id, 'facebook']),
-        'description'=>"Cast your vote and watch the contest at pick.cool.",
-      ];
-      
-    }
-    return View::make('contest.spider')->with($data);
+Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', [
+  'as'=>'contest.candidate.view',
+  function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
+    return process_hit($contest_id, $candidate_id);
   }
-  return View::make('app');
+]);
+
+function process_hit($contest_id, $candidate_id=null, $user_id=null)
+{
+  $is_facebook = preg_match("/facebookexternalhit/", Request::server('HTTP_USER_AGENT')) || Input::get('f');
+  if(!$is_facebook) return View::make('app');
+  
+  $c = Contest::find($contest_id);
+  if($candidate_id)
+  {
+    $w = Candidate::find($candidate_id);
+    $data = [
+      'title'=>"Vote {$w->name} in {$c->title}",
+      'canonical_url'=>route('contest.candidate.view', [$c->id, $c->slug(), $w->id, $w->slug()]),
+      'image_url'=>route('image.view', [$w->image_id, 'facebook']),
+      'description'=>"Cast your vote and watch the contest at pick.cool.",
+    ];
+  } else {
+    $w = $c->current_winner();
+    $data = [
+      'title'=>"Vote in {$c->title}",
+      'canonical_url'=>route('contest.view', [$c->id, $c->slug()]),
+      'image_url'=>route('image.view', [$w->image_id, 'facebook']),
+      'description'=>"{$w->name} (above) leads. Cast your vote and watch the contest at pick.cool.",
+    ];
+  }
+  return View::make('contest.spider')->with($data);
+}
+
+Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', [
+  'as'=>'contest.view', 
+  function($contest_id, $slug, $user_id=null, $candidate_id=null) {
+    return process_hit($contest_id, $candidate_id, $user_id);
 }]);
 
 Route::get('/images/{id}/{size}', ['as'=>'image.view', function($id,$size) {

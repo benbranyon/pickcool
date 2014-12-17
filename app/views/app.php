@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="pickCoolApp">
   <head>
+    <script>
+      var CP_DEBUG=<?php echo($_ENV['JS_DEBUG'] ? 'true' : 'false') ?>;
+    </script>
     <base href="/">
     <meta property="fb:app_id" content="1497159643900204"/>
     <meta charset="utf-8">
@@ -55,6 +58,14 @@
 
       });
       </script>
+      <?php if($_ENV['BETA']): ?>
+        <style>
+          body
+          {
+            background-color: rgb(255, 186, 155);
+          }
+        </style>
+      <?php endif; ?>
   </head>
 
   <body ng-controller="MainCtrl">
@@ -79,12 +90,8 @@
 
       <div class="row">
         <div class="col-xs-12 ">
-          <div class="row">
-            <div class="col-xs-12">
-              <div flash-messages></div>
-              <div ui-view ng-if="session_started"></div>
-            </div>
-          </div>
+          <div flash-messages></div>
+          <div ui-view ng-if="session_started"></div>
 
           <div class="footer">
             <p>&copy; pick.cool 2014</p>
@@ -93,11 +100,9 @@
               <li><a ng-href="/terms">Terms of Service</a></li>
             </ul>
           </div>
-
-          </div> <!-- /container -->
         </div>
       </div>
-    </div>
+    </div> <!-- // Container -->
     
     <div id="login_dialog" class="modal fade">
       <div class="modal-dialog">

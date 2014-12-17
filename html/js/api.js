@@ -89,6 +89,10 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
+  this.unvote = function(candidate_id, success, error) {
+    api_lowevel({'name': 'vote', 'path': '/unvote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
+  };
+  
  
   var init_contest = function(contest)
   {
@@ -111,6 +115,9 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
       };
       if(c.vote_count > contest.highest_vote) contest.highest_vote = c.vote_count;
       contest.total_votes = contest.total_votes + c.vote_count;
+    });
+    contest.candidates.sort(function(a,b) {
+      return b.vote_count - a.vote_count;
     });
   };
   

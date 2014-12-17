@@ -189,10 +189,10 @@ ul.nav.nav-pills.footer-nav {
   border: 3px solid #24db24;
 }
 .view .contest .candidate .btn {
-  font-size: 11px;
+  font-size: 18px;
 }
 .view .contest .candidate .even {
-  width: 70px;
+  width: 45%;
   padding: 6px 2px;
 }
 .view .contest .votes-total {

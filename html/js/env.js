@@ -1,6 +1,4 @@
 var API_ENDPOINT="/api/v1";
-var DEBUG=true;
-
 
 (function() {
     var method;
@@ -16,15 +14,14 @@ var DEBUG=true;
 
     while (length--) {
         method = methods[length];
-
         // Only stub undefined methods.
-        if (!console[method]) {
+        if (!CP_DEBUG || !console[method]) {
             console[method] = noop;
         }
     }
 }());
 
-if(DEBUG)
+if(CP_DEBUG)
 {
   console.log("***DEBUGGING MODE ENABLED***");
 }
