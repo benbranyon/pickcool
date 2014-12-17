@@ -87,12 +87,8 @@
 
       <div class="row">
         <div class="col-xs-12 ">
-          <div class="row">
-            <div class="col-xs-12">
-              <div flash-messages></div>
-              <div ui-view ng-if="session_started"></div>
-            </div>
-          </div>
+          <div flash-messages></div>
+          <div ui-view ng-if="session_started"></div>
 
           <div class="footer">
             <p>&copy; pick.cool 2014</p>
@@ -101,11 +97,9 @@
               <li><a ng-href="/terms">Terms of Service</a></li>
             </ul>
           </div>
-
-          </div> <!-- /container -->
         </div>
       </div>
-    </div>
+    </div> <!-- // Container -->
     
     <div id="login_dialog" class="modal fade">
       <div class="modal-dialog">

@@ -22,7 +22,9 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     };
     if(DEBUG)
     {
-      $.post('https://graph.facebook.com', {'id': url, 'scrape': true}, share);
+      share();
+      
+//      $.post('https://graph.facebook.com', {'id': url, 'scrape': true}, share);
     } else {
       share();
     }
