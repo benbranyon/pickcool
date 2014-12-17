@@ -112,6 +112,9 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
       if(c.vote_count > contest.highest_vote) contest.highest_vote = c.vote_count;
       contest.total_votes = contest.total_votes + c.vote_count;
     });
+    contest.candidates.sort(function(a,b) {
+      return b.vote_count - a.vote_count;
+    });
   };
   
   
