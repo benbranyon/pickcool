@@ -373,17 +373,6 @@ Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contes
   $is_facebook = preg_match("/facebookexternalhit/", Request::server('HTTP_USER_AGENT')) || Input::get('f');
   if($is_facebook)
   {
-    $picky_speak = [
-      'Sad',
-      'Goofy',
-      'l33t',
-      'pwnd',
-      'Sketchy',
-      'As if',
-      'Solid',
-      'Needs more cowbell',
-    ];
-    $picky = $picky_speak[rand(0,count($picky_speak)-1)];
     if($user_id)
     {
       $u = User::find($user_id);
@@ -392,20 +381,20 @@ Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contes
         $c = Contest::find($contest_id);
         $w = Candidate::find($candidate_id);
         $data = [
-          'title'=>"{$u->first_name} voted {$w->name} coolest? \"{$picky},\" says Picky.",
+          'title'=>"{$u->first_name} voted for {$w->name} in {$c->title}",
           'canonical_url'=>route('contest.view', [$c->id, $c->slug(), $user_id, $candidate_id]),
           'image_url'=>route('image.view', [$w->image_id, 'facebook']),
-          'description'=>"In recent news, {$u->first_name} cast a critical vote that {$w->name} really is cooler than {$c->candidateNamesForHumans($w->id, 'or')}. \"This is about to be a bad day if you're not a {$w->name} fan,\" said Picky McCool in an exclusive interview. \"But voting isn't over,\" he added. Vote now before it's too late!",
+          'description'=>"Cast your vote and watch the contest at pick.cool.",
         ];
       }
     } else {
       $c = Contest::find($contest_id);
       $w = $c->current_winner();
       $data = [
-        'title'=>"{$w->name} voted coolest? \"{$picky},\" says Picky.",
+        'title'=>"Vote in {$c->title}",
         'canonical_url'=>route('contest.view', [$c->id, $c->slug()]),
         'image_url'=>route('image.view', [$w->image_id, 'facebook']),
-        'description'=>"Is {$w->name} really cooler than {$c->candidateNamesForHumans($w->id, 'or')}? \"This is about to be a bad day if you're not a {$w->name} fan,\" said Picky McCool in an exclusive interview. \"But voting isn't over,\" he added. Vote now before it's too late!",
+        'description'=>"Cast your vote and watch the contest at pick.cool.",
       ];
       
     }
