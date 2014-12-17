@@ -17,7 +17,7 @@
       <button class="btn btn-warning even" ng-click="vote(candidate)" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
       <button class="btn btn-success even" ng-click="unvote(candidate)" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
       <button class="btn btn-primary even"><i class="fa {{candidate.buy_text}}"></i> Discover</button>
-      <button class="btn btn-primary"><i class="fa fa-facebook"></i></button>
+      <button class="btn btn-primary" ng-click="share(candidate)"><i class="fa fa-facebook"></i></button>
 
     </div>
     <div class="clearfix"></div>
