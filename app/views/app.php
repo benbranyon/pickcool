@@ -55,6 +55,14 @@
 
       });
       </script>
+      <?php if($_ENV['BETA']): ?>
+        <style>
+          body
+          {
+            background-color: rgb(255, 186, 155);
+          }
+        </style>
+      <?php endif; ?>
   </head>
 
   <body ng-controller="MainCtrl">
