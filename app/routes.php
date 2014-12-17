@@ -431,11 +431,13 @@ Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
   return Redirect::to($candidate->buy_url);
 }]);
 
+Route::get('/privacy', ['as'=>'privacy.view', function() {
+  return View::make('app');
+}]);
 
 Route::any('{url?}', function($url) { 
  return View::make('app');
 })->where(['url' => '[-a-z0-9/]+']);
-
 
 if (Config::get('database.log', false))
 {    	 

@@ -76,5 +76,13 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       controller: 'EditContestCtrl',
       templateUrl: "partials/contests/edit.html"
     })
+    .state('privacy', {
+      url: "/privacy",
+      templateUrl: "partials/privacy.html"
+    })
+    .state('/terms', {
+      url: "/terms",
+      templateUrl: "partials/terms.html"
+    })
   ;
 })

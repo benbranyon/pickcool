@@ -88,6 +88,10 @@
 
           <div class="footer">
             <p>&copy; pick.cool 2014</p>
+            <ul class="nav nav-pills footer-nav">
+              <li><a ng-href="/privacy">Privacy Policy</a></li>
+              <li><a ng-href="/terms">Terms of Service</a></li>
+            </ul>
           </div>
 
           </div> <!-- /container -->
