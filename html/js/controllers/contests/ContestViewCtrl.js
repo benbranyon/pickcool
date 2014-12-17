@@ -5,29 +5,23 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     $scope.contest = res.data;
   });
   
-  $scope.share = function () {
-    var url = $scope.contest.current_user_candidate.share_url();
-    var share = function(response) { 
-      console.log(response);
-      ezfb.ui(
-       {
-        method: 'share',
-        href: url,
-       },
-       function (res) {
-        console.log(res);
-        // res: FB.ui response
-       }
-      );
-    };
-    if(DEBUG)
-    {
-      share();
-      
-//      $.post('https://graph.facebook.com', {'id': url, 'scrape': true}, share);
-    } else {
-      share();
-    }
+  $scope.discuss = function(candidate) {
+    $scope.discuss_candidate = candidate;
+    $('#discuss').modal('show');
+  };
+  
+  $scope.share = function (c) {
+    var url = c.canonical_url;
+    ezfb.ui(
+     {
+      method: 'share',
+      href: url,
+     },
+     function (res) {
+      console.log(res);
+      // res: FB.ui response
+     }
+    );
   };
   
   $scope.vote = function(c) {

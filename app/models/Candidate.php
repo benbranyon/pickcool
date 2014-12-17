@@ -4,6 +4,13 @@ use Cocur\Slugify\Slugify;
 class Candidate extends Eloquent
 {
   
+  function slug()
+  {
+    $slugify = new Slugify();
+    return $slugify->slugify($this->name, '_');
+  }
+
+
   function image_url($size='thumb')
   {
     return route('image.view', [$this->image->id, $size]);
