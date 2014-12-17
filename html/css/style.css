@@ -137,6 +137,12 @@ ul.nav {
   display: inline-block;
   width: 70px;
 }
+ul.nav.nav-pills.footer-nav {
+  float: right;
+}
+.nav-pills > li {
+  width: auto;
+}
 .view .contest {
   text-align: center;
 }
