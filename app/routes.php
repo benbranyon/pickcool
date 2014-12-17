@@ -325,6 +325,22 @@ Route::group([
     return ApiSerializer::ok($c->contest);
   });
   
+  Route::any('/unvote', function() {
+    if(!Auth::user())
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
+    
+    $c = Candidate::find(Input::get('c'));
+    if(!$c)
+    {
+      return ApiSerializer::error(API_ERR_LOOKUP);
+    }
+    Auth::user()->unvote_for($c->id);
+    return ApiSerializer::ok($c->contest);
+  });
+  
+  
   Route::any('/contests/top', function() {
     $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id', 'left outer')
       ->groupBy('contests.id')

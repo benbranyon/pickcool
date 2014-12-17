@@ -89,6 +89,10 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
+  this.unvote = function(candidate_id, success, error) {
+    api_lowevel({'name': 'vote', 'path': '/unvote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
+  };
+  
  
   var init_contest = function(contest)
   {

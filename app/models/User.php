@@ -47,4 +47,16 @@ class User extends Eloquent
     $v->candidate_id = $c->id;
     $v->save();
   }
+  
+  function unvote_for($c)
+  {
+    if(is_numeric($c))
+    {
+      $c = Candidate::find($c);
+    }
+    if(!$c) return;
+    $v = Vote::whereUserId($this->id)->whereContestId($c->contest_id)->first();
+    if(!$v) return;
+    $v->delete();
+  }  
 }
