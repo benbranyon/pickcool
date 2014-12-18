@@ -223,3 +223,7 @@ ul.nav.nav-pills.footer-nav {
 .navbar {
   margin-bottom: 2px;
 }
+.loading {
+  text-align: center;
+  font-size: 100px;
+}

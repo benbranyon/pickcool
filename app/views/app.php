@@ -78,9 +78,9 @@
         </div>
       </div>
       <ul class="list-inline nav">
-        <li class="btn  {{state.is('home') || state.is('hot') ? 'btn-primary' : 'btn-default'}}" ui-sref="hot">Hot</li>
-        <li class="btn  {{state.is('new') ? 'btn-primary' : 'btn-default'}}" ui-sref="new">New</li>
-        <li class="btn  {{state.is('top') ? 'btn-primary' : 'btn-default'}} text-primary" ui-sref="top">Top</li>
+        <li class="btn  {{state.is('home') || state.is('hot') ? 'btn-primary' : 'btn-default'}}" ui-sref="hot" ng-click="state.reload()">Hot</li>
+        <li class="btn  {{state.is('new') ? 'btn-primary' : 'btn-default'}}" ui-sref="new"  ng-click="state.reload()">New</li>
+        <li class="btn  {{state.is('top') ? 'btn-primary' : 'btn-default'}} text-primary" ui-sref="top" ng-click="state.reload()">Top</li>
       </ul>
       <ul class="list-inline pull-right">
         <li ng-if="!current_user" class="pull-right btn btn-xs btn-primary" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</li>

@@ -1,4 +1,7 @@
 <div ng-controller="ContestViewCtrl" class="view">
+  <div  class="loading" ng-if="!contest">
+    <i class="fa fa-spinner fa-spin"></i>
+  </div>
   <div ng-if="contest" class="contest">
     <h1>
       {{contest.title}}

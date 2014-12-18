@@ -11,6 +11,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
         console.log('StateController');
+        $scope.contests=null;
         api.getContests('hot', function(res) {
           $scope.contests = res.data;
         });
@@ -45,6 +46,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
         console.log('StateController');
+        $scope.contests=null;
         api.getContests('hot', function(res) {
           $scope.contests = res.data;
         });
@@ -55,6 +57,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
         console.log('StateController');
+        $scope.contests=null;
         api.getContests('new', function(res) {
           $scope.contests = res.data;
         });
@@ -65,6 +68,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
         console.log('StateController');
+        $scope.contests=null;
         api.getContests('top', function(res) {
           $scope.contests = res.data;
         });
