@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="pickCoolApp">
   <head>
-    <script
-  src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
-  data-apikey="95959bc4ce4684734053839959bc0273">
-</script>
     <script>
       var CP_DEBUG=<?php echo($_ENV['JS_DEBUG'] ? 'true' : 'false') ?>;
+      var BUNGSNAG_ENABLED=<?php echo($_ENV['BUNGSNAG_ENABLED'] ? 'true' : 'false') ?>;
     </script>
+
+    <?php if($_ENV['BUGSNAG_ENABLED']): ?>
+      <script
+      src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
+      data-apikey="95959bc4ce4684734053839959bc0273">
+      </script>
+    <?php endif; ?>
     <base href="/">
     <meta property="fb:app_id" content="1497159643900204"/>
     <meta charset="utf-8">
