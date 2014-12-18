@@ -146,6 +146,26 @@ ul.nav.nav-pills.footer-nav {
 .view .contest {
   text-align: center;
 }
+.view .contest .alert {
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 0px) {
+  .view .contest .alert {
+    width: 100%;
+  }
+}
+@media (min-width: 750px) {
+  .view .contest .alert {
+    width: 75%;
+  }
+}
+.view .contest .alert h1 {
+  text-align: center;
+}
+.view .contest .alert p, .view .contest .alert ul {
+  text-align: left;
+}
 .view .contest .modal-body {
   text-align: left;
 }

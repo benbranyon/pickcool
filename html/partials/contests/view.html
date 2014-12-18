@@ -10,6 +10,21 @@
     <p>
       <b><i>Click your favorite image below to cast your vote.</i></b>
     </p>
+    
+    <div class="alert alert-success" ng-if="contest.writein_enabled && contest.current_user_writein_id">
+      <h1>You are in this contest!</h1>
+      <p>Your job now is to share, share, share, and encourage others to do so too. Here are some ideas that were successful for other users:</p>
+      <ul>
+        <li>Vote for someone. If not for yourself, then someone else in the contest.
+        <li>Share your link to everyone in the world.
+        <li>Not just once! Share every day.
+        <li>Ask others to share your link too.
+        <li>Make videos and other entertaining posts to raise awareness.
+        <li>Be a good sport. Promote others too, you'd be surprised what that can do for your own standing.
+      </ul>
+      <button class="btn btn-primary" ng-click="share(current_user_candidate)"><i class="fa fa-facebook"></i> Share Your Entry Now</button> 
+    </div>
+    <div class="clearfix"></div>
 
     <div class="candidate" ng-repeat="candidate in contest.candidates">
       <h2>{{candidate.name}} </h2>
@@ -21,6 +36,7 @@
       <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
       <button class="btn btn-primary even" ng-click="share(candidate)"><i class="fa fa-facebook"></i> Share</button>
     </div>
+    
     <div class="candidate" ng-if="contest.writein_enabled && !contest.current_user_writein_id">
       <h2>You</h2>
       <h3>Enter the Contest</h3>
