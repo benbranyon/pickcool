@@ -196,7 +196,7 @@ class ApiSerializer
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
           'is_editable'=>$obj->is_editable_by(Auth::user()),
           'slug'=>$obj->slug(),
-          'writein_enabled'=>$obj->writein_enabled,
+          'writein_enabled'=>$obj->writein_enabled == true,
           'candidates'=>$obj->candidates,
         ];
         return self::serialize($contest);
