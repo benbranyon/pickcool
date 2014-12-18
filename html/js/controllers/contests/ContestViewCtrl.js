@@ -4,6 +4,23 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
   });
+  
+  $scope.join = function() {
+    $('#join').modal('show');
+    ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
+      $scope.current_user.profile_img_url = res.data.url;
+    });
+  };
+  
+  $scope.join_confirm = function() {
+    $('#join').modal('hide');
+    $('#join_confirm').modal('show');
+    $scope.joined = false;
+    api.joinContest($scope.contest.id, function(res) {
+      $scope.contest = res.data;
+      $scope.joined = true;
+    });
+  };
 
   $scope.unvote = function(c) {
     $('.candidate').removeClass('selected');

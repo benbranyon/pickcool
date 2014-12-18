@@ -1,5 +1,5 @@
 <?php
-  
+
 class User extends Eloquent
 {
   function contests()
@@ -10,6 +10,11 @@ class User extends Eloquent
   function current_vote_for($contest)
   {
     return Vote::whereUserId(Auth::user()->id)->whereContestId($contest->id)->first();
+  }
+  
+  function profile_image_url()
+  {
+    return "https://graph.facebook.com/{$this->fb_id}/picture?width=1200&height=1200";
   }
   
   static function from_fb($me)

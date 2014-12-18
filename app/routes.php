@@ -196,6 +196,7 @@ class ApiSerializer
           'current_user_candidate_id'=>$v ? $v->candidate_id : null,
           'is_editable'=>$obj->is_editable_by(Auth::user()),
           'slug'=>$obj->slug(),
+          'writein_enabled'=>$obj->writein_enabled,
           'candidates'=>$obj->candidates,
         ];
         return self::serialize($contest);
@@ -215,6 +216,7 @@ class ApiSerializer
           'name'=>$obj->name,
           'image_id'=>$obj->image_id,
           'vote_count'=>$obj->votes()->count(),
+          'fb_id'=>$obj->fb_id,
           'buy_text'=>$obj->buy_text,
           'canonical_url'=>route('contest.candidate.view', [$obj->contest_id, $obj->contest->slug(), $obj->id, $obj->slug()]),
         ];
@@ -293,6 +295,39 @@ Route::group([
     }
     return ApiSerializer::ok($contests);
   });
+
+  Route::any('/contests/join', function() {
+    $contest_id = Input::get('contest_id');
+    $c = Contest::find($contest_id);
+    if(!Auth::user())
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
+    if(!$c)
+    {
+      return ApiSerializer::error(API_ERR_LOOKUP);
+    }
+    if(!$c->writein_enabled)
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
+    
+    $can = Candidate::whereFbId(Auth::user()->fb_id)->first();
+    if(!$can)
+    {
+      $can = new Candidate();
+      $can->contest_id = $c->id;
+      $can->fb_id = Auth::user()->fb_id;
+      $can->buy_url = 'x';
+      $can->buy_text = 'x';
+    }
+    $i = Image::from_url(Auth::user()->profile_image_url());
+    $can->name = Auth::user()->first_name . ' ' . Auth::user()->last_name;
+    $can->image_id = $i->id;
+    $can->save();
+    return ApiSerializer::ok($can->contest);
+  });
+
   Route::any('/contests/create', function() {
     return api_add_edit_contest();
   });

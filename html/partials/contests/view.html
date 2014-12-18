@@ -10,7 +10,7 @@
     <p>
       <b><i>Click your favorite image below to cast your vote.</i></b>
     </p>
-    
+
     <div class="candidate" ng-repeat="candidate in contest.candidates">
       <h2>{{candidate.name}} </h2>
       <h3>{{candidate.vote_count}} votes</h3>
@@ -21,6 +21,15 @@
       <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
       <button class="btn btn-primary even" ng-click="share(candidate)"><i class="fa fa-facebook"></i> Share</button>
     </div>
+    <div class="candidate" ng-if="contest.writein_enabled && !contest.current_user_writein_id">
+      <h2>You</h2>
+      <h3>Enter the Contest</h3>
+      <a class="thumb" ng-click="join()" >
+        <img ng-src="/add-user.png" />
+      </a>
+      <button class="btn btn-success"  ng-click="join()">Join The Contest Now</button>
+    </div>
+    
     <div class="clearfix"></div>
     <div class="row">
       <div class="col-lg-12">
@@ -34,5 +43,60 @@
         </div>          
       </div>
     </div>
-  </div>
+    <div class="modal fade" id="join">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Join The Contest</h4>
+          </div>
+          <div class="modal-body">
+            So you want to join the contest, eh? Well, it's pretty easy. If you don't like what you see below, go update your Facebook profile
+            and then come back to join the contest.
+            <p><em>Preview</em></p>
+            <div class="mini-candidate">
+              <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
+              <h3>427 votes</h3>
+              <div class="thumb">
+                <img ng-src="{{current_user.profile_img_url}}"/>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="join_confirm()">Join Now</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->      
+    <div class="modal fade" id="join_confirm">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">You are **IN**!</h4>
+          </div>
+          <div class="modal-body">
+            <div  class="loading" ng-if="!joined">
+              <p>
+                Please hold while we add you to the contest...
+              <p>
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <div ng-if="joined">
+              Awesome sauce, you're in the contest. Here's what to do next:
+              <ul>
+                <li>Find your entry on this page and cast the first vote.
+                <li>See the SHARE button below your entry. Share, share, share.
+                <li>Really. Share it. Every day. How else are people going to know you're in it to win it?
+                <li>Get involved on Facebook. Post videos, thank people for voting and sharing, and post daily updates.
+              </ul>
+              Good luck.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->      </div>
 </div>

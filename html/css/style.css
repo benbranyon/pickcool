@@ -146,32 +146,35 @@ ul.nav.nav-pills.footer-nav {
 .view .contest {
   text-align: center;
 }
+.view .contest .modal-body {
+  text-align: left;
+}
 .view .contest .candidate {
   border-bottom: 1px solid #ddd;
   padding: 5px;
   margin: 5px;
   text-align: center;
-  max-width: 24%;
+  width: 24%;
 }
 @media (min-width: 0px) {
   .view .contest .candidate {
-    max-width: 100%;
+    width: 100%;
   }
 }
 @media (min-width: 480px) {
   .view .contest .candidate {
-    max-width: 47%;
+    width: 47%;
     display: inline-block;
   }
 }
 @media (min-width: 768px) {
   .view .contest .candidate {
-    max-width: 31%;
+    width: 31%;
   }
 }
 @media (min-width: 992px) {
   .view .contest .candidate {
-    max-width: 23%;
+    width: 23%;
   }
 }
 .view .contest .candidate .thumb {
@@ -194,6 +197,75 @@ ul.nav.nav-pills.footer-nav {
 .view .contest .candidate .even {
   width: 45%;
   padding: 6px 2px;
+}
+.view .contest #join {
+  text-align: left;
+}
+.view .contest #join h1, .view .contest #join .h1, .view .contest #join h2, .view .contest #join .h2, .view .contest #join h3, .view .contest #join .h3 {
+  margin-top: -2px;
+  margin-bottom: 5px;
+}
+.view .contest #join h2 {
+  font-size: 15px;
+}
+.view .contest #join h3 {
+  font-size: 10px;
+}
+.view .contest #join .mini-candidate {
+  border: 1px solid #e7e4e4;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 5px;
+  text-align: left;
+  width: 50%;
+}
+@media (min-width: 0px) {
+  .view .contest #join .mini-candidate {
+    width: 50%;
+  }
+}
+@media (min-width: 480px) {
+  .view .contest #join .mini-candidate {
+    width: 47%;
+    display: inline-block;
+  }
+}
+@media (min-width: 768px) {
+  .view .contest #join .mini-candidate {
+    width: 31%;
+  }
+}
+@media (min-width: 992px) {
+  .view .contest #join .mini-candidate {
+    width: 23%;
+  }
+}
+.view .contest #join .mini-candidate .thumb {
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin: 3px;
+  display: block;
+}
+.view .contest #join .mini-candidate .thumb img {
+  border-radius: 3px;
+  width: 100%;
+}
+.view .contest #join .mini-candidate .thumb.selected {
+  border: 3px solid #24db24;
+}
+.view .contest #join .mini-candidate .btn {
+  font-size: 18px;
+}
+.view .contest #join .mini-candidate .even {
+  width: 45%;
+  padding: 6px 2px;
+}
+.view .contest #join_confirm .loading {
+  font-size: 20px;
+}
+.view .contest #join_confirm .loading .fa {
+  font-size: 50px;
 }
 .view .contest .votes-total {
   font-size: 43px;

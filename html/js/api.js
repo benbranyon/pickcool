@@ -38,6 +38,16 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     });
   };
 
+  this.joinContest = function(contest_id, success, error) {
+    api_lowevel({'name': 'joinContest', 'path': '/contests/join', 'params': {'contest_id': contest_id },
+      'success': function(res) {
+        init_contest(res.data);
+        success(res);
+      }, 
+      'error': error
+    });
+  };
+
   this.saveContest = function(contest, success, error) {
     api_lowevel({'name': 'saveContest', 'path': '/contests/save', 'params': {'contest': JSON.stringify(contest) }, 
     'success': success, 
@@ -90,7 +100,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
   };
   
   this.unvote = function(candidate_id, success, error) {
-    api_lowevel({'name': 'vote', 'path': '/unvote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
+    api_lowevel({'name': 'unvote', 'path': '/unvote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
  
@@ -100,7 +110,12 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     // Fix up contest data
     contest.highest_vote = 0;
     contest.total_votes = 0;
+    contest.current_user_writein_id = null;
     angular.forEach(contest.candidates, function(c,idx) {
+      if(c.fb_id == $rootScope.current_user.fb_id)
+      {
+        contest.current_user_writein_id = c.id;
+      }
       if (c.id == contest.current_user_candidate_id)
       {
         contest.current_user_candidate = c;

@@ -3,7 +3,7 @@
   <head>
     <script>
       var CP_DEBUG=<?php echo($_ENV['JS_DEBUG'] ? 'true' : 'false') ?>;
-      var BUNGSNAG_ENABLED=<?php echo($_ENV['BUNGSNAG_ENABLED'] ? 'true' : 'false') ?>;
+      var BUGSNAG_ENABLED=<?php echo($_ENV['BUGSNAG_ENABLED'] ? 'true' : 'false') ?>;
     </script>
 
     <?php if($_ENV['BUGSNAG_ENABLED']): ?>
