@@ -1,5 +1,11 @@
 var current_user = {};
 
+angular.module('exceptionOverride', []).factory('$exceptionHandler', function () {
+  return function (exception, cause) {
+    Bugsnag.notifyException(exception, {diagnostics:{cause: cause}})
+  };
+});
+
 var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash'])
 .config(function (ezfbProvider) {
   ezfbProvider.setInitParams({

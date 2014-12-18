@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="pickCoolApp">
   <head>
+    <script
+  src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
+  data-apikey="95959bc4ce4684734053839959bc0273">
+</script>
     <script>
       var CP_DEBUG=<?php echo($_ENV['JS_DEBUG'] ? 'true' : 'false') ?>;
     </script>
