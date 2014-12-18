@@ -6,6 +6,11 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   });
   
   $scope.join = function() {
+    if(!$scope.current_user)
+    {
+      $('#login_dialog').modal();
+      return;
+    }
     $('#join').modal('show');
     ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
       $scope.current_user.profile_img_url = res.data.url;
