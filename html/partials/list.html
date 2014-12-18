@@ -18,7 +18,7 @@
           <ul class="list-inline">
             <li ng-repeat="candidate in contest.candidates">
               <a class="thumb" ng-href="{{contest.canonical_url}}"  ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
-                <img ng-src="{{candidate.image('tiny')}}"/>
+                <img ng-src="{{candidate.image('tiny')}}" alt="{{candidate.name}}"/>
                 <span class='votes-count'>{{candidate.vote_count}}</span>
               </a>
             </li>
