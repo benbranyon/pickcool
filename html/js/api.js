@@ -112,7 +112,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     contest.total_votes = 0;
     contest.current_user_writein_id = null;
     angular.forEach(contest.candidates, function(c,idx) {
-      if(c.fb_id == $rootScope.current_user.fb_id)
+      if($rootScope.current_user && c.fb_id == $rootScope.current_user.fb_id)
       {
         contest.current_user_writein_id = c.id;
       }
