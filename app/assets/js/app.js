@@ -9,7 +9,7 @@ if(BUGSNAG_ENABLED)
   });
 }
 
-var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash'])
+var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash', 'angular-inview'])
 .config(function (ezfbProvider) {
   ezfbProvider.setInitParams({
     appId: '1497159643900204',

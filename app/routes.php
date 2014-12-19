@@ -27,8 +27,7 @@ Route::get("/{etag}/assets/{type}/{name}", function($etag, $type, $name) {
       $response = Response::make($js, 200);
 
       $response->header('Content-Type', "application/javascript");
-      $response->setTtl(60*60*24*365);
-      return $response;
+      break;
     case 'css':
       $css = [];
       $css[] = file_get_contents(storage_path().'/assets/css/app.css');
@@ -45,8 +44,7 @@ Route::get("/{etag}/assets/{type}/{name}", function($etag, $type, $name) {
       $response = Response::make($css, 200);
 
       $response->header('Content-Type', "text/css");
-      $response->setTtl(60*60*24*365);
-      return $response;    
+      break;
     case 'fonts':
       $data = file_get_contents(storage_path().'/assets/fonts/'.$name);
       $pathinfo = pathinfo($name);
@@ -60,11 +58,15 @@ Route::get("/{etag}/assets/{type}/{name}", function($etag, $type, $name) {
       $response = Response::make($data, 200);
 
       $response->header('Content-Type', $map[$pathinfo['extension']]);
-      $response->setTtl(60*60*24*365);
-      return $response;    
+      break;
+    default:
+      $response = Response::make("Type {$type} not found", 404);
+      $response->header('Content-Type', "text/plain");
   }
-  $response = Response::make("Type {$type} not found", 404);
-  $response->header('Content-Type', "text/plain");
+  $date = new DateTime();
+  $date->modify('+1 year');
+  $response->setExpires($date);
+  $response->setMaxAge(60*60*24*365);
   $response->setTtl(60*60*24*365);
   return $response;
 });
@@ -529,7 +531,13 @@ Route::get("/images/{id}/{size}", ['as'=>'image.view', function($id,$size) {
     'Content-type',
     'image/jpeg'
   );
+  
+  $date = new DateTime();
+  $date->modify('+1 year');
+  $response->setExpires($date);
+  $response->setMaxAge(60*60*24*365);
   $response->setTtl(60*60*24*365);
+
   return $response;
 }]);
 

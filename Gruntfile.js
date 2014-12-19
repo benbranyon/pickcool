@@ -59,6 +59,7 @@ module.exports = function(grunt) {
           './bower_components/angular-ui-router/release/angular-ui-router.js',
           './bower_components/angular-flash/dist/angular-flash.js',
           './bower_components/angular-easyfb/angular-easyfb.js',
+          './bower_components/angular-inview/angular-inview.js',
           './bower_components/spin.js/spin.js',
           './bower_components/ladda/js/ladda.js',
           './bower_components/ladda/js/ladda.jquery.js',
