@@ -12,6 +12,12 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api) {
       $('#login_dialog').modal('hide');
     }
   });
+  
+  $scope.lazyload = function(event, inview, src) {
+    var $e = angular.element(event.inViewTarget);
+    $e.attr('src', src);
+    console.log(src);
+  };
 
   $scope.candidates = [];
 });
