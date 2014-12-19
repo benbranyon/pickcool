@@ -15,7 +15,7 @@ define('API_ERR_AUTH', 1);
 define('API_ERR_VALIDATION', 2);
 define('API_ERR_LOOKUP', 3);
 
-Route::get("/{$_ENV['ETAG']}/assets/{type}/{name}", function($type, $name) {
+Route::get("/{etag}/assets/{type}/{name}", function($etag, $type, $name) {
   switch($type)
   {
     case 'js':
@@ -514,7 +514,7 @@ Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', [
     return process_hit($contest_id, $candidate_id, $user_id);
 }]);
 
-Route::get('/images/{id}/{size}', ['as'=>'image.view', function($id,$size) {
+Route::get("{/images/{id}/{size}", ['as'=>'image.view', function($id,$size) {
   $image = Image::find($id);
   if(!$image)
   {
@@ -529,6 +529,7 @@ Route::get('/images/{id}/{size}', ['as'=>'image.view', function($id,$size) {
     'Content-type',
     'image/jpeg'
   );
+  $response->setTtl(60*60*24*365);
   return $response;
 }]);
 
