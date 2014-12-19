@@ -3,6 +3,11 @@ app.directive('scrollTo', function($timeout, $anchorScroll) {
     $timeout(function() { $anchorScroll()}, 0);
   };
 });
+app.directive('fixHeight', function() {
+  return function(scope, element, attrs) {
+    angular.element(element).css('height', angular.element(element).css('width'));
+  };
+});
 app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll) {
   console.log('ContestViewCtrl');
   $anchorScroll.yOffset = 50;
