@@ -15,6 +15,59 @@ define('API_ERR_AUTH', 1);
 define('API_ERR_VALIDATION', 2);
 define('API_ERR_LOOKUP', 3);
 
+Route::get("/{$_ENV['ETAG']}/assets/{type}/{name}", function($type, $name) {
+  switch($type)
+  {
+    case 'js':
+      $js = [];
+      $js[] = "var CP_DEBUG=".json_encode($_ENV['JS_DEBUG']==true);
+      $js[] = "var BUGSNAG_ENABLED=".json_encode($_ENV['BUGSNAG_ENABLED']==true);
+      $js[] = file_get_contents(storage_path().'/assets/js/app.js');
+      $js = join(";\n", $js);
+      $response = Response::make($js, 200);
+
+      $response->header('Content-Type', "application/javascript");
+      $response->setTtl(60*60*24*365);
+      return $response;
+    case 'css':
+      $css = [];
+      $css[] = file_get_contents(storage_path().'/assets/css/app.css');
+      if($_ENV['BETA'])
+      {
+        $css[] = "
+          body
+          {
+            background-color: rgb(255, 186, 155);
+          }
+        ";
+      }
+      $css = join("\n", $css);
+      $response = Response::make($css, 200);
+
+      $response->header('Content-Type', "text/css");
+      $response->setTtl(60*60*24*365);
+      return $response;    
+    case 'fonts':
+      $data = file_get_contents(storage_path().'/assets/fonts/'.$name);
+      $pathinfo = pathinfo($name);
+      $map = [
+        'woff'=>'application/font-woff',
+        'ttf'=>'application/font-ttf',
+        'eof'=>'application/vnd.ms-fontobject',
+        'otf'=>'application/font-otf',
+        'svg'=>'image/svg+xml',
+      ];
+      $response = Response::make($data, 200);
+
+      $response->header('Content-Type', $map[$pathinfo['extension']]);
+      $response->setTtl(60*60*24*365);
+      return $response;    
+  }
+  $response = Response::make("Type {$type} not found", 404);
+  $response->header('Content-Type', "text/plain");
+  $response->setTtl(60*60*24*365);
+  return $response;
+});
 
 function api_add_edit_contest()
 {
