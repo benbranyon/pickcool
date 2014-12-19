@@ -28,23 +28,28 @@
   </head>
 
   <body ng-controller="MainCtrl">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          <span class="text-primary">pick.cool</span>
-          <span class="small text-muted">Vote and watch social contests in real time.</span>
-          
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Pick.Cool</a>
+          <p class="brand-slogan">
+            <span class="small text-muted">Vote and watch social contests in real time.</span>
+          </p>
+        </div>
+        <div id="navbar" class="navbar">
+          <ul class="login-list list-inline pull-right">
+            <li ng-if="!current_user" class="pull-right btn btn-xs btn-primary" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</li>
+            <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
+            <li ng-if="current_user" class="btn btn-xs btn-danger" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</li>
+          </ul>
         </div>
       </div>
+    </nav>
+    <div class="container-fluid">      
       <ul class="list-inline nav">
         <li class="btn  @{{state.is('home') || state.is('hot') ? 'btn-primary' : 'btn-default'}}" ui-sref="hot" ng-click="state.reload()">Hot</li>
         <li class="btn  @{{state.is('new') ? 'btn-primary' : 'btn-default'}}" ui-sref="new"  ng-click="state.reload()">New</li>
         <li class="btn  @{{state.is('top') ? 'btn-primary' : 'btn-default'}} text-primary" ui-sref="top" ng-click="state.reload()">Top</li>
-      </ul>
-      <ul class="list-inline pull-right">
-        <li ng-if="!current_user" class="pull-right btn btn-xs btn-primary" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</li>
-        <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
-        <li ng-if="current_user" class="btn btn-xs btn-danger" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</li>
       </ul>
 
       <div class="row">
