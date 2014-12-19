@@ -58,7 +58,10 @@
           <div ui-view ng-if="session_started"></div>
 
           <div class="footer">
-            <p>&copy; pick.cool 2014</p>
+            <ul class="pull-left nav nav-pills footer-nav">
+              <li>&copy; pick.cool 2014</li>
+              <li>v{{$_ENV['ETAG']}}</li>
+            </ul>
             <ul class="nav nav-pills footer-nav">
               <li><a ng-href="/privacy">Privacy Policy</a></li>
               <li><a ng-href="/terms">Terms of Service</a></li>
