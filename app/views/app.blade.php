@@ -27,7 +27,7 @@
 
   </head>
 
-  <body ng-controller="MainCtrl">
+  <body ng-controller="MainCtrl" id="top">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-click="scrollTop()">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -36,7 +36,7 @@
             <span class="small text-muted">Vote and watch social contests in real time.</span>
           </p>
         </div>
-        <div id="navbar" class="navbar navbar-right">
+        <div id="navbar" class="navbar pull-right">
           <ul class="login-list list-inline ">
             <li ng-if="!current_user" class="pull-right btn btn-xs btn-primary" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</li>
             <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>

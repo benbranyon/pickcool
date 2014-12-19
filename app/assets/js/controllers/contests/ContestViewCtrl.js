@@ -1,6 +1,12 @@
-
-app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter) {
+app.directive('scrollTo', function($timeout, $anchorScroll) {
+  return function(scope, element, attrs) {
+    $timeout(function() { $anchorScroll()}, 0);
+  };
+});
+app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll) {
   console.log('ContestViewCtrl');
+  $anchorScroll.yOffset = 50;
+   
   api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
   });
@@ -34,6 +40,10 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     $scope.contest.current_user_candidate_id = null;
     api.unvote(c.id);
   };
+  
+  $scope.scroll = function() {
+    $anchorScroll();
+  }
    
   $scope.share = function (c) {
     var url = c.canonical_url;

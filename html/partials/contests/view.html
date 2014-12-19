@@ -3,6 +3,7 @@
     <i class="fa fa-spinner fa-spin"></i>
   </div>
   <div ng-if="contest" class="contest">
+    <button ng-click="scroll()">click</button>
     <h1>
       {{contest.title}}
       <button ng-if="contest.is_editable" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
@@ -26,7 +27,7 @@
     </div>
     <div class="clearfix"></div>
 
-    <div class="candidate" ng-repeat="candidate in contest.candidates">
+    <div class="candidate" ng-repeat="candidate in contest.candidates" id="c{{candidate.id}}">
       <h2>{{candidate.name}} </h2>
       <h3>{{candidate.vote_count}} votes</h3>
       <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
@@ -46,6 +47,7 @@
       <button class="btn btn-success"  ng-click="join()">Join The Contest Now</button>
     </div>
     
+    <div scroll-to></div>
     <div class="clearfix"></div>
     <div class="row">
       <div class="col-lg-12">
