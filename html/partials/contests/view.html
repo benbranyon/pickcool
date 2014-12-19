@@ -26,11 +26,11 @@
     </div>
     <div class="clearfix"></div>
 
-    <div class="candidate" ng-repeat="candidate in contest.candidates">
+    <div class="candidate" ng-repeat="candidate in contest.candidates" id="c{{candidate.id}}">
       <h2>{{candidate.name}} </h2>
       <h3>{{candidate.vote_count}} votes</h3>
       <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
-        <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}"/>
+        <img fix-height ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}"/>
       </a>
       <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
       <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
@@ -46,6 +46,7 @@
       <button class="btn btn-success"  ng-click="join()">Join The Contest Now</button>
     </div>
     
+    <div scroll-to></div>
     <div class="clearfix"></div>
     <div class="row">
       <div class="col-lg-12">

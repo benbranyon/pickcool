@@ -1,5 +1,8 @@
 <?php
 
+$_ENV['ETAG']=file_get_contents(storage_path()."/etag");
+
+
 /*
 |--------------------------------------------------------------------------
 | Register The Laravel Class Loader

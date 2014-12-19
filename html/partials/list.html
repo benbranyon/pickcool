@@ -20,7 +20,7 @@
         <div class="col-xs-12">
           <ul class="list-inline">
             <li ng-repeat="candidate in contest.candidates">
-              <a class="thumb" ng-href="{{contest.canonical_url}}"  ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
+              <a class="thumb" ng-href="{{contest.canonical_url}}#c{{candidate.id}}"  ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
                 <img in-view="lazyload($event, $inview, candidate.image('tiny'))" src="/add-user.png"/>
                 <span class='votes-count'>{{candidate.vote_count}}</span>
               </a>

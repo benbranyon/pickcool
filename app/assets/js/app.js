@@ -9,7 +9,7 @@ if(BUGSNAG_ENABLED)
   });
 }
 
-var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash', 'angular-inview'])
+var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inview'])
 .config(function (ezfbProvider) {
   ezfbProvider.setInitParams({
     appId: '1497159643900204',
@@ -17,24 +17,12 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'ngFlash', '
     status: true,
   });  
 })
-.config(function($flashProvider) {
-  $flashProvider.setRouteChangeSuccess('$stateChangeSuccess');
-})
 .directive('ngLadda', function() {
   return function(scope, element, attrs) {
     Ladda.bind(element[0]);
   };
 })
 .run(function(ezfb,$rootScope,$http,api,$templateCache) {
-  $templateCache.put('template/flash-messages.html', 
-        '<div class="flash-messages">' +
-          '<div class="flash-message alert alert-{{message.type}}" ng-repeat="message in _flash.messages">' +
-            '<a href="" class="close" ng-click="message.remove()"></a>' +
-            '<span class="flash-content" ng-bind-html="message.message"></span>' +
-          '</div>' +
-        '</div>'
-    );
-
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 

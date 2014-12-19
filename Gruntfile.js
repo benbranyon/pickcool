@@ -49,21 +49,15 @@ module.exports = function(grunt) {
       },
       js: {
         options: {
-          separator: ';',
+          separator: "\n;\n",
         },
         src: [
-          './bower_components/jquery/dist/jquery.js',
+          './bower_components/jquery/dist/jquery.min.js',
           './bower_components/bootstrap/dist/js/bootstrap.min.js',
-          './bower_components/angularjs/angular.js',
-          './bower_components/angular-sanitize/angular-sanitize.js',
-          './bower_components/angular-ui-router/release/angular-ui-router.js',
-          './bower_components/angular-flash/dist/angular-flash.js',
-          './bower_components/angular-easyfb/angular-easyfb.js',
+          './bower_components/angularjs/angular.min.js',
+          './bower_components/angular-ui-router/release/angular-ui-router.min.js',
+          './bower_components/angular-easyfb/angular-easyfb.min.js',
           './bower_components/angular-inview/angular-inview.js',
-          './bower_components/spin.js/spin.js',
-          './bower_components/ladda/js/ladda.js',
-          './bower_components/ladda/js/ladda.jquery.js',
-          './bower_components/angular-ladda/src/angular-ladda.js',
           './app/assets/js/app.js',
           './app/assets/js/**',
         ],
@@ -85,7 +79,6 @@ module.exports = function(grunt) {
         src: [
           './bower_components/bootstrap/dist/css/bootstrap.min.css',
           './bower_components/fontawesome/css/font-awesome.css',
-          './bower_components/ladda/dist/ladda-themeless.min.css',
           './app/storage/grunt-tmp/assets/css/style.css',
         ],
         dest: './app/storage/assets/css/app.css',
@@ -97,6 +90,7 @@ module.exports = function(grunt) {
         files: [
           './bower_components/**',
           "./app/assets/**",
+          "./etag.sh",
         ],   
         tasks: ['init'],     //tasks to run
         options: {
@@ -108,12 +102,16 @@ module.exports = function(grunt) {
       options: {
         // Task-specific options go here.
       },
+      etag: {
+        cmd: './etag.sh',
+      },
       artisan: {
         cmd: './artisan',
         args: [
           'cache:views:clear',
         ]
-      }
+      },
+      
     }
   });
     
@@ -123,6 +121,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-jsvalidate');

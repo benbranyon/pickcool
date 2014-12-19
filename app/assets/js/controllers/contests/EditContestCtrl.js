@@ -1,4 +1,4 @@
-app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api, $flash) {
+app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
   $scope.add = function() {
     $scope.contest.candidates.push({});
   };
@@ -31,13 +31,13 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api, $
   });
 
   $scope.save = function($event) {
+    $scope.saving = true;
     api.saveContest($scope.contest,
       function(res) {
-        $($event.currentTarget).ladda().ladda('stop');
+        $scope.saving = false;
         $scope.contest = res.data;
         if(!res.error_message)
         {
-          $flash('Saved.', {type: 'success'});
           $state.go('contests-view', {contest_id: $scope.contest.id, slug: $scope.contest.slug})
           return;
         }

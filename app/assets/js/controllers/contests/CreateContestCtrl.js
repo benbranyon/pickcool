@@ -87,6 +87,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
   };
   
   $scope.save = function($event) {
+    $scope.saving=true;
     api.createContest($scope.contest,
       function(res) {
         if(!res.error_message)
@@ -95,8 +96,8 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
           $state.go('contests-view', {contest_id: contest.id, slug: contest.slug});
           return;
         }
+        $scope.saving=false;
         angular.extend($scope.contest, res.data);
-        $($event.currentTarget).ladda().ladda('stop');
       }
     );
   }

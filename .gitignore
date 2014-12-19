@@ -6,3 +6,4 @@ Thumbs.db
 *.log
 .env
 vendor
+.sass-cache
