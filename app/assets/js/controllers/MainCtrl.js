@@ -9,7 +9,7 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api) {
   
   $scope.$watch('current_user', function(newVal,oldVal,scope) {
     if($scope.current_user) {
-      $('#login_dialog').modal('hide');
+      angular.element('#login_dialog').modal('hide');
     }
   });
   
