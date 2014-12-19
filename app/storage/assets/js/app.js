@@ -884,7 +884,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
 ;
 
 ;
-app.controller('MainCtrl', function ($state, $scope, $window, $location, api) {
+app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $anchorScroll) {
   console.log('MainCtrl');
   $scope.state = $state;
   
@@ -892,6 +892,11 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api) {
   {
     $scope.$broadcast('go');
   }
+  
+  $scope.scrollTop = function() {
+    $location.hash('top');
+    $anchorScroll();
+  };
   
   $scope.$watch('current_user', function(newVal,oldVal,scope) {
     if($scope.current_user) {
