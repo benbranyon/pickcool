@@ -90,6 +90,7 @@ module.exports = function(grunt) {
         files: [
           './bower_components/**',
           "./app/assets/**",
+          "./etag.sh",
         ],   
         tasks: ['init'],     //tasks to run
         options: {
@@ -101,12 +102,16 @@ module.exports = function(grunt) {
       options: {
         // Task-specific options go here.
       },
+      etag: {
+        cmd: './etag.sh',
+      },
       artisan: {
         cmd: './artisan',
         args: [
           'cache:views:clear',
         ]
-      }
+      },
+      
     }
   });
     
@@ -116,6 +121,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-run');
   grunt.loadNpmTasks('grunt-jsvalidate');
