@@ -5,7 +5,7 @@ app.directive('scrollTo', function($timeout, $anchorScroll) {
 });
 app.directive('fixHeight', function() {
   return function(scope, element, attrs) {
-    angular.element(element).css('height', angular.element(element).css('width'));
+    $timeout(function() { angular.element(element).css('height', angular.element(element).css('width'))},0);
   };
 });
 app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll) {
