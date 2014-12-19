@@ -514,7 +514,7 @@ Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', [
     return process_hit($contest_id, $candidate_id, $user_id);
 }]);
 
-Route::get("{/images/{id}/{size}", ['as'=>'image.view', function($id,$size) {
+Route::get("/images/{id}/{size}", ['as'=>'image.view', function($id,$size) {
   $image = Image::find($id);
   if(!$image)
   {
