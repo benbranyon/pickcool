@@ -1,11 +1,10 @@
 app.directive('scrollTo', function($timeout, $anchorScroll) {
   return function(scope, element, attrs) {
-    $timeout(function() { $anchorScroll()}, 0);
-  };
-});
-app.directive('fixHeight', function() {
-  return function(scope, element, attrs) {
-    $timeout(function() { angular.element(element).css('height', angular.element(element).css('width'))},0);
+    $timeout(function() {
+      var $e = $('.candidate .thumb');
+      $e.height($e.width());
+      $anchorScroll();
+    });
   };
 });
 app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll) {
