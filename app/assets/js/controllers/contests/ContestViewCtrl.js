@@ -50,6 +50,23 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   }
    
   $scope.share = function (c) {
+    var serialize = function(obj) {
+      var str = [];
+      for(var p in obj)
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      return str.join("&");
+    };
+    qs = {
+      app_id: '1497159643900204',
+      display: 'page',
+      href: c.canonical_url,
+      redirect_uri: $location.absUrl(),
+    };
+    window.location = "https://www.facebook.com/dialog/share?"+serialize(qs);
+    return;
+        
     var url = c.canonical_url;
     ezfb.ui(
      {
