@@ -874,11 +874,11 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     // Fix up contest data
     contest.highest_vote = 0;
     contest.total_votes = 0;
-    contest.current_user_writein_id = null;
+    contest.current_user_writein = null;
     angular.forEach(contest.candidates, function(c,idx) {
       if($rootScope.current_user && c.fb_id == $rootScope.current_user.fb_id)
       {
-        contest.current_user_writein_id = c.id;
+        contest.current_user_writein = c;
       }
       if (c.id == contest.current_user_candidate_id)
       {
