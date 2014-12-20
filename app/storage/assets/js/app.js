@@ -634,7 +634,7 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inv
     Ladda.bind(element[0]);
   };
 })
-.run(function(ezfb,$rootScope,$http,api,$templateCache) {
+.run(function(ezfb,$rootScope,$http,api,$templateCache, $location) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
@@ -672,12 +672,33 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inv
     console.log('xx authResponseChanged');
     console.log(statusRes);
   });  
+  
+  $rootScope.location = $location;
 
   $rootScope.login = function () {
-   ezfb.login(null, {
-    scope: 'public_profile,email,user_likes',
-    default_audience: 'everyone',
-   });
+    var serialize = function(obj) {
+      var str = [];
+      for(var p in obj)
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      return str.join("&");
+    };
+    qs = {
+      client_id: '1497159643900204',
+      redirect_uri: $location.absUrl(),
+      scope: 'public_profile,email,user_likes',
+      default_audience: 'everyone',
+      auth_type: 'rerequest',
+    };
+    window.location = "https://www.facebook.com/dialog/oauth?"+serialize(qs);
+    return;
+    ezfb.login(null, {
+     scope: 'public_profile,email,user_likes',
+     default_audience: 'everyone',
+    });
+    return;
+    
   };
 
   $rootScope.logout = function () {
@@ -853,11 +874,11 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     // Fix up contest data
     contest.highest_vote = 0;
     contest.total_votes = 0;
-    contest.current_user_writein_id = null;
+    contest.current_user_writein = null;
     angular.forEach(contest.candidates, function(c,idx) {
       if($rootScope.current_user && c.fb_id == $rootScope.current_user.fb_id)
       {
-        contest.current_user_writein_id = c.id;
+        contest.current_user_writein = c;
       }
       if (c.id == contest.current_user_candidate_id)
       {
@@ -918,12 +939,11 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $a
 ;
 app.directive('scrollTo', function($timeout, $anchorScroll) {
   return function(scope, element, attrs) {
-    $timeout(function() { $anchorScroll()}, 0);
-  };
-});
-app.directive('fixHeight', function() {
-  return function(scope, element, attrs) {
-    angular.element(element).css('height', angular.element(element).css('width'));
+    $timeout(function() {
+      var $e = $('.candidate .thumb');
+      $e.height($e.width());
+      $anchorScroll();
+    });
   };
 });
 app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll) {
@@ -969,6 +989,23 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   }
    
   $scope.share = function (c) {
+    var serialize = function(obj) {
+      var str = [];
+      for(var p in obj)
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      return str.join("&");
+    };
+    qs = {
+      app_id: '1497159643900204',
+      display: 'page',
+      href: c.canonical_url,
+      redirect_uri: $location.absUrl(),
+    };
+    window.location = "https://www.facebook.com/dialog/share?"+serialize(qs);
+    return;
+        
     var url = c.canonical_url;
     ezfb.ui(
      {

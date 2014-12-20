@@ -164,6 +164,7 @@ button, input, optgroup, select, textarea {
       {
         margin-left: auto;
         margin-right: auto;
+        
       }
     }
     
@@ -290,7 +291,7 @@ ul.nav.nav-pills.footer-nav {
         position: relative;
         border: 1px solid gray;
         border-radius: 3px;
-        margin: 3px;
+        margin: 2px;
         display: block;
         img
         {
@@ -301,6 +302,7 @@ ul.nav.nav-pills.footer-nav {
       .thumb.selected
       {
         border: 3px solid rgb(36, 219, 36);
+        margin: 0px;
       }
       .btn
       {

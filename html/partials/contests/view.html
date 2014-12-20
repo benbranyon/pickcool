@@ -11,7 +11,7 @@
       <b><i>Click your favorite image below to cast your vote.</i></b>
     </p>
     
-    <div class="alert alert-success" ng-if="contest.writein_enabled && contest.current_user_writein_id">
+    <div class="alert alert-success" ng-if="contest.writein_enabled && contest.current_user_writein">
       <h1>You are in this contest!</h1>
       <p>Your job now is to share, share, share, and encourage others to do so too. Here are some ideas that were successful for other users:</p>
       <ul>
@@ -22,7 +22,7 @@
         <li>Make videos and other entertaining posts to raise awareness.
         <li>Be a good sport. Promote others too, you'd be surprised what that can do for your own standing.
       </ul>
-      <button class="btn btn-primary" ng-click="share(current_user_candidate)"><i class="fa fa-facebook"></i> Share Your Entry Now</button> 
+      <button class="btn btn-primary" ng-click="share(contest.current_user_writein)"><i class="fa fa-facebook"></i> Share Your Entry Now</button> 
     </div>
     <div class="clearfix"></div>
 
@@ -30,14 +30,14 @@
       <h2>{{candidate.name}} </h2>
       <h3>{{candidate.vote_count}} votes</h3>
       <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
-        <img fix-height ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}"/>
+        <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}"/>
       </a>
       <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
       <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
       <button class="btn btn-primary even" ng-click="share(candidate)"><i class="fa fa-facebook"></i> Share</button>
     </div>
     
-    <div class="candidate" ng-if="contest.writein_enabled && !contest.current_user_writein_id">
+    <div class="candidate" ng-if="contest.writein_enabled && !contest.current_user_writein">
       <h2>You</h2>
       <h3>Enter the Contest</h3>
       <a class="thumb" ng-click="join()" >
@@ -106,6 +106,7 @@
                 <li>See the SHARE button below your entry. Share, share, share.
                 <li>Really. Share it. Every day. How else are people going to know you're in it to win it?
                 <li>Get involved on Facebook. Post videos, thank people for voting and sharing, and post daily updates.
+                <li>Share out your competitors. Be a good sport and people will love you for it.
               </ul>
               Good luck.
             </div>

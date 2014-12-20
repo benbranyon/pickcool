@@ -1894,13 +1894,14 @@ ul.nav.nav-pills.footer-nav {
       position: relative;
       border: 1px solid gray;
       border-radius: 3px;
-      margin: 3px;
+      margin: 2px;
       display: block; }
       .view .contest .candidate .thumb img {
         border-radius: 3px;
         width: 100%; }
     .view .contest .candidate .thumb.selected {
-      border: 3px solid #24db24; }
+      border: 3px solid #24db24;
+      margin: 0px; }
     .view .contest .candidate .btn {
       font-size: 18px; }
     .view .contest .candidate .even {

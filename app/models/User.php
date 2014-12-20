@@ -1,5 +1,8 @@
 <?php
 
+use NinjaMutex\Lock\MySqlLock;
+use NinjaMutex\Mutex;
+
 class User extends Eloquent
 {
   function contests()
@@ -20,18 +23,20 @@ class User extends Eloquent
   static function from_fb($me)
   {
     $fb_id = $me->getId();
-    $user = User::whereFbId($fb_id)->first();
-    if(!$user)
-    {
-      $user = new User();
-    }
-    $user->fb_id = $fb_id;
-    $user->first_name = $me->getFirstName();
-    $user->last_name = $me->getLastName();
-    $user->email = $me->getEmail();
-    $user->gender = $me->getProperty('gender');
-    $user->save();
-    
+    $user = Lock::go('create_'.$fb_id, function() use ($fb_id, $me) {
+      $user = User::whereFbId($fb_id)->first();
+      if(!$user)
+      {
+        $user = new User();
+      }
+      $user->fb_id = $fb_id;
+      $user->first_name = $me->getFirstName();
+      $user->last_name = $me->getLastName();
+      $user->email = $me->getEmail();
+      $user->gender = $me->getProperty('gender');
+      $user->save();
+      return $user;
+    }, $fb_id, $me);
     return $user;
   }
   

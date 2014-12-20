@@ -214,7 +214,7 @@ function api_add_edit_contest()
     $c->name = $can['name']['value'];
     $c->image_id = $i->id;
     $c->buy_url = $can['buy_url']['value'];
-    $c->buy_icon = $can['buy_text']['value'];
+    $c->buy_text = $can['buy_text']['value'];
     $c->save();
     $can['id']['value'] = $c->id;
   }
@@ -272,7 +272,7 @@ class ApiSerializer
           'image_id'=>$obj->image_id,
           'vote_count'=>$obj->votes()->count(),
           'fb_id'=>$obj->fb_id,
-          'buy_text'=>$obj->buy_icon,
+          'buy_text'=>$obj->buy_text,
           'canonical_url'=>route('contest.candidate.view', [$obj->contest_id, $obj->contest->slug(), $obj->id, $obj->slug()]),
         ];
         if($obj->is_editable_by(Auth::user()))
