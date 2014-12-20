@@ -1,3 +1,5 @@
+!#/bin/bash
+source ~/.bash_profile
 mysqldump db126393_coolfactor > db.sql
 mysql -D db126393_coolbeta < db.sql
 ./artisan migrate
