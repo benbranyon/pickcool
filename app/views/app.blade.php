@@ -32,23 +32,24 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Pick.Cool</a>
-          <p class="brand-slogan">
-            <span class="small text-muted">Vote and watch social contests in real time.</span>
-          </p>
         </div>
-        <div id="navbar" class="navbar pull-right">
-          <ul class="login-list list-inline ">
-            <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="@{{state.is('home') || state.is('hot') ? 'active' : ''}}"><a ui-sref="hot" ng-click="state.reload()">Hot</a></li>
+            <li class="@{{state.is('new') ? 'active' : ''}}"><a ui-sref="new"  ng-click="state.reload()">New</a></li>
+            <li class="@{{state.is('top') ? 'active' : ''}}"><a ui-sref="top" ng-click="state.reload()">Top</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <div class="container-fluid">
-      <ul class="list-inline nav">
-        <li class="btn  @{{state.is('home') || state.is('hot') ? 'btn-primary' : 'btn-default'}}" ui-sref="hot" ng-click="state.reload()">Hot</li>
-        <li class="btn  @{{state.is('new') ? 'btn-primary' : 'btn-default'}}" ui-sref="new"  ng-click="state.reload()">New</li>
-        <li class="btn  @{{state.is('top') ? 'btn-primary' : 'btn-default'}} text-primary" ui-sref="top" ng-click="state.reload()">Top</li>
-      </ul>
+
+      <div class="row">
+        <ul class="login-list list-inline pull-right">
+          <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
+        </ul>
+      </div>
 
       <div class="row">
         <div class="col-xs-12 ">

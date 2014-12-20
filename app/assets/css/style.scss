@@ -29,21 +29,22 @@ body {
   margin-bottom:15px;
 }
 
+.navbar-right {
+float: right!important;
+margin-right: -10px;
+}
+
 .navbar-header {
-  margin-top: 15px;
   float:left;
 }
 
-.navbar-default .navbar-brand {
-  float:none;
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+  background-color:#337ab7;
+  color:#fff;
 }
 
 .brand-slogan {
   display:none;
-}
-
-.login-list {
-  margin-top: 15px;
 }
 
 .login-list li {
@@ -97,9 +98,6 @@ body {
   }
   .votes-total {
     font-size:43px!important;
-  }
-  .navbar-header {
-    margin-top: 5px;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
@@ -222,7 +220,6 @@ button, input, optgroup, select, textarea {
 ul.nav
 {
   text-align: center;
-  margin-bottom: 10px;
 }
 .nav>li {
   position: relative;
