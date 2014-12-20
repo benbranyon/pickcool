@@ -1726,6 +1726,15 @@ body {
   color: #777;
   border-top: 1px solid #e5e5e5; }
 
+ul.pull-left.nav.nav-pills.footer-nav {
+  margin-bottom: 10px; }
+
+.text-center .footer-nav {
+  display: inline-block; }
+
+.like-button-wrapper {
+  margin-bottom: 10px; }
+
 .container-narrow > hr {
   margin: 30px 0; }
 
@@ -1844,9 +1853,6 @@ ul.nav {
   position: relative;
   display: inline-block;
   width: 70px; }
-
-ul.nav.nav-pills.footer-nav {
-  float: right; }
 
 .nav-pills > li {
   width: auto; }

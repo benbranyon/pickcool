@@ -28,6 +28,14 @@
   </head>
 
   <body ng-controller="MainCtrl" id="top">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1497159643900204&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-click="scrollTop()">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -57,14 +65,27 @@
           <div ui-view ng-if="session_started"></div>
 
           <div class="footer">
-            <ul class="pull-left nav nav-pills footer-nav">
-              <li>&copy; pick.cool 2014</li>
-              <li>v{{$_ENV['ETAG']}}</li>
-            </ul>
-            <ul class="nav nav-pills footer-nav">
-              <li><a ng-href="/privacy">Privacy Policy</a></li>
-              <li><a ng-href="/terms">Terms of Service</a></li>
-            </ul>
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="pull-left nav nav-pills footer-nav">
+                  <li>&copy; pick.cool 2014</li>
+                  <li>v{{$_ENV['ETAG']}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 like-button-wrapper">
+                <div class="fb-like" data-href="https://www.facebook.com/pages/PickCool/310629329135330" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <ul class="nav nav-pills footer-nav">
+                  <li><a ng-href="/privacy">Privacy Policy</a></li>
+                  <li><a ng-href="/terms">Terms of Service</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
