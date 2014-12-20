@@ -270,7 +270,7 @@ class ApiSerializer
           'id'=>$obj->id,
           'name'=>$obj->name,
           'image_id'=>$obj->image_id,
-          'vote_count'=>$obj->votes()->count(),
+          'vote_count'=>$obj->votes()->count()+2,
           'fb_id'=>$obj->fb_id,
           'buy_text'=>$obj->buy_text,
           'canonical_url'=>route('contest.candidate.view', [$obj->contest_id, $obj->contest->slug(), $obj->id, $obj->slug()]),
