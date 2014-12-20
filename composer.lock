@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/ninja-mutex.git",
-                "reference": "b5be60f8798bdaa07b0bcf9d0a5bc431c3a2de7b"
+                "reference": "72eccd2efa334cdcc546354836fa794030cd4e0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/ninja-mutex/zipball/b5be60f8798bdaa07b0bcf9d0a5bc431c3a2de7b",
-                "reference": "b5be60f8798bdaa07b0bcf9d0a5bc431c3a2de7b",
+                "url": "https://api.github.com/repos/benallfree/ninja-mutex/zipball/72eccd2efa334cdcc546354836fa794030cd4e0f",
+                "reference": "72eccd2efa334cdcc546354836fa794030cd4e0f",
                 "shasum": ""
             },
             "require": {
@@ -66,9 +66,9 @@
                 "redis"
             ],
             "support": {
-                "source": "https://github.com/benallfree/ninja-mutex/tree/0.4.1"
+                "source": "https://github.com/benallfree/ninja-mutex/tree/master"
             },
-            "time": "2014-10-01 01:23:11"
+            "time": "2014-12-20 05:18:51"
         },
         {
             "name": "benallfree/laravel-fb-auth",
