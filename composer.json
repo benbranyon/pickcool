@@ -7,6 +7,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/benallfree/stapler"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/benallfree/ninja-mutex"
       }
   ],
   
@@ -17,7 +21,8 @@
     "codesleeve/stapler": "dev-master as 1.0.0",
     "benallfree/laravel-fb-auth": "dev-master",
     "benallfree/laravel-stapler-images": "dev-master",
-    "cocur/slugify": "1.*"
+    "cocur/slugify": "1.*",
+    "arvenil/ninja-mutex": "dev-master"
   },
   "require-dev": {
     "panique/laravel-sass": "dev-master"

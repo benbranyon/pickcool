@@ -4,8 +4,72 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bf378610ec845dc944a60fb37f9985f0",
+    "hash": "bda040683cf6193660a2a509bcecef69",
     "packages": [
+        {
+            "name": "arvenil/ninja-mutex",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benallfree/ninja-mutex.git",
+                "reference": "b5be60f8798bdaa07b0bcf9d0a5bc431c3a2de7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benallfree/ninja-mutex/zipball/b5be60f8798bdaa07b0bcf9d0a5bc431c3a2de7b",
+                "reference": "b5be60f8798bdaa07b0bcf9d0a5bc431c3a2de7b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "v0.1.2",
+                "ext-memcache": "*",
+                "ext-memcached": "*",
+                "ext-pdo_mysql": "*",
+                "mikey179/vfsstream": "v1.4.0",
+                "predis/predis": "v1.0.0",
+                "scrutinizer/ocular": "1.1.1"
+            },
+            "suggest": {
+                "ext-memcache": "Create mutex using memcache extension",
+                "ext-memcached": "Create mutex using memcached extension",
+                "ext-pdo_mysql": "Create mutex using MySql",
+                "predis/predis": "Create mutex using Predis (client library for Redis)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "NinjaMutex": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kamil Dziedzic",
+                    "email": "arvenil@klecza.pl"
+                }
+            ],
+            "description": "Simple to use mutex implementation that can use flock, memcache, memcached, mysql or redis for locking",
+            "homepage": "https://github.com/arvenil/ninja-mutex",
+            "keywords": [
+                "flock",
+                "lock",
+                "locking",
+                "memcache",
+                "memcached",
+                "mutex",
+                "mysql",
+                "redis"
+            ],
+            "support": {
+                "source": "https://github.com/benallfree/ninja-mutex/tree/0.4.1"
+            },
+            "time": "2014-10-01 01:23:11"
+        },
         {
             "name": "benallfree/laravel-fb-auth",
             "version": "dev-master",
@@ -2257,12 +2321,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/panique/laravel-sass.git",
-                "reference": "23e7b9ced6f8a646f84c12307d7f6a4df85d3b86"
+                "reference": "ffb03efa92e140930ffd95c164e110e07a300e6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/panique/laravel-sass/zipball/23e7b9ced6f8a646f84c12307d7f6a4df85d3b86",
-                "reference": "23e7b9ced6f8a646f84c12307d7f6a4df85d3b86",
+                "url": "https://api.github.com/repos/panique/laravel-sass/zipball/ffb03efa92e140930ffd95c164e110e07a300e6d",
+                "reference": "ffb03efa92e140930ffd95c164e110e07a300e6d",
                 "shasum": ""
             },
             "require": {
@@ -2286,14 +2350,14 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Compiles your SASS .scss files to .css every time you run your app (in development)",
+            "description": "Compiles your Sass .scss files to .css every time you run your app (in development)",
             "homepage": "https://github.com/panique/laravel-sass",
             "keywords": [
                 "css",
                 "sass",
                 "scss"
             ],
-            "time": "2014-11-09 01:35:34"
+            "time": "2014-12-18 00:24:02"
         }
     ],
     "aliases": [
@@ -2309,6 +2373,7 @@
         "codesleeve/stapler": 20,
         "benallfree/laravel-fb-auth": 20,
         "benallfree/laravel-stapler-images": 20,
+        "arvenil/ninja-mutex": 20,
         "panique/laravel-sass": 20
     },
     "prefer-stable": false,
