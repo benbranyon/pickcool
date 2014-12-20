@@ -30,7 +30,7 @@
       <h2>{{candidate.name}} </h2>
       <h3>{{candidate.vote_count}} votes</h3>
       <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
-        <img fix-height ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}"/>
+        <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}"/>
       </a>
       <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
       <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>

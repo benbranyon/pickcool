@@ -22,7 +22,7 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inv
     Ladda.bind(element[0]);
   };
 })
-.run(function(ezfb,$rootScope,$http,api,$templateCache) {
+.run(function(ezfb,$rootScope,$http,api,$templateCache, $location) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
@@ -60,12 +60,33 @@ var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inv
     console.log('xx authResponseChanged');
     console.log(statusRes);
   });  
+  
+  $rootScope.location = $location;
 
   $rootScope.login = function () {
-   ezfb.login(null, {
-    scope: 'public_profile,email,user_likes',
-    default_audience: 'everyone',
-   });
+    var serialize = function(obj) {
+      var str = [];
+      for(var p in obj)
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      return str.join("&");
+    };
+    qs = {
+      client_id: '1497159643900204',
+      redirect_uri: $location.absUrl(),
+      scope: 'public_profile,email,user_likes',
+      default_audience: 'everyone',
+      auth_type: 'rerequest',
+    };
+    window.location = "https://www.facebook.com/dialog/oauth?"+serialize(qs);
+    return;
+    ezfb.login(null, {
+     scope: 'public_profile,email,user_likes',
+     default_audience: 'everyone',
+    });
+    return;
+    
   };
 
   $rootScope.logout = function () {

@@ -38,14 +38,12 @@
         </div>
         <div id="navbar" class="navbar pull-right">
           <ul class="login-list list-inline ">
-            <li ng-if="!current_user" class="pull-right btn btn-xs btn-primary" ng-click="login()" ><i class="fa fa-facebook-square"></i> Login</li>
             <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
-            <li ng-if="current_user" class="btn btn-xs btn-danger" ng-click="logout()" ><i class="fa fa-sign-out"></i> Logout</li>
           </ul>
         </div>
       </div>
     </nav>
-    <div class="container-fluid">      
+    <div class="container-fluid">
       <ul class="list-inline nav">
         <li class="btn  @{{state.is('home') || state.is('hot') ? 'btn-primary' : 'btn-default'}}" ui-sref="hot" ng-click="state.reload()">Hot</li>
         <li class="btn  @{{state.is('new') ? 'btn-primary' : 'btn-default'}}" ui-sref="new"  ng-click="state.reload()">New</li>
@@ -79,8 +77,12 @@
             <h4 class="modal-title">Connect via Facebook</h4>
           </div>
           <div class="modal-body">
-            <p>Hold on, Stan! You have to be logged in before you can spit with us.</p>
-            <button class="btn btn-primary btn-xs" ng-click="login()" ng-if="!is_user_logged_in"><i class="fa fa-facebook-square"></i> Login</button>
+            <p>To vote in a contest or enter a contest, you must connect via Facebook.</p>
+            <p style="text-align: center">
+              <button class="btn btn-primary btn-xl" ng-click="login()" ng-if="!is_user_logged_in"><i class="fa fa-facebook-square"></i> Connect via Facebook</button>
+            </p>
+            <p class="small">Your privacy and the security of this voting platform is our priority. Please see our <a href="/privacy">privacy policy</a> for more information.
+            </p>
             
           </div>
         </div><!-- /.modal-content -->
