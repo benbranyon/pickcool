@@ -5,6 +5,11 @@ use NinjaMutex\Mutex;
 
 class User extends Eloquent
 {
+  function full_name()
+  {
+    return "{$this->first_name} {$this->last_name}";
+  }
+  
   function contests()
   {
     return $this->hasMany('Contest');

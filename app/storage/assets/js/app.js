@@ -651,13 +651,17 @@ if(BUGSNAG_ENABLED)
     };
   });
   app.run(function($rootScope) {
-    $rootScope.$on('user', function() {
+    $rootScope.$on('user', function(event, user) {
       console.log('got user event');
       Bugsnag.user = {
-        id: res.data.id,
-        name: res.data.name,
-        email: res.data.email
+        id: user.id,
+        fb_id: user.fb_id,
+        name: user.name,
+        email: user.email
       };
+      console.log(Bugsnag.user);
+      Bugsnag.appVersion = APP_VERSION;
+      Bugsnag.notify('testing');
     });
   });
 }

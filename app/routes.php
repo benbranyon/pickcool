@@ -22,6 +22,7 @@ Route::get("/{etag}/assets/{type}/{name}", function($etag, $type, $name) {
       $js = [];
       $js[] = "var CP_DEBUG=".json_encode($_ENV['JS_DEBUG']==true);
       $js[] = "var BUGSNAG_ENABLED=".json_encode($_ENV['BUGSNAG_ENABLED']==true);
+      $js[] = "var APP_VERSION=".json_encode($_ENV['ETAG']);
       $js[] = file_get_contents(storage_path().'/assets/js/app.js');
       $js = join(";\n", $js);
       $response = Response::make($js, 200);
@@ -290,6 +291,7 @@ class ApiSerializer
         return self::serialize([
           'id'=>$obj->id,
           'fb_id'=>$obj->fb_id,
+          'name'=>$obj->full_name(),
           'first_name'=>$obj->first_name,
           'last_name'=>$obj->last_name,
           'email'=>$obj->email,
