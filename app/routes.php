@@ -444,7 +444,7 @@ Route::group([
 
   Route::any('/contests/hot', function() {
     $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id')
-      ->whereRaw('votes.created_at > now() - interval 24 hour')
+      ->whereRaw('votes.created_at > now() - interval 72 hour')
       ->groupBy('contests.id')
       ->select(['contests.*', DB::raw('count(votes.id) as rank')])
       ->orderBy('rank', 'desc')
