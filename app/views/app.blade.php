@@ -28,27 +28,36 @@
   </head>
 
   <body ng-controller="MainCtrl" id="top">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1497159643900204&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-click="scrollTop()">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#">Pick.Cool</a>
-          <p class="brand-slogan">
-            <span class="small text-muted">Vote and watch social contests in real time.</span>
-          </p>
         </div>
-        <div id="navbar" class="navbar pull-right">
-          <ul class="login-list list-inline ">
-            <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="@{{state.is('home') || state.is('hot') ? 'active' : ''}}"><a ui-sref="hot" ng-click="state.reload()">Hot</a></li>
+            <li class="@{{state.is('new') ? 'active' : ''}}"><a ui-sref="new"  ng-click="state.reload()">New</a></li>
+            <li class="@{{state.is('top') ? 'active' : ''}}"><a ui-sref="top" ng-click="state.reload()">Top</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <div class="container-fluid">
-      <ul class="list-inline nav">
-        <li class="btn  @{{state.is('home') || state.is('hot') ? 'btn-primary' : 'btn-default'}}" ui-sref="hot" ng-click="state.reload()">Hot</li>
-        <li class="btn  @{{state.is('new') ? 'btn-primary' : 'btn-default'}}" ui-sref="new"  ng-click="state.reload()">New</li>
-        <li class="btn  @{{state.is('top') ? 'btn-primary' : 'btn-default'}} text-primary" ui-sref="top" ng-click="state.reload()">Top</li>
-      </ul>
+
+      <div class="row">
+        <ul class="login-list list-inline pull-right">
+          <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
+        </ul>
+      </div>
 
       <div class="row">
         <div class="col-xs-12 ">
@@ -56,14 +65,27 @@
           <div ui-view ng-if="session_started"></div>
 
           <div class="footer">
-            <ul class="pull-left nav nav-pills footer-nav">
-              <li>&copy; pick.cool 2014</li>
-              <li>v{{$_ENV['ETAG']}}</li>
-            </ul>
-            <ul class="nav nav-pills footer-nav">
-              <li><a ng-href="/privacy">Privacy Policy</a></li>
-              <li><a ng-href="/terms">Terms of Service</a></li>
-            </ul>
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="pull-left nav nav-pills footer-nav">
+                  <li>&copy; pick.cool 2014</li>
+                  <li>v{{$_ENV['ETAG']}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 like-button-wrapper">
+                <div class="fb-like" data-href="https://www.facebook.com/pages/PickCool/310629329135330" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 text-center">
+                <ul class="nav nav-pills footer-nav">
+                  <li><a ng-href="/privacy">Privacy Policy</a></li>
+                  <li><a ng-href="/terms">Terms of Service</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
