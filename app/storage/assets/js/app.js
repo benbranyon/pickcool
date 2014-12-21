@@ -610,8 +610,39 @@ https://github.com/pc035860/angular-easyfb.git */
 
 }).call(this);
 ;
+(function() {
+    var method;
+    var noop = function () {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+        // Only stub undefined methods.
+        if (!CP_DEBUG || !console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+console.log('debug.js loaded');
+if(CP_DEBUG)
+{
+  console.log("***DEBUGGING MODE ENABLED***");
+}
+;
+console.log('app.js loaded');
 var current_user = {};
 
+var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inview']);
+;
+console.log('bugsnag.js loaded');
 if(BUGSNAG_ENABLED)
 {
   angular.module('exceptionOverride', []).factory('$exceptionHandler', function () {
@@ -619,10 +650,18 @@ if(BUGSNAG_ENABLED)
       Bugsnag.notifyException(exception, {diagnostics:{cause: cause}})
     };
   });
+  app.run(function($rootScope) {
+    $rootScope.$on('user', function() {
+      console.log('got user event');
+      Bugsnag.user = {
+        id: res.data.id,
+        name: res.data.name,
+        email: res.data.email
+      };
+    });
+  });
 }
 
-
-var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inview']);
 ;
 
 ;
@@ -678,6 +717,7 @@ var amzn_ws_path = amzn_ws_url + "/widgets/q?";
 /********* Custom Code End ******************/
 
 ;
+console.log('api.js loaded');
 app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
   var api_lowevel = function(args) {
     ezfb.getLoginStatus().then(function(res) {
@@ -819,6 +859,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
   
 });
 ;
+console.log('auth.js loaded');
 app.config(function (ezfbProvider) {
   ezfbProvider.setInitParams({
     appId: '1497159643900204',
@@ -848,6 +889,7 @@ app.config(function (ezfbProvider) {
       if(res.status=='ok')
       {
         $rootScope.current_user = res.data;
+        $rootScope.$broadcast('user', res.data);
         console.log('Authenticated');
         $rootScope.session_started = true;
       } else {
@@ -1193,34 +1235,23 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
   }
 })
 ;
+console.log('env.js loaded');
+
 var API_ENDPOINT="/api/v1";
 
-(function() {
-    var method;
-    var noop = function () {};
-    var methods = [
-        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-        'timeStamp', 'trace', 'warn'
-    ];
-    var length = methods.length;
-    var console = (window.console = window.console || {});
 
-    while (length--) {
-        method = methods[length];
-        // Only stub undefined methods.
-        if (!CP_DEBUG || !console[method]) {
-            console[method] = noop;
-        }
-    }
-}());
-
-if(CP_DEBUG)
-{
-  console.log("***DEBUGGING MODE ENABLED***");
-}
 ;
+console.log('ga.js loaded');
+app.run(function($rootScope, $location, $window) {
+  $rootScope.$on('$stateChangeSuccess', function(event) {
+    if (!$window.ga) return;
+    $window.ga('send', 'pageview', { page: $location.path() });
+  });
+});
+
+;
+console.log('routes.js loaded');
+
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
   
