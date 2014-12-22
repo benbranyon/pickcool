@@ -1903,8 +1903,7 @@ ul.nav {
         border-radius: 3px;
         width: 100%; }
     .view .contest .candidate .thumb.selected {
-      border: 3px solid #24db24;
-      margin: 0px; }
+      border: 3px solid #24db24; }
     .view .contest .candidate .btn {
       font-size: 18px; }
     .view .contest .candidate .even {

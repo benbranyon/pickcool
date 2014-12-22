@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bda040683cf6193660a2a509bcecef69",
+    "hash": "67e0d5993c01fd9aa291a9970df4c5a5",
     "packages": [
         {
             "name": "arvenil/ninja-mutex",
@@ -819,16 +819,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v4.2.12",
+            "version": "v4.2.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "70a60f2ff9b96b3fcd88a68ef5382557733fe671"
+                "reference": "a8104d53fef0582a8e93b33f424eafd4bd5c7989"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/70a60f2ff9b96b3fcd88a68ef5382557733fe671",
-                "reference": "70a60f2ff9b96b3fcd88a68ef5382557733fe671",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/a8104d53fef0582a8e93b33f424eafd4bd5c7989",
+                "reference": "a8104d53fef0582a8e93b33f424eafd4bd5c7989",
                 "shasum": ""
             },
             "require": {
@@ -930,7 +930,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2014-12-11 17:14:36"
+            "time": "2014-12-21 20:31:14"
         },
         {
             "name": "monolog/monolog",
