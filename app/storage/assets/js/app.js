@@ -931,6 +931,7 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $a
 app.directive('scrollTo', function($timeout, $anchorScroll) {
   return function(scope, element, attrs) {
     $timeout(function() {
+      console.log('sizing');
       var $e = $('.candidate .thumb');
       $e.height($e.width());
       $anchorScroll();
