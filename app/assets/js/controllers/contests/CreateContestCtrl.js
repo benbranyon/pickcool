@@ -1,3 +1,4 @@
+console.log('ContestViewCtrl.js loaded');
 app.controller('CreateContestCtrl', function ($scope, $state, api) {
   $scope.add = function() {
     $scope.contest.candidates.push({'id': $scope.candidates.length+1});

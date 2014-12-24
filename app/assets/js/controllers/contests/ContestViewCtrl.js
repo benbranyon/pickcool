@@ -1,3 +1,4 @@
+console.log('ContestViewCtrl.js loaded');
 app.directive('scrollTo', function($timeout, $anchorScroll) {
   return function(scope, element, attrs) {
     $timeout(function() {

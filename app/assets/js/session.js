@@ -1,4 +1,4 @@
-console.log('auth.js loaded');
+console.log('session.js loaded');
 app.config(function (ezfbProvider) {
   ezfbProvider.setInitParams({
     appId: '1497159643900204',

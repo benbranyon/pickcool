@@ -29,7 +29,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-click="scrollTop()">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Pick.Cool</a>
+          <a class="navbar-brand" href="/">Pick.Cool</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
