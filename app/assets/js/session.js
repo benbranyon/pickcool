@@ -1,5 +1,6 @@
-console.log('auth.js loaded');
+console.log('session.js loaded');
 app.config(function (ezfbProvider) {
+  console.log('howdy');
   ezfbProvider.setInitParams({
     appId: '1497159643900204',
     version   : 'v2.2',
@@ -7,6 +8,7 @@ app.config(function (ezfbProvider) {
   });  
 })
 .run(function(ezfb,$rootScope,$http,api,$templateCache, $location) {
+  console.log('howdy2');
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
@@ -37,6 +39,7 @@ app.config(function (ezfbProvider) {
     });
   }
   
+  console.log(window.FB);
   ezfb.getLoginStatus(updateStatus);
   
   ezfb.Event.subscribe('auth.statusChange', updateStatus);
@@ -78,4 +81,14 @@ app.config(function (ezfbProvider) {
    ezfb.logout();
    window.location = '/';
   };
+});
+
+$(window).load(function(){
+  console.log(window.FB);
+ if(typeof window.FB == 'undefined'){
+  alert('Facebook SDK is unable to load, display some alternative content for visitor');
+ }
+ else{
+  alert('Facebook is working just fine');
+ }
 });
