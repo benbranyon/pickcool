@@ -30,7 +30,7 @@ Route::group([
 });
 
 Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contest.candidate.view', 'uses'=>'ContestViewController@view']);
-Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', 'ContestViewController@view_old');
+Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contest.view', 'uses'=>'ContestViewController@view_old']);
 
 Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
   $candidate = Candidate::find($candidate_id);
