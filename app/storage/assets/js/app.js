@@ -610,8 +610,39 @@ https://github.com/pc035860/angular-easyfb.git */
 
 }).call(this);
 ;
+(function() {
+    var method;
+    var noop = function () {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+        // Only stub undefined methods.
+        if (!CP_DEBUG || !console[method]) {
+            console[method] = noop;
+        }
+    }
+}());
+
+console.log('debug.js loaded');
+if(CP_DEBUG)
+{
+  console.log("***DEBUGGING MODE ENABLED***");
+}
+;
+console.log('app.js loaded');
 var current_user = {};
 
+var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inview']);
+;
+console.log('bugsnag.js loaded');
 if(BUGSNAG_ENABLED)
 {
   angular.module('exceptionOverride', []).factory('$exceptionHandler', function () {
@@ -619,149 +650,25 @@ if(BUGSNAG_ENABLED)
       Bugsnag.notifyException(exception, {diagnostics:{cause: cause}})
     };
   });
-}
-
-var app = angular.module('pickCoolApp', ['ezfb', 'ui.router', 'ng', 'angular-inview'])
-.config(function (ezfbProvider) {
-  ezfbProvider.setInitParams({
-    appId: '1497159643900204',
-    version   : 'v2.2',
-    status: true,
-  });  
-})
-.directive('ngLadda', function() {
-  return function(scope, element, attrs) {
-    Ladda.bind(element[0]);
-  };
-})
-.run(function(ezfb,$rootScope,$http,api,$templateCache, $location) {
-  $rootScope.current_user = null;
-  $rootScope.accessToken = null;
-
-  function updateStatus(res) 
-  {
-    console.log("auth.statusChange",res);
-    $rootScope.fb_loaded = true;
-    $rootScope.accssToken = null;
-    $rootScope.session_started = false;
-    if(!res.authResponse) 
-    {
-      $rootScope.current_user = null;
-      console.log('Unauthenticated');
-      $rootScope.session_started = true;
-      return;
-    }
-    $rootScope.accessToken = res.authResponse.accessToken;
-    api.getUser(function(res) {
-      if(res.status=='ok')
-      {
-        $rootScope.current_user = res.data;
-        console.log('Authenticated');
-        $rootScope.session_started = true;
-      } else {
-        console.log("API Error");
-      }
+  app.run(function($rootScope) {
+    $rootScope.$on('user', function(event, user) {
+      console.log('got user event');
+      Bugsnag.user = {
+        id: user.id,
+        fb_id: user.fb_id,
+        name: user.name,
+        email: user.email
+      };
+      console.log(Bugsnag.user);
+      Bugsnag.appVersion = APP_VERSION;
     });
-  }
-  
-  ezfb.getLoginStatus(updateStatus);
-  
-  ezfb.Event.subscribe('auth.statusChange', updateStatus);
-  
-  ezfb.Event.subscribe('auth.authResponseChanged', function (statusRes) {
-    console.log('xx authResponseChanged');
-    console.log(statusRes);
-  });  
-  
-  $rootScope.location = $location;
-
-  $rootScope.login = function () {
-    var serialize = function(obj) {
-      var str = [];
-      for(var p in obj)
-        if (obj.hasOwnProperty(p)) {
-          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        }
-      return str.join("&");
-    };
-    qs = {
-      client_id: '1497159643900204',
-      redirect_uri: $location.absUrl(),
-      scope: 'public_profile,email,user_likes',
-      default_audience: 'everyone',
-      auth_type: 'rerequest',
-    };
-    window.location = "https://www.facebook.com/dialog/oauth?"+serialize(qs);
-    return;
-    ezfb.login(null, {
-     scope: 'public_profile,email,user_likes',
-     default_audience: 'everyone',
-    });
-    return;
-    
-  };
-
-  $rootScope.logout = function () {
-   ezfb.logout();
-   window.location = '/';
-  };
-});
+  });
+}
 
 ;
 
 ;
-
-
-/********* Custom Code Start ******************/
-/**
- * Copyright (c) 2008 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- */
-
-
-
-var de_ws_url = "//ws-eu.amazon-adsystem.com";
-var us_ws_url = "//ws-na.amazon-adsystem.com";
-var fr_ws_url = "//ws-eu.amazon-adsystem.com";
-var ca_ws_url = "//ws-na.amazon-adsystem.com";
-var cn_ws_url = "//ws-cn.amazon-adsystem.com";
-var gb_ws_url = "//ws-eu.amazon-adsystem.com";
-var jp_ws_url = "//ws-fe.amazon-adsystem.com";
-
-
-function escapeParam(param){
-	param = encodeURIComponent(param);
-	param=param.replace("+", "%20");
-	param=param.replace("/", "%2F");
-	return param;
-}
-
-var amzn_MarketPlace =  null;
-if( amzn_MarketPlace == null ||  amzn_MarketPlace == "" ){
-	amzn_MarketPlace= "US";
-}
-
-var amzn_ws_url = us_ws_url;
-switch(amzn_MarketPlace){
-	case "US": amzn_ws_url = us_ws_url;break;
-	case "DE": amzn_ws_url = de_ws_url;break;
-	case "GB": amzn_ws_url = gb_ws_url;break;
-	case "CA": amzn_ws_url = ca_ws_url;break;
-	case "CN": amzn_ws_url = cn_ws_url;break;
-	case "FR": amzn_ws_url = fr_ws_url;break;
-	case "JP": amzn_ws_url = jp_ws_url;break;
-	default: amzn_ws_url = us_ws_url;
-}
-
-if(typeof wsPreview != 'undefined'){
-    amzn_ws_url = amzn_ws_url.replace(/^http:\/\//, "https://");
-}
-
-var amzn_ws_path = amzn_ws_url + "/widgets/q?";
-
-
-/********* Custom Code End ******************/
-
-;
+console.log('api.js loaded');
 app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
   var api_lowevel = function(args) {
     ezfb.getLoginStatus().then(function(res) {
@@ -909,11 +816,6 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $a
   console.log('MainCtrl');
   $scope.state = $state;
   
-  if($scope.fb_loaded)
-  {
-    $scope.$broadcast('go');
-  }
-  
   $scope.scrollTop = function() {
     $location.hash('top');
     $anchorScroll();
@@ -937,9 +839,11 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $a
 ;
 
 ;
+console.log('ContestViewCtrl.js loaded');
 app.directive('scrollTo', function($timeout, $anchorScroll) {
   return function(scope, element, attrs) {
     $timeout(function() {
+      console.log('sizing');
       var $e = $('.candidate .thumb');
       $e.height($e.width());
       $anchorScroll();
@@ -1043,6 +947,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   };
 });
 ;
+console.log('ContestViewCtrl.js loaded');
 app.controller('CreateContestCtrl', function ($scope, $state, api) {
   $scope.add = function() {
     $scope.contest.candidates.push({'id': $scope.candidates.length+1});
@@ -1148,6 +1053,7 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
   }
 })
 ;
+console.log('ContestViewCtrl.js loaded');
 app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
   $scope.add = function() {
     $scope.contest.candidates.push({});
@@ -1196,34 +1102,23 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
   }
 })
 ;
+console.log('env.js loaded');
+
 var API_ENDPOINT="/api/v1";
 
-(function() {
-    var method;
-    var noop = function () {};
-    var methods = [
-        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-        'timeStamp', 'trace', 'warn'
-    ];
-    var length = methods.length;
-    var console = (window.console = window.console || {});
 
-    while (length--) {
-        method = methods[length];
-        // Only stub undefined methods.
-        if (!CP_DEBUG || !console[method]) {
-            console[method] = noop;
-        }
-    }
-}());
-
-if(CP_DEBUG)
-{
-  console.log("***DEBUGGING MODE ENABLED***");
-}
 ;
+console.log('ga.js loaded');
+app.run(function($rootScope, $location, $window) {
+  $rootScope.$on('$stateChangeSuccess', function(event) {
+    if (!$window.ga) return;
+    $window.ga('send', 'pageview', { page: $location.path() });
+  });
+});
+
+;
+console.log('routes.js loaded');
+
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true).hashPrefix('!');
   
@@ -1320,3 +1215,85 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     })
   ;
 })
+;
+console.log('session.js loaded');
+app.config(function (ezfbProvider) {
+  ezfbProvider.setInitParams({
+    appId: '1497159643900204',
+    version   : 'v2.2',
+    status: true,
+  });  
+})
+.run(function(ezfb,$rootScope,$http,api,$templateCache, $location) {
+  $rootScope.current_user = null;
+  $rootScope.accessToken = null;
+
+  function updateStatus(res) 
+  {
+    console.log("auth.statusChange",res);
+    $rootScope.fb_loaded = true;
+    $rootScope.accssToken = null;
+    $rootScope.session_started = false;
+    if(!res.authResponse) 
+    {
+      $rootScope.current_user = null;
+      console.log('Unauthenticated');
+      $rootScope.session_started = true;
+      return;
+    }
+    $rootScope.accessToken = res.authResponse.accessToken;
+    api.getUser(function(res) {
+      if(res.status=='ok')
+      {
+        $rootScope.current_user = res.data;
+        $rootScope.$broadcast('user', res.data);
+        console.log('Authenticated');
+        $rootScope.session_started = true;
+      } else {
+        console.log("API Error");
+      }
+    });
+  }
+  
+  ezfb.getLoginStatus(updateStatus);
+  
+  ezfb.Event.subscribe('auth.statusChange', updateStatus);
+  
+  ezfb.Event.subscribe('auth.authResponseChanged', function (statusRes) {
+    console.log('xx authResponseChanged');
+    console.log(statusRes);
+  });  
+  
+  $rootScope.location = $location;
+
+  $rootScope.login = function () {
+    var serialize = function(obj) {
+      var str = [];
+      for(var p in obj)
+        if (obj.hasOwnProperty(p)) {
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+      return str.join("&");
+    };
+    qs = {
+      client_id: '1497159643900204',
+      redirect_uri: $location.absUrl(),
+      scope: 'public_profile,email,user_likes',
+      default_audience: 'everyone',
+      auth_type: 'rerequest',
+    };
+    window.location = "https://www.facebook.com/dialog/oauth?"+serialize(qs);
+    return;
+    ezfb.login(null, {
+     scope: 'public_profile,email,user_likes',
+     default_audience: 'everyone',
+    });
+    return;
+    
+  };
+
+  $rootScope.logout = function () {
+   ezfb.logout();
+   window.location = '/';
+  };
+});

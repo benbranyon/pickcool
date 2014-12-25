@@ -1,3 +1,4 @@
+console.log('ContestViewCtrl.js loaded');
 app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
   $scope.add = function() {
     $scope.contest.candidates.push({});

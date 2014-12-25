@@ -1,3 +1,4 @@
+console.log('session.js loaded');
 app.config(function (ezfbProvider) {
   ezfbProvider.setInitParams({
     appId: '1497159643900204',
@@ -27,6 +28,7 @@ app.config(function (ezfbProvider) {
       if(res.status=='ok')
       {
         $rootScope.current_user = res.data;
+        $rootScope.$broadcast('user', res.data);
         console.log('Authenticated');
         $rootScope.session_started = true;
       } else {

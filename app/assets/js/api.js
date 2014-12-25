@@ -1,3 +1,4 @@
+console.log('api.js loaded');
 app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
   var api_lowevel = function(args) {
     ezfb.getLoginStatus().then(function(res) {

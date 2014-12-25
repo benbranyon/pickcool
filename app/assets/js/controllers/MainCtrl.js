@@ -2,11 +2,6 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $a
   console.log('MainCtrl');
   $scope.state = $state;
   
-  if($scope.fb_loaded)
-  {
-    $scope.$broadcast('go');
-  }
-  
   $scope.scrollTop = function() {
     $location.hash('top');
     $anchorScroll();

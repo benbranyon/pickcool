@@ -11,9 +11,7 @@
     <meta property="fb:app_id" content="1497159643900204"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0">
 
     <title>pick.cool</title>
 
@@ -28,18 +26,10 @@
   </head>
 
   <body ng-controller="MainCtrl" id="top">
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1497159643900204&version=v2.0";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-click="scrollTop()">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Pick.Cool</a>
+          <a class="navbar-brand" href="/">Pick.Cool</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
@@ -64,7 +54,7 @@
           <div flash-messages></div>
           <div ui-view ng-if="session_started"></div>
 
-          <div class="footer">
+          <footer class="footer">
             <div class="row">
               <div class="col-sm-12">
                 <ul class="pull-left nav nav-pills footer-nav">
@@ -86,7 +76,19 @@
                 </ul>
               </div>
             </div>
-          </div>
+
+            <script>
+              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+              ga('create', 'UA-57868973-1', 'auto');
+              ga('send', 'pageview');
+            </script>
+
+          </footer>
+
         </div>
       </div>
     </div> <!-- // Container -->
