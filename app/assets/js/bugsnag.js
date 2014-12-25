@@ -17,7 +17,6 @@ if(BUGSNAG_ENABLED)
       };
       console.log(Bugsnag.user);
       Bugsnag.appVersion = APP_VERSION;
-      Bugsnag.notify('testing');
     });
   });
 }
