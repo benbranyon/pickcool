@@ -1857,22 +1857,22 @@ ul.nav {
 .nav-pills > li {
   width: auto; }
 
-.view .countdown {
-  width: 100%;
-  max-width: 380px;
-  margin-left: auto;
-  margin-right: auto; }
-  .view .countdown .times td {
-    font-size: 40px;
-    color: #797979;
-    width: 25%; }
-  .view .countdown .times td.seconds {
-    color: red; }
-  .view .countdown .labels {
-    font-size: 10px;
-    text-transform: uppercase; }
 .view .contest {
   text-align: center; }
+  .view .contest .countdown {
+    width: 100%;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto; }
+    .view .contest .countdown .times td {
+      font-size: 40px;
+      color: #797979;
+      width: 25%; }
+    .view .contest .countdown .times td.seconds {
+      color: red; }
+    .view .contest .countdown .labels {
+      font-size: 10px;
+      text-transform: uppercase; }
   .view .contest .alert {
     margin-left: auto;
     margin-right: auto; }

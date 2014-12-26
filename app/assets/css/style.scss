@@ -245,33 +245,34 @@ ul.nav
 
 .view
 {
-  .countdown
-  {
-    width: 100%;
-    max-width: 380px;
-    margin-left: auto;
-    margin-right: auto;
-    .times
-    {
-      td
-      {
-        font-size: 40px;
-        color: #797979;
-        width: 25%;
-      }
-      td.seconds
-      {
-        color: red;
-      }
-    }
-    .labels
-    {
-      font-size: 10px;
-      text-transform: uppercase;
-    }
-  }
   .contest
   {
+    .countdown
+    {
+      width: 100%;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      .times
+      {
+        td
+        {
+          font-size: 40px;
+          color: #797979;
+          width: 25%;
+        }
+        td.seconds
+        {
+          color: red;
+        }
+      }
+      .labels
+      {
+        font-size: 10px;
+        text-transform: uppercase;
+      }
+    }
+    
     .alert
     {
       margin-left: auto;
