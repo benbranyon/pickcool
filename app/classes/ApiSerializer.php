@@ -33,6 +33,7 @@ class ApiSerializer
           'is_editable'=>$obj->is_editable_by(Auth::user()),
           'slug'=>$obj->slug(),
           'writein_enabled'=>$obj->writein_enabled == true,
+          'ends_at'=>$obj->ends_at ? $obj->ends_at->format('U') : null,
           'candidates'=>$obj->candidates,
         ];
         return self::serialize($contest);

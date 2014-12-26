@@ -9,15 +9,16 @@ app.directive('scrollTo', function($timeout, $anchorScroll) {
     });
   };
 });
-app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll) {
+app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll, $timeout) {
   console.log('ContestViewCtrl');
   $anchorScroll.yOffset = 50;
-   
+
   api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
   });
-  
+
   $scope.join = function() {
+    if(!$scope.contest.can_join) return; 
     if(!$scope.current_user)
     {
       angular.element('#login_dialog').modal();
@@ -30,6 +31,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   };
   
   $scope.join_confirm = function() {
+    if(!$scope.contest.can_join) return; 
     angular.element('#join').modal('hide');
     angular.element('#join_confirm').modal('show');
     $scope.joined = false;
@@ -40,6 +42,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   };
 
   $scope.unvote = function(c) {
+    if(!$scope.contest.can_vote) return; 
     angular.element('.candidate').removeClass('selected');
     c.vote_count--;
     $scope.contest.current_user_candidate = null;
@@ -83,6 +86,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   };
   
   $scope.vote = function(c) {
+    if(!$scope.contest.can_vote) return; 
     if(!$scope.current_user)
     {
       angular.element('#login_dialog').modal();

@@ -26,6 +26,10 @@ class ContestViewController extends BaseController
     {
       return ApiSerializer::error(API_ERR_AUTH);
     }
+    if(!$c->can_enter())
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
     
     $can = Candidate::whereFbId(Auth::user()->fb_id)->first();
     if(!$can)

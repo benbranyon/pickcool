@@ -22,6 +22,10 @@ class VoteController extends BaseController
     {
       return ApiSerializer::error(API_ERR_LOOKUP);
     }
+    if(!$c->can_vote())
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
     Auth::user()->vote_for($c->id);
     return ApiSerializer::ok($c->contest);
   }
@@ -38,6 +42,11 @@ class VoteController extends BaseController
     {
       return ApiSerializer::error(API_ERR_LOOKUP);
     }
+    if(!$c->can_vote())
+    {
+      return ApiSerializer::error(API_ERR_AUTH);
+    }
+    
     Auth::user()->unvote_for($c->id);
     return ApiSerializer::ok($c->contest);    
   }

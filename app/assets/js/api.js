@@ -1,5 +1,5 @@
 console.log('api.js loaded');
-app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
+app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout) {
   var api_lowevel = function(args) {
     ezfb.getLoginStatus().then(function(res) {
       $rootScope.accssToken = null;
@@ -112,6 +112,26 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     contest.highest_vote = 0;
     contest.total_votes = 0;
     contest.current_user_writein = null;
+    contest.ends_at = contest.ends_at ? moment.unix(contest.ends_at) : null;
+    contest.end_check = function()
+    {
+      console.log('heartbeat');
+      contest.can_end = false;
+      contest.can_join = contest.writein_enabled;
+      contest.is_ended = false;
+      contest.can_vote = true;
+      if(!contest.ends_at) return;
+      contest.can_end = true;
+      var now = moment();
+      contest.duration = moment.duration(contest.ends_at.diff(now, 'milliseconds'));
+      contest.is_ended = now > contest.ends_at;
+      contest.can_vote = !contest.is_ended;
+      contest.can_join = contest.writein_enabled && !contest.is_ended && !contest.current_user_writein;
+      if(!contest.is_ended)
+      {
+        $timeout(contest.end_check,1000);
+      }
+    };
     angular.forEach(contest.candidates, function(c,idx) {
       if($rootScope.current_user && c.fb_id == $rootScope.current_user.fb_id)
       {
@@ -135,6 +155,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state) {
     contest.candidates.sort(function(a,b) {
       return b.vote_count - a.vote_count;
     });
+    contest.end_check();
   };
   
   

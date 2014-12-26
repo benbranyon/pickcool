@@ -10,6 +10,11 @@ class Candidate extends Eloquent
     return $slugify->slugify($this->name, '_');
   }
 
+  function can_vote()
+  {
+    return $this->contest->can_vote();
+  }
+
 
   function image_url($size='thumb')
   {

@@ -22,6 +22,7 @@
     "html5shiv": "~3.7.2",
     "respond": "~1.4.2",
     "fontawesome": "~4.2.0",
-    "angular-inview": "~1.5.0"
+    "angular-inview": "~1.5.0",
+    "momentjs": "~2.8.4"
   }
 }

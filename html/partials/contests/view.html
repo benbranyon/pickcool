@@ -7,11 +7,33 @@
       {{contest.title}}
       <button ng-if="contest.is_editable" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
     </h1>
-    <p>
+    <div class="countdown" ng-if="contest.can_end">
+      <div ng-if="!contest.is_ended">
+        <h2>Voting ends in</h2>
+        <table class="countdown table">
+          <tr class="times">
+            <td>{{contest.duration.days() | numberFixedLen:2}}</td>
+            <td>{{contest.duration.hours() | numberFixedLen:2}}</td>
+            <td>{{contest.duration.minutes() | numberFixedLen:2}}</td>
+            <td class="seconds">{{contest.duration.seconds() | numberFixedLen:2}}</td>
+          </tr>
+          <tr class="labels">
+            <td>Days</td>
+            <td>Hours</td>
+            <td>Minutes</td>
+            <td>Seconds</td>
+          </tr>
+        </table>
+      </div>
+      <div class="text-danger" ng-if="contest.is_ended">
+        Voting has ended.
+      </div>      
+    </div>
+    <p ng-if="contest.can_vote">
       <b><i>Click your favorite image below to cast your vote.</i></b>
     </p>
     
-    <div class="alert alert-success" ng-if="contest.writein_enabled && contest.current_user_writein">
+    <div class="alert alert-success" ng-if="contest.can_vote && contest.writein_enabled && contest.current_user_writein">
       <h1>You are in this contest!</h1>
       <p>Your job now is to share, share, share, and encourage others to do so too. Here are some ideas that were successful for other users:</p>
       <ul>
@@ -32,12 +54,12 @@
       <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
         <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}" title="Vote for {{candidate.name}}"/>
       </a>
-      <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
-      <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
+      <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id == candidate.id ">Unvote</button>
+      <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id != candidate.id ">Vote</button>
       <button class="btn btn-primary even" ng-click="share(candidate)"><i class="fa fa-facebook"></i> Share</button>
     </div>
     
-    <div class="candidate" ng-if="contest.writein_enabled && !contest.current_user_writein">
+    <div class="candidate" ng-if="contest.can_join">
       <h2>You</h2>
       <h3>Enter the Contest</h3>
       <a class="thumb" ng-click="join()" >

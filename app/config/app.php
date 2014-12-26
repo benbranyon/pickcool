@@ -191,6 +191,7 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
     'Image'             => 'BenAllfree\LaravelStaplerImages\Image',
+    'Carbon'            => 'Carbon\Carbon',
     
 	),
 

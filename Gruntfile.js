@@ -58,6 +58,7 @@ module.exports = function(grunt) {
           './bower_components/angular-ui-router/release/angular-ui-router.min.js',
           './bower_components/angular-easyfb/angular-easyfb.min.js',
           './bower_components/angular-inview/angular-inview.js',
+          './bower_components/momentjs/min/moment.min.js',
           './app/assets/js/debug.js',
           './app/assets/js/app.js',
           './app/assets/js/bugsnag.js',

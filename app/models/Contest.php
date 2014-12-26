@@ -3,6 +3,30 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  public function getDates()
+  {
+    return [
+      'created_at',
+      'updated_at',
+      'ends_at',
+    ];
+  }
+  
+  function can_enter()
+  {
+    if($this->ends_at)
+    {
+      return $this->writein_enabled && $this->ends_at->gt(\Carbon::now());
+    } else {
+      return $this->writen_enabled;
+    }
+  }
+  
+  function can_vote()
+  {
+    return !$this->ends_at || $this->ends_at->gt(\Carbon::now());
+  }
+  
   function candidates()
   {
     return $this->hasMany('Candidate');
