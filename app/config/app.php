@@ -1,6 +1,6 @@
 <?php
 
-return array(
+$config = [
 
 	/*
 	|--------------------------------------------------------------------------
@@ -192,7 +192,14 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
     'Image'             => 'BenAllfree\LaravelStaplerImages\Image',
     'Carbon'            => 'Carbon\Carbon',
+    'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
     
 	),
+];
 
-);
+if($_ENV['BUGSNAG_ENABLED'])
+{
+  $config['providers'][] = 'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider';
+}
+
+return $config;

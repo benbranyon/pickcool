@@ -22,7 +22,8 @@
     "benallfree/laravel-fb-auth": "dev-master",
     "benallfree/laravel-stapler-images": "dev-master",
     "cocur/slugify": "1.*",
-    "arvenil/ninja-mutex": "dev-master"
+    "arvenil/ninja-mutex": "dev-master",
+    "bugsnag/bugsnag-laravel": "1.*"
   },
   "require-dev": {
     "panique/laravel-sass": "dev-master"

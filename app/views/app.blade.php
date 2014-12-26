@@ -4,7 +4,7 @@
     @if($_ENV['BUGSNAG_ENABLED'])
       <script
       src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
-      data-apikey="95959bc4ce4684734053839959bc0273">
+      data-apikey="{{$_ENV['BUGSNAG_API_KEY']}}">
       </script>
     @endif
     <base href="/">
