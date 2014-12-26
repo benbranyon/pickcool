@@ -49,7 +49,7 @@ class AssetController extends BaseController
         if($_ENV['BETA'])
         {
           $css[] = "
-            body
+            .navbar.navbar-default
             {
               background-color: rgb(255, 186, 155);
             }
