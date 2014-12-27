@@ -23,8 +23,7 @@
     "benallfree/laravel-stapler-images": "dev-master",
     "cocur/slugify": "1.*",
     "arvenil/ninja-mutex": "dev-master",
-    "bugsnag/bugsnag-laravel": "1.*",
-    "graham-campbell/markdown": "~2.0"
+    "bugsnag/bugsnag-laravel": "1.*"
   },
   "require-dev": {
     "panique/laravel-sass": "dev-master"
