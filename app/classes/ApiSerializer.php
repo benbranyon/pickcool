@@ -36,8 +36,20 @@ class ApiSerializer
           'ends_at'=>$obj->ends_at ? $obj->ends_at->format('U') : null,
           'candidates'=>$obj->candidates,
           'description'=>$obj->description,
+          'sponsors'=>$obj->sponsors,
         ];
         return self::serialize($contest);
+      }
+      
+      if($class=='Sponsor')
+      {
+        $sponsor = [
+          'name'=>$obj->name,
+          'description'=>$obj->description,
+          'url'=>route('sponsor', [$obj->id]),
+          'image_id'=>$obj->image_id,
+        ];
+        return self::serialize($sponsor);
       }
       
       if($class=='Illuminate\Database\Eloquent\Collection')

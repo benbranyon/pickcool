@@ -32,6 +32,16 @@ Route::group([
 Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contest.candidate.view', 'uses'=>'ContestViewController@view']);
 Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contest.view', 'uses'=>'ContestViewController@view_old']);
 
+Route::get('/sponsors/{sponsor_id}', ['as'=>'sponsor', 'uses'=>function($sponsor_id) {
+  $sponsor = Sponsor::find($sponsor_id);
+  if(!$sponsor)
+  {
+    App::abort(404);
+  }
+  return Redirect::to($sponsor->url);
+}]);
+
+
 Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
   $candidate = Candidate::find($candidate_id);
   if(!$candidate)

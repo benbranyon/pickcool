@@ -3,6 +3,12 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+
+  public function sponsors()
+  {
+    return $this->belongsToMany('Sponsor');
+  }
+  
   public function getDates()
   {
     return [

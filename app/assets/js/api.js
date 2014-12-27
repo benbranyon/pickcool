@@ -152,6 +152,12 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       if(c.vote_count > contest.highest_vote) contest.highest_vote = c.vote_count;
       contest.total_votes = contest.total_votes + c.vote_count;
     });
+    angular.forEach(contest.sponsors, function(c,idx) {
+      c.image = function(size) {
+        if(!size) size='thumb';
+        return $state.href('image-view', {'id': c.image_id, 'size': size}); 
+      };
+    });
     contest.candidates.sort(function(a,b) {
       return b.vote_count - a.vote_count;
     });

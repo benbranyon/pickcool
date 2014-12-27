@@ -33,17 +33,11 @@
     <p class="description" dd-text-collapse dd-text-collapse-max-length="110" dd-text-collapse-text="{{contest.description}}"></p>
     <h3>Pick Sponsors</h3>
     <div class="sponsors">
-      <div class="sponsor clearfix">
-        <a href="http://www.benallfree.com"><img src="https://scontent-b-sjc.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/10425095_337181199816868_6070981443256229832_n.jpg?oh=7746c311cee0fbf05b0dc5236899ddfe&oe=55459466" align="left" /></a>
-        <a href="http://www.benallfree.com">Ben Allfree</a>
+      <div class="sponsor clearfix" ng-repeat="sponsor in contest.sponsors">
+        <a href="{{sponsor.url}}" target="_self"><img src="{{sponsor.image('thumb')}}" align="left" /></a>
+        <a href="{{sponsor.url}}" target="_self">{{sponsor.name}}</a>
         <br/>
-        House concert and Guitar Center prizes
-      </div>
-      <div class="sponsor clearfix">
-        <a href="http://www.amazon.com?tag=pickcool-20"><img src="http://cdn.dice.com/wp-content/uploads/2013/10/amazon-1.png" align="left" /></a>
-        <a href="http://www.amazon.com?tag=pickcool-20">Amazon.com</a>
-        <br/>
-        Put some wind in our sails! Bookmark this Amazon.com link and use it the next time you go shopping. It costs nothing and helps us a lot.
+        {{sponsor.description}}
       </div>
     </div>
     
