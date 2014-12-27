@@ -128,12 +128,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/laravel-stapler-images.git",
-                "reference": "5bd86001822104d44080b56e43f2540e7ccc6295"
+                "reference": "c8be86d88c3040613c156996a0527b077e0423e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/5bd86001822104d44080b56e43f2540e7ccc6295",
-                "reference": "5bd86001822104d44080b56e43f2540e7ccc6295",
+                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/c8be86d88c3040613c156996a0527b077e0423e2",
+                "reference": "c8be86d88c3040613c156996a0527b077e0423e2",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +164,7 @@
                 "laravel",
                 "stapler"
             ],
-            "time": "2014-12-14 17:39:36"
+            "time": "2014-12-27 11:41:21"
         },
         {
             "name": "bugsnag/bugsnag",
