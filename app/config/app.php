@@ -124,7 +124,6 @@ $config = [
     'Codesleeve\LaravelStapler\LaravelStaplerServiceProvider',
     'BenAllfree\LaravelStaplerImages\LaravelStaplerImagesServiceProvider',
     'BenAllfree\FbAuth\FbAuthServiceProvider',
-    'GrahamCampbell\Markdown\MarkdownServiceProvider'
 	),
 
 	/*
@@ -194,8 +193,6 @@ $config = [
     'Image'             => 'BenAllfree\LaravelStaplerImages\Image',
     'Carbon'            => 'Carbon\Carbon',
     'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
-    'Markdown' => 'GrahamCampbell\Markdown\Facades\Markdown',
-    
 	),
 ];
 
