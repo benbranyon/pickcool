@@ -1880,6 +1880,20 @@ ul.nav {
       content: ''; }
     .view .contest .description .collapse-text-toggle:after {
       content: ''; }
+  .view .contest .sponsors {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 5px;
+    border-radius: 3px;
+    max-width: 530px;
+    margin-left: auto;
+    margin-right: auto; }
+    .view .contest .sponsors .sponsor img {
+      width: 75px;
+      height: 75px;
+      border: 1px solid black;
+      border-radius: 3px;
+      margin: 5px; }
   .view .contest .countdown {
     width: 100%;
     max-width: 380px;
