@@ -29,15 +29,19 @@
         Voting has ended.
       </div>      
     </div>
-    <h3>About this Pick</h3>
-    <p class="description" dd-text-collapse dd-text-collapse-max-length="110" dd-text-collapse-text="{{contest.description}}"></p>
-    <h3>Pick Sponsors</h3>
-    <div class="sponsors">
-      <div class="sponsor clearfix" ng-repeat="sponsor in contest.sponsors">
-        <a href="{{sponsor.url}}" target="_self"><img src="{{sponsor.image('thumb')}}" align="left" /></a>
-        <a href="{{sponsor.url}}" target="_self">{{sponsor.name}}</a>
-        <br/>
-        {{sponsor.description}}
+    <div ng-if="contest.description.trim()">
+      <h3>About this Pick</h3>
+      <p class="description" dd-text-collapse dd-text-collapse-max-length="110" dd-text-collapse-text="{{contest.description}}"></p>
+    </div>
+    <div ng-if="contest.sponsors.length>0">
+      <h3>Pick Sponsors</h3>
+      <div class="sponsors">
+        <div class="sponsor clearfix" ng-repeat="sponsor in contest.sponsors">
+          <a href="{{sponsor.url}}" target="_self"><img src="{{sponsor.image('thumb')}}" align="left" /></a>
+          <a href="{{sponsor.url}}" target="_self">{{sponsor.name}}</a>
+          <br/>
+          {{sponsor.description}}
+        </div>
       </div>
     </div>
     
