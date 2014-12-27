@@ -66,7 +66,7 @@ class AssetController extends BaseController
         $map = [
           'woff'=>'application/font-woff',
           'ttf'=>'application/font-ttf',
-          'eof'=>'application/vnd.ms-fontobject',
+          'eot'=>'application/vnd.ms-fontobject',
           'otf'=>'application/font-otf',
           'svg'=>'image/svg+xml',
         ];
