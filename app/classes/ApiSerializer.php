@@ -35,6 +35,7 @@ class ApiSerializer
           'writein_enabled'=>$obj->writein_enabled == true,
           'ends_at'=>$obj->ends_at ? $obj->ends_at->format('U') : null,
           'candidates'=>$obj->candidates,
+          'description'=>$obj->description,
         ];
         return self::serialize($contest);
       }

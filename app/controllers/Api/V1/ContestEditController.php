@@ -37,21 +37,25 @@ class ContestEditController extends BaseController
     $res = [
       'id'=>init($data, 'id'),
       'title'=>init($data, 'title'),
+      'description'=>init($data, 'description'),
     ];
   
     $validator = Validator::make(
       $data,
       [
         'title.value'=>'required',
+        'description.value'=>'required',
       ],
       [
         'title.value.required'=>'Contest title is required',
+        'description.value.required'=>'Contest description is required',
       ]
     );
     if($validator->fails())
     {
       $has_error = true;
       $res['title']['errors'] = $validator->messages()->get('title.value');
+      $res['description']['errors'] = $validator->messages()->get('description.value');
     }
   
     // Validate candidates
@@ -124,6 +128,7 @@ class ContestEditController extends BaseController
       $contest->user_id = Auth::user()->id; // Only assign user if creating
     }
     $contest->title = $res['title']['value'];
+    $contest->description = $res['description']['value'];
     $contest->save();
     $res['id']['value'] = $contest->id;
     // Update candidates

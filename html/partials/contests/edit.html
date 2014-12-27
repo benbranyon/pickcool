@@ -10,6 +10,13 @@
             <p ng-repeat="e in contest.title.errors">{{e}}</p>
           </span>
         </div>
+        <div class="form-group" ng-class="{'has-error': contest.description.errors.length>0}">
+          <label for="description">Contest Description</label>
+          <textarea class="form-control" ng-model="contest.description.value" name="Description" placeholder="Contest description"></textarea>
+          <span id="helpBlock" class="help-block" ng-if="contest.description.errors.length>0">
+            <p ng-repeat="e in contest.description.errors">{{e}}</p>
+          </span>
+        </div>
         <table class="table">
           <tr>
             <th>Candidate Name</th>

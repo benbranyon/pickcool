@@ -1,0 +1,17 @@
+{
+  "name": "AngularJS-Components",
+  "homepage": "https://github.com/benallfree/AngularJS-Components",
+  "_release": "385d17d234",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "385d17d234ef2d3c6e4a066998fd25cd0c392f38"
+  },
+  "_source": "git://github.com/benallfree/AngularJS-Components.git",
+  "_target": "*",
+  "_originalSource": "benallfree/AngularJS-Components",
+  "_direct": true,
+  "devDependencies": {
+    "AngularJS-Components": "benallfree/AngularJS-Components"
+  }
+}

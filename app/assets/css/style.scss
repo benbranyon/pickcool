@@ -247,6 +247,42 @@ ul.nav
 {
   .contest
   {
+ 
+    
+    .description
+    {
+      border: 1px solid rgb(221, 221, 221);
+      text-align: left;
+      padding: 5px;
+      border-radius: 3px;
+      max-width: 530px;
+      margin-left: auto;
+      margin-right: auto;
+      
+      h1
+      {
+        font-size: 16px;
+      }
+      h2
+      {
+        font-size: 14px;
+      }
+      h3
+      {
+        font-size: 12px;
+      }
+      .collapse-text-toggle {
+        color: #337AB7;
+        cursor: pointer;
+      }
+      .collapse-text-toggle:before {
+          content: '';
+      }
+      .collapse-text-toggle:after {
+          content: '';
+      }
+    }
+    
     .countdown
     {
       width: 100%;
@@ -272,7 +308,6 @@ ul.nav
         text-transform: uppercase;
       }
     }
-    
     .alert
     {
       margin-left: auto;
@@ -454,3 +489,4 @@ ul.nav
   text-align: center;
   font-size: 100px;
 }
+
