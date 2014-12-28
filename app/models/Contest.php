@@ -13,6 +13,28 @@ class Contest extends Eloquent
     return $this->candidates()->whereNotNull('fb_id')->get();
   }
   
+  function generate_standings($ago='0 day')
+  {
+    $candidates = $this->candidates()->get();
+    foreach($candidates as $candidate)
+    {
+      $candidate->total_votes = $candidate->votes_ago($ago)->count();
+      $candidate->save();
+    }
+    $candidates->sort(function($a,$b) {
+      if($a->total_votes==$b->total_votes) return 0;
+      return ($a->total_votes < $b->total_votes) ? 1 : -1;
+    });
+    $rank=1;
+    foreach($candidates as $candidate)
+    {
+      $candidate->previous_rank = $candidate->current_rank;
+      $candidate->current_rank = $rank++;
+      $candidate->save();
+    }
+    return $candidates;
+  }
+  
   function standings()
   {
     return $this->candidates()->orderBy('contest_id')->orderBy('current_rank', 'asc')->get();

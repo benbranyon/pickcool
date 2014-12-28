@@ -14,6 +14,13 @@ class Candidate extends Eloquent
     return route('contest.candidate.unfollow', [$this->id]);
   }
   
+  function votes_ago($ago='0 day')
+  {
+    return $this->votes()->where(function($query) use($ago) {
+      $query->whereRaw('created_at < utc_timestamp() - interval '.$ago);
+    });
+  }
+  
   function user()
   {
     if(!$this->fb_id) return null;
