@@ -3,6 +3,20 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  function toHashTag()
+  {
+    return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->title));
+  }
+  
+  function fb_candidates()
+  {
+    return $this->candidates()->whereNotNull('fb_id')->get();
+  }
+  
+  function standings()
+  {
+    return $this->candidates()->orderBy('contest_id')->orderBy('current_rank', 'asc')->get();
+  }
 
   public function sponsors()
   {

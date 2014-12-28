@@ -47,8 +47,4 @@ $app = require_once __DIR__.'/../bootstrap/start.php';
 |
 */
 
-if (App::environment('local'))
-{
-  SassCompiler::run("scss/", "css/");
-}
 $app->run();

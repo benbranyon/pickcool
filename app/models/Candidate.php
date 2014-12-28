@@ -4,6 +4,23 @@ use Cocur\Slugify\Slugify;
 class Candidate extends Eloquent
 {
   
+  function share_url()
+  {
+    return route('contest.candidate.view', [$this->contest->id, $this->contest->slug(), $this->id, $this->slug()]);
+  }
+  
+  function unfollow_url()
+  {
+    return route('contest.candidate.unfollow', [$this->id]);
+  }
+  
+  function user()
+  {
+    if(!$this->fb_id) return null;
+    $u = User::whereFbId($this->fb_id)->first();
+    return $u;
+  }
+  
   function slug()
   {
     $slugify = new Slugify();

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ba9bb29995e5fd859ebeee1a34a1b886",
+    "hash": "abcb62e9ded1b4c0ee279441eab6ec6e",
     "packages": [
         {
             "name": "arvenil/ninja-mutex",
@@ -572,6 +572,89 @@
             "time": "2013-01-10 21:49:15"
         },
         {
+            "name": "erusev/parsedown",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown.git",
+                "reference": "495e7ac73bb5fde6b857b88ff2bb1b5e79a4263a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown/zipball/495e7ac73bb5fde6b857b88ff2bb1b5e79a4263a",
+                "reference": "495e7ac73bb5fde6b857b88ff2bb1b5e79a4263a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Parsedown": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "Parser for Markdown.",
+            "homepage": "http://parsedown.org",
+            "keywords": [
+                "markdown",
+                "parser"
+            ],
+            "time": "2014-11-29 02:29:14"
+        },
+        {
+            "name": "erusev/parsedown-extra",
+            "version": "0.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/erusev/parsedown-extra.git",
+                "reference": "77f604b65b08550f229c2e79c0427c84c0c0979e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/erusev/parsedown-extra/zipball/77f604b65b08550f229c2e79c0427c84c0c0979e",
+                "reference": "77f604b65b08550f229c2e79c0427c84c0c0979e",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParsedownExtra": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emanuil Rusev",
+                    "email": "hello@erusev.com",
+                    "homepage": "http://erusev.com"
+                }
+            ],
+            "description": "An extension of Parsedown that adds support for Markdown Extra.",
+            "homepage": "https://github.com/erusev/parsedown-extra",
+            "keywords": [
+                "markdown",
+                "markdown extra",
+                "parsedown",
+                "parser"
+            ],
+            "time": "2014-11-20 20:21:03"
+        },
+        {
             "name": "facebook/php-sdk-v4",
             "version": "4.0.13",
             "source": {
@@ -677,6 +760,63 @@
                 "zf2"
             ],
             "time": "2014-10-26 09:05:09"
+        },
+        {
+            "name": "graham-campbell/markdown",
+            "version": "v2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Laravel-Markdown.git",
+                "reference": "d316f586fcaf59ecdf9d2f60f26da277cd6c8e8d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Markdown/zipball/d316f586fcaf59ecdf9d2f60f26da277cd6c8e8d",
+                "reference": "d316f586fcaf59ecdf9d2f60f26da277cd6c8e8d",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "~1.1",
+                "erusev/parsedown-extra": "~0.2.2",
+                "illuminate/support": "~4.1",
+                "illuminate/view": "~4.1",
+                "php": ">=5.4.7"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\Markdown\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@mineuk.com"
+                }
+            ],
+            "description": "Markdown Is A Parsedown Extra Wrapper For Laravel 4.1/4.2",
+            "keywords": [
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Laravel Markdown",
+                "Laravel-Markdown",
+                "Parsedown Extra",
+                "framework",
+                "laravel",
+                "markdown",
+                "markdown wrapper",
+                "parsedown",
+                "parsedown extra wrapper",
+                "parsedown wrapper"
+            ],
+            "time": "2014-10-05 14:49:46"
         },
         {
             "name": "guzzle/guzzle",
@@ -2363,98 +2503,7 @@
             "time": "2014-10-16 14:50:21"
         }
     ],
-    "packages-dev": [
-        {
-            "name": "leafo/scssphp",
-            "version": "v0.0.14",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/leafo/scssphp.git",
-                "reference": "dfb793daf3ecdce82c40fb6e6c3a84b6ab230364"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/dfb793daf3ecdce82c40fb6e6c3a84b6ab230364",
-                "reference": "dfb793daf3ecdce82c40fb6e6c3a84b6ab230364",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "require-dev": {
-                "php": ">=5.3.0",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "bin": [
-                "pscss"
-            ],
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "scss.inc.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Leaf Corcoran",
-                    "email": "leafot@gmail.com",
-                    "homepage": "http://leafo.net"
-                }
-            ],
-            "description": "scssphp is a compiler for SCSS written in PHP.",
-            "homepage": "http://leafo.net/scssphp/",
-            "time": "2014-08-05 05:45:15"
-        },
-        {
-            "name": "panique/laravel-sass",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/panique/laravel-sass.git",
-                "reference": "ffb03efa92e140930ffd95c164e110e07a300e6d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/panique/laravel-sass/zipball/ffb03efa92e140930ffd95c164e110e07a300e6d",
-                "reference": "ffb03efa92e140930ffd95c164e110e07a300e6d",
-                "shasum": ""
-            },
-            "require": {
-                "leafo/scssphp": "v0.0.14",
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "sass-compiler.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Panique",
-                    "homepage": "http://careers.stackoverflow.com/panique",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Compiles your Sass .scss files to .css every time you run your app (in development)",
-            "homepage": "https://github.com/panique/laravel-sass",
-            "keywords": [
-                "css",
-                "sass",
-                "scss"
-            ],
-            "time": "2014-12-18 00:24:02"
-        }
-    ],
+    "packages-dev": [],
     "aliases": [
         {
             "alias": "1.0.0",
@@ -2468,8 +2517,7 @@
         "codesleeve/stapler": 20,
         "benallfree/laravel-fb-auth": 20,
         "benallfree/laravel-stapler-images": 20,
-        "arvenil/ninja-mutex": 20,
-        "panique/laravel-sass": 20
+        "arvenil/ninja-mutex": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

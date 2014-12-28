@@ -32,6 +32,10 @@ Route::group([
 Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contest.candidate.view', 'uses'=>'ContestViewController@view']);
 Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contest.view', 'uses'=>'ContestViewController@view_old']);
 
+Route::get('/unfollow/{contest_id}/{candidate_id}', ['as'=>'contest.candidate.unfollow', 'uses'=>function($contest_id, $candidate_id) {
+  return "You are no longer following {$c->contest->name} and will not receive any further updates about it.";
+}]);
+
 Route::get('/sponsors/{sponsor_id}', ['as'=>'sponsor', 'uses'=>function($sponsor_id) {
   $sponsor = Sponsor::find($sponsor_id);
   if(!$sponsor)
