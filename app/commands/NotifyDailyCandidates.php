@@ -77,6 +77,7 @@ class NotifyDailyCandidates extends Command {
           'call_to_action'=>"Vote {$u->full_name()} in {$contest->name}",
           'hashtags'=>['PickCool', $u->toHashTag(), $contest->toHashTag()],
           'standings'=>$standings_data,
+          'sponsors'=>$contest->sponsors,
         ];
         Mail::send('emails.candidate-daily-update', $vars, function($message) use ($vars)
         {

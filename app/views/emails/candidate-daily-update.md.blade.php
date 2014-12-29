@@ -41,10 +41,11 @@ Example post text:
 
 # Sponsors
 
-Please remember to support and promote our sponsors too. This is one more way you can get involved in the pick and show your support for not only your own position, but the pick overall. It gives you another reason to share and talk about the pick.
+Please remember to support and spread the word about our sponsors. This is one more way you can get involved in the pick and show your support for not only your own position, but the pick overall. It gives you another reason to share and talk about the pick.
 
-* [Ben Allfree](http://www.benallfree.com) - prizes and support
-* [Amazon.com](http://www.amazon.com) - Want to have karma and great blessings heaped upon you? Encourage your friends to visit the pick sponsors. In particular, bookmarking our Amazon.com link is one of the most powerful things your fans can do to support the pick. It doesn't cost them anything. Just tell them to bookmark it and use it the next time they plan to go to Amazon.com to make a purchase:
+@foreach($sponsors as $sponsor)
+* [{{{$sponsor->name}}}]({{{route('sponsor', [$sponsor->id])}}}) - {{{$sponsor->description}}}
+@endforeach
 
 Best,  
 the pick.cool team  
