@@ -49,6 +49,7 @@ class ApiSerializer
           'description'=>$obj->description,
           'url'=>route('sponsor', [$obj->id]),
           'image_id'=>$obj->image_id,
+          'weight'=>$obj->pivot->weight,
         ];
         return self::serialize($sponsor);
       }

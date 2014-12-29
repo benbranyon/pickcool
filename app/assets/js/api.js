@@ -162,6 +162,10 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
     contest.candidates.sort(function(a,b) {
       return b.vote_count - a.vote_count;
     });
+    contest.sponsors.sort(function(a,b) {
+      console.log('sorting', a, b);
+      return a.weight - b.weight;
+    });
     contest.end_check();
   };
   
