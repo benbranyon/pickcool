@@ -17,6 +17,13 @@
             <p ng-repeat="e in contest.description.errors">{{e}}</p>
           </span>
         </div>
+        <div class="form-group" ng-class="{'has-error': contest.password.errors.length>0}">
+          <label for="password">Contest Password</label> (Contest will be unlisted if password is supplied)
+          <input type="text" class="form-control" ng-model="contest.password.value" name="password" placeholder="Contest password">
+          <span id="helpBlock" class="help-block" ng-if="contest.password.errors.length>0">
+            <p ng-repeat="e in contest.password.errors">{{e}}</p>
+          </span>
+        </div>
         <table class="table">
           <tr>
             <th>Candidate Name</th>

@@ -917,13 +917,14 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       contest.can_end = false;
       contest.can_join = contest.writein_enabled;
       contest.is_ended = false;
-      contest.can_vote = true;
+      contest.can_vote = true && (!contest.password || contest.password.length==0);
+      contest.can_share = true && (!contest.password || contest.password.length==0);
       if(!contest.ends_at) return;
       contest.can_end = true;
       var now = moment();
       contest.duration = moment.duration(contest.ends_at.diff(now, 'milliseconds'));
       contest.is_ended = now > contest.ends_at;
-      contest.can_vote = !contest.is_ended;
+      contest.can_vote = !contest.is_ended && (!contest.password || contest.password.length==0);
       contest.can_join = contest.writein_enabled && !contest.is_ended && !contest.current_user_writein;
       if(!contest.is_ended)
       {
@@ -1012,9 +1013,16 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
   });
+  
+  $scope.input = {password: null};
+  
+  $scope.$watch('password', function() {
+    
+  });
 
   $scope.join = function() {
     if(!$scope.contest.can_join) return; 
+    if($scope.contest.password && $scope.contest.password != $scope.input.password) return;
     if(!$scope.current_user)
     {
       angular.element('#login_dialog').modal();
@@ -1028,6 +1036,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   
   $scope.join_confirm = function() {
     if(!$scope.contest.can_join) return; 
+    if($scope.contest.password && $scope.contest.password != $scope.input.password) return;
     angular.element('#join').modal('hide');
     angular.element('#join_confirm').modal('show');
     $scope.joined = false;
@@ -1051,6 +1060,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   }
    
   $scope.share = function (c) {
+    if(!$scope.contest.can_vote) return; 
     var serialize = function(obj) {
       var str = [];
       for(var p in obj)
@@ -1231,6 +1241,7 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
       id: edit(res.data.id),
       title: edit(res.data.title),
       description: edit(res.data.description),
+      password: edit(res.data.password),
       candidates: [],
     };
     angular.forEach(res.data.candidates, function(candidate, idx) {

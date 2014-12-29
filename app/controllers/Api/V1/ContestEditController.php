@@ -38,6 +38,7 @@ class ContestEditController extends BaseController
       'id'=>init($data, 'id'),
       'title'=>init($data, 'title'),
       'description'=>init($data, 'description'),
+      'password'=>init($data, 'password'),
     ];
   
     $validator = Validator::make(
@@ -129,6 +130,7 @@ class ContestEditController extends BaseController
     }
     $contest->title = $res['title']['value'];
     $contest->description = $res['description']['value'];
+    $contest->password = $res['password']['value'] ? $res['password']['value'] : null;
     $contest->save();
     $res['id']['value'] = $contest->id;
     // Update candidates
