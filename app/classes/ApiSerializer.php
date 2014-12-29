@@ -37,6 +37,7 @@ class ApiSerializer
           'candidates'=>$obj->candidates,
           'description'=>$obj->description,
           'sponsors'=>$obj->sponsors,
+          'password'=>$obj->password,
         ];
         return self::serialize($contest);
       }

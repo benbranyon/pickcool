@@ -119,13 +119,14 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       contest.can_end = false;
       contest.can_join = contest.writein_enabled;
       contest.is_ended = false;
-      contest.can_vote = true;
+      contest.can_vote = true && (!contest.password || contest.password.length==0);
+      contest.can_share = true && (!contest.password || contest.password.length==0);
       if(!contest.ends_at) return;
       contest.can_end = true;
       var now = moment();
       contest.duration = moment.duration(contest.ends_at.diff(now, 'milliseconds'));
       contest.is_ended = now > contest.ends_at;
-      contest.can_vote = !contest.is_ended;
+      contest.can_vote = !contest.is_ended && (!contest.password || contest.password.length==0);
       contest.can_join = contest.writein_enabled && !contest.is_ended && !contest.current_user_writein;
       if(!contest.is_ended)
       {

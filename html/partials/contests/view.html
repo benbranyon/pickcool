@@ -7,96 +7,102 @@
       {{contest.title}}
       <button ng-if="contest.is_editable" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
     </h1>
-    <div class="countdown" ng-if="contest.can_end">
-      <div ng-if="!contest.is_ended">
-        <h2>Voting ends in</h2>
-        <table class="countdown table">
-          <tr class="times">
-            <td>{{contest.duration.days() | numberFixedLen:2}}</td>
-            <td>{{contest.duration.hours() | numberFixedLen:2}}</td>
-            <td>{{contest.duration.minutes() | numberFixedLen:2}}</td>
-            <td class="seconds">{{contest.duration.seconds() | numberFixedLen:2}}</td>
-          </tr>
-          <tr class="labels">
-            <td>Days</td>
-            <td>Hours</td>
-            <td>Minutes</td>
-            <td>Seconds</td>
-          </tr>
-        </table>
+    <div ng-if="contest.password">
+      <h2>This pick is password protected. No voting or sharing can take place at this time. We will send you an email when the pick opens to the public.</h2>
+      Password: <input type="password" ng-model="input.password" ng-trim="true"/> 
+    </div>
+    <div ng-if="!contest.password || contest.password == input.password"> 
+      <div class="countdown" ng-if="contest.can_end">
+        <div ng-if="!contest.is_ended">
+          <h2>Voting ends in</h2>
+          <table class="countdown table">
+            <tr class="times">
+              <td>{{contest.duration.days() | numberFixedLen:2}}</td>
+              <td>{{contest.duration.hours() | numberFixedLen:2}}</td>
+              <td>{{contest.duration.minutes() | numberFixedLen:2}}</td>
+              <td class="seconds">{{contest.duration.seconds() | numberFixedLen:2}}</td>
+            </tr>
+            <tr class="labels">
+              <td>Days</td>
+              <td>Hours</td>
+              <td>Minutes</td>
+              <td>Seconds</td>
+            </tr>
+          </table>
+        </div>
+        <div class="text-danger" ng-if="contest.is_ended">
+          Voting has ended.
+        </div>      
       </div>
-      <div class="text-danger" ng-if="contest.is_ended">
-        Voting has ended.
-      </div>      
-    </div>
-    <div ng-if="contest.description.trim()">
-      <h3>About this Pick</h3>
-      <p class="description" dd-text-collapse dd-text-collapse-max-length="110" dd-text-collapse-text="{{contest.description}}"></p>
-    </div>
-    <div ng-if="contest.sponsors.length>0">
-      <h3>Pick Sponsors</h3>
-      <div class="sponsors">
-        <div class="sponsor clearfix" ng-repeat="sponsor in contest.sponsors">
-          <a href="{{sponsor.url}}" target="_self"><img src="{{sponsor.image('thumb')}}" align="left" /></a>
-          <a href="{{sponsor.url}}" target="_self">{{sponsor.name}}</a>
-          <br/>
-          {{sponsor.description}}
+      <div ng-if="contest.description.trim()">
+        <h3>About this Pick</h3>
+        <p class="description" dd-text-collapse dd-text-collapse-max-length="110" dd-text-collapse-text="{{contest.description}}"></p>
+      </div>
+      <div ng-if="contest.sponsors.length>0">
+        <h3>Pick Sponsors</h3>
+        <div class="sponsors">
+          <div class="sponsor clearfix" ng-repeat="sponsor in contest.sponsors">
+            <a href="{{sponsor.url}}" target="_self"><img src="{{sponsor.image('thumb')}}" align="left" /></a>
+            <a href="{{sponsor.url}}" target="_self">{{sponsor.name}}</a>
+            <br/>
+            {{sponsor.description}}
+          </div>
         </div>
       </div>
-    </div>
     
-    <h3>The Picks</h3>
-    <p ng-if="contest.can_vote">
-      <b><i>Click your favorite image below to cast your vote.</i></b>
-    </p>
+      <h3>The Picks</h3>
+      <p ng-if="contest.can_vote">
+        <b><i>Click your favorite image below to cast your vote.</i></b>
+      </p>
     
-    <div class="alert alert-success" ng-if="contest.can_vote && contest.writein_enabled && contest.current_user_writein">
-      <h1>You are in this contest!</h1>
-      <p>Your job now is to share, share, share, and encourage others to do so too. Here are some ideas that were successful for other users:</p>
-      <ul>
-        <li>Vote for someone. If not for yourself, then someone else in the contest.
-        <li>Share your link to everyone in the world.
-        <li>Not just once! Share every day.
-        <li>Ask others to share your link too.
-        <li>Make videos and other entertaining posts to raise awareness.
-        <li>Be a good sport. Promote others too, you'd be surprised what that can do for your own standing.
-      </ul>
-      <button class="btn btn-primary" ng-click="share(contest.current_user_writein)"><i class="fa fa-facebook"></i> Share Your Entry Now</button> 
-    </div>
-    <div class="clearfix"></div>
+      <div class="alert alert-success" ng-if="contest.can_vote && contest.writein_enabled && contest.current_user_writein">
+        <h1>You are in this contest!</h1>
+        <p>Your job now is to share, share, share, and encourage others to do so too. Here are some ideas that were successful for other users:</p>
+        <ul>
+          <li>Vote for someone. If not for yourself, then someone else in the contest.
+          <li>Share your link to everyone in the world.
+          <li>Not just once! Share every day.
+          <li>Ask others to share your link too.
+          <li>Make videos and other entertaining posts to raise awareness.
+          <li>Be a good sport. Promote others too, you'd be surprised what that can do for your own standing.
+        </ul>
+        <button class="btn btn-primary" ng-click="share(contest.current_user_writein)"><i class="fa fa-facebook"></i> Share Your Entry Now</button> 
+      </div>
+      <div class="clearfix"></div>
 
-    <div class="candidate" ng-repeat="candidate in contest.candidates" id="c{{candidate.id}}">
-      <h2>{{candidate.name}} </h2>
-      <h3>{{candidate.vote_count}} votes</h3>
-      <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
-        <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}" title="Vote for {{candidate.name}}"/>
-      </a>
-      <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id == candidate.id ">Unvote</button>
-      <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id != candidate.id ">Vote</button>
-      <button class="btn btn-primary even" ng-click="share(candidate)"><i class="fa fa-facebook"></i> Share</button>
-    </div>
+      <div class="candidate" ng-repeat="candidate in contest.candidates" id="c{{candidate.id}}">
+        <h2>{{candidate.name}} </h2>
+        <h3>{{candidate.vote_count}} votes</h3>
+        <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
+          <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}" title="Vote for {{candidate.name}}"/>
+        </a>
+        <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id == candidate.id ">Unvote</button>
+        <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id != candidate.id ">Vote</button>
+        <button class="btn btn-primary even" ng-click="share(candidate)" ng-if="contest.can_share"><i class="fa fa-facebook"></i> Share</button>
+      </div>
     
-    <div class="candidate" ng-if="contest.can_join">
-      <h2>You</h2>
-      <h3>Enter the Contest</h3>
-      <a class="thumb" ng-click="join()" >
-        <img ng-src="/add-user.png" />
-      </a>
-      <button class="btn btn-success"  ng-click="join()">Join The Contest Now</button>
-    </div>
+      <div class="candidate" ng-if="contest.can_join">
+        <h2>You</h2>
+        <h3>Enter the Contest</h3>
+        <a class="thumb" ng-click="join()" >
+          <img ng-src="/add-user.png" />
+        </a>
+        <button class="btn btn-success"  ng-click="join()">Join The Contest Now</button>
+      </div>
     
-    <div scroll-to></div>
-    <div class="clearfix"></div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Discussion</h3>
-          </div>
-          <div class="panel-body" style="padding-left: 0px; padding-right: 0px;padding-top:0px" ng-if="fb_loaded">
-            <div class="fb-comments" data-href="{{contest.canonical_url}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
-          </div>
-        </div>          
+      <div scroll-to></div>
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Discussion</h3>
+            </div>
+            <div class="panel-body" style="padding-left: 0px; padding-right: 0px;padding-top:0px" ng-if="fb_loaded">
+              <div class="fb-comments" data-href="{{contest.canonical_url}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
+            </div>
+          </div>          
+        </div>
       </div>
     </div>
     <div class="modal fade" id="join">

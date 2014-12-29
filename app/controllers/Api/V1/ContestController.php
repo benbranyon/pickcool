@@ -14,6 +14,7 @@ class ContestController extends BaseController
   function top()
   {
     $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id', 'left outer')
+      ->whereNull('password')
       ->groupBy('contests.id')
       ->select(['contests.*', DB::raw('count(votes.id) as rank')])
       ->orderBy('rank', 'desc')
@@ -25,6 +26,7 @@ class ContestController extends BaseController
   {
     $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id')
       ->whereRaw('votes.created_at > now() - interval 72 hour')
+      ->whereNull('password')
       ->groupBy('contests.id')
       ->select(['contests.*', DB::raw('count(votes.id) as rank')])
       ->orderBy('rank', 'desc')
@@ -35,6 +37,7 @@ class ContestController extends BaseController
   function recent()
   {
     $contests = Contest::query()
+      ->whereNull('password')
       ->orderBy('created_at', 'desc')
       ->with('candidates', 'candidates.votes')
       ->get();

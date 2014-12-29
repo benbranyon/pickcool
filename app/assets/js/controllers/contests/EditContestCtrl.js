@@ -17,6 +17,7 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
       id: edit(res.data.id),
       title: edit(res.data.title),
       description: edit(res.data.description),
+      password: edit(res.data.password),
       candidates: [],
     };
     angular.forEach(res.data.candidates, function(candidate, idx) {

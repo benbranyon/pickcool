@@ -16,9 +16,16 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
   });
+  
+  $scope.input = {password: null};
+  
+  $scope.$watch('password', function() {
+    
+  });
 
   $scope.join = function() {
     if(!$scope.contest.can_join) return; 
+    if($scope.contest.password && $scope.contest.password != $scope.input.password) return;
     if(!$scope.current_user)
     {
       angular.element('#login_dialog').modal();
@@ -32,6 +39,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   
   $scope.join_confirm = function() {
     if(!$scope.contest.can_join) return; 
+    if($scope.contest.password && $scope.contest.password != $scope.input.password) return;
     angular.element('#join').modal('hide');
     angular.element('#join_confirm').modal('show');
     $scope.joined = false;
@@ -55,6 +63,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   }
    
   $scope.share = function (c) {
+    if(!$scope.contest.can_vote) return; 
     var serialize = function(obj) {
       var str = [];
       for(var p in obj)
