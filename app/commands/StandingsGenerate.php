@@ -46,7 +46,7 @@ class StandingsGenerate extends Command {
     $contests = Contest::all();
     foreach($contests as $contest)
     {
-      $contest->generate_standings('1 day');
+      $contest->generate_standings($_ENV['STANDINGS_WINDOW'].' day');
       $contest->generate_standings('0 day');
     }
 	}
