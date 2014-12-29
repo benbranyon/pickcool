@@ -61,7 +61,7 @@ class NotifyDailyCandidates extends Command {
           'votes'=>$standing->total_votes+2,
         ];
       }
-      foreach($contest->fb_candidates()->take(2) as $c)
+      foreach($contest->fb_candidates() as $c)
       {
         $u = $c->user();
         $vars = [
