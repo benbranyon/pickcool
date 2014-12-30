@@ -128,12 +128,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/laravel-stapler-images.git",
-                "reference": "c8be86d88c3040613c156996a0527b077e0423e2"
+                "reference": "3e86a4f3b629eb0aeb393e56d9f319ffd2ab3209"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/c8be86d88c3040613c156996a0527b077e0423e2",
-                "reference": "c8be86d88c3040613c156996a0527b077e0423e2",
+                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/3e86a4f3b629eb0aeb393e56d9f319ffd2ab3209",
+                "reference": "3e86a4f3b629eb0aeb393e56d9f319ffd2ab3209",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +164,7 @@
                 "laravel",
                 "stapler"
             ],
-            "time": "2014-12-27 11:41:21"
+            "time": "2014-12-30 03:18:13"
         },
         {
             "name": "bugsnag/bugsnag",
@@ -656,16 +656,16 @@
         },
         {
             "name": "facebook/php-sdk-v4",
-            "version": "4.0.13",
+            "version": "4.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-sdk-v4.git",
-                "reference": "ba732909485ae25484584a11202927ef2c70acd3"
+                "reference": "566c4ea8df82ba8bdd18abf5c0b66c23fe79b3e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/ba732909485ae25484584a11202927ef2c70acd3",
-                "reference": "ba732909485ae25484584a11202927ef2c70acd3",
+                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/566c4ea8df82ba8bdd18abf5c0b66c23fe79b3e9",
+                "reference": "566c4ea8df82ba8bdd18abf5c0b66c23fe79b3e9",
                 "shasum": ""
             },
             "require": {
@@ -701,7 +701,7 @@
                 "facebook",
                 "sdk"
             ],
-            "time": "2014-12-12 19:49:23"
+            "time": "2014-12-29 22:43:17"
         },
         {
             "name": "filp/whoops",
@@ -1169,16 +1169,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa"
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
                 "shasum": ""
             },
             "require": {
@@ -1192,7 +1192,7 @@
                 "aws/aws-sdk-php": "~2.4, >2.4.8",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
-                "phpunit/phpunit": "~3.7.0",
+                "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
                 "videlalvaro/php-amqplib": "~2.4"
@@ -1211,7 +1211,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11.x-dev"
+                    "dev-master": "1.12.x-dev"
                 }
             },
             "autoload": {
@@ -1237,7 +1237,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-09-30 13:30:58"
+            "time": "2014-12-29 21:29:35"
         },
         {
             "name": "nesbot/carbon",

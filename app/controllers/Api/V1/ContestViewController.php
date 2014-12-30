@@ -39,7 +39,7 @@ class ContestViewController extends BaseController
       $can->buy_url = 'x';
       $can->buy_text = 'x';
     }
-    $i = \Image::from_url(Auth::user()->profile_image_url());
+    $i = \Image::from_url(Auth::user()->profile_image_url(),true);
     $can->name = Auth::user()->first_name . ' ' . Auth::user()->last_name;
     $can->image_id = $i->id;
     $can->save();

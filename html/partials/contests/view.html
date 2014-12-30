@@ -76,9 +76,9 @@
         <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
           <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}" title="Vote for {{candidate.name}}"/>
         </a>
-        <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id == candidate.id ">Unvote</button>
-        <button class="btn btn-success even" ng-click="vote(candidate)" ng-if="contest.can_vote && contest.current_user_candidate_id != candidate.id ">Vote</button>
-        <button class="btn btn-primary even" ng-click="share(candidate)" ng-if="contest.can_share"><i class="fa fa-facebook"></i> Share</button>
+        <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
+        <button class="btn btn-success even" ng-click="vote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
+        <button class="btn btn-primary even" ng-click="share(candidate)" ng-disabled="!contest.can_share"><i class="fa fa-facebook"></i> Share</button>
       </div>
     
       <div class="candidate" ng-if="contest.can_join">
