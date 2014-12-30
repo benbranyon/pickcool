@@ -60,7 +60,7 @@ class Contest extends Eloquent
     {
       return $this->writein_enabled && $this->ends_at->gt(\Carbon::now());
     } else {
-      return $this->writen_enabled;
+      return $this->writein_enabled;
     }
   }
   

@@ -117,7 +117,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
     {
       console.log('heartbeat');
       contest.can_end = false;
-      contest.can_join = contest.writein_enabled;
+      contest.can_join = contest.writein_enabled && !contest.current_user_writein;
       contest.is_ended = false;
       contest.can_vote = true && (!contest.password || contest.password.length==0);
       contest.can_share = true && (!contest.password || contest.password.length==0);
