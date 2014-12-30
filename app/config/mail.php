@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'smtp',
+	'driver' => $_ENV['IS_MAIL_ENABLED'] ? 'smtp' : 'log',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -119,5 +119,5 @@ return array(
 	|
 	*/
 
-	'pretend' => !$_ENV['IS_MAIL_ENABLED'],
+	'pretend' => false,
 );
