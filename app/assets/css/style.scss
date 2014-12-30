@@ -247,8 +247,12 @@ ul.nav
 {
   .contest
   {
- 
-    
+    .modal-body
+    {
+      max-height: 200px;
+      overflow: auto;
+    }
+
     .description
     {
       border: 1px solid rgb(221, 221, 221);
@@ -417,54 +421,59 @@ ul.nav
       {
         font-size: 10px;
       }
-      .mini-candidate 
+      .modal-body
       {
-        border: 1px solid rgb(231, 228, 228);
-        border-radius: 3px;
-        padding: 5px;
-        margin: 5px;
-        text-align: left;
-        width: 50%;
-        @media (min-width: 0px) {
-          width: 50%;
-        }
-        @media (min-width: 480px) {
-          width: 47%;
-          display: inline-block;
-        }
-        @media (min-width: 768px) {
-          width: 31%;
-        }
-        @media (min-width: 992px) {
-          width: 23%;
-        }
-        .thumb
+        .mini-candidate 
         {
-          position: relative;
-          border: 1px solid gray;
+          float: left;
+          border: 1px solid rgb(231, 228, 228);
           border-radius: 3px;
-          margin: 3px;
-          display: block;
-          img
-          {
-            border-radius: 3px;
-            width: 100%;
+          padding: 5px;
+          margin: 5px;
+          text-align: left;
+          width: 50%;
+          @media (min-width: 0px) {
+            width: 50%;
           }
-        }
-        .thumb.selected
-        {
-          border: 3px solid rgb(36, 219, 36);
-        }
-        .btn
-        {
-          font-size: 18px;
-        }
-        .even
-        {
-          width: 45%;
-          padding: 6px 2px
-        }
+          @media (min-width: 480px) {
+            width: 47%;
+            display: inline-block;
+          }
+          @media (min-width: 768px) {
+            width: 31%;
+          }
+          @media (min-width: 992px) {
+            width: 23%;
+          }
+          .thumb
+          {
+            position: relative;
+            border: 1px solid gray;
+            border-radius: 3px;
+            margin: 3px;
+            display: block;
+            img
+            {
+              border-radius: 3px;
+              width: 100%;
+            }
+          }
+          .thumb.selected
+          {
+            border: 3px solid rgb(36, 219, 36);
+          }
+          .btn
+          {
+            font-size: 18px;
+          }
+          .even
+          {
+            width: 45%;
+            padding: 6px 2px
+          }
+        }        
       }
+
       
 
     }    

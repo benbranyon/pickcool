@@ -70,6 +70,15 @@
       </div>
       <div class="clearfix"></div>
 
+      <div class="candidate" ng-if="!contest.current_user_writein && contest.password">
+        <h2>You</h2>
+        <h3>Join the Pick</h3>
+        <a class="thumb" ng-click="join()" >
+          <img ng-src="/add-user.png" />
+        </a>
+        <button class="btn btn-success"  ng-click="join()">Join The Pick Now</button>
+      </div>
+
       <div class="candidate" ng-repeat="candidate in contest.candidates" id="c{{candidate.id}}">
         <h2>{{candidate.name}} </h2>
         <h3>{{candidate.vote_count}} votes</h3>
@@ -119,9 +128,6 @@
             <h4 class="modal-title">Edit Your Pick</h4>
           </div>
           <div class="modal-body">
-            <p>
-              Update your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back and click edit again.
-            <p class="text-danger">This is really what they're going to see if you press Save. Seriously, if you don't like it, go change your Facebook profile.</p>
             <div class="mini-candidate">
               <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
               <h3>7,000 votes</h3>
@@ -129,6 +135,10 @@
                 <img ng-src="{{current_user.profile_img_url}}"/>
               </div>
             </div>
+            <p class="text-danger">This is really what they're going to see if you press Save. Seriously, if you don't like it, go change your Facebook profile.</p>
+            <p>
+              Update your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back and click edit again.
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" ng-click="join_confirm()">Save</button>
@@ -140,9 +150,6 @@
             <h4 class="modal-title">Join the Pick</h4>
           </div>
           <div class="modal-body">
-            <p>
-              So you want to join the pick, eh? Well, it's pretty easy. Go change your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back to join the pick.
-            <p class="text-danger">This is really what they're going to see if you press Join. Seriously, if you don't like it, go change your Facebook profile.</p>
             <div class="mini-candidate">
               <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
               <h3>427 votes</h3>
@@ -150,6 +157,9 @@
                 <img ng-src="{{current_user.profile_img_url}}"/>
               </div>
             </div>
+            <p class="text-danger">This is really what they're going to see if you press Join. Seriously, if you don't like it, go change your Facebook profile.</p>
+            <p>
+              So you want to join the pick, eh? Well, it's pretty easy. Go change your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back to join the pick.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" ng-click="join_confirm()">Join Now</button>
