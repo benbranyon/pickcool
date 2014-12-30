@@ -79,7 +79,7 @@
         <span ng-if="candidate.fb_id == current_user.fb_id">
           <button class="btn btn-success even"  ng-click="join()">Edit</button>
         </span>
-        <span ng-if="contest.current_user_candidate_id != candidate.id">
+        <span ng-if="candidate.fb_id != current_user.fb_id">
           <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
           <button class="btn btn-success even" ng-click="vote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
         </span>
