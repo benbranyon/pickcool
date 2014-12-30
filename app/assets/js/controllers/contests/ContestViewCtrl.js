@@ -31,6 +31,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
       angular.element('#login_dialog').modal();
       return;
     }
+    console.log('hi');
     angular.element('#join').modal('show');
     ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
       $scope.current_user.profile_img_url = res.data.url;

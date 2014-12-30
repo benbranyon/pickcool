@@ -915,7 +915,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
     {
       console.log('heartbeat');
       contest.can_end = false;
-      contest.can_join = contest.writein_enabled && !contest.current_user_writein;
+      contest.can_join = contest.writein_enabled;
       contest.is_ended = false;
       contest.can_vote = true && (!contest.password || contest.password.length==0);
       contest.can_share = true && (!contest.password || contest.password.length==0);
@@ -1032,6 +1032,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
       angular.element('#login_dialog').modal();
       return;
     }
+    console.log('hi');
     angular.element('#join').modal('show');
     ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
       $scope.current_user.profile_img_url = res.data.url;
