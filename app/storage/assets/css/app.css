@@ -1859,6 +1859,9 @@ ul.nav {
 
 .view .contest {
   text-align: center; }
+  .view .contest .modal-body {
+    max-height: 200px;
+    overflow: auto; }
   .view .contest .description {
     border: 1px solid #dddddd;
     text-align: left;
@@ -1967,7 +1970,8 @@ ul.nav {
       font-size: 15px; }
     .view .contest #join h3 {
       font-size: 10px; }
-    .view .contest #join .mini-candidate {
+    .view .contest #join .modal-body .mini-candidate {
+      float: left;
       border: 1px solid #e7e4e4;
       border-radius: 3px;
       padding: 5px;
@@ -1975,32 +1979,32 @@ ul.nav {
       text-align: left;
       width: 50%; }
       @media (min-width: 0px) {
-        .view .contest #join .mini-candidate {
+        .view .contest #join .modal-body .mini-candidate {
           width: 50%; } }
       @media (min-width: 480px) {
-        .view .contest #join .mini-candidate {
+        .view .contest #join .modal-body .mini-candidate {
           width: 47%;
           display: inline-block; } }
       @media (min-width: 768px) {
-        .view .contest #join .mini-candidate {
+        .view .contest #join .modal-body .mini-candidate {
           width: 31%; } }
       @media (min-width: 992px) {
-        .view .contest #join .mini-candidate {
+        .view .contest #join .modal-body .mini-candidate {
           width: 23%; } }
-      .view .contest #join .mini-candidate .thumb {
+      .view .contest #join .modal-body .mini-candidate .thumb {
         position: relative;
         border: 1px solid gray;
         border-radius: 3px;
         margin: 3px;
         display: block; }
-        .view .contest #join .mini-candidate .thumb img {
+        .view .contest #join .modal-body .mini-candidate .thumb img {
           border-radius: 3px;
           width: 100%; }
-      .view .contest #join .mini-candidate .thumb.selected {
+      .view .contest #join .modal-body .mini-candidate .thumb.selected {
         border: 3px solid #24db24; }
-      .view .contest #join .mini-candidate .btn {
+      .view .contest #join .modal-body .mini-candidate .btn {
         font-size: 18px; }
-      .view .contest #join .mini-candidate .even {
+      .view .contest #join .modal-body .mini-candidate .even {
         width: 45%;
         padding: 6px 2px; }
   .view .contest #join_confirm .loading {

@@ -99,7 +99,7 @@ module.exports = function(grunt) {
           "./etag.sh",
           "./Gruntfile.js",
         ],   
-        tasks: ['init'],     //tasks to run
+        tasks: ['dev'],     //tasks to run
         options: {
           livereload: true                        //reloads the browser
         }
@@ -135,7 +135,8 @@ module.exports = function(grunt) {
   
 
   // Task definition
-  grunt.registerTask('init', ['jsvalidate', 'sass', 'concat', 'copy', 'run',]);
+  grunt.registerTask('dev', ['jsvalidate', 'sass', 'concat', 'copy', 'run:artisan',]);
+  grunt.registerTask('prod', ['jsvalidate', 'sass', 'concat', 'copy', 'run',]);
   grunt.registerTask('default', ['watch']);
 
 };
