@@ -87,7 +87,7 @@
         <button class="btn btn-primary even" ng-click="share(candidate)" ng-disabled="!contest.can_share"><i class="fa fa-facebook"></i> Share</button>
       </div>
     
-      <div class="candidate" ng-if="!contest.contest.current_user_writein">
+      <div class="candidate" ng-if="!contest.current_user_writein">
         <h2>You</h2>
         <h3>Join the Pick</h3>
         <a class="thumb" ng-click="join()" >
@@ -124,7 +124,7 @@
             <p class="text-danger">This is really what they're going to see if you press Save. Seriously, if you don't like it, go change your Facebook profile.</p>
             <div class="mini-candidate">
               <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
-              <h3>427 votes</h3>
+              <h3>7,000 votes</h3>
               <div class="thumb">
                 <img ng-src="{{current_user.profile_img_url}}"/>
               </div>
