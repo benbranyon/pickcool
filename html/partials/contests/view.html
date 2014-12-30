@@ -76,12 +76,18 @@
         <a class="thumb" ng-href="{{contest.canonical_url}}" ng-click="vote(candidate)" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
           <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}" title="Vote for {{candidate.name}}"/>
         </a>
-        <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
-        <button class="btn btn-success even" ng-click="vote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
+        <span ng-if="candidate.fb_id == current_user.fb_id">
+          <button class="btn btn-success even"  ng-click="join()">Edit</button>
+        </span>
+        <span ng-if="contest.current_user_candidate_id != candidate.id">
+          <button class="btn btn-warning even" ng-click="unvote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
+          <button class="btn btn-success even" ng-click="vote(candidate)" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
+        </span>
+        
         <button class="btn btn-primary even" ng-click="share(candidate)" ng-disabled="!contest.can_share"><i class="fa fa-facebook"></i> Share</button>
       </div>
     
-      <div class="candidate" ng-if="contest.can_join">
+      <div class="candidate" ng-if="!contest.contest.current_user_writein">
         <h2>You</h2>
         <h3>Join the Pick</h3>
         <a class="thumb" ng-click="join()" >
@@ -107,15 +113,36 @@
     </div>
     <div class="modal fade" id="join">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" ng-if="contest.current_user_writein">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">Join The Pick</h4>
+            <h4 class="modal-title">Edit Your Pick</h4>
           </div>
           <div class="modal-body">
-            So you want to join the pick, eh? Well, it's pretty easy. If you don't like what you see below, go update your Facebook profile
-            and then come back to join the pick.
-            <p><em>Preview</em></p>
+            <p>
+              Update your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back and click edit again.
+            <p class="text-danger">This is really what they're going to see if you press Save. Seriously, if you don't like it, go change your Facebook profile.</p>
+            <div class="mini-candidate">
+              <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
+              <h3>427 votes</h3>
+              <div class="thumb">
+                <img ng-src="{{current_user.profile_img_url}}"/>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="join_confirm()">Save</button>
+          </div>
+        </div><!-- /.modal-content -->
+        <div class="modal-content" ng-if="!contest.current_user_writein">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Join the Pick</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              So you want to join the pick, eh? Well, it's pretty easy. Go change your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back to join the pick.
+            <p class="text-danger">This is really what they're going to see if you press Join. Seriously, if you don't like it, go change your Facebook profile.</p>
             <div class="mini-candidate">
               <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
               <h3>427 votes</h3>

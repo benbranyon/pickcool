@@ -25,9 +25,10 @@ class User extends Eloquent
     return Vote::whereUserId(Auth::user()->id)->whereContestId($contest->id)->first();
   }
   
-  function profile_image_url()
+  function profile_image_url($cache_bust = false)
   {
-    return "https://graph.facebook.com/{$this->fb_id}/picture?width=1200&height=1200";
+    $extra = $cache_bust ? '&_r='.time() : '';
+    return "https://graph.facebook.com/{$this->fb_id}/picture?width=1200&height=1200".$extra;
   }
   
   static function from_fb($me)
