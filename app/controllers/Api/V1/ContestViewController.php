@@ -30,8 +30,7 @@ class ContestViewController extends BaseController
     {
       return ApiSerializer::error(API_ERR_AUTH);
     }
-    
-    $can = Candidate::whereFbId(Auth::user()->fb_id)->first();
+    $can = Candidate::whereFbId(Auth::user()->fb_id)->whereContestId($c->id)->first();
     if(!$can)
     {
       $can = new Candidate();
@@ -40,7 +39,7 @@ class ContestViewController extends BaseController
       $can->buy_url = 'x';
       $can->buy_text = 'x';
     }
-    $i = Image::from_url(Auth::user()->profile_image_url());
+    $i = \Image::from_url(Auth::user()->profile_image_url());
     $can->name = Auth::user()->first_name . ' ' . Auth::user()->last_name;
     $can->image_id = $i->id;
     $can->save();

@@ -56,10 +56,10 @@
       </p>
     
       <div class="alert alert-success" ng-if="contest.can_vote && contest.writein_enabled && contest.current_user_writein">
-        <h1>You are in this contest!</h1>
+        <h1>You are in this pick!</h1>
         <p>Your job now is to share, share, share, and encourage others to do so too. Here are some ideas that were successful for other users:</p>
         <ul>
-          <li>Vote for someone. If not for yourself, then someone else in the contest.
+          <li>Vote for someone. If not for yourself, then someone else in the pick.
           <li>Share your link to everyone in the world.
           <li>Not just once! Share every day.
           <li>Ask others to share your link too.
@@ -83,11 +83,11 @@
     
       <div class="candidate" ng-if="contest.can_join">
         <h2>You</h2>
-        <h3>Enter the Contest</h3>
+        <h3>Join the Pick</h3>
         <a class="thumb" ng-click="join()" >
           <img ng-src="/add-user.png" />
         </a>
-        <button class="btn btn-success"  ng-click="join()">Join The Contest Now</button>
+        <button class="btn btn-success"  ng-click="join()">Join The Pick Now</button>
       </div>
     
       <div scroll-to></div>
@@ -110,11 +110,11 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">Join The Contest</h4>
+            <h4 class="modal-title">Join The Pick</h4>
           </div>
           <div class="modal-body">
-            So you want to join the contest, eh? Well, it's pretty easy. If you don't like what you see below, go update your Facebook profile
-            and then come back to join the contest.
+            So you want to join the pick, eh? Well, it's pretty easy. If you don't like what you see below, go update your Facebook profile
+            and then come back to join the pick.
             <p><em>Preview</em></p>
             <div class="mini-candidate">
               <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
@@ -140,12 +140,12 @@
           <div class="modal-body">
             <div  class="loading" ng-if="!joined">
               <p>
-                Please hold while we add you to the contest...
+                Please hold while we add you to the pick...
               <p>
                 <i class="fa fa-spinner fa-spin"></i>
             </div>
             <div ng-if="joined">
-              Awesome sauce, you're in the contest. Here's what to do next:
+              Awesome sauce, you're in the pick. Here's what to do next:
               <ul>
                 <li>Find your entry on this page and cast the first vote.
                 <li>See the SHARE button below your entry. Share, share, share.
