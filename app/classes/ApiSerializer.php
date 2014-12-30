@@ -71,6 +71,7 @@ class ApiSerializer
           'fb_id'=>$obj->fb_id,
           'buy_text'=>$obj->buy_text,
           'canonical_url'=>route('contest.candidate.view', [$obj->contest_id, $obj->contest->slug(), $obj->id, $obj->slug()]),
+          'current_rank'=>$obj->current_rank,
         ];
         if($obj->is_editable_by(Auth::user()))
         {

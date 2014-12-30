@@ -13,26 +13,41 @@ class Contest extends Eloquent
     return $this->candidates()->whereNotNull('fb_id')->get();
   }
   
-  function generate_standings($ago='0 day')
+  function calc_ranks($ago = '0 day', $should_save = false)
   {
-    $candidates = $this->candidates()->get();
-    foreach($candidates as $candidate)
-    {
-      $candidate->total_votes = $candidate->votes_ago($ago)->count();
-      $candidate->save();
-    }
-    $candidates->sort(function($a,$b) {
-      if($a->total_votes==$b->total_votes) return 0;
-      return ($a->total_votes < $b->total_votes) ? 1 : -1;
+    $key = "contest_calc_current_ranks_{$this->id}";
+    return Lock::go($key, function() use($ago, $should_save) {
+      $candidates = $this->candidates()->get();
+      foreach($candidates as $candidate)
+      {
+        $candidate->total_votes = $candidate->votes_ago($ago)->count();
+      }
+      $candidates->sort(function($a,$b) {
+        $atv = $a->total_votes;
+        $btv = $b->total_votes;
+        if($atv>0 && $btv==0) return -1;
+        if($atv==0 && $btv>0) return 1;
+        if($atv==0 && $btv==0)
+        {
+          $created = $a->created_at->timestamp - $b->created_at->timestamp;
+          return $created;
+        }
+        if($atv==$btv)
+        {
+          $earliest_vote = $a->earliest_vote->created_at->timestamp - $b->earliest_vote->created_at->timestamp;
+          return $earliest_vote;
+        }
+        return $btv - $atv;
+      });
+      $rank=1;
+      foreach($candidates as $candidate)
+      {
+        $candidate->current_rank = $rank++;
+        $candidate->save();
+      }
+      return $candidates;
     });
-    $rank=1;
-    foreach($candidates as $candidate)
-    {
-      $candidate->previous_rank = $candidate->current_rank;
-      $candidate->current_rank = $rank++;
-      $candidate->save();
-    }
-    return $candidates;
+
   }
   
   function standings()
@@ -71,7 +86,7 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate');
+    return $this->hasMany('Candidate')->orderBy('current_rank', 'asc');
   }
   
   function is_editable_by($user)
