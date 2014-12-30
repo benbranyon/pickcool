@@ -1406,7 +1406,6 @@ app.config(function (ezfbProvider) {
   function updateStatus(res) 
   {
     console.log("auth.statusChange",res);
-    $rootScope.fb_loaded = true;
     $rootScope.accssToken = null;
     $rootScope.session_started = false;
     if(!res.authResponse) 
