@@ -21,6 +21,13 @@ class Candidate extends Eloquent
     });
   }
   
+  function getEarliestVoteAttribute()
+  {
+    $vote = $this->votes()->orderBy('created_at')->first();
+    if(!$vote) $vote = new Vote();
+    return $vote;
+  }
+  
   function user()
   {
     if(!$this->fb_id) return null;

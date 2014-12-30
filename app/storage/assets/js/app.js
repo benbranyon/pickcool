@@ -968,7 +968,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       };
     });
     contest.candidates.sort(function(a,b) {
-      return b.vote_count - a.vote_count;
+      return a.current_rank - b.current_rank;
     });
     contest.sponsors.sort(function(a,b) {
       console.log('sorting', a, b);
