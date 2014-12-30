@@ -9,18 +9,16 @@ app.directive('scrollTo', function($timeout, $anchorScroll) {
     });
   };
 });
-app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll, $timeout) {
+app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll, $timeout, $cookieStore) {
   console.log('ContestViewCtrl');
   $anchorScroll.yOffset = 50;
 
   api.getContest($stateParams.contest_id, function(res) {
     $scope.contest = res.data;
-  });
-  
-  $scope.input = {password: null};
-  
-  $scope.$watch('password', function() {
-    
+    $scope.input = {password: $scope.contest_passwords($scope.contest.id)};
+    $scope.$watch('input.password', function() {
+      $scope.contest_passwords($scope.contest.id, $scope.input.password);
+    });
   });
 
   $scope.join = function() {
