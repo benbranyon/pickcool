@@ -21,3 +21,17 @@ app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $a
 
   $scope.candidates = [];
 });
+app.run(function($cookieStore, $rootScope) {
+  $rootScope.contest_passwords = function(id) {
+    if(!$cookieStore.get('contest_passwords'))
+    {
+      $cookieStore.put('contest_passwords', {});
+    }
+    var pw = $cookieStore.get('contest_passwords');
+    if(arguments.length>1) {
+      pw[id] = arguments[1];
+      $cookieStore.put('contest_passwords', pw);
+    }
+    return pw[id];
+  };
+});

@@ -42,7 +42,7 @@ class Contest extends Eloquent
 
   public function sponsors()
   {
-    return $this->belongsToMany('Sponsor')->withPivot('weight');
+    return $this->belongsToMany('Sponsor')->withPivot('weight')->orderBy('weight');
   }
   
   public function getDates()
