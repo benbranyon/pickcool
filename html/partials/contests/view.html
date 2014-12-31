@@ -96,7 +96,7 @@
         <button class="btn btn-primary even" ng-click="share(candidate)" ng-disabled="!contest.can_share"><i class="fa fa-facebook"></i> Share</button>
       </div>
     
-      <div class="candidate" ng-if="!contest.current_user_writein">
+      <div class="candidate" ng-if="!contest.current_user_writein && contest.writein_enabled">
         <h2>You</h2>
         <h3>Join the Pick</h3>
         <a class="thumb" ng-click="join()" >
