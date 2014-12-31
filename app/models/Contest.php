@@ -24,7 +24,7 @@ class Contest extends Eloquent
       {
         $candidate->total_votes = $candidate->votes_ago($ago)->count();
         $this->vote_count += $candidate->total_votes;
-        $this->vote_count_hot += ($candidate->total_votes - $candidate->votes_ago('3 day')->count()) + 2;
+        $this->vote_count_hot += ($candidate->total_votes - $candidate->votes_ago('3 day')->count());
       }
       if($should_save) $this->save();
       $candidates->sort(function($a,$b) {
