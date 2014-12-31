@@ -936,7 +936,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       contest.duration = moment.duration(contest.ends_at.diff(now, 'milliseconds'));
       contest.is_ended = now > contest.ends_at;
       contest.can_vote = !contest.is_ended && (!contest.password || contest.password.length==0);
-      contest.can_join = contest.writein_enabled && !contest.is_ended && !contest.current_user_writein;
+      contest.can_join = contest.writein_enabled && !contest.is_ended;
       if(!contest.is_ended)
       {
         $timeout(contest.end_check,1000);
@@ -960,6 +960,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
        return $location.protocol()+'://'+$location.host()+$state.href('contests-share', {'contest_id': contest.id, 'slug': contest.slug, 'user_id': $rootScope.current_user.id, 'candidate_id': c.id}); 
       };
     });
+    contest.has_joined = (contest.current_user_writein != null);
     angular.forEach(contest.sponsors, function(c,idx) {
       c.image = function(size) {
         if(!size) size='thumb';
@@ -1069,7 +1070,6 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
       angular.element('#login_dialog').modal();
       return;
     }
-    console.log('hi');
     angular.element('#join').modal('show');
     ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
       $scope.current_user.profile_img_url = res.data.url;
@@ -1084,6 +1084,13 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     $scope.joined = false;
     api.joinContest($scope.contest.id, function(res) {
       $scope.contest = res.data;
+      angular.forEach($scope.contests, function(c,idx) {
+        if(c.id != $scope.contest.id) return;
+        console.log('found it');
+        $scope.contests[idx] = $scope.contest;
+        $scope.contests_by_id[$scope.contest.id] = $scope.contest;
+        $scope.contest.has_joined = true;
+      })
       $scope.joined = true;
     });
   };

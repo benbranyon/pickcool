@@ -27,7 +27,6 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
       angular.element('#login_dialog').modal();
       return;
     }
-    console.log('hi');
     angular.element('#join').modal('show');
     ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
       $scope.current_user.profile_img_url = res.data.url;
@@ -42,6 +41,13 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     $scope.joined = false;
     api.joinContest($scope.contest.id, function(res) {
       $scope.contest = res.data;
+      angular.forEach($scope.contests, function(c,idx) {
+        if(c.id != $scope.contest.id) return;
+        console.log('found it');
+        $scope.contests[idx] = $scope.contest;
+        $scope.contests_by_id[$scope.contest.id] = $scope.contest;
+        $scope.contest.has_joined = true;
+      })
       $scope.joined = true;
     });
   };

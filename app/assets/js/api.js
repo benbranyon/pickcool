@@ -128,7 +128,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       contest.duration = moment.duration(contest.ends_at.diff(now, 'milliseconds'));
       contest.is_ended = now > contest.ends_at;
       contest.can_vote = !contest.is_ended && (!contest.password || contest.password.length==0);
-      contest.can_join = contest.writein_enabled && !contest.is_ended && !contest.current_user_writein;
+      contest.can_join = contest.writein_enabled && !contest.is_ended;
       if(!contest.is_ended)
       {
         $timeout(contest.end_check,1000);
@@ -152,6 +152,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
        return $location.protocol()+'://'+$location.host()+$state.href('contests-share', {'contest_id': contest.id, 'slug': contest.slug, 'user_id': $rootScope.current_user.id, 'candidate_id': c.id}); 
       };
     });
+    contest.has_joined = (contest.current_user_writein != null);
     angular.forEach(contest.sponsors, function(c,idx) {
       c.image = function(size) {
         if(!size) size='thumb';
