@@ -10,11 +10,11 @@ app.config(function (ezfbProvider) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
+  $rootScope.session_started = false;
   function updateStatus(res) 
   {
     console.log("auth.statusChange",res);
     $rootScope.accssToken = null;
-    $rootScope.session_started = false;
     if(!res.authResponse) 
     {
       $rootScope.current_user = null;

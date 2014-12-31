@@ -18,6 +18,7 @@ Route::group([
   Route::any('/contests/top', 'Api\V1\ContestController@top');
   Route::any('/contests/hot', 'Api\V1\ContestController@hot');
   Route::any('/contests/new', 'Api\V1\ContestController@recent');
+  Route::any('/contests/local', 'Api\V1\ContestController@local');
   Route::any('/contests/{id}', 'Api\V1\ContestController@get');
 
   // Wildcard if no matched route

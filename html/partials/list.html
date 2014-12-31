@@ -5,7 +5,7 @@
   <div ng-repeat="contest in contests" class="contest row" ng-if="contests">
     <div class="col-xs-2 col-sm-1">
       <div class="votes-total">
-        {{contest.total_votes}}
+        {{contest.vote_count}}
       </div>
       <button ng-if="contest.is_editable" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
     </div>

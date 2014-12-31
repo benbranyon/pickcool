@@ -1,6 +1,24 @@
-app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $anchorScroll) {
+app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $anchorScroll, $timeout) {
   console.log('MainCtrl');
   $scope.state = $state;
+  
+  $scope.contests=null;
+
+  $scope.$watch('session_started', function() {
+    if(!$scope.session_started) return;
+    var refresh = function() {
+      api.getContests('local', function(res) {
+        $scope.contests = res.data;
+        $scope.contests_by_id = {};
+        angular.forEach($scope.contests, function(c) {
+          $scope.contests_by_id[c.id]=c;
+        });
+      });
+      $timeout(refresh, 60 * 1000);
+    };
+    refresh();
+  });
+  
   
   $scope.scrollTop = function() {
     $location.hash('top');

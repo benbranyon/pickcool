@@ -917,8 +917,6 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
   {
     contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view', {'contest_id': contest.id, 'slug': contest.slug});
     // Fix up contest data
-    contest.highest_vote = 0;
-    contest.total_votes = 0;
     contest.current_user_writein = null;
     contest.ends_at = contest.ends_at ? moment.unix(contest.ends_at) : null;
     contest.end_check = function()
@@ -958,8 +956,6 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       c.share_url = function() {
        return $location.protocol()+'://'+$location.host()+$state.href('contests-share', {'contest_id': contest.id, 'slug': contest.slug, 'user_id': $rootScope.current_user.id, 'candidate_id': c.id}); 
       };
-      if(c.vote_count > contest.highest_vote) contest.highest_vote = c.vote_count;
-      contest.total_votes = contest.total_votes + c.vote_count;
     });
     angular.forEach(contest.sponsors, function(c,idx) {
       c.image = function(size) {
@@ -967,10 +963,10 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
         return $state.href('image-view', {'id': c.image_id, 'size': size}); 
       };
     });
-    contest.candidates.sort(function(a,b) {
+    contest.candidates = contest.candidates.sort(function(a,b) {
       return a.current_rank - b.current_rank;
     });
-    contest.sponsors.sort(function(a,b) {
+    contest.sponsors = contest.sponsors.sort(function(a,b) {
       console.log('sorting', a, b);
       return a.weight - b.weight;
     });
@@ -982,9 +978,27 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
 ;
 
 ;
-app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $anchorScroll) {
+app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $anchorScroll, $timeout) {
   console.log('MainCtrl');
   $scope.state = $state;
+  
+  $scope.contests=null;
+
+  $scope.$watch('session_started', function() {
+    if(!$scope.session_started) return;
+    var refresh = function() {
+      api.getContests('local', function(res) {
+        $scope.contests = res.data;
+        $scope.contests_by_id = {};
+        angular.forEach($scope.contests, function(c) {
+          $scope.contests_by_id[c.id]=c;
+        });
+      });
+      $timeout(refresh, 60 * 1000);
+    };
+    refresh();
+  });
+  
   
   $scope.scrollTop = function() {
     $location.hash('top');
@@ -1038,12 +1052,10 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   console.log('ContestViewCtrl');
   $anchorScroll.yOffset = 50;
 
-  api.getContest($stateParams.contest_id, function(res) {
-    $scope.contest = res.data;
-    $scope.input = {password: $scope.contest_passwords($scope.contest.id)};
-    $scope.$watch('input.password', function() {
-      $scope.contest_passwords($scope.contest.id, $scope.input.password);
-    });
+  $scope.contest = $scope.contests_by_id[$stateParams.contest_id];
+  $scope.input = {password: $scope.contest_passwords($scope.contest.id)};
+  $scope.$watch('input.password', function() {
+    $scope.contest_passwords($scope.contest.id, $scope.input.password);
   });
 
   $scope.join = function() {
@@ -1329,10 +1341,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('hot', function(res) {
-          $scope.contests = res.data;
+        console.log('HomeController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          return b.vote_count_hot - a.vote_count_hot || b.vote_count - a.vote_count || b.created_at - a.created_at;
         });
       },
     })
@@ -1364,10 +1375,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/hot",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('hot', function(res) {
-          $scope.contests = res.data;
+        console.log('HotController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          return b.vote_count_hot - a.vote_count_hot || b.vote_count - a.vote_count || b.created_at - a.created_at;
         });
       },
     })
@@ -1375,10 +1385,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/new",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('new', function(res) {
-          $scope.contests = res.data;
+        console.log('RecentController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          console.log(a,b);
+          return b.created_at - a.created_at || b.vote_count - a.vote_count;
         });
       },
     })
@@ -1386,10 +1396,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/top",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('top', function(res) {
-          $scope.contests = res.data;
+        console.log('TopController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          console.log(b.vote_count - a.vote_count);
+          return b.vote_count - a.vote_count;
         });
       },
     })
@@ -1426,11 +1436,11 @@ app.config(function (ezfbProvider) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
+  $rootScope.session_started = false;
   function updateStatus(res) 
   {
     console.log("auth.statusChange",res);
     $rootScope.accssToken = null;
-    $rootScope.session_started = false;
     if(!res.authResponse) 
     {
       $rootScope.current_user = null;

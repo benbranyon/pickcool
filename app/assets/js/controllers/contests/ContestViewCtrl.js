@@ -13,12 +13,10 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   console.log('ContestViewCtrl');
   $anchorScroll.yOffset = 50;
 
-  api.getContest($stateParams.contest_id, function(res) {
-    $scope.contest = res.data;
-    $scope.input = {password: $scope.contest_passwords($scope.contest.id)};
-    $scope.$watch('input.password', function() {
-      $scope.contest_passwords($scope.contest.id, $scope.input.password);
-    });
+  $scope.contest = $scope.contests_by_id[$stateParams.contest_id];
+  $scope.input = {password: $scope.contest_passwords($scope.contest.id)};
+  $scope.$watch('input.password', function() {
+    $scope.contest_passwords($scope.contest.id, $scope.input.password);
   });
 
   $scope.join = function() {

@@ -109,8 +109,6 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
   {
     contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view', {'contest_id': contest.id, 'slug': contest.slug});
     // Fix up contest data
-    contest.highest_vote = 0;
-    contest.total_votes = 0;
     contest.current_user_writein = null;
     contest.ends_at = contest.ends_at ? moment.unix(contest.ends_at) : null;
     contest.end_check = function()
@@ -150,8 +148,6 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       c.share_url = function() {
        return $location.protocol()+'://'+$location.host()+$state.href('contests-share', {'contest_id': contest.id, 'slug': contest.slug, 'user_id': $rootScope.current_user.id, 'candidate_id': c.id}); 
       };
-      if(c.vote_count > contest.highest_vote) contest.highest_vote = c.vote_count;
-      contest.total_votes = contest.total_votes + c.vote_count;
     });
     angular.forEach(contest.sponsors, function(c,idx) {
       c.image = function(size) {
@@ -159,10 +155,10 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
         return $state.href('image-view', {'id': c.image_id, 'size': size}); 
       };
     });
-    contest.candidates.sort(function(a,b) {
+    contest.candidates = contest.candidates.sort(function(a,b) {
       return a.current_rank - b.current_rank;
     });
-    contest.sponsors.sort(function(a,b) {
+    contest.sponsors = contest.sponsors.sort(function(a,b) {
       console.log('sorting', a, b);
       return a.weight - b.weight;
     });

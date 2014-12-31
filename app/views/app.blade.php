@@ -26,17 +26,17 @@
   </head>
 
   <body ng-controller="MainCtrl" id="top">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-click="scrollTop()">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Pick.Cool</a>
+          <a class="navbar-brand" ui-sref="home">Pick.Cool</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
           <ul class="nav navbar-nav navbar-right">
-            <li class="@{{state.is('home') || state.is('hot') ? 'active' : ''}}"><a ui-sref="hot" ng-click="state.reload()">Hot</a></li>
-            <li class="@{{state.is('new') ? 'active' : ''}}"><a ui-sref="new"  ng-click="state.reload()">New</a></li>
-            <li class="@{{state.is('top') ? 'active' : ''}}"><a ui-sref="top" ng-click="state.reload()">Top</a></li>
+            <li class="@{{state.is('home') || state.is('hot') ? 'active' : ''}}"><a ui-sref="hot">Hot</a></li>
+            <li class="@{{state.is('new') ? 'active' : ''}}"><a ui-sref="new"  >New</a></li>
+            <li class="@{{state.is('top') ? 'active' : ''}}"><a ui-sref="top" >Top</a></li>
           </ul>
         </div>
       </div>
@@ -51,8 +51,10 @@
 
       <div class="row">
         <div class="col-xs-12 ">
-          <div flash-messages></div>
-          <div ui-view ng-if="session_started"></div>
+          <div  class="loading" ng-if="!contests">
+            <i class="fa fa-spinner fa-spin"></i>
+          </div>
+          <div ui-view ng-if="contests"></div>
 
           <footer class="footer">
             <div class="row">

@@ -12,10 +12,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('hot', function(res) {
-          $scope.contests = res.data;
+        console.log('HomeController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          return b.vote_count_hot - a.vote_count_hot || b.vote_count - a.vote_count || b.created_at - a.created_at;
         });
       },
     })
@@ -47,10 +46,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/hot",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('hot', function(res) {
-          $scope.contests = res.data;
+        console.log('HotController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          return b.vote_count_hot - a.vote_count_hot || b.vote_count - a.vote_count || b.created_at - a.created_at;
         });
       },
     })
@@ -58,10 +56,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/new",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('new', function(res) {
-          $scope.contests = res.data;
+        console.log('RecentController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          console.log(a,b);
+          return b.created_at - a.created_at || b.vote_count - a.vote_count;
         });
       },
     })
@@ -69,10 +67,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/top",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('top', function(res) {
-          $scope.contests = res.data;
+        console.log('TopController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          console.log(b.vote_count - a.vote_count);
+          return b.vote_count - a.vote_count;
         });
       },
     })
