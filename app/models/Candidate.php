@@ -85,3 +85,8 @@ class Candidate extends Eloquent
   }
 }
 
+
+Candidate::created(function($obj) {
+  $obj->contest->calc_ranks('0 day', true);
+});
+
