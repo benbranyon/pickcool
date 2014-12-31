@@ -912,6 +912,9 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
     api_lowevel({'name': 'unvote', 'path': '/unvote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
+  this.init_contest = function(contest) {
+    return init_contest(contest);
+  };
  
   var init_contest = function(contest)
   {
@@ -1251,6 +1254,9 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
         if(!res.error_message)
         {
           var contest = res.data;
+          api.init_contest(contest);
+          $scope.contests.push(contest);
+          $scope.contests_by_id[contest.id] = contest;
           $state.go('contests-view', {contest_id: contest.id, slug: contest.slug});
           return;
         }

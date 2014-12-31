@@ -47,7 +47,6 @@ class ContestController extends BaseController
   function local()
   {
     $contests = Contest::query()
-      ->select(['contests.*', DB::raw('(select count(votes.id) from votes where contest_id = contests.id and votes.created_at > utc_timestamp() - interval 72 hour) as vote_count_72')])
       ->with('candidates', 'candidates.votes', 'candidates.image', 'sponsors')
       ->get();
     return ApiSerializer::ok($contests);

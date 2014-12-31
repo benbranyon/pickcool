@@ -104,6 +104,9 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
     api_lowevel({'name': 'unvote', 'path': '/unvote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
+  this.init_contest = function(contest) {
+    return init_contest(contest);
+  };
  
   var init_contest = function(contest)
   {
