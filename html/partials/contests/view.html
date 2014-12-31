@@ -8,8 +8,8 @@
       <button ng-if="contest.is_editable" class="btn btn-xs btn-success" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
     </h1>
     <div ng-if="contest.password">
-      <h2>This pick is password protected. No voting or sharing can take place at this time. We will send you an email when the pick opens to the public.</h2>
-      Password: <input type="password" ng-model="input.password" ng-trim="true"/> 
+      <p class="alert alert-danger">This pick has not opened yet. All details are subject to change without notice. No voting or sharing can take place at this time. We will send you an email when the pick opens to the public. If you have the earlybird password, please enter it below.</p>
+      Earlybird Password: <input type="password" ng-model="input.password" ng-trim="true"/> 
     </div>
     <div ng-if="!contest.password || contest.password == input.password"> 
       <div class="countdown" ng-if="contest.can_end">
@@ -38,18 +38,7 @@
         <h3>About this Pick</h3>
         <p class="description" dd-text-collapse dd-text-collapse-max-length="110" dd-text-collapse-text="{{contest.description}}"></p>
       </div>
-      <div ng-if="contest.sponsors.length>0">
-        <h3>Pick Sponsors</h3>
-        <div class="sponsors">
-          <div class="sponsor clearfix" ng-repeat="sponsor in contest.sponsors">
-            <a href="{{sponsor.url}}" target="_self"><img ng-src="{{sponsor.image('thumb')}}" align="left" /></a>
-            <a href="{{sponsor.url}}" target="_self">{{sponsor.name}}</a>
-            <br/>
-            {{sponsor.description}}
-          </div>
-        </div>
-      </div>
-    
+
       <h3>The Picks</h3>
       <p ng-if="contest.can_vote">
         <b><i>Click your favorite image below to cast your vote.</i></b>
@@ -103,6 +92,18 @@
           <img ng-src="/add-user.png" />
         </a>
         <button class="btn btn-success"  ng-click="join()">Join The Pick Now</button>
+      </div>
+
+      <div ng-if="contest.sponsors.length>0">
+        <h3>Pick Sponsors</h3>
+        <div class="sponsors">
+          <div class="sponsor clearfix" ng-repeat="sponsor in contest.sponsors">
+            <a href="{{sponsor.url}}" target="_self"><img ng-src="{{sponsor.image('thumb')}}" align="left" /></a>
+            <a href="{{sponsor.url}}" target="_self">{{sponsor.name}}</a>
+            <br/>
+            {{sponsor.description}}
+          </div>
+        </div>
       </div>
     
       <div scroll-to></div>
