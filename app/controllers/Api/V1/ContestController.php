@@ -43,6 +43,14 @@ class ContestController extends BaseController
       ->get();
     return ApiSerializer::ok($contests);
   }
+
+  function local()
+  {
+    $contests = Contest::query()
+      ->with('candidates', 'candidates.votes', 'candidates.image', 'sponsors')
+      ->get();
+    return ApiSerializer::ok($contests);
+  }
   
   function get($id)
   {

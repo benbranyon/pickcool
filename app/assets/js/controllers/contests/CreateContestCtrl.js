@@ -94,6 +94,9 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
         if(!res.error_message)
         {
           var contest = res.data;
+          api.init_contest(contest);
+          $scope.contests.push(contest);
+          $scope.contests_by_id[contest.id] = contest;
           $state.go('contests-view', {contest_id: contest.id, slug: contest.slug});
           return;
         }

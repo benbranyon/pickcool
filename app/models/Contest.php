@@ -17,11 +17,16 @@ class Contest extends Eloquent
   {
     $key = "contest_calc_current_ranks_{$this->id}";
     return Lock::go($key, function() use($ago, $should_save) {
+      $this->vote_count = 0;
+      $this->vote_count_hot = 0;
       $candidates = $this->candidates()->get();
       foreach($candidates as $candidate)
       {
         $candidate->total_votes = $candidate->votes_ago($ago)->count();
+        $this->vote_count += $candidate->total_votes;
+        $this->vote_count_hot += ($candidate->total_votes - $candidate->votes_ago('3 day')->count());
       }
+      if($should_save) $this->save();
       $candidates->sort(function($a,$b) {
         $atv = $a->total_votes;
         $btv = $b->total_votes;
@@ -43,7 +48,7 @@ class Contest extends Eloquent
       foreach($candidates as $candidate)
       {
         $candidate->current_rank = $rank++;
-        $candidate->save();
+        if($should_save) $candidate->save();
       }
       return $candidates;
     });
@@ -102,21 +107,7 @@ class Contest extends Eloquent
     return $user->is_admin;
   }
   
-  function candidateNamesForHumans($exclude_id=null, $join = 'or') {
-    $names = [];
-    foreach($this->candidates as $c)
-    {
-      if($c->id == $exclude_id) continue;
-      $names[] = $c->name;
-    }
-    if(count($names))
-    {
-      $names[count($names)-1] = "{$join} {$names[count($names)-1]}";
-    }
-    $names = join(', ', $names);
-    return $names;
-  }
-  
+
   function slug()
   {
     $slugify = new Slugify();

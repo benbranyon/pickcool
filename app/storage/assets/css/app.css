@@ -1891,12 +1891,14 @@ ul.nav {
     max-width: 530px;
     margin-left: auto;
     margin-right: auto; }
-    .view .contest .sponsors .sponsor img {
-      width: 75px;
-      height: 75px;
-      border: 1px solid black;
-      border-radius: 3px;
-      margin: 5px; }
+    .view .contest .sponsors .sponsor {
+      margin-bottom: 10px; }
+      .view .contest .sponsors .sponsor img {
+        width: 75px;
+        height: 75px;
+        border: 1px solid black;
+        border-radius: 3px;
+        margin: 5px; }
   .view .contest .countdown {
     width: 100%;
     max-width: 380px;

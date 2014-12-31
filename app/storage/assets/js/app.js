@@ -912,13 +912,14 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
     api_lowevel({'name': 'unvote', 'path': '/unvote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
   };
   
+  this.init_contest = function(contest) {
+    return init_contest(contest);
+  };
  
   var init_contest = function(contest)
   {
     contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view', {'contest_id': contest.id, 'slug': contest.slug});
     // Fix up contest data
-    contest.highest_vote = 0;
-    contest.total_votes = 0;
     contest.current_user_writein = null;
     contest.ends_at = contest.ends_at ? moment.unix(contest.ends_at) : null;
     contest.end_check = function()
@@ -935,7 +936,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       contest.duration = moment.duration(contest.ends_at.diff(now, 'milliseconds'));
       contest.is_ended = now > contest.ends_at;
       contest.can_vote = !contest.is_ended && (!contest.password || contest.password.length==0);
-      contest.can_join = contest.writein_enabled && !contest.is_ended && !contest.current_user_writein;
+      contest.can_join = contest.writein_enabled && !contest.is_ended;
       if(!contest.is_ended)
       {
         $timeout(contest.end_check,1000);
@@ -958,19 +959,18 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       c.share_url = function() {
        return $location.protocol()+'://'+$location.host()+$state.href('contests-share', {'contest_id': contest.id, 'slug': contest.slug, 'user_id': $rootScope.current_user.id, 'candidate_id': c.id}); 
       };
-      if(c.vote_count > contest.highest_vote) contest.highest_vote = c.vote_count;
-      contest.total_votes = contest.total_votes + c.vote_count;
     });
+    contest.has_joined = (contest.current_user_writein != null);
     angular.forEach(contest.sponsors, function(c,idx) {
       c.image = function(size) {
         if(!size) size='thumb';
         return $state.href('image-view', {'id': c.image_id, 'size': size}); 
       };
     });
-    contest.candidates.sort(function(a,b) {
+    contest.candidates = contest.candidates.sort(function(a,b) {
       return a.current_rank - b.current_rank;
     });
-    contest.sponsors.sort(function(a,b) {
+    contest.sponsors = contest.sponsors.sort(function(a,b) {
       console.log('sorting', a, b);
       return a.weight - b.weight;
     });
@@ -982,9 +982,27 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
 ;
 
 ;
-app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $anchorScroll) {
+app.controller('MainCtrl', function ($state, $scope, $window, $location, api, $anchorScroll, $timeout) {
   console.log('MainCtrl');
   $scope.state = $state;
+  
+  $scope.contests=null;
+
+  $scope.$watch('session_started', function() {
+    if(!$scope.session_started) return;
+    var refresh = function() {
+      api.getContests('local', function(res) {
+        $scope.contests = res.data;
+        $scope.contests_by_id = {};
+        angular.forEach($scope.contests, function(c) {
+          $scope.contests_by_id[c.id]=c;
+        });
+      });
+      $timeout(refresh, 60 * 1000);
+    };
+    refresh();
+  });
+  
   
   $scope.scrollTop = function() {
     $location.hash('top');
@@ -1038,12 +1056,10 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
   console.log('ContestViewCtrl');
   $anchorScroll.yOffset = 50;
 
-  api.getContest($stateParams.contest_id, function(res) {
-    $scope.contest = res.data;
-    $scope.input = {password: $scope.contest_passwords($scope.contest.id)};
-    $scope.$watch('input.password', function() {
-      $scope.contest_passwords($scope.contest.id, $scope.input.password);
-    });
+  $scope.contest = $scope.contests_by_id[$stateParams.contest_id];
+  $scope.input = {password: $scope.contest_passwords($scope.contest.id)};
+  $scope.$watch('input.password', function() {
+    $scope.contest_passwords($scope.contest.id, $scope.input.password);
   });
 
   $scope.join = function() {
@@ -1054,7 +1070,6 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
       angular.element('#login_dialog').modal();
       return;
     }
-    console.log('hi');
     angular.element('#join').modal('show');
     ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
       $scope.current_user.profile_img_url = res.data.url;
@@ -1069,6 +1084,13 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     $scope.joined = false;
     api.joinContest($scope.contest.id, function(res) {
       $scope.contest = res.data;
+      angular.forEach($scope.contests, function(c,idx) {
+        if(c.id != $scope.contest.id) return;
+        console.log('found it');
+        $scope.contests[idx] = $scope.contest;
+        $scope.contests_by_id[$scope.contest.id] = $scope.contest;
+        $scope.contest.has_joined = true;
+      })
       $scope.joined = true;
     });
   };
@@ -1239,6 +1261,9 @@ app.controller('CreateContestCtrl', function ($scope, $state, api) {
         if(!res.error_message)
         {
           var contest = res.data;
+          api.init_contest(contest);
+          $scope.contests.push(contest);
+          $scope.contests_by_id[contest.id] = contest;
           $state.go('contests-view', {contest_id: contest.id, slug: contest.slug});
           return;
         }
@@ -1329,10 +1354,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('hot', function(res) {
-          $scope.contests = res.data;
+        console.log('HomeController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          return b.vote_count_hot - a.vote_count_hot || b.vote_count - a.vote_count || b.created_at - a.created_at;
         });
       },
     })
@@ -1364,10 +1388,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/hot",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('hot', function(res) {
-          $scope.contests = res.data;
+        console.log('HotController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          return b.vote_count_hot - a.vote_count_hot || b.vote_count - a.vote_count || b.created_at - a.created_at;
         });
       },
     })
@@ -1375,10 +1398,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/new",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('new', function(res) {
-          $scope.contests = res.data;
+        console.log('RecentController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          console.log(a,b);
+          return b.created_at - a.created_at || b.vote_count - a.vote_count;
         });
       },
     })
@@ -1386,10 +1409,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/top",
       templateUrl: "partials/list.html",
       controller: function(api, $scope) {
-        console.log('StateController');
-        $scope.contests=null;
-        api.getContests('top', function(res) {
-          $scope.contests = res.data;
+        console.log('TopController');
+        $scope.contests = $scope.contests.sort(function(a,b) {
+          console.log(b.vote_count - a.vote_count);
+          return b.vote_count - a.vote_count;
         });
       },
     })
@@ -1426,11 +1449,11 @@ app.config(function (ezfbProvider) {
   $rootScope.current_user = null;
   $rootScope.accessToken = null;
 
+  $rootScope.session_started = false;
   function updateStatus(res) 
   {
     console.log("auth.statusChange",res);
     $rootScope.accssToken = null;
-    $rootScope.session_started = false;
     if(!res.authResponse) 
     {
       $rootScope.current_user = null;
