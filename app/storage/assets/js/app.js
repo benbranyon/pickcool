@@ -1317,6 +1317,12 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
         $scope.contest = res.data;
         if(!res.error_message)
         {
+          api.init_contest($scope.contest);
+          angular.forEach($scope.contests, function(c,idx) {
+            if(c.id != $scope.contest.id) return;
+            $scope.contest[idx] = $scope.contest;
+          })
+          $scope.contests_by_id[$scope.contest.id] = $scope.contest;
           $state.go('contests-view', {contest_id: $scope.contest.id, slug: $scope.contest.slug})
           return;
         }
