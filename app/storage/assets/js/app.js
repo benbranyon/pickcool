@@ -1101,6 +1101,19 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
    
   $scope.share = function (c) {
     if(!$scope.contest.can_vote) return; 
+    var url = c.canonical_url;
+    ezfb.ui(
+     {
+      method: 'share',
+      href: url,
+     },
+     function (res) {
+      console.log(res);
+      // res: FB.ui response
+     }
+    );
+    
+    return;
     var serialize = function(obj) {
       var str = [];
       for(var p in obj)
@@ -1118,17 +1131,6 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
     window.location = "https://www.facebook.com/dialog/share?"+serialize(qs);
     return;
         
-    var url = c.canonical_url;
-    ezfb.ui(
-     {
-      method: 'share',
-      href: url,
-     },
-     function (res) {
-      console.log(res);
-      // res: FB.ui response
-     }
-    );
   };
   
   $scope.vote = function(c) {
