@@ -17,7 +17,6 @@ class ApiSerializer
     if(is_object($obj))
     {
       $class = get_class($obj);
-      Log::info($class);
       if($class=='Contest')
       {
         $v = null;
