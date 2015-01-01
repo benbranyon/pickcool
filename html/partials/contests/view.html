@@ -17,10 +17,10 @@
           <h2>Voting ends in</h2>
           <table class="countdown table">
             <tr class="times">
-              <td>{{contest.duration.days() | numberFixedLen:2}}</td>
-              <td>{{contest.duration.hours() | numberFixedLen:2}}</td>
-              <td>{{contest.duration.minutes() | numberFixedLen:2}}</td>
-              <td class="seconds">{{contest.duration.seconds() | numberFixedLen:2}}</td>
+              <td>{{contest.duration.days | numberFixedLen:2}}</td>
+              <td>{{contest.duration.hours | numberFixedLen:2}}</td>
+              <td>{{contest.duration.minutes | numberFixedLen:2}}</td>
+              <td class="seconds">{{contest.duration.seconds | numberFixedLen:2}}</td>
             </tr>
             <tr class="labels">
               <td>Days</td>

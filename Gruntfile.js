@@ -59,7 +59,6 @@ module.exports = function(grunt) {
           './bower_components/angular-easyfb/angular-easyfb.min.js',
           './bower_components/angular-inview/angular-inview.js',
           './bower_components/angular-cookies/angular-cookies.min.js',
-          './bower_components/momentjs/min/moment.min.js',
           './bower_components/showdown/compressed/showdown.js',
           './app/assets/js/debug.js',
           './app/assets/js/app.js',
