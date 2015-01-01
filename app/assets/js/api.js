@@ -113,7 +113,6 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
     contest.canonical_url = $location.protocol()+'://'+$location.host()+$state.href('contests-view', {'contest_id': contest.id, 'slug': contest.slug});
     // Fix up contest data
     contest.current_user_writein = null;
-    contest.ends_at = contest.ends_at ? moment.unix(contest.ends_at) : null;
     contest.end_check = function()
     {
       console.log('heartbeat');
@@ -124,8 +123,14 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       contest.can_share = true && (!contest.password || contest.password.length==0);
       if(!contest.ends_at) return;
       contest.can_end = true;
-      var now = moment();
-      contest.duration = moment.duration(contest.ends_at.diff(now, 'milliseconds'));
+      var now = new Date() / 1000;
+      var dd = contest.ends_at - now;
+      contest.duration = {
+        days: Math.floor(dd/(60*60*24)*1),
+        hours: Math.floor((dd%(60*60*24))/(60*60)*1),
+        minutes: Math.floor(((dd%(60*60*24))%(60*60))/(60)*1),
+        seconds: Math.floor((((dd%(60*60*24))%(60*60))%(60))*1),
+      };
       contest.is_ended = now > contest.ends_at;
       contest.can_vote = !contest.is_ended && (!contest.password || contest.password.length==0);
       contest.can_join = contest.writein_enabled && !contest.is_ended;
