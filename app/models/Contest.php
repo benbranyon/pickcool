@@ -56,10 +56,11 @@ class Contest extends Eloquent
       Log::info("New winner ". $new_winner->id);
       if($winner->id != $new_winner->id)
       {
-        Log::info("New winner, calling Facebook");
+        $url = route('contest.view', [$this->id, $this->slug()]);
+        Log::info("New winner, calling Facebook for $url");
         $client = new \GuzzleHttp\Client();
         $client->post('http://graph.facebook.com', ['query'=>[
-          'id'=>route('contest.view', [$new_winner->id]),
+          'id'=>$url,
           'scrape'=>'true',
         ]]);
       }
