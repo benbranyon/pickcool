@@ -20,6 +20,7 @@ class Contest extends Eloquent
       $this->vote_count = 0;
       $this->vote_count_hot = 0;
       $candidates = $this->candidates()->get();
+      $winner = $candidates[0];
       foreach($candidates as $candidate)
       {
         $candidate->total_votes = $candidate->votes_ago($ago)->count();
@@ -49,6 +50,18 @@ class Contest extends Eloquent
       {
         $candidate->current_rank = $rank++;
         if($should_save) $candidate->save();
+      }
+      $new_winner = $candidates->first();
+      Log::info("Old winner ". $winner->id);
+      Log::info("New winner ". $new_winner->id);
+      if($winner->id != $new_winner->id)
+      {
+        Log::info("New winner, calling Facebook");
+        $client = new \GuzzleHttp\Client();
+        $client->post('http://graph.facebook.com', ['query'=>[
+          'id'=>route('contest.view', [$new_winner->id]),
+          'scrape'=>'true',
+        ]]);
       }
       return $candidates;
     });
