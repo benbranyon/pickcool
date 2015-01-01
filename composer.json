@@ -24,7 +24,8 @@
     "cocur/slugify": "1.*",
     "arvenil/ninja-mutex": "dev-master",
     "bugsnag/bugsnag-laravel": "1.*",
-    "graham-campbell/markdown": "~2.0"
+    "graham-campbell/markdown": "~2.0",
+    "guzzlehttp/guzzle": "~5.0"
   },
   "autoload": {
     "classmap": [
