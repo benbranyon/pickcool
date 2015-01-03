@@ -891,7 +891,12 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
   };
   
   this.vote = function(candidate_id, success, error) {
-    api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
+    api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 
+      'success': function(res) {
+        init_contest(res.data);
+        success(res);
+      },
+      'error': error});
   };
   
   this.unvote = function(candidate_id, success, error) {
@@ -933,7 +938,9 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
         $timeout(contest.end_check,1000);
       }
     };
+    contest.candidates_by_id = {};
     angular.forEach(contest.candidates, function(c,idx) {
+      contest.candidates_by_id[c.id] = c;
       if($rootScope.current_user && c.fb_id == $rootScope.current_user.fb_id)
       {
         contest.current_user_writein = c;
@@ -948,7 +955,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       };
       c.buy_url = $state.href('buy', {candidate_id: c.id});
       c.share_url = function() {
-       return $location.protocol()+'://'+$location.host()+$state.href('contests-share', {'contest_id': contest.id, 'slug': contest.slug, 'user_id': $rootScope.current_user.id, 'candidate_id': c.id}); 
+       return $location.protocol()+'://'+$location.host()+$state.href('contests-candidate-share', {contest_id: contest.id, contest_slug: contest.slug, candidate_id: $rootScope.current_user.id, candidate_slug: $rootScope.current_user.slug}); 
       };
     });
     contest.has_joined = (contest.current_user_writein != null);
@@ -1032,6 +1039,62 @@ app.run(function($cookieStore, $rootScope) {
 ;
 
 ;
+console.log('ContestCandidateViewCtrl.js loaded');
+app.controller('ContestCandidateViewCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll, $timeout, $cookieStore) {
+  console.log('ContestCandidateViewCtrl');
+
+  $scope.contest = $scope.contests_by_id[$stateParams.contest_id];
+  $scope.candidate = $scope.contest.candidates_by_id[$stateParams.candidate_id];
+
+  $scope.vote = function() {
+    if(!$scope.contest.can_vote) return; 
+    if(!$scope.current_user)
+    {
+      $state.go('login', {r: $location.href()});
+      return;
+    }
+    var c = $scope.candidate;
+
+    if(c.id == $scope.contest.current_user_candidate_id) return;
+    angular.element('.candidate').removeClass('selected');
+    angular.element('#c_'+c.id).addClass('selected');
+    if($scope.contest.current_user_candidate_id )
+    {
+      angular.forEach($scope.contest.candidates, function(c,k) {
+        if($scope.contest.current_user_candidate_id != c.id) return;
+        c.vote_count--;
+      });
+    }
+    c.vote_count++;
+    $scope.contest.current_user_candidate = c;
+    $scope.contest.current_user_candidate_id = c.id;
+    api.vote(c.id);
+  };
+  
+  $scope.unvote = function() {
+    if(!$scope.contest.can_vote) return; 
+    var c = $scope.candidate;
+    angular.element('.candidate').removeClass('selected');
+    c.vote_count--;
+    $scope.contest.current_user_candidate = null;
+    $scope.contest.current_user_candidate_id = null;
+    api.unvote(c.id);
+  };
+  
+  $scope.scroll = function() {
+    $anchorScroll();
+  }
+   
+  $scope.share = function (c) {
+    ezfb.ui({
+      method: 'share',
+      href: $scope.contest.canonical_url,
+    });    
+  };
+  
+
+});
+;
 console.log('ContestViewCtrl.js loaded');
 app.directive('scrollTo', function($timeout, $anchorScroll) {
   return function(scope, element, attrs) {
@@ -1101,17 +1164,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
    
   $scope.share = function (c) {
     if(!$scope.contest.can_vote) return; 
-    var url = c.canonical_url;
-    ezfb.ui(
-     {
-      method: 'share',
-      href: url,
-     },
-     function (res) {
-      console.log(res);
-      // res: FB.ui response
-     }
-    );
+
     
     return;
     var serialize = function(obj) {
@@ -1324,6 +1377,75 @@ app.controller('EditContestCtrl', function ($scope, $state, $stateParams, api) {
   }
 })
 ;
+console.log('JoinConfirmCtrl.js loaded');
+app.controller('JoinConfirmCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll, $timeout, $cookieStore) {
+  console.log('JoinConfirmCtrl');
+
+  $scope.contest = $scope.contests_by_id[$stateParams.contest_id];
+
+  $scope.joined = false;
+  api.joinContest($scope.contest.id, function(res) {
+    $scope.contest = res.data;
+    angular.forEach($scope.contests, function(c,idx) {
+      if(c.id != $scope.contest.id) return;
+      $scope.contests[idx] = $scope.contest;
+      $scope.contests_by_id[$scope.contest.id] = $scope.contest;
+      $scope.contest.has_joined = true;
+    })
+    var candidate = $scope.contest.current_user_writein;
+    api.vote(candidate.id, function(res)
+    {
+      $scope.contest = res.data;
+      angular.forEach($scope.contests, function(c,idx) {
+        if(c.id != $scope.contest.id) return;
+        $scope.contests[idx] = $scope.contest;
+        $scope.contests_by_id[$scope.contest.id] = $scope.contest;
+        $scope.contest.has_joined = true;
+      });
+    });
+    ezfb.ui(
+     {
+      method: 'share',
+      href: candidate.canonical_url,
+     },
+     function (res) {
+     }
+    );    
+    $scope.joined = true;
+  });
+});
+;
+console.log('JoinCtrl.js loaded');
+app.controller('JoinCtrl', function($state, ezfb, $scope, $stateParams, api, $location, $filter, $anchorScroll, $timeout, $cookieStore) {
+  console.log('JoinCtrl');
+
+  $scope.contest = $scope.contests_by_id[$stateParams.contest_id];
+
+  if(!$scope.current_user)
+  {
+    $state.go('login', {r: $location.href()});
+    return;
+  }
+  ezfb.api('/me/picture', {width: 1200, height: 1200}, function (res) {
+    $scope.current_user.profile_img_url = res.data.url;
+  });
+  
+  $scope.join_confirm = function() {
+    $scope.joined = false;
+    api.joinContest($scope.contest.id, function(res) {
+      $scope.contest = res.data;
+      angular.forEach($scope.contests, function(c,idx) {
+        if(c.id != $scope.contest.id) return;
+        console.log('found it');
+        $scope.contests[idx] = $scope.contest;
+        $scope.contests_by_id[$scope.contest.id] = $scope.contest;
+        $scope.contest.has_joined = true;
+      })
+      $scope.joined = true;
+    });
+  };
+});
+;
 console.log('env.js loaded');
 
 var API_ENDPOINT="/api/v1";
@@ -1359,6 +1481,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         });
       },
     })
+    .state('contest-join', {
+      url: '/est/:contest_id/:slug/join',
+      templateUrl: "partials/contests/join.html"
+    })
+    .state('contest-join-confirm', {
+      url: '/est/:contest_id/:slug/join/confirm',
+      templateUrl: "partials/contests/join-confirm.html"
+    })
     .state('contests-view', {
       url: "/est/:contest_id/:slug",
       templateUrl: "partials/contests/view.html"
@@ -1367,9 +1497,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/est/:contest_id/:slug/:user_id/:candidate_id",
       templateUrl: "partials/contests/view.html"
     })
-    .state('contests-share-2', {
+    .state('contests-candidate-view', {
       url: "/est/:contest_id/:contest_slug/picks/:candidate_id/:candidate_slug",
-      templateUrl: "partials/contests/view.html"
+      templateUrl: "partials/contests/candidates/view.html"
     })
     .state('image-view', {
       url: '/images/:id/:size'

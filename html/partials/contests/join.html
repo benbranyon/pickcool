@@ -1,0 +1,20 @@
+<div ng-controller="JoinCtrl" style="max-width: 320px; width: 100%; margin-left: auto;margin-right: auto">
+  <h1>Join the Pick</h1>
+  <h2>You are joining {{contest.title}}</h2>
+  <div style="float: left;
+text-align: center;
+border: 1px solid rgb(223, 223, 223);
+border-radius: 3px;
+margin-right: 3px;">
+    <h2>{{current_user.first_name}} {{current_user.last_name}}</h2>
+    <div class="candidate-small" >
+      <img ng-src="{{current_user.profile_img_url}}" />
+      <span class='votes-count'>420</span>
+    </div>
+  </div>
+  <p class="text-danger">This is really what they're going to see if you press Join. Seriously, if you don't like it, go change your Facebook profile.</p>
+  <p>
+    So you want to join the pick, eh? Well, it's pretty easy. Go change your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back to join the pick.
+  </p>
+  <a class="btn btn-primary" ui-sref="contest-join-confirm({contest_id: contest.id, slug: contest.slug})">Join Now & Share</a>
+</div>

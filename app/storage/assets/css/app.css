@@ -1770,9 +1770,6 @@ ul.pull-left.nav.nav-pills.footer-nav {
   .brand-slogan {
     display: block; }
 
-  .votes-total {
-    font-size: 43px !important; }
-
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0; } }
@@ -1792,6 +1789,98 @@ button, input, optgroup, select, textarea {
 .fb_iframe_widget iframe[style] {
   width: 100% !important; }
 
+h1 {
+  font-size: 14px; }
+
+h2 {
+  font-size: 12px; }
+
+h3 {
+  font-size: 11px; }
+
+.candidate-large {
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin: 3px;
+  width: 100%;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block; }
+  .candidate-large img {
+    border-radius: 3px;
+    width: 100%;
+    max-width: 320px; }
+  .candidate-large .votes-count {
+    position: absolute;
+    background-color: #ffe9dd;
+    width: 25px;
+    height: 25px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 3px;
+    text-align: center;
+    color: #ff6b00;
+    border: 1px solid gray; }
+
+.candidate-small {
+  position: relative;
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin: 3px;
+  width: 77px;
+  height: 77px;
+  display: block; }
+  .candidate-small img {
+    border-radius: 3px;
+    width: 75px;
+    height: 75px; }
+  .candidate-small .votes-count {
+    position: absolute;
+    background-color: #ffe9dd;
+    width: 25px;
+    height: 25px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: 3px;
+    text-align: center;
+    color: #ff6b00;
+    border: 1px solid gray; }
+  .candidate-small .overlay {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    top: 0; }
+    .candidate-small .overlay .btn {
+      text-align: center;
+      width: 90%;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      display: block; }
+
+.candidate-small.selected {
+  border: 3px solid #24db24;
+  width: 81px;
+  height: 81px;
+  margin: 0px; }
+
+.countdown {
+  width: 100%;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto; }
+  .countdown .times td {
+    font-size: 12px;
+    color: #797979;
+    width: 25%; }
+  .countdown .times td.seconds {
+    color: red; }
+  .countdown .labels {
+    font-size: 10px;
+    text-transform: uppercase; }
+
 .list .contest .candidate {
   border: 1px solid #dddddd;
   padding: 5px;
@@ -1810,39 +1899,8 @@ button, input, optgroup, select, textarea {
     margin-left: auto;
     margin-right: auto; }
 .list .contest .votes-total {
-  font-size: 30px;
-  color: gray;
-  text-align: right;
-  margin-top: auto;
-  margin-bottom: auto; }
-.list .contest .thumb {
-  position: relative;
-  border: 1px solid gray;
-  border-radius: 3px;
-  margin: 3px;
-  width: 77px;
-  height: 77px;
-  display: block; }
-  .list .contest .thumb img {
-    border-radius: 3px;
-    width: 75px;
-    height: 75px; }
-  .list .contest .thumb .votes-count {
-    position: absolute;
-    background-color: #ffe9dd;
-    width: 25px;
-    height: 25px;
-    right: -1px;
-    bottom: -1px;
-    border-radius: 3px;
-    text-align: center;
-    color: #ff6b00;
-    border: 1px solid gray; }
-.list .contest .thumb.selected {
-  border: 3px solid #24db24;
-  width: 81px;
-  height: 81px;
-  margin: 0px; }
+  font-size: 27px;
+  color: gray; }
 .list .contest .title {
   font-size: 26px; }
 
@@ -1899,20 +1957,6 @@ ul.nav {
         border: 1px solid black;
         border-radius: 3px;
         margin: 5px; }
-  .view .contest .countdown {
-    width: 100%;
-    max-width: 380px;
-    margin-left: auto;
-    margin-right: auto; }
-    .view .contest .countdown .times td {
-      font-size: 40px;
-      color: #797979;
-      width: 25%; }
-    .view .contest .countdown .times td.seconds {
-      color: red; }
-    .view .contest .countdown .labels {
-      font-size: 10px;
-      text-transform: uppercase; }
   .view .contest .alert {
     margin-left: auto;
     margin-right: auto; }

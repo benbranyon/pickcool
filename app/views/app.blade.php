@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="pickCoolApp">
+<html lang="en">
   <head>
     @if($_ENV['BUGSNAG_ENABLED'])
       <script
@@ -7,54 +7,67 @@
       data-apikey="{{$_ENV['BUGSNAG_API_KEY']}}">
       </script>
     @endif
-    <base href="/">
     <meta property="fb:app_id" content="1497159643900204"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0">
+    @yield('head')
 
-    <title>pick.cool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="/{{$_ENV['ETAG']}}/assets/css/app.css">
-    <script src="/{{$_ENV['ETAG']}}/assets/js/app.js"></script>
-    
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="/assets/js/ie_compat.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" href="/assets/css/style.css">
 
   </head>
 
-  <body ng-controller="MainCtrl" id="top">
+  <body>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1497159643900204&version=v2.1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" ui-sref="home">Pick.Cool</a>
+          <a class="navbar-brand" href="{{route('home')}}">Pick.Cool</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
           <ul class="nav navbar-nav navbar-right">
-            <li class="@{{state.is('home') || state.is('hot') ? 'active' : ''}}"><a ui-sref="hot">Hot</a></li>
-            <li class="@{{state.is('new') ? 'active' : ''}}"><a ui-sref="new"  >New</a></li>
-            <li class="@{{state.is('top') ? 'active' : ''}}"><a ui-sref="top" >Top</a></li>
+            <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='hot') ? 'active' : ''}}"><a href="{{{route('contests.hot')}}}">Hot</a></li>
+            <li class="{{Route::currentRouteName()=='new' ? 'active' : ''}}"><a href="{{{route('contests.new')}}}"  >New</a></li>
+            <li class="{{Route::currentRouteName()=='hot' ? 'active' : ''}}"><a href="{{{route('contests.top')}}}" >Top</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <div class="container-fluid">
-
-      <div class="row">
-        <ul class="login-list list-inline pull-right">
-          <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
-        </ul>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12 ">
-          <div  class="loading" ng-if="!contests">
-            <i class="fa fa-spinner fa-spin"></i>
+      @if(Session::get('success'))
+        <div class="alert alert-success">
+          {{{Session::get('success')}}}
+        </div>
+      @endif
+      @if(Session::get('warning'))
+        <div class="alert alert-danger">
+          {{{Session::get('warning')}}}
+        </div>
+      @endif
+      <?php
+      Session::forget('success');
+      Session::forget('warning');
+      ?>
+          @yield('content')
+          
+          <div class="clearfix">
+            <ul class="login-list list-inline pull-right">
+              @if(Auth::check() && Auth::user()->is_contributor)
+                <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
+              @endif
+            </ul>
           </div>
-          <div ui-view ng-if="contests"></div>
 
           <footer class="footer">
             <div class="row">
@@ -93,6 +106,7 @@
 
         </div>
       </div>
+      
     </div> <!-- // Container -->
     
     <div id="login_dialog" class="modal fade">

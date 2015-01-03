@@ -3,6 +3,92 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  function getIsEndedAttribute()
+  {
+    return $this->ends_at->format('U') < time();
+  }
+  
+  function getLoginUrlAttribute()
+  {
+    return route('contest.login', [$this->id, $this->slug]);
+  }
+  
+  function authorize_user($user = null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return false;
+    Session::put('contest_access_'.$this->id, $user->id);
+    return true;
+  }
+  
+  function getCanViewAttribute()
+  {
+    return $this->can_view();
+  }
+  
+  function getCanEndAttribute()
+  {
+    return $this->ends_at != null;
+  }
+  
+  function can_view($user=null)
+  {
+    if($this->password)
+    {
+      if(!$user) $user = Auth::user();
+      if(!$user) return false;
+      return Session::get('contest_access_'.$this->id) == $user->id;
+    }
+    return true;
+  }
+  
+  function authorized_users()
+  {
+    return $this->belongsToMany('ContestUser')->whereHasPassedChallenge(true);
+  }
+  
+  function getCanonicalUrlAttribute()
+  {
+    return route('contest.view', [$this->id, $this->slug]);
+  }
+  
+  function getSlugAttribute()
+  {
+    return $this->slug();
+  }
+  
+  static function hot()
+  {
+    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id')
+      ->whereRaw('votes.created_at > now() - interval 72 hour')
+      ->groupBy('contests.id')
+      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
+      ->orderBy('rank', 'desc')
+      ->get();
+    return $contests;
+  }
+  
+  static function recent()
+  {
+    $contests = Contest::query()
+      ->orderBy('created_at', 'desc')
+      ->with('candidates', 'candidates.votes')
+      ->get();
+    return $contests;
+  }
+
+  static function top()
+  {
+    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id', 'left outer')
+      ->groupBy('contests.id')
+      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
+      ->orderBy('rank', 'desc')
+      ->get();
+    return $contests;
+  }
+  
+
+  
   function toHashTag()
   {
     return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->title));
@@ -23,7 +109,8 @@ class Contest extends Eloquent
       $winner = $candidates[0];
       foreach($candidates as $candidate)
       {
-        $candidate->total_votes = $candidate->votes_ago($ago)->count();
+        $vc = $candidate->votes_ago($ago)->count();
+        $candidate->total_votes = $vc;
         $this->vote_count += $candidate->total_votes;
         $this->vote_count_hot += ($candidate->total_votes - $candidate->votes_ago('3 day')->count());
       }
@@ -98,7 +185,12 @@ class Contest extends Eloquent
     }
   }
   
-  function can_vote()
+  function getIsVoteableAttribute()
+  {
+    return $this->can_vote;
+  }
+  
+  function getCanVoteAttribute()
   {
     return !$this->ends_at || $this->ends_at->gt(\Carbon::now());
   }

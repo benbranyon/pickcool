@@ -3,13 +3,39 @@ use Cocur\Slugify\Slugify;
   
 class Candidate extends Eloquent
 {
-  
-  function share_url()
+  function getIsVoteableAttribute()
   {
-    return route('contest.candidate.view', [$this->contest->id, $this->contest->slug(), $this->id, $this->slug()]);
+    return $this->contest->is_voteable;
   }
   
-  function unfollow_url()
+  function getIsUserVoteAttribute()
+  {
+    $user = Auth::user();
+    if(!$user) return false;
+    return Vote::whereUserId($user->id)->whereCandidateId($this->id)->first()!=null;
+  }
+  
+  function getVoteCountAttribute()
+  {
+    return $this->total_votes;
+  }
+
+  function getVoteUrlAttribute()
+  {
+    return route('candidates.vote', [$this->id]);
+  }
+  
+  function getUnvoteUrlAttribute()
+  {
+    return route('candidates.unvote', [$this->id]);
+  }
+  
+  function getCanonicalUrlAttribute()
+  {
+    return route('contest.candidate.view', [$this->contest->id, $this->contest->slug(), $this->id, $this->slug]);
+  }
+  
+  function getUnfollowUrlAttribute()
   {
     return route('contest.candidate.unfollow', [$this->id]);
   }
@@ -17,7 +43,7 @@ class Candidate extends Eloquent
   function votes_ago($ago='0 day')
   {
     return $this->votes()->where(function($query) use($ago) {
-      $query->whereRaw('created_at < utc_timestamp() - interval '.$ago);
+  //    $query->whereRaw('created_at < utc_timestamp() - interval '.$ago);
     });
   }
   
@@ -27,26 +53,26 @@ class Candidate extends Eloquent
     return $vote;
   }
   
-  function user()
+  function getUserAttribute()
   {
     if(!$this->fb_id) return null;
     $u = User::whereFbId($this->fb_id)->first();
     return $u;
   }
   
-  function slug()
+  function getSlugAttribute()
   {
     $slugify = new Slugify();
     return $slugify->slugify($this->name, '_');
   }
 
-  function can_vote()
+  function getCanVoteAttribute()
   {
-    return $this->contest->can_vote();
+    return $this->contest->can_vote;
   }
 
 
-  function image_url($size='thumb')
+  function getImageUrlAttribute($size='thumb')
   {
     return route('image.view', [$this->image->id, $size]);
   }

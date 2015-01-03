@@ -5,7 +5,7 @@ use NinjaMutex\Mutex;
 
 class User extends Eloquent
 {
-  function full_name()
+  function getFullNameAttribute()
   {
     return "{$this->first_name} {$this->last_name}";
   }
@@ -33,7 +33,7 @@ class User extends Eloquent
   
   static function from_fb($me)
   {
-    $fb_id = $me->getId();
+    $fb_id = $me['id'];
     $user = Lock::go('create_'.$fb_id, function() use ($fb_id, $me) {
       $user = User::whereFbId($fb_id)->first();
       if(!$user)
@@ -41,10 +41,10 @@ class User extends Eloquent
         $user = new User();
       }
       $user->fb_id = $fb_id;
-      $user->first_name = $me->getFirstName();
-      $user->last_name = $me->getLastName();
-      $user->email = $me->getEmail();
-      $user->gender = $me->getProperty('gender');
+      $user->first_name = $me['first_name'];
+      $user->last_name = $me['last_name'];
+      $user->email = $me['email'];
+      $user->gender = $me['gender'];
       $user->save();
       return $user;
     }, $fb_id, $me);

@@ -154,6 +154,14 @@ h1
 h2 { font-size: 12px;}
 h3 { font-size: 11px;}
 
+.btn-full
+{
+  width: 100%;
+}
+
+.candidate-large.selected {
+  border: 3px solid rgb(36, 219, 36);
+}
 .candidate-large
 {
   position: relative;

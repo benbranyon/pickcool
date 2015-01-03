@@ -1,0 +1,13 @@
+<div ng-controller="ContestCandidateViewCtrl" class="view" style="text-align: center; max-width: 320px; width:100%; margin-left: auto; margin-right: auto;">
+  <h1>{{candidate.name}}</h1>
+  <h2>{{contest.title}}</h2>
+  <h3>{{candidate.vote_count}} votes</h3>
+  <a ng-href="{{candidate.image('mobile')}}" target="_blank" class="candidate-large" ng-class="{selected: contest.current_user_candidate_id == candidate.id}">
+    <img ng-src="{{candidate.image('mobile')}}" alt="{{candidate.name}}" title="Vote for {{candidate.name}}"/>
+  </a>
+  <a class="btn btn-success btn-full"  ui-sref="" ng-if="contest.current_user_writein && candidate.fb_id == current_user.fb_id">Edit</a>
+  <button class="btn btn-warning btn-full" ng-click="unvote()" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id == candidate.id ">Unvote</button>
+  <button class="btn btn-success btn-full" ng-click="vote()" ng-disabled="!contest.can_vote" ng-if="contest.current_user_candidate_id != candidate.id ">Vote</button>
+  <button class="btn btn-primary btn-full" ng-click="share(candidate)" ng-disabled="!contest.can_share"><i class="fa fa-facebook"></i> Share</button>
+  <button ng-if="contest.is_editable" class="btn btn-xs btn-success btn-full" ui-sref="contests-edit({contest_id: contest.id})">Edit</button>
+</div>

@@ -18,6 +18,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         });
       },
     })
+    .state('contest-join', {
+      url: '/est/:contest_id/:slug/join',
+      templateUrl: "partials/contests/join.html"
+    })
+    .state('contest-join-confirm', {
+      url: '/est/:contest_id/:slug/join/confirm',
+      templateUrl: "partials/contests/join-confirm.html"
+    })
     .state('contests-view', {
       url: "/est/:contest_id/:slug",
       templateUrl: "partials/contests/view.html"
@@ -26,9 +34,9 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/est/:contest_id/:slug/:user_id/:candidate_id",
       templateUrl: "partials/contests/view.html"
     })
-    .state('contests-share-2', {
+    .state('contests-candidate-view', {
       url: "/est/:contest_id/:contest_slug/picks/:candidate_id/:candidate_slug",
-      templateUrl: "partials/contests/view.html"
+      templateUrl: "partials/contests/candidates/view.html"
     })
     .state('image-view', {
       url: '/images/:id/:size'

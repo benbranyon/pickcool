@@ -1,5 +1,107 @@
 <?php
 
+Route::get('/', ['as'=>'home', 'uses'=>function() {
+  $contests = Contest::hot();
+  return View::make('home')->with(['contests'=>$contests]);
+}]);
+
+Route::get('/est/{contest_id}/{slug}', ['as'=>'contest.view', 'uses'=>function($contest_id) {
+  $contest = Contest::find($contest_id);
+  if(!$contest->can_view)
+  {
+    Session::put('r', Request::url());
+    return Redirect::to($contest->login_url);
+  }
+  return View::make('contests.view')->with(['contest'=>$contest]);
+}]);
+
+Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contest.candidate.view', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
+  $contest = Contest::find($contest_id);
+  if(!$contest->can_view)
+  {
+    Session::put('r', Request::url());
+    return Redirect::to($contest->login_url);
+  }
+  $candidate = Candidate::find($candidate_id);
+  return View::make('candidates.view')->with(['contest'=>$contest, 'candidate'=>$candidate]);
+}]);
+
+
+Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest.login', 'uses'=>function($contest_id) {
+  $contest = Contest::find($contest_id);
+  if($contest->can_view)
+  {
+    return Redirect::to($contest->canonical_url);
+  }
+  if(Input::get('password'))
+  {
+    $pw = trim(Input::get('password'));
+    if($pw == $contest->password)
+    {
+      $contest->authorize_user();
+      return Redirect::to($contest->canonical_url);
+    }
+  }
+  return View::make('contests.login')->with(['contest'=>$contest]);
+}]);
+
+Route::get('/login', function() {
+  return View::make('login');
+});
+
+Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function() {
+  $code = Input::get( 'code' );
+  $fb = OAuth::consumer( 'Facebook' );
+  if ( !empty( $code ) ) {
+    try
+    {
+      $token = $fb->requestAccessToken( $code );
+      $me = json_decode( $fb->request( '/me' ), true );
+      Auth::fb_login($me);
+    } catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
+    }
+    Session::put('success', "Welcome, " . Auth::user()->full_name);
+    return Redirect::to(Session::get('r', 'home'));
+  }
+  else {
+    $url = $fb->getAuthorizationUri();
+    return Redirect::to( (string)$url );
+  }
+}]);
+
+Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>function($id) {
+  $candidate = Candidate::find($id);
+  $contest = $candidate->contest;
+  Auth::user()->vote_for($candidate);
+  Session::put('success', "You voted for {$candidate->name}");
+  return "ok";
+}]);
+
+Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=>function($id) {
+  $candidate = Candidate::find($id);
+  $contest = $candidate->contest;
+  Auth::user()->unvote_for($candidate);
+  Session::put('success', "Ok, you unvoted {$candidate->name}");
+  return Redirect::to($contest->canonical_url);
+}]);
+
+Route::get('/contests/{id}/edit', ['as'=>'contests.edit', 'uses'=>function() {
+  return "hi";
+}]);
+
+Route::get('/hot', ['as'=>'contests.hot', 'uses'=>function() {
+  $contests = Contest::hot();
+  return View::make('home')->with(['contests'=>$contests]);
+}]);
+Route::get('/new', ['as'=>'contests.new', 'uses'=>function() {
+  $contests = Contest::recent();
+  return View::make('home')->with(['contests'=>$contests]);
+}]);
+Route::get('/top', ['as'=>'contests.top', 'uses'=>function() {
+  $contests = Contest::top();
+  return View::make('home')->with(['contests'=>$contests]);
+}]);
+
 Route::get("/{etag}/assets/{type}/{name}", 'AssetController@get');
 Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>'AssetController@image']);
 
@@ -30,7 +132,6 @@ Route::group([
   })->where('all', '.*');
 });
 
-Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contest.candidate.view', 'uses'=>'ContestViewController@view']);
 Route::get('/est/{contest_id}/{slug}/{user_id?}/{candidate_id?}', ['as'=>'contest.view', 'uses'=>'ContestViewController@view_old']);
 
 Route::get('/unfollow/{contest_id}/{candidate_id}', ['as'=>'contest.candidate.unfollow', 'uses'=>function($contest_id, $candidate_id) {

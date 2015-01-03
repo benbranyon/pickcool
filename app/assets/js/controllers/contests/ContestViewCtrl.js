@@ -67,17 +67,7 @@ app.controller('ContestViewCtrl', function($state, ezfb, $scope, $stateParams, a
    
   $scope.share = function (c) {
     if(!$scope.contest.can_vote) return; 
-    var url = c.canonical_url;
-    ezfb.ui(
-     {
-      method: 'share',
-      href: url,
-     },
-     function (res) {
-      console.log(res);
-      // res: FB.ui response
-     }
-    );
+
     
     return;
     var serialize = function(obj) {

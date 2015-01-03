@@ -97,7 +97,12 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
   };
   
   this.vote = function(candidate_id, success, error) {
-    api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 'success': success, 'error': error});
+    api_lowevel({'name': 'vote', 'path': '/vote',  'params': {'c': candidate_id }, 
+      'success': function(res) {
+        init_contest(res.data);
+        success(res);
+      },
+      'error': error});
   };
   
   this.unvote = function(candidate_id, success, error) {
@@ -139,7 +144,9 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
         $timeout(contest.end_check,1000);
       }
     };
+    contest.candidates_by_id = {};
     angular.forEach(contest.candidates, function(c,idx) {
+      contest.candidates_by_id[c.id] = c;
       if($rootScope.current_user && c.fb_id == $rootScope.current_user.fb_id)
       {
         contest.current_user_writein = c;
@@ -154,7 +161,7 @@ app.service('api', function(ezfb, $http, $rootScope, $location, $state, $timeout
       };
       c.buy_url = $state.href('buy', {candidate_id: c.id});
       c.share_url = function() {
-       return $location.protocol()+'://'+$location.host()+$state.href('contests-share', {'contest_id': contest.id, 'slug': contest.slug, 'user_id': $rootScope.current_user.id, 'candidate_id': c.id}); 
+       return $location.protocol()+'://'+$location.host()+$state.href('contests-candidate-share', {contest_id: contest.id, contest_slug: contest.slug, candidate_id: $rootScope.current_user.id, candidate_slug: $rootScope.current_user.slug}); 
       };
     });
     contest.has_joined = (contest.current_user_writein != null);
