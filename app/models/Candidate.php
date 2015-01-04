@@ -3,6 +3,11 @@ use Cocur\Slugify\Slugify;
   
 class Candidate extends Eloquent
 {
+  function getAfterJoinUrlAttribute()
+  {
+    return route("candidates.after_join", [$this->id]);
+  }
+
   function getAfterVoteUrlAttribute()
   {
     return route('candidates.after_vote', [$this->id]);

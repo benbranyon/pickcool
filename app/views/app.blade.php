@@ -13,11 +13,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0">
     @yield('head')
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-
     <link rel="stylesheet" href="/assets/css/style.css">
-
   </head>
 
   <body>
@@ -38,9 +36,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
           <ul class="nav navbar-nav navbar-right">
-            <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='hot') ? 'active' : ''}}"><a href="{{{route('contests.hot')}}}">Hot</a></li>
-            <li class="{{Route::currentRouteName()=='new' ? 'active' : ''}}"><a href="{{{route('contests.new')}}}"  >New</a></li>
-            <li class="{{Route::currentRouteName()=='hot' ? 'active' : ''}}"><a href="{{{route('contests.top')}}}" >Top</a></li>
+            <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='contests.hot') ? 'active' : ''}}"><a href="{{{route('contests.hot')}}}">Hot</a></li>
+            <li class="{{Route::currentRouteName()=='contests.new' ? 'active' : ''}}"><a href="{{{route('contests.new')}}}"  >New</a></li>
+            <li class="{{Route::currentRouteName()=='contests.top' ? 'active' : ''}}"><a href="{{{route('contests.top')}}}" >Top</a></li>
           </ul>
         </div>
       </div>
@@ -85,42 +83,22 @@
                 </ul>
               </div>
             </div>
-
-            <script>
-              (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-              })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-              ga('create', 'UA-57868973-1', 'auto');
-              ga('send', 'pageview');
-            </script>
-
           </footer>
 
         </div>
       </div>
-      
     </div> <!-- // Container -->
-    
-    <div id="login_dialog" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title">Connect via Facebook</h4>
-          </div>
-          <div class="modal-body">
-            <p>To vote in a contest or enter a contest, you must connect via Facebook.</p>
-            <p style="text-align: center">
-              <button class="btn btn-primary btn-xl" ng-click="login()" ng-if="!is_user_logged_in"><i class="fa fa-facebook-square"></i> Connect via Facebook</button>
-            </p>
-            <p class="small">Your privacy and the security of this voting platform is our priority. Please see our <a href="/privacy">privacy policy</a> for more information.
-            </p>
-            
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    <script src="/assets/js/echo.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57868973-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
   </body>
 </html>

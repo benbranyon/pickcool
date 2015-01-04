@@ -1,7 +1,13 @@
 @extends('app')
 
 @section('head')
-  <title>pick.cool</title>
+<title>pick.cool</title>
+<meta property="og:type" content="website" />
+<meta property="og:title" content="pick.cool"/>
+<meta property="og:site_name" content="pick.cool"/>
+<meta property="og:url" content="http://pick.cool"/>
+<meta property="og:description" content="Vote and watch social contests in real time."/>
+<meta property="og:image" content="{{{$contests[0]->canonical_url}}}"/>
 @stop
 
 @section('content')
@@ -20,7 +26,7 @@
           @foreach($contest->candidates->take(5) as $candidate)
             <li>
               <a class="candidate-small" href="{{{$contest->canonical_url}}}"  class="{{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}">
-                <img src="{{{route('image.view', [$candidate->image_id, 'thumb'])}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                <img src="/loading.gif" data-echo="{{{route('image.view', [$candidate->image_id, 'thumb'])}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <span class='votes-count'>{{{$candidate->vote_count}}}</span>
               </a>
             </li>

@@ -37,7 +37,7 @@ class Auth
   public static function user()
   {
     if(self::$user !== false) return self::$user;
-    
+
     $user_id = \Session::get('user_id');
     if(!$user_id) return null;
     

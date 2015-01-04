@@ -2,6 +2,7 @@
 
 @section('head')
 <title>{{{$candidate->name}}} in {{{$contest->title}}} | pick.cool</title>
+<meta property="fb:app_id" content="1497159643900204"/>
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Vote for {{{$candidate->name}}} in {{{$contest->title}}}"/>
 <meta property="og:site_name" content="pick.cool"/>
@@ -11,38 +12,28 @@
 @stop
 
 @section('content')
-  <div class="view" style="text-align: center; max-width: 320px; width:100%; margin-left: auto; margin-right: auto;">
-    <h1>{{{$candidate->name}}}</h1>
-    <h2><a href="{{{$contest->canonical_url}}}">{{$contest->title}}</a></h2>
-    <h3>{{$candidate->vote_count}} votes</h3>
-    <div id="candidate" class="candidate-large {{{$candidate->is_user_vote ? 'selected' : ''}}}">
-      <img src="/images/{{{$candidate->image_id}}}/mobile" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+  <div style="max-width: 320px; width=100%; margin-left: auto; margin-right: auto">
+    <div class="row">
+      <div class="col-xs-4">
+        <div class="candidate-small">
+          <img src="/images/{{{$candidate->image_id}}}/mobile" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+        </div>
+      </div>
+      <div class="col-xs-8 text-success" style="font-size: 30px;">
+        <i class="fa fa-check"></i> You Joined
+      </div>
     </div>
-    @if($contest->is_voteable)
-      @if(!$candidate->is_user_vote)
-        <a class="btn btn-lg btn-primary btn-full" href="{{{$candidate->vote_url}}}"><i class="fa fa-check"></i> Vote</a>
-      @endif
-    @endif
-    @if($contest->is_shareable && Auth::user())
-      <a class="btn btn-lg btn-primary btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share</a>
-    @endif
-    @if($contest->is_voteable)
-      @if($candidate->is_user_vote)
-        <a class="btn btn-lg btn-warning btn-full" href="{{{$candidate->unvote_url}}}">Unvote</a>
-      @endif
-    @endif
-    <a href="/images/{{{$candidate->image_id}}}/large" class="btn btn-warning btn-full btn-lg"><i class="fa fa-camera"></i> View Large</a>
-    @if($candidate->is_writein)
-      <a class="btn btn-lg btn-warning btn-full" href="{{{$contest->join_url}}}"><i class="fa fa-facebook"></i> Refresh Your Picture</a>
-    @endif
+        
+    <div class="alert alert-success">
+      <p>Awesome sauce, you joined the pick. But seriously, picks are won by people who share. So share this page with your friends.</p>
+    </div>
+    <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
+    
+    <a class="btn btn-default btn-lg btn-full"  href="{{{$candidate->canonical_url}}}"><i class="fa fa-arrow-left"></i> Back to {{{$candidate->name}}}</a>
     <a class="btn btn-default btn-lg btn-full"  href="{{{$contest->canonical_url}}}"><i class="fa fa-arrow-left"></i> Back to Pick</a>
-    @if(!Auth::user())
-      <a href="{{{$candidate->login_url}}}">Is this you? Log in to edit.</a>
-    @endif
-
   </div>
   <script>
-    function share()
+    function share(response)
     {
       FB.ui({
         method: 'share',

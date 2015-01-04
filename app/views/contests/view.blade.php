@@ -2,13 +2,12 @@
 
 @section('head')
 <title>{{{$contest->title}}} | pick.cool</title>
-<meta property="fb:app_id" content="1497159643900204"/>
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Vote in {{{$contest->title}}}"/>
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$contest->canonical_url}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
-<meta property="og:image" content="/images/{{$contest->image_id}}/facebook?_c={{microtime(true)}}"/>
+<meta property="og:image" content="{{{route('image.view', [$contest->current_winner->image_id, 'facebook'])}}}?_c={{microtime(true)}}"/>
 @stop
 
 @section('content')
@@ -109,14 +108,14 @@
           <li >
             @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
-                <img src="/images/{{$candidate->image_id}}/thumb"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                <img src="/loading.gif" data-echo="/images/{{$candidate->image_id}}/thumb"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <span class='votes-count'>{{{$candidate->vote_count}}}</span>
               </a>
             @else
               <div >
                 <h1 class="big">{{{$candidate->name}}} ({{{$candidate->vote_count}}} votes)</h1>
                 <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
-                  <img src="/images/{{$candidate->image_id}}/mobile"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                  <img src="/loading.gif" data-echo="/images/{{$candidate->image_id}}/mobile"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 </a>
                 <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url}}}"><i class="fa fa-camera"></i> More</a>
                 @if($candidate->is_user_vote)
@@ -142,12 +141,16 @@
               </a>
             @else
               <div >
+                <h1 class="big">You</h1>
                 <a class="candidate-large" href="{{{$contest->join_url}}}">
                   <img src="/add-user.png"/ alt="You" title="Join the Pick" />
                   <div class="overlay">
                     <div class="btn btn-lg btn-success">Join Now!</div>
                   </div>
                 </a>
+                <button disabled=true class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
+                <button disabled=true a class="btn btn-md btn-primary btn-half" ><i class="fa fa-camera"></i> More</button>
+                <button disabled=true  class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
               </div>
             @endif
           </li>

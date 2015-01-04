@@ -3,6 +3,7 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+
   function getJoinUrlAttribute()
   {
     return route("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
@@ -149,7 +150,7 @@ class Contest extends Eloquent
         if($atv==0 && $btv>0) return 1;
         if($atv==0 && $btv==0)
         {
-          $created = $a->created_at->timestamp - $b->created_at->timestamp;
+          $created =  $a->created_at->timestamp - $b->created_at->timestamp;
           return $created;
         }
         if($atv==$btv)
@@ -165,12 +166,20 @@ class Contest extends Eloquent
         $candidate->current_rank = $rank++;
         $candidate->total_votes+=2;
         if($should_save) $candidate->save();
+        $earliest_vote = "(none)";
+        if($candidate->earliest_vote) $earliest_vote = $candidate->earliest_vote->created_at;
+        Log::info("
+        {$candidate->name}: ID {$candidate->id}, {$candidate->total_votes} votes, Earliest vote {$earliest_vote}, Created {$candidate->created_at}, Rank {$candidate->current_rank}
+        ");
       }
       $new_winner = $candidates->first();
-      Log::info("Old winner ". $winner->id);
-      Log::info("New winner ". $new_winner->id);
       if($winner->id != $new_winner->id)
       {
+        Log::info("
+        {$this->title}
+        Old Winner: {$winner->name} {$winner->id}
+        New Winner: {$new_winner->name} {$new_winner->id}
+        ");
         $url = route('contest.view', [$this->id, $this->slug()]);
         Log::info("New winner, calling Facebook for $url");
         $client = new \GuzzleHttp\Client();
@@ -248,18 +257,10 @@ class Contest extends Eloquent
     return $slugify->slugify($this->title, '_');
   }
   
-  function current_winner()
+  function getCurrentWinnerAttribute()
   {
     $w = null;
-    foreach($this->candidates as $c)
-    {
-      if(!$w) $w = $c;
-      if($c->votes()->count() > $w->votes()->count())
-      {
-        $w = $c;
-      }
-    }
-    return $w;
+    return $this->candidates->first();
   }
   
   function add_user($user = null)
@@ -302,11 +303,10 @@ class Contest extends Eloquent
         'contest_name'=>$contest->title,
         'candidate_url'=>$c->canonical_url,
         'help_url'=>'http://pick.cool/help/sharing',
-        'call_to_action'=>"Vote {$u->full_name()} in {$contest->name}",
+        'call_to_action'=>"Vote {$u->full_name} in {$contest->name}",
         'hashtags'=>['PickCool', $u->hash_tag, $contest->hash_tag],
         'sponsors'=>$contest->sponsors,
       ];
-      var_dump($vars);die;
       $message = $contest->password ? 'emails.candidate-join-pick-earlybird' : 'emails.candidate-join-pick';
       \Mail::send($message, $vars, function($message) use ($vars)
       {

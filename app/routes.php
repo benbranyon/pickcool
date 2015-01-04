@@ -57,12 +57,18 @@ Route::get('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
   if($contest->can_join || $contest->has_joined)
   {
     $candidate = $contest->add_user();
-    Session::put('success', "You have joined {$contest->title}.");
-    return Redirect::to($candidate->canonical_url);
+    return Redirect::to($candidate->after_join_url);
   }
   Session::put('error', "You can not join {$contest->title}.");
   return Redirect::to($contest->canonical_url);
 }]);
+
+Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_join', 'uses'=>function($id) {
+  $candidate = Candidate::find($id);
+  $contest = $candidate->contest;
+  return View::make('contests.after_join')->with(['candidate'=>$candidate, 'contest'=>$contest]);
+}]);
+
 
 
 Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function() {

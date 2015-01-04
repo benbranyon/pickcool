@@ -132,8 +132,7 @@ h1.big {
   border: 1px solid gray;
   border-radius: 3px;
   margin: 3px;
-  width: 100%;
-  max-width: 320px;
+  width: 300px;
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -286,6 +285,7 @@ ul.nav {
   max-width: 530px;
   margin-left: auto;
   margin-right: auto;
+  overflow-x: auto;
 }
 .view .contest .description h1 {
   font-size: 16px;
