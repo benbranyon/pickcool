@@ -11,6 +11,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/benallfree/ninja-mutex"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/benallfree/dflydev-apache-mime-types"
       }
   ],
   
@@ -25,7 +29,8 @@
     "bugsnag/bugsnag-laravel": "1.*",
     "graham-campbell/markdown": "~2.0",
     "guzzlehttp/guzzle": "~5.0",
-    "artdarek/oauth-4-laravel": "dev-master"
+    "artdarek/oauth-4-laravel": "dev-master",
+     "dflydev/apache-mime-types": "dev-master"
   },
   "require-dev": {
     "panique/laravel-sass": "dev-master"

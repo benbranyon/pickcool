@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a1d91830c6881b3a20bfbeab00b8bbac",
+    "hash": "296c31fa03e6781176bf7da3f3959ce0",
     "packages": [
         {
             "name": "artdarek/oauth-4-laravel",
@@ -420,15 +420,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/stapler.git",
-                "reference": "af3aea8dd15998fe296bfab30e6e61bd4c0cd251"
+                "reference": "b12fc81c27a4e7274d74ec21309bf41a96176614"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/stapler/zipball/af3aea8dd15998fe296bfab30e6e61bd4c0cd251",
-                "reference": "af3aea8dd15998fe296bfab30e6e61bd4c0cd251",
+                "url": "https://api.github.com/repos/benallfree/stapler/zipball/b12fc81c27a4e7274d74ec21309bf41a96176614",
+                "reference": "b12fc81c27a4e7274d74ec21309bf41a96176614",
                 "shasum": ""
             },
             "require": {
+                "dflydev/apache-mime-types": "dev-master",
                 "doctrine/inflector": "v1.0",
                 "imagine/imagine": "~0.5.0",
                 "php": ">=5.4",
@@ -467,7 +468,7 @@
             "support": {
                 "source": "https://github.com/benallfree/stapler/tree/master"
             },
-            "time": "2014-12-15 21:15:21"
+            "time": "2015-01-04 01:21:28"
         },
         {
             "name": "d11wtq/boris",
@@ -502,6 +503,63 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "time": "2014-01-17 12:21:18"
+        },
+        {
+            "name": "dflydev/apache-mime-types",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benallfree/dflydev-apache-mime-types.git",
+                "reference": "a99f376818f04caeb8821eefad2afd8f1ead9b8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benallfree/dflydev-apache-mime-types/zipball/a99f376818f04caeb8821eefad2afd8f1ead9b8a",
+                "reference": "a99f376818f04caeb8821eefad2afd8f1ead9b8a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "twig/twig": "1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\ApacheMimeTypes": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Apache MIME Types",
+            "keywords": [
+                "apache",
+                "mime",
+                "mimetypes"
+            ],
+            "support": {
+                "source": "https://github.com/benallfree/dflydev-apache-mime-types/tree/master"
+            },
+            "time": "2014-07-12 15:46:45"
         },
         {
             "name": "doctrine/inflector",
@@ -2777,10 +2835,10 @@
         "benallfree/laravel-stapler-images": 20,
         "arvenil/ninja-mutex": 20,
         "artdarek/oauth-4-laravel": 20,
+        "dflydev/apache-mime-types": 20,
         "panique/laravel-sass": 20
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }

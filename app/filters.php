@@ -35,17 +35,12 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest())
-	{
-		if (Request::ajax())
-		{
-			return Response::make('Unauthorized', 401);
-		}
-		else
-		{
-			return Redirect::guest('login');
-		}
-	}
+  if(Input::get('fb_access_token'))
+  {
+    Auth::fb_login(Input::get('fb_access_token'));
+  }
+  if(Auth::user()) return;
+  return Redirect::to(route('facebook.authorize', ['success'=>Request::url(), 'cancel'=>Input::get('cancel', route('home'))]));
 });
 
 

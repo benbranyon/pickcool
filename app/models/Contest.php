@@ -3,6 +3,33 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  function getJoinUrlAttribute()
+  {
+    return route("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
+  }
+  
+  function getCanJoinAttribute()
+  {
+    return $this->writein_enabled && !$this->is_ended && !$this->has_joined;
+  }
+  
+  function getHasJoinedAttribute()
+  {
+    return $this->has_joined();
+  }
+
+  function has_joined($user=null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return null;
+    return Candidate::whereFbId($user->fb_id)->whereContestId($this->id)->first() != null;
+  }
+  
+  function getIsShareableAttribute()
+  {
+    return $this->password != true;
+  }
+  
   function getIsEndedAttribute()
   {
     return $this->ends_at->format('U') < time();
@@ -89,7 +116,7 @@ class Contest extends Eloquent
   
 
   
-  function toHashTag()
+  function getHashTagAttribute()
   {
     return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->title));
   }
@@ -232,5 +259,59 @@ class Contest extends Eloquent
       }
     }
     return $w;
+  }
+  
+  function add_user($user = null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return null;
+    
+    $can = Candidate::whereFbId($user->fb_id)->whereContestId($this->id)->first();
+    $is_new = false;
+    if(!$can)
+    {
+      $can = new Candidate();
+      $can->contest_id = $this->id;
+      $can->fb_id = $user->fb_id;
+      $is_new = true;
+    }
+    $i = \Image::from_url($user->profile_image_url,true);
+    $can->name = $user->full_name;
+    $can->image_id = $i->id;
+    $can->save();
+    $user->vote_for($can);
+    
+    $client = new \GuzzleHttp\Client();
+    $client->post('http://graph.facebook.com', ['query'=>[
+      'id'=>$can->canonical_url,
+      'scrape'=>'true',
+    ]]);
+
+    
+    if($is_new)
+    {
+      $u = $user;
+      $c = $can;
+      $contest = $this;
+      $vars = [
+        'subject'=>"[{$contest->title}] - Entry Confirmation",
+        'to_email'=>$u->email,
+        'candidate_full_name'=>$u->full_name,
+        'candidate_first_name'=>$u->first_name,
+        'contest_name'=>$contest->title,
+        'candidate_url'=>$c->canonical_url,
+        'help_url'=>'http://pick.cool/help/sharing',
+        'call_to_action'=>"Vote {$u->full_name()} in {$contest->name}",
+        'hashtags'=>['PickCool', $u->hash_tag, $contest->hash_tag],
+        'sponsors'=>$contest->sponsors,
+      ];
+      var_dump($vars);die;
+      $message = $contest->password ? 'emails.candidate-join-pick-earlybird' : 'emails.candidate-join-pick';
+      \Mail::send($message, $vars, function($message) use ($vars)
+      {
+          $message->to($vars['to_email'])->subject($vars['subject']);
+      });      
+    }
+    return $can;
   }
 }

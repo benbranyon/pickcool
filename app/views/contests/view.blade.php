@@ -7,12 +7,12 @@
 <meta property="og:title" content="Vote in {{{$contest->title}}}"/>
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$contest->canonical_url}}}"/>
-<meta property="og:description" content="{{{$contest->description}}}"/>
+<meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
 <meta property="og:image" content="/images/{{$contest->image_id}}/facebook?_c={{microtime(true)}}"/>
 @stop
 
 @section('content')
-<div ng-controller="ContestViewCtrl" class="view">
+<div class="view">
   <div class="contest">
     <h1>
       {{{$contest->title}}}
@@ -85,12 +85,23 @@
       <ul class="list-inline clearfix" style="text-align: center">
         @if($contest->can_join && $contest->password)
           <li>
-            <a class="candidate-small" href="{{{$contest->vote_url}}}">
-              <img src="/add-user.png"/ alt="You" title="Join the Pick" />
-              <div class="overlay">
-                <button class="btn btn-xs btn-success">Join Now!</button>
+            @if(Input::get('s','s')=='s')
+              <a class="candidate-small" href="{{{$contest->join_url}}}">
+                <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                <div class="overlay">
+                  <div class="btn btn-xs btn-success">Join Now!</div>
+                </div>
+              </a>
+            @else
+              <div >
+                <a class="candidate-large" href="{{{$contest->join_url}}}">
+                  <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                  <div class="overlay">
+                    <div class="btn btn-lg btn-success">Join Now!</div>
+                  </div>
+                </a>
               </div>
-            </a>
+            @endif
           </li>
         @endif
         
@@ -102,22 +113,37 @@
                 <span class='votes-count'>{{{$candidate->vote_count}}}</span>
               </a>
             @else
-              <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
-                <img src="/images/{{$candidate->image_id}}/mobile"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                <span class='votes-count'>{{{$candidate->vote_count}}}</span>
-              </a>
+              <div >
+                <h1>{{{$candidate->name}}}</h1>
+                <h2>{{{$candidate->vote_count}}} votes</h2>
+                <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
+                  <img src="/images/{{$candidate->image_id}}/mobile"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                </a>
+                <hr/>
+              </div>
             @endif
           </li>
         @endforeach
         
         @if($contest->can_join)
           <li>
-            <a class="candidate-small" ui-sref="contest-join({contest_id: $contest->id, slug: $contest->slug})">
-              <img src="/add-user.png"/ alt="You" title="Join the Pick" />
-              <div class="overlay">
-                <div class="btn btn-xs btn-success">Join Now!</div>
+            @if(Input::get('s','s')=='s')
+              <a class="candidate-small" href="{{{$contest->join_url}}}">
+                <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                <div class="overlay">
+                  <div class="btn btn-xs btn-success">Join Now!</div>
+                </div>
+              </a>
+            @else
+              <div >
+                <a class="candidate-large" href="{{{$contest->join_url}}}">
+                  <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                  <div class="overlay">
+                    <div class="btn btn-lg btn-success">Join Now!</div>
+                  </div>
+                </a>
               </div>
-            </a>
+            @endif
           </li>
         @endif
       </ul>

@@ -23,6 +23,10 @@ Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slu
     return Redirect::to($contest->login_url);
   }
   $candidate = Candidate::find($candidate_id);
+  if(Auth::user() && Input::get('v'))
+  {
+    Auth::user()->vote_for($candidate);
+  }
   return View::make('candidates.view')->with(['contest'=>$contest, 'candidate'=>$candidate]);
 }]);
 
@@ -45,9 +49,18 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
   return View::make('contests.login')->with(['contest'=>$contest]);
 }]);
 
-Route::get('/login', function() {
-  return View::make('login');
-});
+Route::get('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
+  $contest = Contest::find($id);
+  if($contest->can_join || $contest->has_joined)
+  {
+    $candidate = $contest->add_user();
+    Session::put('success', "You have joined {$contest->title}.");
+    return Redirect::to($candidate->canonical_url);
+  }
+  Session::put('error', "You can not join {$contest->title}.");
+  return Redirect::to($contest->canonical_url);
+}]);
+
 
 Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function() {
   $code = Input::get( 'code' );
@@ -56,25 +69,28 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
     try
     {
       $token = $fb->requestAccessToken( $code );
-      $me = json_decode( $fb->request( '/me' ), true );
-      Auth::fb_login($me);
+      Auth::fb_login($token);
+      Session::put('success', "Welcome, " . Auth::user()->full_name);
+      return Redirect::to(Session::get('onsuccess'));
     } catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
     }
-    Session::put('success', "Welcome, " . Auth::user()->full_name);
-    return Redirect::to(Session::get('r', 'home'));
   }
-  else {
-    $url = $fb->getAuthorizationUri();
-    return Redirect::to( (string)$url );
+  if(Input::get('error')) {
+    Session::put('warning', "You must connect with Facebook before continuing.");
+    return Redirect::to(Session::get('oncancel'));
   }
+  Session::put('onsuccess', Input::get('success', route('home')));
+  Session::put('oncancel', Input::get('cancel', route('home')));
+  $url = $fb->getAuthorizationUri();
+  return Redirect::to( (string)$url );
 }]);
 
 Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>function($id) {
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
-  Auth::user()->vote_for($candidate);
+  $v = Auth::user()->vote_for($candidate);
   Session::put('success', "You voted for {$candidate->name}");
-  return "ok";
+  return $v->id;
 }]);
 
 Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=>function($id) {

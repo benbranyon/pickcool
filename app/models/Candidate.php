@@ -3,6 +3,22 @@ use Cocur\Slugify\Slugify;
   
 class Candidate extends Eloquent
 {
+  function getLoginUrlAttribute()
+  {
+    return route('facebook.authorize', ['success'=>$this->canonical_url, 'cancel'=>$this->canonical_url]);
+  }
+  
+  function getIsWriteinAttribute()
+  {
+    return $this->is_writein();
+  }
+  function is_writein($user=null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return false;
+    return $this->fb_id == $user->fb_id;
+  }
+  
   function getIsVoteableAttribute()
   {
     return $this->contest->is_voteable;

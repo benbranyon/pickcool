@@ -1,5 +1,8 @@
 <?php
 namespace BenAllfree\FbAuth;
+
+use OAuth\OAuth2\Token\StdOAuth2Token;
+
   
 class Auth
 {
@@ -15,8 +18,17 @@ class Auth
     return !self::guest();
   }
   
-  public static function fb_login($me)
+  public static function fb_login($access_token)
   {
+    $fb = \OAuth::consumer( 'Facebook' );
+    $token = $access_token;
+    if(is_string($token))
+    {
+      $token = new StdOAuth2Token();
+      $token->setAccessToken($access_token);
+    }
+    $fb->getStorage()->storeAccessToken($fb->service(), $token);
+    $me = json_decode( $fb->request( '/me' ), true );
     self::$user = \User::from_fb($me);
     \Session::put('user_id', self::$user->id);
     return self::$user;

@@ -14,6 +14,7 @@
     @yield('head')
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="/assets/css/style.css">
 
@@ -45,20 +46,14 @@
       </div>
     </nav>
     <div class="container-fluid">
-      @if(Session::get('success'))
-        <div class="alert alert-success">
-          {{{Session::get('success')}}}
-        </div>
-      @endif
-      @if(Session::get('warning'))
-        <div class="alert alert-danger">
-          {{{Session::get('warning')}}}
-        </div>
-      @endif
-      <?php
-      Session::forget('success');
-      Session::forget('warning');
-      ?>
+      @foreach(['success', 'warning', 'danger'] as $kind)
+        @if(Session::get($kind))
+          <div class="alert alert-{{{$kind}}}">
+            {{{Session::get($kind)}}}
+          </div>
+        @endif
+        <?php Session::forget($kind); ?>
+      @endforeach
           @yield('content')
           
           <div class="clearfix">

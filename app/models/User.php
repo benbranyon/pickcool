@@ -5,14 +5,19 @@ use NinjaMutex\Mutex;
 
 class User extends Eloquent
 {
+  function getProfileImageUrlAttribute()
+  {
+    return "http://graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
+  }
+  
   function getFullNameAttribute()
   {
     return "{$this->first_name} {$this->last_name}";
   }
   
-  function toHashTag()
+  function getHashTagAttribute()
   {
-    return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->full_name()));
+    return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->full_name));
   }
   
   function contests()
@@ -67,6 +72,7 @@ class User extends Eloquent
     }
     $v->candidate_id = $c->id;
     $v->save();
+    return $v;
   }
   
   function unvote_for($c)
