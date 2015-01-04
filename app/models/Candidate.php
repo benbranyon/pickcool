@@ -3,6 +3,11 @@ use Cocur\Slugify\Slugify;
   
 class Candidate extends Eloquent
 {
+  function getAfterVoteUrlAttribute()
+  {
+    return route('candidates.after_vote', [$this->id]);
+  }
+  
   function getLoginUrlAttribute()
   {
     return route('facebook.authorize', ['success'=>$this->canonical_url, 'cancel'=>$this->canonical_url]);

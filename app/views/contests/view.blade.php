@@ -85,7 +85,7 @@
       <ul class="list-inline clearfix" style="text-align: center">
         @if($contest->can_join && $contest->password)
           <li>
-            @if(Input::get('s','s')=='s')
+            @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small" href="{{{$contest->join_url}}}">
                 <img src="/add-user.png"/ alt="You" title="Join the Pick" />
                 <div class="overlay">
@@ -107,18 +107,24 @@
         
         @foreach($contest->candidates as $candidate)
           <li >
-            @if(Input::get('s','s')=='s')
+            @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
                 <img src="/images/{{$candidate->image_id}}/thumb"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <span class='votes-count'>{{{$candidate->vote_count}}}</span>
               </a>
             @else
               <div >
-                <h1>{{{$candidate->name}}}</h1>
-                <h2>{{{$candidate->vote_count}}} votes</h2>
+                <h1 class="big">{{{$candidate->name}}} ({{{$candidate->vote_count}}} votes)</h1>
                 <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
                   <img src="/images/{{$candidate->image_id}}/mobile"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 </a>
+                <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url}}}"><i class="fa fa-camera"></i> More</a>
+                @if($candidate->is_user_vote)
+                  <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}"><i class="fa fa-close"></i> Unvote</a>
+                @else
+                  <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->vote_url}}}"><i class="fa fa-check"></i> Vote</a>
+                @endif
+                <button class="btn btn-md btn-primary btn-half" onclick="share({{{json_encode($candidate->canonical_url)}}})"><i class="fa fa-facebook"></i> Share</button>
                 <hr/>
               </div>
             @endif
@@ -127,7 +133,7 @@
         
         @if($contest->can_join)
           <li>
-            @if(Input::get('s','s')=='s')
+            @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small" href="{{{$contest->join_url}}}">
                 <img src="/add-user.png"/ alt="You" title="Join the Pick" />
                 <div class="overlay">
@@ -207,6 +213,14 @@
     </div>
   </div>
 </div>
-
+<script>
+function share(url)
+{
+  FB.ui({
+    method: 'share',
+    href: url,
+  });
+}
+</script>
 
 @stop

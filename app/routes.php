@@ -9,8 +9,11 @@ Route::get('/est/{contest_id}/{slug}', ['as'=>'contest.view', 'uses'=>function($
   $contest = Contest::find($contest_id);
   if(!$contest->can_view)
   {
-    Session::put('r', Request::url());
     return Redirect::to($contest->login_url);
+  }
+  if(Input::get('s'))
+  {
+    Session::put('contest_view_mode', Input::get('s'));
   }
   return View::make('contests.view')->with(['contest'=>$contest]);
 }]);
@@ -89,9 +92,15 @@ Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>fun
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
   $v = Auth::user()->vote_for($candidate);
-  Session::put('success', "You voted for {$candidate->name}");
-  return $v->id;
+  return Redirect::to($candidate->after_vote_url);
 }]);
+
+Route::get('/vote/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_vote', 'uses'=>function($id) {
+  $candidate = Candidate::find($id);
+  $contest = $candidate->contest;
+  return View::make('candidates.after_vote')->with(['candidate'=>$candidate, 'contest'=>$contest]);
+}]);
+
 
 Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=>function($id) {
   $candidate = Candidate::find($id);

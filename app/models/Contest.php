@@ -32,7 +32,7 @@ class Contest extends Eloquent
   
   function getIsEndedAttribute()
   {
-    return $this->ends_at->format('U') < time();
+    return $this->ends_at!=null && ($this->ends_at->format('U') < time());
   }
   
   function getLoginUrlAttribute()
@@ -138,7 +138,7 @@ class Contest extends Eloquent
       {
         $vc = $candidate->votes_ago($ago)->count();
         $candidate->total_votes = $vc;
-        $this->vote_count += $candidate->total_votes;
+        $this->vote_count += ($candidate->total_votes+2);
         $this->vote_count_hot += ($candidate->total_votes - $candidate->votes_ago('3 day')->count());
       }
       if($should_save) $this->save();
@@ -163,6 +163,7 @@ class Contest extends Eloquent
       foreach($candidates as $candidate)
       {
         $candidate->current_rank = $rank++;
+        $candidate->total_votes+=2;
         if($should_save) $candidate->save();
       }
       $new_winner = $candidates->first();

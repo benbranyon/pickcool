@@ -69,7 +69,6 @@
               <div class="col-sm-12">
                 <ul class="pull-left nav nav-pills footer-nav">
                   <li>&copy; pick.cool 2014</li>
-                  <li>v{{$_ENV['ETAG']}}</li>
                 </ul>
               </div>
             </div>

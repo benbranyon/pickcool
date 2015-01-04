@@ -71,6 +71,10 @@ $sizes = [
     $image = letterbox($image, $imagine, 1200, 630);
     return $image;
   },
+  'large' => function($file, $imagine) {
+    $image = fit($file, $imagine, 1500, 1500);
+    return $image;
+  },
   'mobile' => function($file, $imagine) {
     return frameit($file, $imagine, 820,820);
   },
