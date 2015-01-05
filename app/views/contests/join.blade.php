@@ -8,7 +8,7 @@
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$contest->canonical_url}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
-<meta property="og:image" content="/images/{{$contest->image_id}}/facebook?_c={{microtime(true)}}"/>
+<meta property="og:image" content="{{{$contest->image_url('facebook')}}}?_c={{microtime(true)}}"/>
 
 
 @stop

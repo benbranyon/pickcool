@@ -18,6 +18,19 @@ Route::get('/est/{contest_id}/{slug}', ['as'=>'contest.view', 'uses'=>function($
   return View::make('contests.view')->with(['contest'=>$contest]);
 }]);
 
+Route::get('/est/{contest_id}/{slug}/realtime', ['as'=>'contest.realtime', 'uses'=>function($contest_id) {
+  $contest = Contest::find($contest_id);
+  if(!$contest->can_view)
+  {
+    return Redirect::to($contest->login_url);
+  }
+  if(Input::get('s'))
+  {
+    Session::put('contest_view_mode', Input::get('s'));
+  }
+  return View::make('contests.realtime')->with(['contest'=>$contest]);
+}]);
+
 Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contest.candidate.view', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
   $contest = Contest::find($contest_id);
   if(!$contest->can_view)
@@ -133,10 +146,6 @@ Route::get('/top', ['as'=>'contests.top', 'uses'=>function() {
   return View::make('home')->with(['contests'=>$contests]);
 }]);
 
-Route::get("/{etag}/assets/{type}/{name}", 'AssetController@get');
-Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>'AssetController@image']);
-
-
 
 
 Route::get('/unfollow/{contest_id}/{candidate_id}', ['as'=>'contest.candidate.unfollow', 'uses'=>function($contest_id, $candidate_id) {
@@ -162,7 +171,3 @@ Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
   
   return Redirect::to($candidate->buy_url);
 }]);
-
-Route::any('{all}', function($url) { 
- return View::make('app');
-})->where('all', '.*');

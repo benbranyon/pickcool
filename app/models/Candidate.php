@@ -3,17 +3,38 @@ use Cocur\Slugify\Slugify;
   
 class Candidate extends Eloquent
 {
+  public static $intervals = [0,24];
+  
+  function getIsOnFireAttribute()
+  {
+    $delta = $this->vote_count_0 - $this->vote_count_24;
+    if($delta<=0) return false;
+    return ($delta/$this->vote_count_0) > .1;
+  }
+  
+  function change_since($interval)
+  {
+    $rank_key = "rank_{$interval}";
+    return $this->$rank_key - $this->rank_0;
+  }
+  
+  public function getDates()
+  {
+    return ['created_at', 'updated_at', 'first_voted_at'];
+  }
+  
+	public function newCollection(array $models = array())
+	{
+		return new RankedCandidateCollection($models);
+	}
+  
   function add_vote_count_columns($columns)
   {
-    $vote_count_intervals = [0,1,12];
-    for($i=1;$i<15;$i++)
-    {
-      $vote_count_intervals[] = ($i*24);
-    }
-    foreach($vote_count_intervals as $interval)
+    foreach(self::$intervals as $interval)
     {
       $columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and created_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
     }
+    $columns[] = DB::raw("(select created_at from votes where candidate_id = candidates.id order by created_at asc limit 1) as first_voted_at");
     return $columns;
   }
   
@@ -48,7 +69,7 @@ class Candidate extends Eloquent
   {
     if(!$user) $user = Auth::user();
     if(!$user) return false;
-    return $this->fb_id == $user->fb_id;
+    return $this->user_id == $user->id;
   }
   
   function getIsVoteableAttribute()
@@ -75,7 +96,12 @@ class Candidate extends Eloquent
   
   function getCanonicalUrlAttribute()
   {
-    return route('contest.candidate.view', [$this->contest->id, $this->contest->slug(), $this->id, $this->slug]);
+    return $this->canonical_url($this->contest);
+  }
+    
+  function canonical_url($contest)
+  {
+    return route('contest.candidate.view', [$contest->id, $contest->slug(), $this->id, $this->slug]);
   }
   
   function getUnfollowUrlAttribute()
@@ -83,23 +109,10 @@ class Candidate extends Eloquent
     return route('contest.candidate.unfollow', [$this->id]);
   }
   
-  function votes_ago($ago='0 day')
-  {
-    return $this->votes()->where(function($query) use($ago) {
-  //    $query->whereRaw('created_at < utc_timestamp() - interval '.$ago);
-    });
-  }
-  
-  function getEarliestVoteAttribute()
-  {
-    $vote = $this->votes()->orderBy('created_at')->first();
-    return $vote;
-  }
-  
   function getUserAttribute()
   {
-    if(!$this->fb_id) return null;
-    $u = User::whereFbId($this->fb_id)->first();
+    if(!$this->user_id) return null;
+    $u = User::find($this->user_id)->first();
     return $u;
   }
   
@@ -113,13 +126,17 @@ class Candidate extends Eloquent
   {
     return $this->contest->can_vote;
   }
-
-
-  function getImageUrlAttribute($size='thumb')
+  
+  function getImageUrlAttribute()
   {
-    return route('image.view', [$this->image->id, $size]);
+    return $this->image_url();
   }
   
+  function image_url($size=thumb)
+  {
+    return $this->image->image->url($size);
+  }
+
   function image()
   {
     return $this->belongsTo('Image');
@@ -152,9 +169,3 @@ class Candidate extends Eloquent
     });
   }
 }
-
-
-Candidate::created(function($obj) {
-  $obj->contest->calc_ranks('0 day', true);
-});
-

@@ -8,7 +8,7 @@
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$candidate->canonical_url}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
-<meta property="og:image" content="{{{route('image.view', [$candidate->image_id, 'facebook'])}}}?_c={{microtime(true)}}"/>
+<meta property="og:image" content="{{{$candidate->image_url('facebook')}}}?_c={{microtime(true)}}"/>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-xs-4">
         <div class="candidate-small">
-          <img src="/images/{{{$candidate->image_id}}}/mobile" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+          <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
         </div>
       </div>
       <div class="col-xs-8 text-success" style="font-size: 30px;">

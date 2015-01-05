@@ -155,6 +155,14 @@ h2 { font-size: 12px;}
 h3 { font-size: 11px;}
 h4 { font-size: 10px;}
 
+.realtime
+{
+  th
+  {
+    text-align: center;
+  }
+  
+}
 h1.big
 {
   font-size: 20px;
@@ -163,6 +171,8 @@ h1.big
 {
   width: 100%;
   margin-bottom: 5px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .btn-half
@@ -173,6 +183,11 @@ h1.big
   margin-right: 2px;
 }
 
+.fire
+{
+  color: rgb(255, 107, 0);
+  text-shadow: 1px 1px rgba(255,255,255,.4);
+}
 .candidate-large.selected {
   border: 3px solid rgb(36, 219, 36);
 }
@@ -249,6 +264,15 @@ h1.big
     text-align: center;
     color: rgb(255, 107, 0);
     border: 1px solid gray;
+  }
+  .fire
+  {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: -4px;
+    bottom: -4px;
+    text-align: center;
   }
   .overlay
   {

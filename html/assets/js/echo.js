@@ -4,5 +4,4 @@ echo.init({
   throttle: 250,
   unload: false,
   debounce: false,
-  unload: true,
 });

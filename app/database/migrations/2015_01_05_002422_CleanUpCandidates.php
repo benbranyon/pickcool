@@ -41,8 +41,8 @@ class CleanUpCandidates extends Migration {
 			$table->dropColumn('vote_count');
       $table->dropColumn('vote_count_hot');
 		});
-    DB::insert('insert into votes (user_id, candidate_id) select 0,id from candidates');
-    DB::insert('insert into votes (user_id, candidate_id) select 0,id from candidates');
+    DB::insert('insert into votes (user_id, candidate_id, created_at, updated_at) select 0,id,utc_timestamp() - interval 5 day,utc_timestamp() - interval 5 day from candidates');
+    DB::insert('insert into votes (user_id, candidate_id, created_at, updated_at) select 0,id,utc_timestamp() - interval 5 day,utc_timestamp() - interval 5 day from candidates');
     
 	}
 
