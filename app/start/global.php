@@ -1,7 +1,5 @@
 <?php
 
-$_ENV['ETAG']=trim(file_get_contents(storage_path()."/etag"));
-
 
 use NinjaMutex\Lock\MySqlLock;
 

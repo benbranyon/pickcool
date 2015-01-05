@@ -11,3 +11,7 @@ class Vote extends Eloquent
 Vote::saved(function($obj) {
   $obj->contest->calc_ranks('0 day', true);
 });
+
+Vote::deleted(function($obj) {
+  $obj->contest->calc_ranks('0 day', true);
+});

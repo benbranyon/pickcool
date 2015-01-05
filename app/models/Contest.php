@@ -3,7 +3,139 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
-  function toHashTag()
+
+  function getJoinUrlAttribute()
+  {
+    return route("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
+  }
+  
+  function getCanJoinAttribute()
+  {
+    return $this->writein_enabled && !$this->is_ended && !$this->has_joined;
+  }
+  
+  function getHasJoinedAttribute()
+  {
+    return $this->has_joined();
+  }
+
+  function has_joined($user=null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return null;
+    return Candidate::whereFbId($user->fb_id)->whereContestId($this->id)->first() != null;
+  }
+  
+  function getIsShareableAttribute()
+  {
+    return $this->password != true;
+  }
+  
+  function getIsEndedAttribute()
+  {
+    return $this->ends_at!=null && ($this->ends_at->format('U') < time());
+  }
+  
+  function getLoginUrlAttribute()
+  {
+    return route('contest.login', [$this->id, $this->slug]);
+  }
+  
+  function authorize_user($user = null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return false;
+    Session::put('contest_access_'.$this->id, $user->id);
+    return true;
+  }
+  
+  function getCanViewAttribute()
+  {
+    return $this->can_view();
+  }
+  
+  function getCanEndAttribute()
+  {
+    return $this->ends_at != null;
+  }
+  
+  function can_view($user=null)
+  {
+    if($this->password)
+    {
+      if(!$user) $user = Auth::user();
+      if(!$user) return false;
+      return Session::get('contest_access_'.$this->id) == $user->id;
+    }
+    return true;
+  }
+  
+  function authorized_users()
+  {
+    return $this->belongsToMany('ContestUser')->whereHasPassedChallenge(true);
+  }
+  
+  function getCanonicalUrlAttribute()
+  {
+    return route('contest.view', [$this->id, $this->slug]);
+  }
+  
+  function getSlugAttribute()
+  {
+    return $this->slug();
+  }
+  
+  static function add_vote_count_columns($columns)
+  {
+    $vote_count_intervals = [0,1,12];
+    for($i=1;$i<15;$i++)
+    {
+      $vote_count_intervals[] = ($i*24);
+    }
+    foreach($vote_count_intervals as $interval)
+    {
+      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.created_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+    }
+    return $columns;
+  }
+  
+	public function newEloquentBuilder($query)
+	{
+    $builder = parent::newEloquentBuilder($query);
+    $builder
+      ->select($this->add_vote_count_columns(['contests.*']))
+    ;
+    return $builder;
+	}
+  
+  static function hot()
+  {
+    $contests = Contest::query()
+      ->havingRaw('vote_count_0 > vote_count_72')
+      ->orderByRaw('vote_count_0 - vote_count_72 desc')
+      ->get();
+    return $contests;
+  }
+  
+  static function recent()
+  {
+    $contests = Contest::query()
+      ->orderBy('created_at', 'desc')
+      ->get();
+    return $contests;
+  }
+
+  static function top()
+  {
+    $contests = Contest::query()
+      ->orderBy('vote_count_0', 'desc')
+      ->get();
+    return $contests;
+  }
+  
+
+  
+  function getHashTagAttribute()
   {
     return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->title));
   }
@@ -23,8 +155,9 @@ class Contest extends Eloquent
       $winner = $candidates[0];
       foreach($candidates as $candidate)
       {
-        $candidate->total_votes = $candidate->votes_ago($ago)->count();
-        $this->vote_count += $candidate->total_votes;
+        $vc = $candidate->votes_ago($ago)->count();
+        $candidate->total_votes = $vc;
+        $this->vote_count += ($candidate->total_votes+2);
         $this->vote_count_hot += ($candidate->total_votes - $candidate->votes_ago('3 day')->count());
       }
       if($should_save) $this->save();
@@ -35,7 +168,7 @@ class Contest extends Eloquent
         if($atv==0 && $btv>0) return 1;
         if($atv==0 && $btv==0)
         {
-          $created = $a->created_at->timestamp - $b->created_at->timestamp;
+          $created =  $a->created_at->timestamp - $b->created_at->timestamp;
           return $created;
         }
         if($atv==$btv)
@@ -49,13 +182,22 @@ class Contest extends Eloquent
       foreach($candidates as $candidate)
       {
         $candidate->current_rank = $rank++;
+        $candidate->total_votes+=2;
         if($should_save) $candidate->save();
+        $earliest_vote = "(none)";
+        if($candidate->earliest_vote) $earliest_vote = $candidate->earliest_vote->created_at;
+        Log::info("
+        {$candidate->name}: ID {$candidate->id}, {$candidate->total_votes} votes, Earliest vote {$earliest_vote}, Created {$candidate->created_at}, Rank {$candidate->current_rank}
+        ");
       }
       $new_winner = $candidates->first();
-      Log::info("Old winner ". $winner->id);
-      Log::info("New winner ". $new_winner->id);
       if($winner->id != $new_winner->id)
       {
+        Log::info("
+        {$this->title}
+        Old Winner: {$winner->name} {$winner->id}
+        New Winner: {$new_winner->name} {$new_winner->id}
+        ");
         $url = route('contest.view', [$this->id, $this->slug()]);
         Log::info("New winner, calling Facebook for $url");
         $client = new \GuzzleHttp\Client();
@@ -98,14 +240,19 @@ class Contest extends Eloquent
     }
   }
   
-  function can_vote()
+  function getIsVoteableAttribute()
+  {
+    return $this->can_vote;
+  }
+  
+  function getCanVoteAttribute()
   {
     return !$this->ends_at || $this->ends_at->gt(\Carbon::now());
   }
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->orderBy('current_rank', 'asc');
+    return $this->hasMany('Candidate')->orderBy('vote_count_0', 'desc');
   }
   
   function is_editable_by($user)
@@ -128,17 +275,62 @@ class Contest extends Eloquent
     return $slugify->slugify($this->title, '_');
   }
   
-  function current_winner()
+  function getCurrentWinnerAttribute()
   {
     $w = null;
-    foreach($this->candidates as $c)
+    return $this->candidates->first();
+  }
+  
+  function add_user($user = null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return null;
+    
+    $can = Candidate::whereFbId($user->fb_id)->whereContestId($this->id)->first();
+    $is_new = false;
+    if(!$can)
     {
-      if(!$w) $w = $c;
-      if($c->votes()->count() > $w->votes()->count())
-      {
-        $w = $c;
-      }
+      $can = new Candidate();
+      $can->contest_id = $this->id;
+      $can->fb_id = $user->fb_id;
+      $is_new = true;
     }
-    return $w;
+    $i = \Image::from_url($user->profile_image_url,true);
+    $can->name = $user->full_name;
+    $can->image_id = $i->id;
+    $can->save();
+    $user->vote_for($can);
+    
+    $client = new \GuzzleHttp\Client();
+    $client->post('http://graph.facebook.com', ['query'=>[
+      'id'=>$can->canonical_url,
+      'scrape'=>'true',
+    ]]);
+
+    
+    if($is_new)
+    {
+      $u = $user;
+      $c = $can;
+      $contest = $this;
+      $vars = [
+        'subject'=>"[{$contest->title}] - Entry Confirmation",
+        'to_email'=>$u->email,
+        'candidate_full_name'=>$u->full_name,
+        'candidate_first_name'=>$u->first_name,
+        'contest_name'=>$contest->title,
+        'candidate_url'=>$c->canonical_url,
+        'help_url'=>'http://pick.cool/help/sharing',
+        'call_to_action'=>"Vote {$u->full_name} in {$contest->name}",
+        'hashtags'=>['PickCool', $u->hash_tag, $contest->hash_tag],
+        'sponsors'=>$contest->sponsors,
+      ];
+      $message = $contest->password ? 'emails.candidate-join-pick-earlybird' : 'emails.candidate-join-pick';
+      \Mail::send($message, $vars, function($message) use ($vars)
+      {
+          $message->to($vars['to_email'])->subject($vars['subject']);
+      });      
+    }
+    return $can;
   }
 }
