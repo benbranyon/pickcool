@@ -15,7 +15,7 @@
     @foreach($contests as $contest)
       <div class="contest">
         <span class="votes-total">
-          {{{$contest->vote_count}}}
+          {{{$contest->vote_count_0}}}
         </span>
         <a class="title" href="{{{$contest->canonical_url}}}">{{{$contest->title}}}</a>
         @if($contest->is_editable)
@@ -27,7 +27,7 @@
             <li>
               <a class="candidate-small" href="{{{$contest->canonical_url}}}"  class="{{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}">
                 <img src="/loading.gif" data-echo="{{{route('image.view', [$candidate->image_id, 'thumb'])}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                <span class='votes-count'>{{{$candidate->vote_count}}}</span>
+                <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
               </a>
             </li>
           @endforeach

@@ -85,13 +85,34 @@ class Contest extends Eloquent
     return $this->slug();
   }
   
+  static function add_vote_count_columns($columns)
+  {
+    $vote_count_intervals = [0,1,12];
+    for($i=1;$i<15;$i++)
+    {
+      $vote_count_intervals[] = ($i*24);
+    }
+    foreach($vote_count_intervals as $interval)
+    {
+      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.created_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+    }
+    return $columns;
+  }
+  
+	public function newEloquentBuilder($query)
+	{
+    $builder = parent::newEloquentBuilder($query);
+    $builder
+      ->select($this->add_vote_count_columns(['contests.*']))
+    ;
+    return $builder;
+	}
+  
   static function hot()
   {
-    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id')
-      ->whereRaw('votes.created_at > now() - interval 72 hour')
-      ->groupBy('contests.id')
-      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
-      ->orderBy('rank', 'desc')
+    $contests = Contest::query()
+      ->havingRaw('vote_count_0 > vote_count_72')
+      ->orderByRaw('vote_count_0 - vote_count_72 desc')
       ->get();
     return $contests;
   }
@@ -100,17 +121,14 @@ class Contest extends Eloquent
   {
     $contests = Contest::query()
       ->orderBy('created_at', 'desc')
-      ->with('candidates', 'candidates.votes')
       ->get();
     return $contests;
   }
 
   static function top()
   {
-    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id', 'left outer')
-      ->groupBy('contests.id')
-      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
-      ->orderBy('rank', 'desc')
+    $contests = Contest::query()
+      ->orderBy('vote_count_0', 'desc')
       ->get();
     return $contests;
   }
@@ -234,7 +252,7 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->orderBy('current_rank', 'asc');
+    return $this->hasMany('Candidate')->orderBy('vote_count_0', 'desc');
   }
   
   function is_editable_by($user)

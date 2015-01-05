@@ -3,6 +3,28 @@ use Cocur\Slugify\Slugify;
   
 class Candidate extends Eloquent
 {
+  function add_vote_count_columns($columns)
+  {
+    $vote_count_intervals = [0,1,12];
+    for($i=1;$i<15;$i++)
+    {
+      $vote_count_intervals[] = ($i*24);
+    }
+    foreach($vote_count_intervals as $interval)
+    {
+      $columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and created_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+    }
+    return $columns;
+  }
+  
+	public function newEloquentBuilder($query)
+	{
+    $builder = parent::newEloquentBuilder($query);
+    $builder->select($this->add_vote_count_columns(['candidates.*']));
+    return $builder;
+	}
+  
+  
   function getAfterJoinUrlAttribute()
   {
     return route("candidates.after_join", [$this->id]);
@@ -41,11 +63,6 @@ class Candidate extends Eloquent
     return Vote::whereUserId($user->id)->whereCandidateId($this->id)->first()!=null;
   }
   
-  function getVoteCountAttribute()
-  {
-    return $this->total_votes;
-  }
-
   function getVoteUrlAttribute()
   {
     return route('candidates.vote', [$this->id]);

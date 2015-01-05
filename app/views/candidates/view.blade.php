@@ -14,7 +14,7 @@
   <div class="view" style="text-align: center; max-width: 320px; width:100%; margin-left: auto; margin-right: auto;">
     <h1>{{{$candidate->name}}}</h1>
     <h2><a href="{{{$contest->canonical_url}}}">{{$contest->title}}</a></h2>
-    <h3>{{$candidate->vote_count}} votes</h3>
+    <h3>{{$candidate->vote_count_0}} votes</h3>
     <div id="candidate" class="candidate-large {{{$candidate->is_user_vote ? 'selected' : ''}}}">
       <img src="/images/{{{$candidate->image_id}}}/mobile" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
     </div>

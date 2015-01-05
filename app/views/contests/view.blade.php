@@ -31,7 +31,7 @@
       @if($contest->can_end && !$contest->is_ended)
         <div class="countdown">
           <h2>
-            {{{$contest->vote_count}}} votes | 
+            {{{$contest->vote_count_0}}} votes | 
             {{{$contest->candidates->count()}}} picks | 
             @if($contest->writein_enabled)
               <span class="text-success">OPEN pick - Join below</span>
@@ -109,11 +109,11 @@
             @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
                 <img src="/loading.gif" data-echo="/images/{{$candidate->image_id}}/thumb"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                <span class='votes-count'>{{{$candidate->vote_count}}}</span>
+                <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
               </a>
             @else
               <div >
-                <h1 class="big">{{{$candidate->name}}} ({{{$candidate->vote_count}}} votes)</h1>
+                <h1 class="big">{{{$candidate->name}}} ({{{$candidate->vote_count_0}}} votes)</h1>
                 <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
                   <img src="/loading.gif" data-echo="/images/{{$candidate->image_id}}/mobile"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 </a>
