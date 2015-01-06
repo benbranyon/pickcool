@@ -63,11 +63,12 @@ class User extends Eloquent
       $c = Candidate::find($c);
     }
     if(!$c) return;
-    $v = Vote::whereUserId($this->id)->whereCandidateId($c->id)->first();
+    $v = Vote::whereUserId($this->id)->whereContestId($c->contest_id)->first();
     if(!$v)
     {
       $v = new Vote();
       $v->user_id = $this->id;
+      $v->contest_id = $c->contest_id;
     }
     $v->candidate_id = $c->id;
     $v->save();

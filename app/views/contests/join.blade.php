@@ -39,7 +39,7 @@ margin-right: 3px;">
   {
     FB.ui({
       method: 'share',
-      href: {{json_encode($candidate->canonical_url)}},
+      href: {{json_encode($candidate->canonical_url($contest))}},
     }, response);
   }
   function join()

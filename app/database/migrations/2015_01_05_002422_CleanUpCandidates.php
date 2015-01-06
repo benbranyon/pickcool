@@ -30,10 +30,12 @@ class CleanUpCandidates extends Migration {
     
 		Schema::table('votes', function(Blueprint $table)
 		{
-			$table->dropColumn('contest_id');
+  		$table->index(['user_id', 'contest_id']);
       $table->index('candidate_id');
       $table->index('created_at');
-      $table->index(['candidate_id','created_at']);
+      $table->index('updated_at');
+      $table->index(['candidate_id','updated_at']);
+      $table->index(['candidate_id','user_id',]);
 		});
     
 		Schema::table('contests', function(Blueprint $table)
@@ -41,8 +43,8 @@ class CleanUpCandidates extends Migration {
 			$table->dropColumn('vote_count');
       $table->dropColumn('vote_count_hot');
 		});
-    DB::insert('insert into votes (user_id, candidate_id, created_at, updated_at) select 0,id,utc_timestamp() - interval 5 day,utc_timestamp() - interval 5 day from candidates');
-    DB::insert('insert into votes (user_id, candidate_id, created_at, updated_at) select 0,id,utc_timestamp() - interval 5 day,utc_timestamp() - interval 5 day from candidates');
+    DB::insert('insert into votes (user_id, candidate_id, contest_id, created_at, updated_at) select 0,id,contest_id, utc_timestamp() - interval 5 day,utc_timestamp() - interval 5 day from candidates');
+    DB::insert('insert into votes (user_id, candidate_id, contest_id, created_at, updated_at) select 0,id,contest_id, utc_timestamp() - interval 5 day,utc_timestamp() - interval 5 day from candidates');
     
 	}
 

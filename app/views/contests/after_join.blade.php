@@ -6,7 +6,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Vote for {{{$candidate->name}}} in {{{$contest->title}}}"/>
 <meta property="og:site_name" content="pick.cool"/>
-<meta property="og:url" content="{{{$candidate->canonical_url}}}"/>
+<meta property="og:url" content="{{{$candidate->canonical_url($contest)}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
 <meta property="og:image" content="{{{$candidate->image_url('facebook')}}}?_c={{microtime(true)}}"/>
 @stop
@@ -29,7 +29,7 @@
     </div>
     <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
     
-    <a class="btn btn-default btn-lg btn-full"  href="{{{$candidate->canonical_url}}}"><i class="fa fa-arrow-left"></i> Back to {{{$candidate->name}}}</a>
+    <a class="btn btn-default btn-lg btn-full"  href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-arrow-left"></i> Back to {{{$candidate->name}}}</a>
     <a class="btn btn-default btn-lg btn-full"  href="{{{$contest->canonical_url}}}"><i class="fa fa-arrow-left"></i> Back to Pick</a>
   </div>
   <script>
@@ -37,7 +37,7 @@
     {
       FB.ui({
         method: 'share',
-        href: {{json_encode($candidate->canonical_url)}},
+        href: {{json_encode($candidate->canonical_url($contest))}},
       });
     }
 

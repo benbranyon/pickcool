@@ -5,7 +5,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Vote for {{{$candidate->name}}} in {{{$contest->title}}}"/>
 <meta property="og:site_name" content="pick.cool"/>
-<meta property="og:url" content="{{{$candidate->canonical_url}}}"/>
+<meta property="og:url" content="{{{$candidate->canonical_url($contest)}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
 <meta property="og:image" content="{{{$candidate->image_url('facebook')}}}?_c={{microtime(true)}}"/>
 @stop
@@ -14,7 +14,7 @@
   <div class="view" style="text-align: center; max-width: 320px; width:100%; margin-left: auto; margin-right: auto;">
     <h1>
       @if($candidate->is_on_fire)
-        <span class="fire" title="On fire! Gained 10% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+        <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
       @endif
       {{{$candidate->name}}}
     </h1>
@@ -24,8 +24,8 @@
       <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
     </div>
     @if($candidate->is_on_fire)
-      <span class="fire" title="On fire! Gained 10% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-      {{{$candidate->name}}} is on fire because the vote count has increased by 10% or more in the last 24 hours. Congratulations!
+      <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+      {{{$candidate->name}}} is on fire because the vote count has increased by {{{Candidate::$on_fire_threshold*100}}}% or more in the last 24 hours. Congratulations!
     @endif
     
     @if($contest->is_voteable)
@@ -56,7 +56,7 @@
     {
       FB.ui({
         method: 'share',
-        href: {{json_encode($candidate->canonical_url)}},
+        href: {{json_encode($candidate->canonical_url($contest))}},
       });
     }
 

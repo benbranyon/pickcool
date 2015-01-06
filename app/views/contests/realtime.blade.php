@@ -94,7 +94,7 @@
       }
       function mlink($interval)
       {
-        if(Input::get('h',1)==$interval) return hinterval($interval);
+        if(Input::get('h',12)==$interval) return hinterval($interval);
         return "<a href='?h={$interval}'>".hinterval($interval)."</a>";
       }
       ?>
@@ -117,116 +117,176 @@
       </style>
       <div style="max-width: 500px; margin-left: auto; margin-right: auto;">
         <?php
-        $interval = Input::get("h",1);
+        $interval = Input::get("h",12);
         $rank_key = "rank_{$interval}";
         $vote_key = "vote_count_{$interval}";
         $candidates = $contest->ranked_candidates($interval);
-        $candidates->sort(function($a, $b) use($interval) {
-          $diff = $b->change_since($interval) - $a->change_since($interval);
-          if($diff!=0) return $diff;
-          return $a->rank_0 - $b->rank_0;
-        });
           
         ?>
-        <h1>Top Movers / On Fire</h1>
+        
+        <?php
+          $top = $candidates
+            ->filter(function($obj) use($interval) { return $obj->vote_change_since($interval)>0; })
+            ->sort(function($a, $b) use($interval) {
+              $diff = $b->vote_change_since($interval) - $a->vote_change_since($interval);
+              if($diff!=0) return $diff;
+              return $a->rank_0 - $b->rank_0;
+            })
+            ->take(10);
+        ?>
         <table class="table table-bordered">
           <tr>
+            <td colspan=2>
+              <h1>Top 10 Movers by Votes Gained</h1>
+            </td>
+          </tr>
+          <tr>
             <td></td>
-            <th>Change</th>
-            <th>Standing</th>
             <th>Name</th>
           </tr>
-          @foreach($candidates as $candidate)
+          @foreach($top as $candidate)
             <?php
-            $change = $candidate->change_since($interval);
-            if($change<=0) continue;
+            $vote_change = $candidate->vote_change_since($interval);
+            $rank_change = $candidate->rank_change_since($interval);
             ?>
             <tr>
               <td>
                 <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
                   <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                  <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
-                  @if($candidate->is_on_fire)
-                    <span class="fire" title="On fire! Gained 10% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-                  @endif
                 </a>
               </td>
-              <td class="standing">
-                @if($change > 0)
-                  <span style="color: green">
-                  <i class="fa fa-arrow-up"></i>{{{$change}}}
-                  </span>
+              <td style="text-align: left">
+                <a href="{{{$candidate->canonical_url($contest)}}}">{{{$candidate->name}}}</a>
+                <br/>
+                Standing: #{{{$candidate->rank_0}}}
+                  @if($rank_change > 0)
+                    (<span style="color: green"><i class="fa fa-arrow-up"></i>{{{$rank_change}}}</span>)
+                  @endif
+                  @if($rank_change < 0)
+                    (<span style="color: red"><i class="fa fa-arrow-down"></i>{{{abs($rank_change)}}}</span>)
+                  @endif
+                <br/>
+                Votes: {{{$candidate->vote_count_0}}}
+                  @if($vote_change > 0)
+                    (<span style="color: green">+{{{$vote_change}}}</span>)
+                  @endif
+                  @if($vote_change < 0)
+                    (<span style="color: red">-{{{abs($vote_change)}}}</span>)
+                  @endif
+                @if($candidate->is_on_fire)
+                  <br/>
+                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span> On fire
                 @endif
-                @if($change < 0)
-                  <span style="color: red">
-                  <i class="fa fa-arrow-down"></i>{{{abs($change)}}}
-                  </span>
-                @endif
-                @if($change == 0)
-                  <span style="color: gray">
-                  -
-                  </span>
-                @endif
-              </td>
-              <td class="standing">
-                {{{$candidate->rank_0}}}
-              </td>
-              <td>
-                {{{$candidate->name}}}
+                
               </td>
             </tr>
           @endforeach
-        </table>
-        
-        <?php
-        $candidates->sort(function($a, $b) use($interval) {
-          return $a->rank_0 - $b->rank_0;
-        });
-        ?>
-        <h1>All Candidates</h1>
-        <table class="table table-bordered">
+
+          <?php
+            $top = $candidates
+              ->filter(function($obj) use($interval) { return $obj->rank_change_since($interval)>0; })
+              ->sort(function($a, $b) use($interval) {
+                $diff = $b->rank_change_since($interval) - $a->rank_change_since($interval);
+                if($diff!=0) return $diff;
+                return $a->rank_0 - $b->rank_0;
+              })
+              ->take(10);
+          ?>
+          <tr>
+            <td colspan=2>
+              <h1>Top 10 Movers by Change in Standing</h1>
+            </td>
+          </tr>
           <tr>
             <td></td>
-            <th>Change</th>
-            <th>Standing</th>
             <th>Name</th>
           </tr>
-          @foreach($candidates as $candidate)
+          @foreach($top as $candidate)
+            <?php
+            $vote_change = $candidate->vote_change_since($interval);
+            $rank_change = $candidate->rank_change_since($interval);
+            ?>
             <tr>
               <td>
                 <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
                   <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                  <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
-                  @if($candidate->is_on_fire)
-                    <span class="fire" title="On fire! Gained 10% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-                  @endif
                 </a>
               </td>
-              <td class="standing">
-                <?php
-                $change = $candidate->$rank_key - $candidate->rank_0;
-                ?>
-                @if($change > 0)
-                  <span style="color: green">
-                  <i class="fa fa-arrow-up"></i>{{{$change}}}
-                  </span>
+              <td style="text-align: left">
+                <a href="{{{$candidate->canonical_url($contest)}}}">{{{$candidate->name}}}</a>
+                <br/>
+                Standing: #{{{$candidate->rank_0}}}
+                  @if($rank_change > 0)
+                    (<span style="color: green"><i class="fa fa-arrow-up"></i>{{{$rank_change}}}</span>)
+                  @endif
+                  @if($rank_change < 0)
+                    (<span style="color: red"><i class="fa fa-arrow-down"></i>{{{abs($rank_change)}}}</span>)
+                  @endif
+                <br/>
+                Votes: {{{$candidate->vote_count_0}}}
+                  @if($vote_change > 0)
+                    (<span style="color: green">+{{{$vote_change}}}</span>)
+                  @endif
+                  @if($vote_change < 0)
+                    (<span style="color: red">-{{{abs($vote_change)}}}</span>)
+                  @endif
+                @if($candidate->is_on_fire)
+                  <br/>
+                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span> On fire
                 @endif
-                @if($change < 0)
-                  <span style="color: red">
-                  <i class="fa fa-arrow-down"></i>{{{abs($change)}}}
-                  </span>
-                @endif
-                @if($change == 0)
-                  <span style="color: gray">
-                  -
-                  </span>
-                @endif
+                
               </td>
-              <td class="standing">
-                {{{$candidate->rank_0}}}
-              </td>
+            </tr>
+          @endforeach
+          <?php
+            $top = $candidates
+              ->sort(function($a, $b) use($interval) {
+                return $a->rank_0 - $b->rank_0;
+              })
+          ?>
+          <tr>
+            <td colspan=2>
+              <h1>All Candidates by Rank</h1>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <th>Name</th>
+          </tr>
+          @foreach($top as $candidate)
+            <?php
+            $vote_change = $candidate->vote_change_since($interval);
+            $rank_change = $candidate->rank_change_since($interval);
+            ?>
+            <tr>
               <td>
-                {{{$candidate->name}}}
+                <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
+                  <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                </a>
+              </td>
+              <td style="text-align: left">
+                <a href="{{{$candidate->canonical_url($contest)}}}">{{{$candidate->name}}}</a>
+                <br/>
+                Standing: #{{{$candidate->rank_0}}}
+                  @if($rank_change > 0)
+                    (<span style="color: green"><i class="fa fa-arrow-up"></i>{{{$rank_change}}}</span>)
+                  @endif
+                  @if($rank_change < 0)
+                    (<span style="color: red"><i class="fa fa-arrow-down"></i>{{{abs($rank_change)}}}</span>)
+                  @endif
+                <br/>
+                Votes: {{{$candidate->vote_count_0}}}
+                  @if($vote_change > 0)
+                    (<span style="color: green">+{{{$vote_change}}}</span>)
+                  @endif
+                  @if($vote_change < 0)
+                    (<span style="color: red">-{{{abs($vote_change)}}}</span>)
+                  @endif
+                @if($candidate->is_on_fire)
+                  <br/>
+                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span> On fire
+                @endif
+                
               </td>
             </tr>
           @endforeach

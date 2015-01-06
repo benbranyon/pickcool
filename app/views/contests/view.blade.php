@@ -109,11 +109,11 @@
         @foreach($contest->candidates as $candidate)
           <li >
             @if(Session::get('contest_view_mode','s')=='s')
-              <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
+              <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
                 <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
                 @if($candidate->is_on_fire)
-                  <span class="fire" title="On fire! Gained 10% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
                 @endif
                 
               </a>
@@ -121,17 +121,17 @@
               <div >
                 <h1 class="big">
                   @if($candidate->is_on_fire)
-                    <span class="fire" title="On fire! Gained 10% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                    <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
                   @endif
                   {{{$candidate->name}}}
                 </h1>
                 <h2>
                   {{{$candidate->vote_count_0}}} votes
                 </h2>
-                <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
+                <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
                   <img src="/loading.gif" data-echo="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 </a>
-                <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url}}}"><i class="fa fa-camera"></i> More</a>
+                <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-camera"></i> More</a>
                 @if($candidate->is_user_vote)
                   <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}"><i class="fa fa-close"></i> Unvote</a>
                 @else

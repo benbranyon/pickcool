@@ -4,18 +4,25 @@ use Cocur\Slugify\Slugify;
 class Candidate extends Eloquent
 {
   public static $intervals = [0,24];
+  public static $on_fire_threshold = .2;
   
   function getIsOnFireAttribute()
   {
     $delta = $this->vote_count_0 - $this->vote_count_24;
     if($delta<=0) return false;
-    return ($delta/$this->vote_count_0) > .1;
+    return ($delta/$this->vote_count_0) > self::$on_fire_threshold;
   }
   
-  function change_since($interval)
+  function rank_change_since($interval)
   {
     $rank_key = "rank_{$interval}";
     return $this->$rank_key - $this->rank_0;
+  }
+  
+  function vote_change_since($interval)
+  {
+    $vote_key = "vote_count_{$interval}";
+    return $this->vote_count_0 - $this->$vote_key;
   }
   
   public function getDates()
@@ -32,9 +39,14 @@ class Candidate extends Eloquent
   {
     foreach(self::$intervals as $interval)
     {
-      $columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and created_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+      $columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
     }
-    $columns[] = DB::raw("(select created_at from votes where candidate_id = candidates.id order by created_at asc limit 1) as first_voted_at");
+    $columns[] = DB::raw("(select updated_at from votes where candidate_id = candidates.id order by updated_at asc limit 1) as first_voted_at");
+    if(Auth::user())
+    {
+      $user_id = Auth::user()->id;
+      $columns[] = DB::raw("(select id from votes where candidate_id = candidates.id and user_id = {$user_id}) as current_user_vote_id");
+    }
     return $columns;
   }
   
@@ -79,9 +91,7 @@ class Candidate extends Eloquent
   
   function getIsUserVoteAttribute()
   {
-    $user = Auth::user();
-    if(!$user) return false;
-    return Vote::whereUserId($user->id)->whereCandidateId($this->id)->first()!=null;
+    return $this->current_user_vote_id != null;
   }
   
   function getVoteUrlAttribute()
@@ -122,11 +132,6 @@ class Candidate extends Eloquent
     return $slugify->slugify($this->name, '_');
   }
 
-  function getCanVoteAttribute()
-  {
-    return $this->contest->can_vote;
-  }
-  
   function getImageUrlAttribute()
   {
     return $this->image_url();

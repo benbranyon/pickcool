@@ -202,6 +202,8 @@ h1.big {
   text-align: center;
   color: #ff6b00;
   border: 1px solid gray;
+  font-size: 10px;
+  padding-top: 5px;
 }
 .candidate-small .fire {
   position: absolute;

@@ -95,7 +95,7 @@ class Contest extends Eloquent
   {
     foreach(self::$intervals as $interval)
     {
-      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.created_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
     }
     return $columns;
   }
@@ -248,7 +248,7 @@ class Contest extends Eloquent
     
     $client = new \GuzzleHttp\Client();
     $client->post('http://graph.facebook.com', ['query'=>[
-      'id'=>$can->canonical_url,
+      'id'=>$can->canonical_url($this),
       'scrape'=>'true',
     ]]);
 
