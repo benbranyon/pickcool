@@ -2839,6 +2839,7 @@
         "panique/laravel-sass": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }

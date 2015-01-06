@@ -3,6 +3,12 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  static $intervals = [0,24];
+  
+  function getRealtimeUrlAttribute()
+  {
+    return route('contest.realtime', [$this->id, $this->slug]);
+  }
 
   function getJoinUrlAttribute()
   {
@@ -23,7 +29,7 @@ class Contest extends Eloquent
   {
     if(!$user) $user = Auth::user();
     if(!$user) return null;
-    return Candidate::whereFbId($user->fb_id)->whereContestId($this->id)->first() != null;
+    return Candidate::whereUserId($user->id)->whereContestId($this->id)->first() != null;
   }
   
   function getIsShareableAttribute()
@@ -85,32 +91,46 @@ class Contest extends Eloquent
     return $this->slug();
   }
   
+  static function add_vote_count_columns($columns)
+  {
+    foreach(self::$intervals as $interval)
+    {
+      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+    }
+    return $columns;
+  }
+  
+	public function newEloquentBuilder($query)
+	{
+    $builder = parent::newEloquentBuilder($query);
+    $builder
+      ->select($this->add_vote_count_columns(['contests.*']))
+    ;
+    return $builder;
+	}
+  
   static function hot()
   {
-    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id')
-      ->whereRaw('votes.created_at > now() - interval 72 hour')
-      ->groupBy('contests.id')
-      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
-      ->orderBy('rank', 'desc')
+    self::$intervals[] = 72;
+    $contests = self::query()
+      ->havingRaw('vote_count_0 > vote_count_72')
+      ->orderByRaw('vote_count_0 - vote_count_72 desc')
       ->get();
     return $contests;
   }
   
   static function recent()
   {
-    $contests = Contest::query()
+    $contests = self::query()
       ->orderBy('created_at', 'desc')
-      ->with('candidates', 'candidates.votes')
       ->get();
     return $contests;
   }
 
   static function top()
   {
-    $contests = Contest::join('votes', 'votes.contest_id', '=', 'contests.id', 'left outer')
-      ->groupBy('contests.id')
-      ->select(['contests.*', DB::raw('count(votes.id) as rank')])
-      ->orderBy('rank', 'desc')
+    $contests = self::query()
+      ->orderBy('vote_count_0', 'desc')
       ->get();
     return $contests;
   }
@@ -124,73 +144,7 @@ class Contest extends Eloquent
   
   function fb_candidates()
   {
-    return $this->candidates()->whereNotNull('fb_id')->get();
-  }
-  
-  function calc_ranks($ago = '0 day', $should_save = false)
-  {
-    $key = "contest_calc_current_ranks_{$this->id}";
-    return Lock::go($key, function() use($ago, $should_save) {
-      $this->vote_count = 0;
-      $this->vote_count_hot = 0;
-      $candidates = $this->candidates()->get();
-      $winner = $candidates[0];
-      foreach($candidates as $candidate)
-      {
-        $vc = $candidate->votes_ago($ago)->count();
-        $candidate->total_votes = $vc;
-        $this->vote_count += ($candidate->total_votes+2);
-        $this->vote_count_hot += ($candidate->total_votes - $candidate->votes_ago('3 day')->count());
-      }
-      if($should_save) $this->save();
-      $candidates->sort(function($a,$b) {
-        $atv = $a->total_votes;
-        $btv = $b->total_votes;
-        if($atv>0 && $btv==0) return -1;
-        if($atv==0 && $btv>0) return 1;
-        if($atv==0 && $btv==0)
-        {
-          $created =  $a->created_at->timestamp - $b->created_at->timestamp;
-          return $created;
-        }
-        if($atv==$btv)
-        {
-          $earliest_vote = $a->earliest_vote->created_at->timestamp - $b->earliest_vote->created_at->timestamp;
-          return $earliest_vote;
-        }
-        return $btv - $atv;
-      });
-      $rank=1;
-      foreach($candidates as $candidate)
-      {
-        $candidate->current_rank = $rank++;
-        $candidate->total_votes+=2;
-        if($should_save) $candidate->save();
-        $earliest_vote = "(none)";
-        if($candidate->earliest_vote) $earliest_vote = $candidate->earliest_vote->created_at;
-        Log::info("
-        {$candidate->name}: ID {$candidate->id}, {$candidate->total_votes} votes, Earliest vote {$earliest_vote}, Created {$candidate->created_at}, Rank {$candidate->current_rank}
-        ");
-      }
-      $new_winner = $candidates->first();
-      if($winner->id != $new_winner->id)
-      {
-        Log::info("
-        {$this->title}
-        Old Winner: {$winner->name} {$winner->id}
-        New Winner: {$new_winner->name} {$new_winner->id}
-        ");
-        $url = route('contest.view', [$this->id, $this->slug()]);
-        Log::info("New winner, calling Facebook for $url");
-        $client = new \GuzzleHttp\Client();
-        $client->post('http://graph.facebook.com', ['query'=>[
-          'id'=>$url,
-          'scrape'=>'true',
-        ]]);
-      }
-      return $candidates;
-    });
-
+    return $this->candidates()->whereNotNull('user_id')->get();
   }
   
   function standings()
@@ -200,7 +154,7 @@ class Contest extends Eloquent
 
   public function sponsors()
   {
-    return $this->belongsToMany('Sponsor')->withPivot('weight')->orderBy('weight');
+    return $this->belongsToMany('Sponsor')->with('image')->withPivot('weight')->orderBy('weight');
   }
   
   public function getDates()
@@ -234,7 +188,16 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->orderBy('current_rank', 'asc');
+    return $this->hasMany('Candidate')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
+  }
+  
+  function ranked_candidates($interval)
+  {
+    $old = Candidate::$intervals;
+    Candidate::$intervals[] = $interval;
+    $candidates = $this->hasMany('Candidate')->get()->withRanks();
+    Candidate::$intervals = $old;
+    return $candidates;
   }
   
   function is_editable_by($user)
@@ -268,13 +231,13 @@ class Contest extends Eloquent
     if(!$user) $user = Auth::user();
     if(!$user) return null;
     
-    $can = Candidate::whereFbId($user->fb_id)->whereContestId($this->id)->first();
+    $can = Candidate::whereUserId($user->id)->whereContestId($this->id)->first();
     $is_new = false;
     if(!$can)
     {
       $can = new Candidate();
       $can->contest_id = $this->id;
-      $can->fb_id = $user->fb_id;
+      $can->user_id = $user->id;
       $is_new = true;
     }
     $i = \Image::from_url($user->profile_image_url,true);
@@ -285,7 +248,7 @@ class Contest extends Eloquent
     
     $client = new \GuzzleHttp\Client();
     $client->post('http://graph.facebook.com', ['query'=>[
-      'id'=>$can->canonical_url,
+      'id'=>$can->canonical_url($this),
       'scrape'=>'true',
     ]]);
 

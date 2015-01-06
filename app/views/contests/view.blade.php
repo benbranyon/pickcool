@@ -7,7 +7,7 @@
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$contest->canonical_url}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
-<meta property="og:image" content="{{{route('image.view', [$contest->current_winner->image_id, 'facebook'])}}}?_c={{microtime(true)}}"/>
+<meta property="og:image" content="{{{$contest->current_winner->image_url('facebook')}}}?_c={{microtime(true)}}"/>
 @stop
 
 @section('content')
@@ -20,6 +20,8 @@
       <a href="?s=s">View Small</a>
       |
       <a href="?s=l">View Large</a>
+      |
+      <a href="{{{$contest->realtime_url}}}">Realtime</a>
     </div>
     <div> 
       @if($contest->is_ended)
@@ -31,7 +33,7 @@
       @if($contest->can_end && !$contest->is_ended)
         <div class="countdown">
           <h2>
-            {{{$contest->vote_count}}} votes | 
+            {{{$contest->vote_count_0}}} votes | 
             {{{$contest->candidates->count()}}} picks | 
             @if($contest->writein_enabled)
               <span class="text-success">OPEN pick - Join below</span>
@@ -107,17 +109,29 @@
         @foreach($contest->candidates as $candidate)
           <li >
             @if(Session::get('contest_view_mode','s')=='s')
-              <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
-                <img src="/loading.gif" data-echo="/images/{{$candidate->image_id}}/thumb"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                <span class='votes-count'>{{{$candidate->vote_count}}}</span>
+              <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
+                <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
+                @if($candidate->is_on_fire)
+                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                @endif
+                
               </a>
             @else
               <div >
-                <h1 class="big">{{{$candidate->name}}} ({{{$candidate->vote_count}}} votes)</h1>
-                <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url}}}"  >
-                  <img src="/loading.gif" data-echo="/images/{{$candidate->image_id}}/mobile"/ alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                <h1 class="big">
+                  @if($candidate->is_on_fire)
+                    <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                  @endif
+                  {{{$candidate->name}}}
+                </h1>
+                <h2>
+                  {{{$candidate->vote_count_0}}} votes
+                </h2>
+                <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
+                  <img src="/loading.gif" data-echo="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 </a>
-                <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url}}}"><i class="fa fa-camera"></i> More</a>
+                <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-camera"></i> More</a>
                 @if($candidate->is_user_vote)
                   <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}"><i class="fa fa-close"></i> Unvote</a>
                 @else
@@ -173,7 +187,7 @@
           <div class="sponsors">
             @foreach($contest->sponsors as $sponsor)
               <div class="sponsor clearfix">
-                <a href="{{{$sponsor->url}}}" target="_self"><img src="/images/{{$sponsor->image_id}}/thumb" align="left" /></a>
+                <a href="{{{$sponsor->url}}}" target="_self"><img src="{{{$sponsor->image_url('thumb')}}}" align="left" /></a>
                 <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a>
                 <br/>
                 {{{$sponsor->description}}}

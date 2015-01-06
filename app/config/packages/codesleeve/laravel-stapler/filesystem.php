@@ -14,7 +14,7 @@ return [
 	|
 	*/
 
-	'url' => '/system/:class/:attachment/:id_partition/:style/:filename',
+	'url' => '/i/:id_partition/:style/:filename',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'path' => ':app_root/app/storage/data:url',
+	'path' => ':app_root/html/:url',
 
 	/*
 	|--------------------------------------------------------------------------
