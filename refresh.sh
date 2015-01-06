@@ -6,9 +6,10 @@ mysql -D db126393_coolbeta -e "update users set email=concat('user',id,'@benallf
 ./artisan migrate
 ./artisan standings:generate
 mysqldump db126393_coolbeta > db.sql
-rsync -avv ../pick.cool/app/storage/data ./app/storage
+rsync -avv ../pick.cool/app/storage/data/system/BenAllfree/LaravelStaplerImages/Image/images/ html/i
 
 # locally:
 scp mediatemple:~/domains/next.pick.cool/db.sql .
-rsync -avv mediatemple:~/domains/next.pick.cool/app/storage/data app/storage
+rsync -avv mediatemple:~/domains/next.pick.cool/app/storage/data/system/BenAllfree/LaravelStaplerImages/Image/images/ html/i
+
 

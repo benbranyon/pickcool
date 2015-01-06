@@ -5,9 +5,9 @@
 <meta property="og:type" content="website" />
 <meta property="og:title" content="pick.cool"/>
 <meta property="og:site_name" content="pick.cool"/>
-<meta property="og:url" content="http://pick.cool"/>
+<meta property="og:url" content="{{{route('home')}}}"/>
 <meta property="og:description" content="Vote and watch social contests in real time."/>
-<meta property="og:image" content="{{{$contests[0]->canonical_url}}}"/>
+<meta property="og:image" content="{{{$contests[0]->current_winner->image_url('facebook')}}}" />
 @stop
 
 @section('content')
@@ -28,6 +28,9 @@
               <a class="candidate-small" href="{{{$contest->canonical_url}}}"  class="{{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}">
                 <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
+                @if($candidate->is_on_fire)
+                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                @endif
               </a>
             </li>
           @endforeach
