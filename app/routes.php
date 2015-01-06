@@ -116,6 +116,17 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
   return Redirect::to($contest->canonical_url);
 }]);
 
+Route::get('/sponsor/signup/{id}', ['as'=>'sponsors.signup', 'uses'=>function($id) {
+  $contest = Contest::find($id);
+  return View::make('sponsors.signup')->with(['contest'=>$contest]);
+}]);
+
+Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>function($id) {
+  return "hello";
+}]);
+
+Route::post('sponsor/edit/{id}', 'SponsorController@edit');
+
 Route::get('/contests/{id}/edit', ['as'=>'contests.edit', 'uses'=>function() {
   return "hi";
 }]);
