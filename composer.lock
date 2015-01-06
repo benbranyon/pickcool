@@ -124,12 +124,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/laravel-stapler-images.git",
-                "reference": "8f80f6b336800d9c8fe42cf53da44e6aa45e35f0"
+                "reference": "cf61cdcaa48d3afe9fef8375faa0e93c4817b6bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/8f80f6b336800d9c8fe42cf53da44e6aa45e35f0",
-                "reference": "8f80f6b336800d9c8fe42cf53da44e6aa45e35f0",
+                "url": "https://api.github.com/repos/benallfree/laravel-stapler-images/zipball/cf61cdcaa48d3afe9fef8375faa0e93c4817b6bb",
+                "reference": "cf61cdcaa48d3afe9fef8375faa0e93c4817b6bb",
                 "shasum": ""
             },
             "require": {
@@ -160,7 +160,7 @@
                 "laravel",
                 "stapler"
             ],
-            "time": "2015-01-04 22:25:36"
+            "time": "2015-01-05 21:44:26"
         },
         {
             "name": "bugsnag/bugsnag",
@@ -420,12 +420,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/benallfree/stapler.git",
-                "reference": "62ffebfabbba7fdf796eebc7625aae35ef6b1547"
+                "reference": "72bcc39f548b138edfe5949d8ed36b70329a5c19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/benallfree/stapler/zipball/62ffebfabbba7fdf796eebc7625aae35ef6b1547",
-                "reference": "62ffebfabbba7fdf796eebc7625aae35ef6b1547",
+                "url": "https://api.github.com/repos/benallfree/stapler/zipball/72bcc39f548b138edfe5949d8ed36b70329a5c19",
+                "reference": "72bcc39f548b138edfe5949d8ed36b70329a5c19",
                 "shasum": ""
             },
             "require": {
@@ -468,7 +468,7 @@
             "support": {
                 "source": "https://github.com/benallfree/stapler/tree/master"
             },
-            "time": "2015-01-04 02:04:52"
+            "time": "2015-01-05 21:44:09"
         },
         {
             "name": "d11wtq/boris",
@@ -2839,6 +2839,7 @@
         "panique/laravel-sass": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
