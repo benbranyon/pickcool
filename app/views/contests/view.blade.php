@@ -194,7 +194,7 @@
               </div>
             @endforeach
             <div class="text-center">
-              <button class="btn btn-lg btn-primary"><a href="/sponsor/signup/{{$contest->id}}">Sponsor Signup</a></button>
+              <a href="/sponsor/signup/{{$contest->id}}" class="btn btn-lg btn-primary">Sponsor Signup</a>
             </div>
           </div>
         </div>
