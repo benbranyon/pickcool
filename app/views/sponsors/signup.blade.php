@@ -1,5 +1,12 @@
 @extends('app')
 
+@section('head')
+<title>Sponsor Signup {{{$contest->title}}} | pick.cool</title>
+<script src="/assets/js/jquery-2.1.3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="/assets/js/facebookphotoselector.jquery.js"></script>
+@stop
+
 @section('content')
 <div class="container">
   <div class="sponsor">
@@ -31,13 +38,56 @@
 
 		    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
 		        {{ Form::label('image', 'Image') }}
+		        <br />
+		        <a class="btn btn-md btn-primary" data-toggle="modal" href="#facebook_photo_selector">Select Facebook Photo</a>
+		        {{ $errors->first('description', '<p class="help-block">:message</p>') }}
 		    </div>
 
 	    </fieldset>
-		{{Form::submit('Signup', array('class' => 'btn btn-primary'))}}
+		{{Form::submit('Signup', array('class' => 'btn btn-md btn-primary'))}}
     {{ Form::close() }}
 
    </div>
+
+	<!-- Facebook photo selector modal -->
+	<div id="facebook_photo_selector" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Choose a photo</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form">
+						<label>Select Facebook Album:</label>
+						<select class="fbps-albums" name="facebook_photo_album"></select>
+					</div>
+					<hr>
+					<div class="fbps-photos clearfix"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default fbps-cancel" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary fbps-select" data-dismiss="modal">Select Photo</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 </div>
+
+	<script>
+		$(function()
+		{
+			
+			FacebookPhotoSelector.setFacebookSDK(FB);
+
+			$('#facebook_photo_selector').facebookPhotoSelector({
+				onFinalSelect : function(photos)
+				{
+					console.log(photos);
+				}
+			});
+		});
+	</script>
 
 @stop
