@@ -5,14 +5,19 @@ use NinjaMutex\Mutex;
 
 class User extends Eloquent
 {
-  function full_name()
+  function getProfileImageUrlAttribute()
+  {
+    return "http://graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
+  }
+  
+  function getFullNameAttribute()
   {
     return "{$this->first_name} {$this->last_name}";
   }
   
-  function toHashTag()
+  function getHashTagAttribute()
   {
-    return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->full_name()));
+    return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->full_name));
   }
   
   function contests()
@@ -33,7 +38,7 @@ class User extends Eloquent
   
   static function from_fb($me)
   {
-    $fb_id = $me->getId();
+    $fb_id = $me['id'];
     $user = Lock::go('create_'.$fb_id, function() use ($fb_id, $me) {
       $user = User::whereFbId($fb_id)->first();
       if(!$user)
@@ -41,10 +46,10 @@ class User extends Eloquent
         $user = new User();
       }
       $user->fb_id = $fb_id;
-      $user->first_name = $me->getFirstName();
-      $user->last_name = $me->getLastName();
-      $user->email = $me->getEmail();
-      $user->gender = $me->getProperty('gender');
+      $user->first_name = $me['first_name'];
+      $user->last_name = $me['last_name'];
+      $user->email = $me['email'];
+      $user->gender = $me['gender'];
       $user->save();
       return $user;
     }, $fb_id, $me);
@@ -61,12 +66,21 @@ class User extends Eloquent
     $v = Vote::whereUserId($this->id)->whereContestId($c->contest_id)->first();
     if(!$v)
     {
+      $result = 'new';
       $v = new Vote();
       $v->user_id = $this->id;
       $v->contest_id = $c->contest_id;
+    } else {
+      $v->candidate_id = $c->id;
+      if($v->isDirty())
+      {
+        $result = 'changed';
+      } else {
+        $result = 'unchanged';
+      }
     }
-    $v->candidate_id = $c->id;
     $v->save();
+    return [$result, $v];
   }
   
   function unvote_for($c)

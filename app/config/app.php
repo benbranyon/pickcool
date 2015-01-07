@@ -123,8 +123,8 @@ $config = [
 		'Illuminate\Workbench\WorkbenchServiceProvider',
     'Codesleeve\LaravelStapler\LaravelStaplerServiceProvider',
     'BenAllfree\LaravelStaplerImages\LaravelStaplerImagesServiceProvider',
-    'BenAllfree\FbAuth\FbAuthServiceProvider',
     'GrahamCampbell\Markdown\MarkdownServiceProvider',
+    'Artdarek\OAuth\OAuthServiceProvider',
     
 	),
 
@@ -196,6 +196,7 @@ $config = [
     'Carbon'            => 'Carbon\Carbon',
     'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
     'Markdown' => 'GrahamCampbell\Markdown\Facades\Markdown',
+    'OAuth' => 'Artdarek\OAuth\Facade\OAuth',
 	),
 ];
 
