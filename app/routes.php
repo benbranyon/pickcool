@@ -129,8 +129,22 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
   return Redirect::to($contest->canonical_url);
 }]);
 
-Route::get('/sponsor/signup/{id}', ['as'=>'sponsors.signup', 'uses'=>function($id) {
+Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>function($id) {
   $contest = Contest::find($id);
+  $fb = \OAuth::consumer( 'Facebook' );
+  $fb_permissions = json_decode( $fb->request( "/me/permissions" ), true );
+  $user_photos = false;
+  foreach($fb_permissions['data'] as $permission)
+  {
+    if(array_search('user_photos', $permission))
+    {
+      $user_photos = true;
+    }
+  }
+  if(!$user_photos)
+  {
+    echo 'Hello'; 
+  }
   return View::make('sponsors.signup')->with(['contest'=>$contest]);
 }]);
 

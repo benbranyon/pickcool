@@ -25,10 +25,11 @@
         FB.init({
           appId      : '1497159643900204',
           xfbml      : true,
-          version    : 'v2.1'
+          version    : 'v2.1',
         });
-
-        $(document).trigger('fbload'); 
+        if (window.jQuery) {  
+          $(document).trigger('fbload'); 
+        }
       };
 
       (function(d, s, id){
