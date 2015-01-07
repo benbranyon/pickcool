@@ -97,6 +97,23 @@
 		{
 
 			$(document).on('fbload', function(){
+				FB.api(
+				    "/me/permissions",
+				    function (response) {
+				      if (response && !response.error) {
+				        /* handle the result */
+				        alert(response);
+				      }
+				      else {
+						FB.login(function(response) {
+						   // handle the response
+						 }, {
+						   scope: 'user_photos', 
+						   return_scopes: true
+						 });
+				      }
+				    }
+				);
 				FacebookPhotoSelector.setFacebookSDK(FB);
 			});
 
