@@ -102,9 +102,6 @@
 				    function (response) {
 				      if (response && !response.error) {
 				        /* handle the result */
-				        alert(response);
-				      }
-				      else {
 						FB.login(function(response) {
 						   // handle the response
 						 }, {
