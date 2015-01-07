@@ -59,35 +59,6 @@
         href: {{json_encode($candidate->canonical_url($contest))}},
       });
     }
-
-    function vote()
-    {
-      var serialize = function(obj) {
-        var str = [];
-        for(var p in obj)
-          if (obj.hasOwnProperty(p)) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          }
-        return '?'+str.join("&");
-      };
-      
-      FB.login(function(response) {
-        if (response.authResponse) {
-          var d = document.getElementById("candidate");
-          d.className = d.className + " selected";
-          var xmlhttp=new XMLHttpRequest();
-          xmlhttp.open("GET",{{json_encode($candidate->vote_url)}}+serialize({fb_access_token: response.authResponse.accessToken, fb_user_id: response.authResponse.userID}),true);
-          xmlhttp.send();
-          setTimeout(function() {
-            alert("Thanks for voting. Support {{$candidate->name}} even more by sharing your vote with your friends.");
-            share();
-          }, 0); 
-        } else {
-           alert('some error');
-           console.log('User cancelled login or did not fully authorize.');
-         }
-      });
-    }
   </script>
 
 @stop
