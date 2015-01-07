@@ -25,7 +25,7 @@
 }
 .navbar-header {
   float: left;
-  width: 150px;
+  width: 130px;
 }
 .logo-img {
   width: 100%;
@@ -83,6 +83,9 @@ ul.pull-left.nav.nav-pills.footer-nav {
   }
   .brand-slogan {
     display: block;
+  }
+  .navbar-header {
+    width: 150px;
   }
   .jumbotron {
     border-bottom: 0;
@@ -288,7 +291,7 @@ ul.nav {
 .nav > li {
   position: relative;
   display: inline-block;
-  width: 70px;
+  width: 60px;
 }
 .nav-pills > li {
   width: auto;
