@@ -25,6 +25,10 @@
 }
 .navbar-header {
   float: left;
+  width: 150px;
+}
+.logo-img {
+  width: 100%;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
   background-color: #337ab7;
