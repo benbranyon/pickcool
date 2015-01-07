@@ -4,12 +4,12 @@ use Cocur\Slugify\Slugify;
 class Candidate extends Eloquent
 {
   public static $intervals = [0,24];
-  public static $on_fire_threshold = .2;
+  public static $on_fire_threshold = .1;
   
   function getIsOnFireAttribute()
   {
     $delta = $this->vote_count_0 - $this->vote_count_24;
-    if($delta<=0) return false;
+    if($delta<10) return false;
     return ($delta/$this->vote_count_0) > self::$on_fire_threshold;
   }
   
@@ -139,7 +139,7 @@ class Candidate extends Eloquent
   
   function image_url($size=thumb)
   {
-    return $this->image->image->url($size);
+    return route('home').$this->image->image->url($size);
   }
 
   function image()
