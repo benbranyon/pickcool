@@ -36,7 +36,7 @@ margin-right: -10px;
 
 .navbar-header {
   float:left;
-  width:150px;
+  width:100px;
 }
 
 .logo-img {
@@ -112,6 +112,9 @@ ul.pull-left.nav.nav-pills.footer-nav {
   }
   .brand-slogan {
     display:block;
+  }
+  .navbar-header {
+    width:150px;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
