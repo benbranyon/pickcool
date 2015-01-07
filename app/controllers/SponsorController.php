@@ -24,11 +24,11 @@ class SponsorController extends BaseController
 		$sponsor->description = Input::get('description');
 		$sponsor->url = Input::get('url');
 		$fb_image_id = Input::get('image_id');
-		$fb = OAuth::consumer( 'Facebook' );
-		//$me = json_decode( $fb->request( '/me' ), true );
+
+		$fb = \OAuth::consumer( 'Facebook' );
+		$me = json_decode( $fb->request( '/me' ), true );
 		echo '<pre>';
 		print_r($fb);exit;
-		//$fb = \OAuth::consumer( 'Facebook' );
 		//$fb_image = json_decode( $fb->request( $fb_image_id . '?type=normal' ), true );
 		//$i = \Image::from_url($fb_image['source'],true);
 		//$sponsor->image_id = $i->id;
