@@ -79,6 +79,7 @@ class NotifyDailyCandidates extends Command {
           'standings'=>$standings_data,
           'sponsors'=>$contest->sponsors,
         ];
+        echo("Sending to {$vars['to_email']}\n");
         Mail::send('emails.candidate-daily-update', $vars, function($message) use ($vars)
         {
             $message->to($vars['to_email'])->subject($vars['subject']);

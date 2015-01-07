@@ -20,12 +20,23 @@
         </div>
       </div>
       <div class="col-xs-8 text-success" style="font-size: 30px;">
-        <i class="fa fa-check"></i> You Voted
+        <i class="fa fa-check"></i>
+        @if(Input::get('v')=='new')
+          You voted for {{$candidate->name}}
+        @else
+          @if(Input::get('v')=='changed')
+            You changed your vote to {{$candidate->name}}
+          @else
+            You already voted for {{$candidate->name}}
+          @endif
+        @endif
       </div>
     </div>
         
     <div class="alert alert-success">
-      <p>Awesome sauce, you voted for {{{$candidate->name}}}. BUT it's not over! Without your help, other picks will win. Share this page with your friends.</p>
+      <p>Awesome sauce, you voted for {{{$candidate->name}}}.</p>
+      <p>You can only vote for ONE person, but you can change your vote any time.</p>
+      <p>To help even more, share this page with your friends.</p>
     </div>
     <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
     
@@ -38,35 +49,6 @@
       FB.ui({
         method: 'share',
         href: {{json_encode($candidate->canonical_url($contest))}},
-      });
-    }
-
-    function vote()
-    {
-      var serialize = function(obj) {
-        var str = [];
-        for(var p in obj)
-          if (obj.hasOwnProperty(p)) {
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          }
-        return '?'+str.join("&");
-      };
-      
-      FB.login(function(response) {
-        if (response.authResponse) {
-          var d = document.getElementById("candidate");
-          d.className = d.className + " selected";
-          var xmlhttp=new XMLHttpRequest();
-          xmlhttp.open("GET",{{json_encode($candidate->vote_url)}}+serialize({fb_access_token: response.authResponse.accessToken, fb_user_id: response.authResponse.userID}),true);
-          xmlhttp.send();
-          setTimeout(function() {
-            alert("Thanks for voting. Support {{$candidate->name}} even more by sharing your vote with your friends.");
-            share();
-          }, 0); 
-        } else {
-           alert('some error');
-           console.log('User cancelled login or did not fully authorize.');
-         }
       });
     }
   </script>

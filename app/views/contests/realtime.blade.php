@@ -414,7 +414,9 @@
   </div>
 </div>
 <script>
-update();
+@if($contest->can_end && !$contest->is_ended)
+  update();
+@endif
 function share(url)
 {
   FB.ui({

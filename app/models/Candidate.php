@@ -96,7 +96,7 @@ class Candidate extends Eloquent
   
   function getVoteUrlAttribute()
   {
-    return route('candidates.vote', [$this->id]);
+    return route('candidates.vote', [$this->id, 'cancel'=>$this->canonical_url]);
   }
   
   function getUnvoteUrlAttribute()

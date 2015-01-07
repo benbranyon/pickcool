@@ -66,13 +66,21 @@ class User extends Eloquent
     $v = Vote::whereUserId($this->id)->whereContestId($c->contest_id)->first();
     if(!$v)
     {
+      $result = 'new';
       $v = new Vote();
       $v->user_id = $this->id;
       $v->contest_id = $c->contest_id;
+    } else {
+      $v->candidate_id = $c->id;
+      if($v->isDirty())
+      {
+        $result = 'changed';
+      } else {
+        $result = 'unchanged';
+      }
     }
-    $v->candidate_id = $c->id;
     $v->save();
-    return $v;
+    return [$result, $v];
   }
   
   function unvote_for($c)
