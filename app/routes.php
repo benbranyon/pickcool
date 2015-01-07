@@ -91,7 +91,13 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
     try
     {
       $token = $fb->requestAccessToken( $code );
-      Auth::fb_login($token);
+      try
+      {
+        Auth::fb_login($token);
+      } catch (Exception $e) {
+        Session::put('fb_retry', true);
+        return Redirect::to(route('facebook.authorize.retry'));
+      }
       Session::put('success', "Welcome, " . Auth::user()->full_name);
       return Redirect::to(Session::get('onsuccess'));
     } catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
@@ -101,17 +107,31 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
     Session::put('warning', "You must connect with Facebook before continuing.");
     return Redirect::to(Session::get('oncancel'));
   }
-  Session::put('onsuccess', Input::get('success', route('home')));
-  Session::put('oncancel', Input::get('cancel', route('home')));
-  $url = $fb->getAuthorizationUri();
+  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', route('home'))));
+  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', route('home'))));
+  $params = [];
+  if(Session::get('fb_retry'))
+  {
+    Session::forget('fb_retry');
+    $params['auth_type'] = 'rerequest';
+  }
+  $url = $fb->getAuthorizationUri($params);
   return Redirect::to( (string)$url );
+}]);
+
+Route::get('/facebook/authorize/retry', ['as'=>'facebook.authorize.retry', 'uses'=>function() {
+  return View::make('facebook.authorize.retry');
 }]);
 
 Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>function($id) {
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
-  $v = Auth::user()->vote_for($candidate);
-  return Redirect::to($candidate->after_vote_url);
+  list($result,$v) = Auth::user()->vote_for($candidate);
+  $qs = [
+    'v'=>$result,
+  ];
+  $qs = http_build_query($qs);
+  return Redirect::to($candidate->after_vote_url."?{$qs}");
 }]);
 
 Route::get('/vote/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_vote', 'uses'=>function($id) {

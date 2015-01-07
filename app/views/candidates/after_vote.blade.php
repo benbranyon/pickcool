@@ -20,12 +20,23 @@
         </div>
       </div>
       <div class="col-xs-8 text-success" style="font-size: 30px;">
-        <i class="fa fa-check"></i> You Voted
+        <i class="fa fa-check"></i>
+        @if(Input::get('v')=='new')
+          You voted for {{$candidate->name}}
+        @else
+          @if(Input::get('v')=='changed')
+            You changed your vote to {{$candidate->name}}
+          @else
+            You already voted for {{$candidate->name}}
+          @endif
+        @endif
       </div>
     </div>
         
     <div class="alert alert-success">
-      <p>Awesome sauce, you voted for {{{$candidate->name}}}. BUT it's not over! Without your help, other picks will win. Share this page with your friends.</p>
+      <p>Awesome sauce, you voted for {{{$candidate->name}}}.</p>
+      <p>You can only vote for ONE person, but you can change your vote any time.</p>
+      <p>To help even more, share this page with your friends.</p>
     </div>
     <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
     
