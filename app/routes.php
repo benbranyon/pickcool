@@ -138,7 +138,7 @@ Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>function($id) 
   return "hello";
 }]);
 
-Route::post('sponsor/edit/{id}', 'SponsorController@edit');
+Route::post('sponsor/create/', 'SponsorController@create');
 
 Route::get('/contests/{id}/edit', ['as'=>'contests.edit', 'uses'=>function() {
   return "hi";

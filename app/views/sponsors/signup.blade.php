@@ -2,9 +2,21 @@
 
 @section('head')
 <title>Sponsor Signup {{{$contest->title}}} | pick.cool</title>
-<script src="/assets/js/jquery-2.1.3.min.js"></script>
+<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="/assets/js/facebookphotoselector.jquery.js"></script>
+<style type="text/css">
+    .thumbnail.selected {
+        background-color: #428bca;
+    }
+    .loading {
+        text-align: center;
+    }
+    .modal-body {
+        max-height: 600px;
+        overflow-y: auto;
+    }
+</style>
 @stop
 
 @section('content')
@@ -14,7 +26,7 @@
       {{{$contest->title}}} Sponsor Signup
     </h1>
 
-    {{ Form::open(array('action' => array('SponsorController@edit'), 'files' => true)) }}
+    {{ Form::open(array('action' => array('SponsorController@create'), 'files' => true)) }}
     	<fieldset>
 	    	<legend>Sponsor Info</legend>
 
@@ -37,10 +49,16 @@
 		    </div>
 
 		    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-		        {{ Form::label('image', 'Image') }}
+				{{ Form::hidden('contest_id', $contest->id) }}
+				{{ Form::hidden('contest_slug', $contest->slug) }}
+		    </div>
+
+		    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+		        {{ Form::label('image_id', 'Image') }}
+		        {{ Form::hidden('image_id', null) }}
 		        <br />
 		        <a class="btn btn-md btn-primary" data-toggle="modal" href="#facebook_photo_selector">Select Facebook Photo</a>
-		        {{ $errors->first('description', '<p class="help-block">:message</p>') }}
+		        {{ $errors->first('image_id', '<p class="help-block">:message</p>') }}
 		    </div>
 
 	    </fieldset>
@@ -74,17 +92,18 @@
 	</div><!-- /.modal -->
 
 </div>
-
 	<script>
 		$(function()
 		{
-			
-			FacebookPhotoSelector.setFacebookSDK(FB);
+
+			$(document).on('fbload', function(){
+				FacebookPhotoSelector.setFacebookSDK(FB);
+			});
 
 			$('#facebook_photo_selector').facebookPhotoSelector({
 				onFinalSelect : function(photos)
 				{
-					console.log(photos);
+					$('#image_id').val(photos);
 				}
 			});
 		});
