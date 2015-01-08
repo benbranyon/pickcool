@@ -66,7 +66,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{{route('home')}}">Pick.Cool</a>
+          <a class="navbar-brand" href="{{route('home')}}"><img class="logo-img" src="/assets/img/pick-cool-logo.png" /></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
