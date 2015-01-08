@@ -1,5 +1,17 @@
 <?php
 
+Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$size) 
+{
+  $image = Image::find($id);
+  if(!$image)
+  {
+    App::abort(404);
+  }
+
+  return Redirect::to($image->image->url($size), 301); 
+}]);
+
+
 Route::get('/', ['as'=>'home', 'uses'=>function() {
   $contests = Contest::hot();
   return View::make('home')->with(['contests'=>$contests]);

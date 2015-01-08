@@ -92,6 +92,13 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
+/* Missing */
+
+App::missing(function($exception)
+{
+    return View::make('404.not-found')->withMessage($exception->getMessage());
+});
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
