@@ -183,7 +183,7 @@ Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', '
       Session::put('warning', "You must connect with Facebook before continuing.");
       return Redirect::to(Session::get('oncancel'));
     }
-    Session::put('onsuccess', Input::get('success', Session::get('onsuccess', route('home'))));
+    Session::put('onsuccess', Input::get('success', Session::get('onsuccess', route('sponsors.signup', $id))));
     Session::put('oncancel', Input::get('cancel', Session::get('oncancel', route('home'))));
     $params = [];
     if(Session::get('fb_retry'))
