@@ -35,7 +35,7 @@ class Candidate extends Eloquent
 		return new RankedCandidateCollection($models);
 	}
   
-  function add_vote_count_columns($columns)
+  function add_columns($columns)
   {
     foreach(self::$intervals as $interval)
     {
@@ -53,7 +53,7 @@ class Candidate extends Eloquent
 	public function newEloquentBuilder($query)
 	{
     $builder = parent::newEloquentBuilder($query);
-    $builder->select($this->add_vote_count_columns(['candidates.*']));
+    $builder->select($this->add_columns(['candidates.*']));
     return $builder;
 	}
   
