@@ -191,6 +191,8 @@ Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', '
       Session::forget('fb_retry');
       $params['auth_type'] = 'rerequest';
     }
+    $params = [];
+    $params['auth_type'] = 'rerequest';
     $url = $fb->getAuthorizationUri($params);
     return Redirect::to( (string)$url );  
   }
@@ -218,9 +220,8 @@ Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', '
   }
   if(!$user_photos)
   {
-    $client = new \GuzzleHttp\Client();
-    $dialog = 'https://www.facebook.com/dialog/oauth?client_id='. $_ENV['FACEBOOK_APP_ID']. '&redirect_uri=http://local.pick.cool/sponsor/signup/'.$id.'&scope=user_photos';
-    return Redirect::to( (string)$dialog );
+    $dialog = 'https://www.facebook.com/dialog/oauth?client_id='. $_ENV['FACEBOOK_APP_ID']. '&redirect_uri=' .Request::root() .'/sponsor/signup/'.$id.'&scope=user_photos';
+    return Redirect::to( (string) $dialog);
   }
   return View::make('sponsors.signup')->with(['contest'=>$contest]);
 }]);
