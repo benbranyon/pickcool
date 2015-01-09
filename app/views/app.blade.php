@@ -66,6 +66,9 @@
       </div>
     </nav>
     <div class="container-fluid">
+      <div class="questions pull-right">
+        <a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
+      </div>
       @foreach(['success', 'warning', 'danger'] as $kind)
         @if(Session::get($kind))
           <div class="alert alert-{{{$kind}}}">

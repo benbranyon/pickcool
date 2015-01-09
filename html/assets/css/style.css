@@ -525,3 +525,16 @@ ul.nav {
   text-align: center;
   font-size: 100px;
 }
+.questions {
+  font-size: 12px;
+}
+.faq-accordion a {
+  display: block;
+}
+.faq-accordion a:hover {
+  text-decoration: none;
+}
+.panel-heading {
+  background-color: #0085ca;
+  color: white;
+}

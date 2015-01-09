@@ -203,3 +203,7 @@ Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
   
   return Redirect::to($candidate->buy_url);
 }]);
+
+Route::get('/faq', ['as'=>'faq', 'uses'=>function() {
+  return View::make('legal.faq');
+}]);
