@@ -5,6 +5,12 @@ use NinjaMutex\Mutex;
 
 class User extends Eloquent
 {
+  function log_activity()
+  {
+    $log = new ActivityLog();
+    $log->save();
+  }
+  
   function getProfileImageUrlAttribute()
   {
     return "http://graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
