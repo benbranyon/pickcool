@@ -46,10 +46,14 @@ class User extends Eloquent
         $user = new User();
       }
       $user->fb_id = $fb_id;
-      $user->first_name = $me['first_name'];
-      $user->last_name = $me['last_name'];
-      $user->email = $me['email'];
-      $user->gender = $me['gender'];
+      $optional_fields = [
+        'first_name', 'last_name', 'email', 'gender',
+      ];
+      foreach($optional_fields as $field_name)
+      {
+        if(!isset($me[$field_name]) || !trim($me[$field_name])) continue;
+        $user->$field_name = $me[$field_name];
+      }
       $user->save();
       return $user;
     }, $fb_id, $me);
