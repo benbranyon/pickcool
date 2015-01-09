@@ -71,7 +71,6 @@ class User extends Eloquent
       $v->user_id = $this->id;
       $v->contest_id = $c->contest_id;
     } else {
-      $v->candidate_id = $c->id;
       if($v->isDirty())
       {
         $result = 'changed';
@@ -79,6 +78,7 @@ class User extends Eloquent
         $result = 'unchanged';
       }
     }
+    $v->candidate_id = $c->id;
     $v->save();
     return [$result, $v];
   }
