@@ -88,7 +88,7 @@
           <li>
             @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small" href="{{{$contest->join_url}}}">
-                <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                <img src="/add-user.png" alt="You" title="Join the Pick" />
                 <div class="overlay">
                   <div class="btn btn-xs btn-success">Join Now!</div>
                 </div>
@@ -96,7 +96,7 @@
             @else
               <div >
                 <a class="candidate-large" href="{{{$contest->join_url}}}">
-                  <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                  <img src="/add-user.png" alt="You" title="Join the Pick" />
                   <div class="overlay">
                     <div class="btn btn-lg btn-success">Join Now!</div>
                   </div>
@@ -148,7 +148,7 @@
           <li>
             @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small" href="{{{$contest->join_url}}}">
-                <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                <img src="/add-user.png" alt="You" title="Join the Pick" />
                 <div class="overlay">
                   <div class="btn btn-xs btn-success">Join Now!</div>
                 </div>
@@ -157,7 +157,7 @@
               <div >
                 <h1 class="big">You</h1>
                 <a class="candidate-large" href="{{{$contest->join_url}}}">
-                  <img src="/add-user.png"/ alt="You" title="Join the Pick" />
+                  <img src="/add-user.png" alt="You" title="Join the Pick" />
                   <div class="overlay">
                     <div class="btn btn-lg btn-success">Join Now!</div>
                   </div>
