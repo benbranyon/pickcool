@@ -528,6 +528,9 @@ ul.nav {
 .questions {
   font-size: 12px;
 }
+.panel-default {
+  border-color: #0085ca;
+}
 .faq-accordion a.panel-header-link {
   display: block;
 }
