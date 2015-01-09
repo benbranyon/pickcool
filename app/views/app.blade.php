@@ -103,8 +103,8 @@
             <div class="row">
               <div class="col-sm-12 text-center">
                 <ul class="nav nav-pills footer-nav">
-                  <li><a ng-href="/privacy">Privacy Policy</a></li>
-                  <li><a ng-href="/terms">Terms of Service</a></li>
+                  <li><a href="/privacy">Privacy Policy</a></li>
+                  <li><a href="/terms">Terms of Service</a></li>
                 </ul>
               </div>
             </div>

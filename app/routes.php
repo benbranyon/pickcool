@@ -207,3 +207,11 @@ Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
 Route::get('/faq', ['as'=>'faq', 'uses'=>function() {
   return View::make('legal.faq');
 }]);
+
+Route::get('/privacy', ['as'=>'privacy', 'uses'=>function() {
+  return View::make('legal.privacy');
+}]);
+
+Route::get('/terms', ['as'=>'terms', 'uses'=>function() {
+  return View::make('legal.terms');
+}]);
