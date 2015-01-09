@@ -528,10 +528,10 @@ ul.nav {
 .questions {
   font-size: 12px;
 }
-.faq-accordion a {
+.faq-accordion a.panel-header-link {
   display: block;
 }
-.faq-accordion a:hover {
+.faq-accordion a.panel-header-link:hover {
   text-decoration: none;
 }
 .panel-heading {

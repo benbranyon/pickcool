@@ -13,7 +13,7 @@
             <h1>F.A.Q.</h1>
             <div class="panel-group faq-accordion" id="accordion">
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 1. What is Pick.Cool?
@@ -22,12 +22,12 @@
                     </a>
                     <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <p>We’re a site where locals pick what’s cool. We run local contests on anything that’s popular and let you, the public, pick what you think is the best. Our very first pick, “Reno’s Favorite Musicians” was launched on December 16th 2014, closed on December 31st at midnight, and won by Shane Whitecloud. We are still in beta and working to make the user experience as smooth as possible while expanding the functionality and performance.  If you have any problems please contact us via our Pick.Cool app page on facebook.</p>
+                            <p>We’re a site where locals pick what’s cool. We run local contests on anything that’s popular and let you, the public, pick what you think is the best. Our very first pick, “Reno’s Favorite Musicians” was launched on December 16th 2014, closed on December 31st at midnight, and won by Shane Whitecloud. We are still in beta and working to make the user experience as smooth as possible while expanding the functionality and performance.  If you have any problems please contact us via our <a href="https://www.facebook.com/the.pick.cool">Pick.Cool</a> app page on facebook.</p>
                         </div>
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 2. What does Beta mean?
@@ -36,14 +36,14 @@
                     </a>
                     <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <p> Websites will often introduce themselves to the world by selecting a small to mid-sized market (ie. Reno which happens to be our home town) and launching a few features at a time in a gradual rollout. This way, we can find any issues (bugs) which we may have missed during our internal testing and fix them before they’re seen millions of times. You are our beta users and for that we thank you. If you find a bug, please reach out to us on Facebook. https://www.facebook.com/pages/PickCool/310629329135330?ref=hl [1] and try to be as specific as possible about any problems you may encounter. This will help us make Pick.Cool as reliable as possible for every user on every platform as we rollout the rest of our system to the world.
+                            <p> Websites will often introduce themselves to the world by selecting a small to mid-sized market (ie. Reno which happens to be our home town) and launching a few features at a time in a gradual rollout. This way, we can find any issues (bugs) which we may have missed during our internal testing and fix them before they’re seen millions of times. You are our beta users and for that we thank you. If you find a bug, please reach out to us <a href="https://www.facebook.com/the.pick.cool">on Facebook</a> and try to be as specific as possible about any problems you may encounter. This will help us make Pick.Cool as reliable as possible for every user on every platform as we rollout the rest of our system to the world.
  
                             <p>Remember, we just launched in Mid-December 2014 so we’re still a very young site and we already have several thousand members! Thanks Reno for your support!  We can’t wait to see your faces when we hand out all the sponsorship prizes and awards at our first wrap party on January 31st!</p>
                         </div>
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 3. How does it work?
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 4. What do I need to do to win?
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 5. Can I change my image?
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 6. Are there any restrictions on images?
@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 7. How many times can I vote?
@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 8. What’s Next?
@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine">
+                    <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseNine">
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 9. Why do I have to login to vote?
