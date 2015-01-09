@@ -241,7 +241,7 @@ class Contest extends Eloquent
       $is_new = true;
     }
     $i = \Image::from_url($user->profile_image_url,true);
-    $can->name = $user->first_name;
+    $can->name = $user->full_name;
     $can->image_id = $i->id;
     $can->save();
     $user->vote_for($can);
