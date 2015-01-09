@@ -33,6 +33,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0">
+    <meta name="description" content="Where you pick what’s cool." />
     @yield('head')
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
@@ -53,7 +54,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{{route('home')}}"><img class="logo-img" src="/assets/img/pick-cool-logo.png" /></a>
+          <a class="navbar-brand" href="{{route('home')}}"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>

@@ -187,7 +187,7 @@
           <div class="sponsors">
             @foreach($contest->sponsors as $sponsor)
               <div class="sponsor clearfix">
-                <a href="{{{$sponsor->url}}}" target="_self"><img src="{{{$sponsor->image_url('thumb')}}}" align="left" /></a>
+                <a href="{{{$sponsor->url}}}" target="_self"><img alt="{{{$sponsor->name}}}" src="{{{$sponsor->image_url('thumb')}}}" align="left" /></a>
                 <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a>
                 <br/>
                 {{{$sponsor->description}}}
