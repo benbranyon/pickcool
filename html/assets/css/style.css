@@ -25,7 +25,7 @@
 }
 .navbar-header {
   float: left;
-  width: 130px;
+  width: 150px;
 }
 .logo-img {
   width: 100%;
@@ -279,11 +279,19 @@ h1.big {
   margin-right: auto;
 }
 .list .contest .votes-total {
-  font-size: 27px;
-  color: gray;
+  font-size: 12px;
+  color: #333;
+  font-weight: bold;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.list .contest .title-header {
+  margin-bottom: 0px;
+  padding-right: 8px;
+  padding-left: 8px;
 }
 .list .contest .title {
-  font-size: 26px;
+  font-size: 18px;
 }
 ul.nav {
   text-align: center;
@@ -291,7 +299,7 @@ ul.nav {
 .nav > li {
   position: relative;
   display: inline-block;
-  width: 60px;
+  width: 55px;
 }
 .nav-pills > li {
   width: auto;

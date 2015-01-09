@@ -30,13 +30,13 @@ body {
 }
 
 .navbar-right {
-float: right!important;
-margin-right: -10px;
+  float: right!important;
+  margin-right: -10px;
 }
 
 .navbar-header {
   float:left;
-  width: 130px;
+  width: 150px;
 }
 
 .logo-img {
@@ -368,13 +368,22 @@ h1.big
     
     .votes-total
     {
-      font-size: 27px;
-      color: gray;
+      font-size: 12px;
+      color: #333;
+      font-weight:bold;
+      padding-left:8px;
+      padding-right:8px;
+    }
+
+    .title-header {
+      margin-bottom:0px;
+      padding-right:8px;
+      padding-left:8px;
     }
 
     .title
     {
-      font-size: 26px;
+      font-size: 18px;
     }
   }
 }
@@ -386,7 +395,7 @@ ul.nav
 .nav>li {
   position: relative;
   display: inline-block;
-  width: 60px;
+  width: 55px;
 }
 
 .nav-pills>li {

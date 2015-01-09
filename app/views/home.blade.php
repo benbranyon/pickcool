@@ -14,10 +14,12 @@
   <div class="list">
     @foreach($contests as $contest)
       <div class="contest">
-        <span class="votes-total">
-          {{{$contest->vote_count_0}}}
-        </span>
-        <a class="title" href="{{{$contest->canonical_url}}}">{{{$contest->title}}}</a>
+        <h2 class="title-header"><a class="title" href="{{{$contest->canonical_url}}}">{{{$contest->title}}}</a></h2>
+        <div class="votes-total">
+          <i class="fa fa-check-square"></i> {{{$contest->vote_count_0}}} 
+          Votes @if($contest->writein_enabled && !$contest->is_ended)| <span class="text-success">OPEN pick - Join Now</span>@endif      
+          @if($contest->is_ended)| <span class="text-danger" ng-if="$contest->is_ended">Voting has ended.</span>@endif
+        </div>
         @if($contest->is_editable)
           <a class="btn btn-xs btn-success" href="route('contest.edit', [$contest->id])">Edit</a>
         @endif
