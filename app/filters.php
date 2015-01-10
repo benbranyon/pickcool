@@ -39,7 +39,22 @@ Route::filter('auth', function()
   {
     Auth::fb_login(Input::get('fb_access_token'));
   }
-  if(Auth::user()) return;
+
+  if(Auth::user())
+  {
+  	$fb = OAuth::consumer( 'Facebook' );
+  	try {
+  		$me = json_decode( $fb->request( '/me' ), true );
+  	}
+  	catch(OAuth \ Common \ Http \ Exception \ TokenResponseException $e)
+  	{
+  		$me = false;
+  	}
+  	if($me)
+  	{
+  		return;
+  	}
+  }
   return Redirect::to(route('facebook.authorize', ['success'=>Request::url(), 'cancel'=>Input::get('cancel', route('home'))]));
 });
 
