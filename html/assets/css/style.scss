@@ -234,11 +234,29 @@ h1.big
   margin-right: 2px;
 }
 
-.fire
+.badges
 {
-  color: rgb(255, 107, 0);
-  text-shadow: 1px 1px rgba(255,255,255,.4);
+  .badge
+  {
+    background-color: rgba(232, 232, 232, 0.85);
+    padding: 3px 3px;
+    min-width: 19px;
+  }
+  .badge.badge-vote-count
+  {
+    background-color: rgb(253, 227, 169);
+    color: rgb(51, 122, 183);
+  }
+  .badge.badge-fire
+  {
+    color: rgb(255, 107, 0);
+  }
+  .badge.badge-giver
+  {
+    color: red;
+  }
 }
+
 .candidate-large.selected {
   border: 3px solid rgb(36, 219, 36);
 }
@@ -258,19 +276,26 @@ h1.big
     width: 100%;
     max-width: 320px;
   }
-  .votes-count
+  .badges
   {
     position: absolute;
-    background-color: rgb(255, 233, 221);
-    width: 25px;
-    height: 25px;
-    right: -1px;
-    bottom: -1px;
-    border-radius: 3px;
-    text-align: center;
-    color: rgb(255, 107, 0);
-    border: 1px solid gray;
+    bottom: 1px;
+    right: 1px;
+    .badge
+    {
+      float: left;
+    }
+    .badge.badge-vote-count
+    {
+    }
+    .badge.badge-fire
+    {
+    }
+    .badge.badge-giver
+    {
+    }
   }
+
   .overlay
   {
     position: absolute;
@@ -304,30 +329,26 @@ h1.big
     width: 75px;
     height: 75px;
   }
-  .votes-count
+  .badges
   {
     position: absolute;
-    background-color: rgb(255, 233, 221);
-    width: 25px;
-    height: 25px;
-    right: -1px;
-    bottom: -1px;
-    border-radius: 3px;
-    text-align: center;
-    color: rgb(255, 107, 0);
-    border: 1px solid gray;
-    font-size: 10px;
-    padding-top: 5px;
+    bottom: 1px;
+    right: 1px;
+    .badge
+    {
+      float: left;
+    }
+    .badge.badge-vote-count
+    {
+    }
+    .badge.badge-fire
+    {
+    }
+    .badge.badge-giver
+    {
+    }
   }
-  .fire
-  {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    left: -4px;
-    bottom: -4px;
-    text-align: center;
-  }
+  
   .overlay
   {
     position: absolute;

@@ -169,9 +169,20 @@ h1.big {
   margin-left: 2px;
   margin-right: 2px;
 }
-.fire {
+.badges .badge {
+  background-color: rgba(232, 232, 232, 0.85);
+  padding: 3px 3px;
+  min-width: 19px;
+}
+.badges .badge.badge-vote-count {
+  background-color: #fde3a9;
+  color: #337ab7;
+}
+.badges .badge.badge-fire {
   color: #ff6b00;
-  text-shadow: 1px 1px rgba(255, 255, 255, .4);
+}
+.badges .badge.badge-giver {
+  color: red;
 }
 .candidate-large.selected {
   border: 3px solid #24db24;
@@ -191,17 +202,13 @@ h1.big {
   width: 100%;
   max-width: 320px;
 }
-.candidate-large .votes-count {
+.candidate-large .badges {
   position: absolute;
-  background-color: #ffe9dd;
-  width: 25px;
-  height: 25px;
-  right: -1px;
-  bottom: -1px;
-  border-radius: 3px;
-  text-align: center;
-  color: #ff6b00;
-  border: 1px solid gray;
+  bottom: 1px;
+  right: 1px;
+}
+.candidate-large .badges .badge {
+  float: left;
 }
 .candidate-large .overlay {
   position: absolute;
@@ -231,27 +238,13 @@ h1.big {
   width: 75px;
   height: 75px;
 }
-.candidate-small .votes-count {
+.candidate-small .badges {
   position: absolute;
-  background-color: #ffe9dd;
-  width: 25px;
-  height: 25px;
-  right: -1px;
-  bottom: -1px;
-  border-radius: 3px;
-  text-align: center;
-  color: #ff6b00;
-  border: 1px solid gray;
-  font-size: 10px;
-  padding-top: 5px;
+  bottom: 1px;
+  right: 1px;
 }
-.candidate-small .fire {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  left: -4px;
-  bottom: -4px;
-  text-align: center;
+.candidate-small .badges .badge {
+  float: left;
 }
 .candidate-small .overlay {
   position: absolute;
