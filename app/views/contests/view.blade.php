@@ -163,8 +163,8 @@
                   </div>
                 </a>
                 <button disabled=true class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
-                <button disabled=true a class="btn btn-md btn-primary btn-half" ><i class="fa fa-camera"></i> More</button>
-                <button disabled=true  class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
+                <button disabled=true class="btn btn-md btn-primary btn-half" ><i class="fa fa-check"></i> Vote</button>
+                <button disabled=true class="btn btn-md btn-primary btn-half"><i class="fa fa-facebook"></i> Share</button>
               </div>
             @endif
           </li>
