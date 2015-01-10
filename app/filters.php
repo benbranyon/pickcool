@@ -40,7 +40,9 @@ Route::filter('auth', function()
     Auth::fb_login(Input::get('fb_access_token'));
   }
   if(Auth::user()) return;
-  return Redirect::to(route('facebook.authorize', ['success'=>Request::url(), 'cancel'=>Input::get('cancel', route('home'))]));
+  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
+  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
+  return Redirect::to(route('login'));
 });
 
 

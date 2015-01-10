@@ -16,7 +16,7 @@
     <h1>
       {{{$contest->title}}}
     </h1>
-    <div style="width:320px; margin-left: auto; margin-right: auto; text-align: center">
+    <div style="width:100%; margin-left: auto; margin-right: auto; text-align: center">
       <a href="?s=s">View Small</a>
       |
       <a href="?s=l">View Large</a>
@@ -163,8 +163,8 @@
                   </div>
                 </a>
                 <button disabled=true class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
-                <button disabled=true a class="btn btn-md btn-primary btn-half" ><i class="fa fa-camera"></i> More</button>
-                <button disabled=true  class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
+                <button disabled=true class="btn btn-md btn-primary btn-half" ><i class="fa fa-check"></i> Vote</button>
+                <button disabled=true class="btn btn-md btn-primary btn-half"><i class="fa fa-facebook"></i> Share</button>
               </div>
             @endif
           </li>
