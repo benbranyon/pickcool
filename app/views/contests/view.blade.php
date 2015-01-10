@@ -16,7 +16,7 @@
     <h1>
       {{{$contest->title}}}
     </h1>
-    <div style="width:320px; margin-left: auto; margin-right: auto; text-align: center">
+    <div style="width:100%; margin-left: auto; margin-right: auto; text-align: center">
       <a href="?s=s">View Small</a>
       |
       <a href="?s=l">View Large</a>
