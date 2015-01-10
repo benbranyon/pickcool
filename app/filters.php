@@ -18,8 +18,8 @@ App::before(function($request)
 
 App::after(function($request, $response)
 {
-	if(!Auth::user()) return;
-	Auth::user()->log_activity();
+	$log = new ActivityLog();
+	$log->save();
 });
 
 /*
