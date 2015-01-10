@@ -32,7 +32,7 @@
         @endif
       </div>
     </div>
-    <h1>Now get the word out. Share your pick with friends.</h1>
+    <h1>To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
     <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
 
     <div style="color: gray; font-size: 12px">
