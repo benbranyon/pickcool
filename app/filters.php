@@ -43,13 +43,15 @@ Route::filter('auth', function()
   if(Auth::user())
   {
   	$fb = OAuth::consumer( 'Facebook' );
+
   	try {
   		$me = json_decode( $fb->request( '/me' ), true );
   	}
-  	catch(OAuth \ Common \ Http \ Exception \ TokenResponseException $e)
+  	catch(Exception $e)
   	{
   		$me = false;
   	}
+
   	if($me)
   	{
   		return;
