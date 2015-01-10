@@ -73,7 +73,7 @@
             <li>Welcome, {{{Auth::user()->first_name}}}.
             <li><a href="{{{route('logout', ['success'=>route('home')])}}}">Logout
           @else
-            <li><a href="{{{route('login', ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in
+            <li><a href="{{{route('login', Route::currentRouteName()=='login' ? [] : ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in
           @endif
           <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
         </ul>
