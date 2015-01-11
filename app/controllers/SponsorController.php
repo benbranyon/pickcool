@@ -26,14 +26,16 @@ class SponsorController extends BaseController
 		$fb_image_id = Input::get('image_id');
 
 		$fb = \OAuth::consumer( 'Facebook' );
-		$fb_image = json_decode( $fb->request( $fb_image_id . '?type=normal' ), true );
+		try {
+			$fb_image = json_decode( $fb->request( $fb_image_id . '?type=normal' ), true );
+		}
+		catch (Exception $e) {
+		}
 		$i = \Image::from_url($fb_image['source'],true);
 		$sponsor->image_id = $i->id;
-
 		$sponsor->save();
-
 		$redirect = '/est/' . Input::get('contest_id') . '/' . Input::get('contest_slug');
-
+		Session::put('success', 'Thank you for signing up to be a sponsor. A representative will contact you soon to confirm.');
 	    return Redirect::to($redirect);
     }
 

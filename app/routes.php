@@ -183,50 +183,7 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
 Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>function($id) {
   $contest = Contest::find($id);
   $fb = \OAuth::consumer( 'Facebook' );
-  $has_token = $fb->getStorage()->hasAccessToken("Facebook");
-  
-  //\Session::flush();
-  //$fb->getStorage()->clearToken("Facebook");
-
-  if(!$has_token || !Auth::user())
-  {
-    \Session::flush();
-
-    $code = Input::get( 'code' );
-    $fb = OAuth::consumer( 'Facebook' );
-    if ( !empty( $code ) ) {
-      try
-      {
-        $token = $fb->requestAccessToken( $code );
-        try
-        {
-          Auth::fb_login($token);
-        } catch (Exception $e) {
-          Session::put('fb_retry', true);
-          return Redirect::to(route('facebook.authorize.retry'));
-        }
-        Session::put('success', "Welcome, " . Auth::user()->full_name);
-        return Redirect::to(Session::get('onsuccess'));
-      } catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
-      }
-    }
-    if(Input::get('error')) {
-      Session::put('warning', "You must connect with Facebook before continuing.");
-      return Redirect::to(Session::get('oncancel'));
-    }
-    Session::put('onsuccess', Input::get('success', Session::get('onsuccess', route('sponsors.signup', $id))));
-    Session::put('oncancel', Input::get('cancel', Session::get('oncancel', route('home'))));
-    $params = [];
-    if(Session::get('fb_retry'))
-    {
-      Session::forget('fb_retry');
-      $params['auth_type'] = 'rerequest';
-    }
-    $params = [];
-    $params['auth_type'] = 'rerequest';
-    $url = $fb->getAuthorizationUri($params);
-    return Redirect::to( (string)$url );  
-  }
+  //$has_token = $fb->getStorage()->hasAccessToken("Facebook");
 
   try
   {
@@ -236,7 +193,7 @@ Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', '
     $fb_permissions =  $client->get('https://graph.facebook.com/me/permissions?access_token=' . $access_token); 
     $fb_permissions = $fb_permissions->json();
   }
-  catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
+  catch (Exception $e) {
     //Old token
     //$fb->getStorage()->clearToken("Facebook");
   }
