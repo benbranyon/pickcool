@@ -5,6 +5,12 @@ use NinjaMutex\Mutex;
 
 class User extends Eloquent
 {
+  function log_activity()
+  {
+    $log = new ActivityLog();
+    $log->save();
+  }
+  
   function getProfileImageUrlAttribute()
   {
     return "http://graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
@@ -74,7 +80,9 @@ class User extends Eloquent
       $v = new Vote();
       $v->user_id = $this->id;
       $v->contest_id = $c->contest_id;
+      $v->candidate_id = $c->id;
     } else {
+      $v->candidate_id = $c->id;
       if($v->isDirty())
       {
         $result = 'changed';
@@ -82,7 +90,6 @@ class User extends Eloquent
         $result = 'unchanged';
       }
     }
-    $v->candidate_id = $c->id;
     $v->save();
     return [$result, $v];
   }

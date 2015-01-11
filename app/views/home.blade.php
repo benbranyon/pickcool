@@ -29,10 +29,17 @@
             <li>
               <a class="candidate-small" href="{{{$contest->canonical_url}}}"  class="{{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}">
                 <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
-                @if($candidate->is_on_fire)
-                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-                @endif
+                <div class="clearfix">
+                  <div class="badges pull-right">
+                    @if($candidate->is_on_fire)
+                      <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                    @endif
+                    @if($candidate->is_giver)
+                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span>
+                    @endif
+                    <span class='badge badge-vote-count' title="{{{$candidate->vote_count_0}}} votes">{{{$candidate->vote_count_0}}}</span>
+                  </div>
+                </div>
               </a>
             </li>
           @endforeach

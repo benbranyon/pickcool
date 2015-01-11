@@ -96,6 +96,17 @@ Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_join', 
 }]);
 
 
+Route::get('/login', ['as'=>'login', 'uses'=>function() {
+  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
+  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
+  return View::make('login');
+}]);
+Route::get('/logout', ['as'=>'logout', 'uses'=>function() {
+  Session::flush();
+  Session::put('success', 'You have been logged out.');
+  return Redirect::to(route('home'));
+}]);
+
 
 Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function() {
   $code = Input::get( 'code' );
@@ -117,16 +128,20 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
         return Redirect::to(route('facebook.authorize.retry'));
       }
       Session::put('success', "Welcome, " . Auth::user()->full_name);
-      return Redirect::to(Session::get('onsuccess'));
+      $onsuccess=Session::get('onsuccess');
+      Session::forget('onsuccess');
+      Session::forget('oncancel');
+      return Redirect::to($onsuccess);
     } catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
     }
   }
   if(Input::get('error')) {
     Session::put('warning', "You must connect with Facebook before continuing.");
-    return Redirect::to(Session::get('oncancel'));
+    $oncancel = Session::get('oncancel');
+    Session::forget('onsuccess');
+    Session::forget('oncancel');
+    return Redirect::to($oncancel);
   }
-  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', route('home'))));
-  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', route('home'))));
   $params = [];
   if(Session::get('fb_retry'))
   {

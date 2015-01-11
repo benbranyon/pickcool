@@ -13,6 +13,11 @@ class Candidate extends Eloquent
     return ($delta/$this->vote_count_0) > self::$on_fire_threshold;
   }
   
+  function getIsGiverAttribute()
+  {
+    return trim($this->charity_name)!=false;
+  }
+  
   function rank_change_since($interval)
   {
     $rank_key = "rank_{$interval}";

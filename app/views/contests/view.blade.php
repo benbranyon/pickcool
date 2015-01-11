@@ -16,7 +16,7 @@
     <h1>
       {{{$contest->title}}}
     </h1>
-    <div style="width:320px; margin-left: auto; margin-right: auto; text-align: center">
+    <div style="width:100%; margin-left: auto; margin-right: auto; text-align: center">
       <a href="?s=s">View Small</a>
       |
       <a href="?s=l">View Large</a>
@@ -111,18 +111,21 @@
             @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
                 <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
-                <span class='votes-count'>{{{$candidate->vote_count_0}}}</span>
-                @if($candidate->is_on_fire)
-                  <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-                @endif
-                
+                <div class="clearfix">
+                  <div class="badges pull-right">
+                    @if($candidate->is_on_fire)
+                      <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                    @endif
+                    @if($candidate->is_giver)
+                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span>
+                    @endif
+                    <span class='badge badge-vote-count' title="{{{$candidate->vote_count_0}}} votes">{{{$candidate->vote_count_0}}}</span>
+                  </div>
+                </div>
               </a>
             @else
               <div >
                 <h1 class="big">
-                  @if($candidate->is_on_fire)
-                    <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-                  @endif
                   {{{$candidate->name}}}
                 </h1>
                 <h2>
@@ -130,7 +133,18 @@
                 </h2>
                 <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
                   <img src="/loading.gif" data-echo="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
+                  <div class="clearfix">
+                    <div class="badges pull-right">
+                      @if($candidate->is_on_fire)
+                        <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+                      @endif
+                      @if($candidate->is_giver)
+                        <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span>
+                      @endif
+                    </div>
+                  </div>
                 </a>
+                
                 <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-camera"></i> More</a>
                 @if($candidate->is_user_vote)
                   <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}"><i class="fa fa-close"></i> Unvote</a>
@@ -163,8 +177,8 @@
                   </div>
                 </a>
                 <button disabled=true class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
-                <button disabled=true a class="btn btn-md btn-primary btn-half" ><i class="fa fa-camera"></i> More</button>
-                <button disabled=true  class="btn btn-md btn-primary btn-half"><i class="fa fa-camera"></i> More</button>
+                <button disabled=true class="btn btn-md btn-primary btn-half" ><i class="fa fa-check"></i> Vote</button>
+                <button disabled=true class="btn btn-md btn-primary btn-half"><i class="fa fa-facebook"></i> Share</button>
               </div>
             @endif
           </li>
