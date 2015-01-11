@@ -24,13 +24,28 @@ class Contest extends Eloquent
   {
     return $this->has_joined();
   }
-
+  
   function has_joined($user=null)
   {
     if(!$user) $user = Auth::user();
     if(!$user) return null;
     return Candidate::whereUserId($user->id)->whereContestId($this->id)->first() != null;
   }
+
+  function getHasDroppedAttribute()
+  {
+    return $this->has_dropped();
+  }
+  
+  function has_dropped($user = null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return false;
+    $c = Candidate::whereUserId($user->id)->whereContestId($this->id)->first();
+    if($c==null) return false;
+    return !$c->is_active;
+  }
+
   
   function getIsShareableAttribute()
   {
@@ -188,14 +203,14 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
+    return $this->hasMany('Candidate')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
   }
-  
+
   function ranked_candidates($interval)
   {
     $old = Candidate::$intervals;
     Candidate::$intervals[] = $interval;
-    $candidates = $this->hasMany('Candidate')->get()->withRanks();
+    $candidates = $this->candidates->withRanks();
     Candidate::$intervals = $old;
     return $candidates;
   }

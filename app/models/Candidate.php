@@ -5,6 +5,16 @@ class Candidate extends Eloquent
 {
   public static $intervals = [0,24];
   public static $on_fire_threshold = .1;
+
+  public function getDates()
+  {
+    return ['created_at', 'updated_at', 'first_voted_at', 'dropped_at'];
+  }
+  
+  public function getIsActiveAttribute()
+  {
+    return $this->dropped_at == null;
+  }
   
   function getIsOnFireAttribute()
   {
@@ -28,11 +38,6 @@ class Candidate extends Eloquent
   {
     $vote_key = "vote_count_{$interval}";
     return $this->vote_count_0 - $this->$vote_key;
-  }
-  
-  public function getDates()
-  {
-    return ['created_at', 'updated_at', 'first_voted_at'];
   }
   
 	public function newCollection(array $models = array())
