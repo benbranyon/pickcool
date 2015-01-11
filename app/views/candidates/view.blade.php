@@ -13,9 +13,6 @@
 @section('content')
   <div class="view" style="text-align: center; max-width: 320px; width:100%; margin-left: auto; margin-right: auto;">
     <h1>
-      @if($candidate->is_on_fire)
-        <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-      @endif
       {{{$candidate->name}}}
     </h1>
     <h2><a href="{{{$contest->canonical_url}}}">{{$contest->title}}</a></h2>
@@ -23,10 +20,29 @@
     <div id="candidate" class="candidate-large {{{$candidate->is_user_vote ? 'selected' : ''}}}">
       <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
     </div>
-    @if($candidate->is_on_fire)
-      <span class="fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
-      {{{$candidate->name}}} is on fire because the vote count has increased by {{{Candidate::$on_fire_threshold*100}}}% or more in the last 24 hours. Congratulations!
-    @endif
+    <table class="table badges">
+      @if($candidate->is_on_fire)
+        <tr>
+          <td>
+            <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
+          </td>
+          <td align=left>
+            {{{$candidate->name}}} is on fire because the vote count has increased by {{{Candidate::$on_fire_threshold*100}}}% or more in the last 24 hours. Congratulations!
+          </td>
+        </tr>
+      @endif
+      @if($candidate->is_giver)
+        <tr>
+          <td>
+            <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span>
+          </td>
+          <td align=left>
+            {{{$candidate->name}}} is a Charitable Giver and has pledged 25% or more of cash winnings to <a href="{{{$candidate->charity_url}}}">{{{$candidate->charity_name}}}</a>.
+          </td>
+        </tr>
+      @endif
+
+    </table>
     
     @if($contest->is_voteable)
       @if(!$candidate->is_user_vote)

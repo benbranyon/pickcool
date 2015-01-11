@@ -33,6 +33,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0">
+    <meta name="description" content="Where you pick what’s cool." />
     @yield('head')
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
@@ -66,7 +67,7 @@
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{{route('home')}}"><img class="logo-img" src="/assets/img/pick-cool-logo.png" /></a>
+          <a class="navbar-brand" href="{{route('home')}}"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
@@ -79,6 +80,17 @@
       </div>
     </nav>
     <div class="container-fluid">
+      <div class="clearfix">
+        <ul class="subnav list-inline pull-right">
+          @if(Auth::user())
+            <li>Welcome, {{{Auth::user()->first_name}}}.
+            <li><a href="{{{route('logout', ['success'=>route('home')])}}}">Logout
+          @else
+            <li><a href="{{{route('login', Route::currentRouteName()=='login' ? [] : ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in
+          @endif
+          <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
+        </ul>
+      </div>
       @foreach(['success', 'warning', 'danger'] as $kind)
         @if(Session::get($kind))
           <div class="alert alert-{{{$kind}}}">
@@ -113,8 +125,8 @@
             <div class="row">
               <div class="col-sm-12 text-center">
                 <ul class="nav nav-pills footer-nav">
-                  <li><a ng-href="/privacy">Privacy Policy</a></li>
-                  <li><a ng-href="/terms">Terms of Service</a></li>
+                  <li><a href="/privacy">Privacy Policy</a></li>
+                  <li><a href="/terms">Terms of Service</a></li>
                 </ul>
               </div>
             </div>

@@ -13,4 +13,5 @@
 
 Artisan::add(new CachedViewsCommand());
 Artisan::add(new NotifyDailyCandidates());
+Artisan::add(new NotifyRevote());
 Artisan::add(new StandingsGenerate());

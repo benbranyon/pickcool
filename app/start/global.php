@@ -96,7 +96,7 @@ App::down(function()
 
 App::missing(function($exception)
 {
-    return View::make('404.not-found')->withMessage($exception->getMessage());
+  return Response::view('404.not-found', [], 404);
 });
 
 /*

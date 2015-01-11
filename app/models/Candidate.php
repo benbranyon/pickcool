@@ -5,12 +5,27 @@ class Candidate extends Eloquent
 {
   public static $intervals = [0,24];
   public static $on_fire_threshold = .1;
+
+  public function getDates()
+  {
+    return ['created_at', 'updated_at', 'first_voted_at', 'dropped_at'];
+  }
+  
+  public function getIsActiveAttribute()
+  {
+    return $this->dropped_at == null;
+  }
   
   function getIsOnFireAttribute()
   {
     $delta = $this->vote_count_0 - $this->vote_count_24;
     if($delta<10) return false;
     return ($delta/$this->vote_count_0) > self::$on_fire_threshold;
+  }
+  
+  function getIsGiverAttribute()
+  {
+    return trim($this->charity_name)!=false;
   }
   
   function rank_change_since($interval)
@@ -23,11 +38,6 @@ class Candidate extends Eloquent
   {
     $vote_key = "vote_count_{$interval}";
     return $this->vote_count_0 - $this->$vote_key;
-  }
-  
-  public function getDates()
-  {
-    return ['created_at', 'updated_at', 'first_voted_at'];
   }
   
 	public function newCollection(array $models = array())
