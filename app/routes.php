@@ -56,6 +56,10 @@ Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slu
   {
     Auth::user()->vote_for($candidate);
   }
+  if(!$candidate->is_active)
+  {
+    App::abort(404);
+  }
   return View::make('candidates.view')->with(['contest'=>$contest, 'candidate'=>$candidate]);
 }]);
 
@@ -80,7 +84,7 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
 
 Route::get('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
-  if($contest->can_join || $contest->has_joined)
+  if(!$contest->has_dropped && ($contest->can_join || $contest->has_joined))
   {
     $candidate = $contest->add_user();
     return Redirect::to($candidate->after_join_url);
