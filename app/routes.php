@@ -180,6 +180,46 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
   return Redirect::to($contest->canonical_url);
 }]);
 
+Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>function($id) {
+  $contest = Contest::find($id);
+  $fb = \OAuth::consumer( 'Facebook' );
+  //$has_token = $fb->getStorage()->hasAccessToken("Facebook");
+
+  try
+  {
+    $fb_token = $fb->getStorage()->retrieveAccessToken("Facebook"); 
+    $access_token = $fb_token->getAccessToken();
+    $client = new \GuzzleHttp\Client();
+    $fb_permissions =  $client->get('https://graph.facebook.com/me/permissions?access_token=' . $access_token); 
+    $fb_permissions = $fb_permissions->json();
+  }
+  catch (Exception $e) {
+    //Old token
+    //$fb->getStorage()->clearToken("Facebook");
+  }
+
+  $user_photos = false;
+  foreach($fb_permissions['data'] as $permission)
+  {
+    if(array_search('user_photos', $permission))
+    {
+      $user_photos = true;
+    }
+  }
+  if(!$user_photos)
+  {
+    $dialog = 'https://www.facebook.com/dialog/oauth?client_id='. $_ENV['FACEBOOK_APP_ID']. '&redirect_uri=' .Request::root() .'/sponsor/signup/'.$id.'&scope=user_photos';
+    return Redirect::to( (string) $dialog);
+  }
+  return View::make('sponsors.signup')->with(['contest'=>$contest]);
+}]);
+
+Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>function($id) {
+  return "hello";
+}]);
+
+Route::post('sponsor/create/', 'SponsorController@create');
+
 Route::get('/contests/{id}/edit', ['as'=>'contests.edit', 'uses'=>function() {
   return "hi";
 }]);
