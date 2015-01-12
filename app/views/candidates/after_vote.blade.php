@@ -19,7 +19,7 @@
           <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
         </div>
       </div>
-      <div class="col-xs-8 text-success" style="font-size: 30px;">
+      <div class="col-xs-8 text-success" style="font-size: 19px;">
         <i class="fa fa-check"></i>
         @if(Input::get('v')=='new')
           You voted for {{$candidate->name}}
@@ -32,14 +32,15 @@
         @endif
       </div>
     </div>
-        
-    <div class="alert alert-success">
+    <h1>To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
+    <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
+
+    <div style="color: gray; font-size: 12px">
       <p>Awesome sauce, you voted for {{{$candidate->name}}}.</p>
       <p>You can only vote for ONE person, but you can change your vote any time.</p>
       <p>To help even more, share this page with your friends.</p>
     </div>
-    <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
-    
+
     <a class="btn btn-default btn-lg btn-full"  href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-arrow-left"></i> Back to {{{$candidate->name}}}</a>
     <a class="btn btn-default btn-lg btn-full"  href="{{{$contest->canonical_url}}}"><i class="fa fa-arrow-left"></i> Back to Pick</a>
   </div>

@@ -55,6 +55,10 @@ Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slu
   {
     Auth::user()->vote_for($candidate);
   }
+  if(!$candidate->is_active)
+  {
+    App::abort(404);
+  }
   return View::make('candidates.view')->with(['contest'=>$contest, 'candidate'=>$candidate]);
 }]);
 
@@ -79,7 +83,7 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
 
 Route::get('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
-  if($contest->can_join || $contest->has_joined)
+  if(!$contest->has_dropped && ($contest->can_join || $contest->has_joined))
   {
     $candidate = $contest->add_user();
     return Redirect::to($candidate->after_join_url);
@@ -94,6 +98,17 @@ Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_join', 
   return View::make('contests.after_join')->with(['candidate'=>$candidate, 'contest'=>$contest]);
 }]);
 
+
+Route::get('/login', ['as'=>'login', 'uses'=>function() {
+  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
+  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
+  return View::make('login');
+}]);
+Route::get('/logout', ['as'=>'logout', 'uses'=>function() {
+  Session::flush();
+  Session::put('success', 'You have been logged out.');
+  return Redirect::to(route('home'));
+}]);
 
 
 Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function() {
@@ -111,16 +126,20 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
         return Redirect::to(route('facebook.authorize.retry'));
       }
       Session::put('success', "Welcome, " . Auth::user()->full_name);
-      return Redirect::to(Session::get('onsuccess'));
+      $onsuccess=Session::get('onsuccess');
+      Session::forget('onsuccess');
+      Session::forget('oncancel');
+      return Redirect::to($onsuccess);
     } catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
     }
   }
   if(Input::get('error')) {
     Session::put('warning', "You must connect with Facebook before continuing.");
-    return Redirect::to(Session::get('oncancel'));
+    $oncancel = Session::get('oncancel');
+    Session::forget('onsuccess');
+    Session::forget('oncancel');
+    return Redirect::to($oncancel);
   }
-  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', route('home'))));
-  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', route('home'))));
   $params = [];
   if(Session::get('fb_retry'))
   {
@@ -285,4 +304,16 @@ Route::get('/shop/{candidate_id}', ['buy', function($candidate_id) {
   }
   
   return Redirect::to($candidate->buy_url);
+}]);
+
+Route::get('/faq', ['as'=>'faq', 'uses'=>function() {
+  return View::make('legal.faq');
+}]);
+
+Route::get('/privacy', ['as'=>'privacy', 'uses'=>function() {
+  return View::make('legal.privacy');
+}]);
+
+Route::get('/terms', ['as'=>'terms', 'uses'=>function() {
+  return View::make('legal.terms');
 }]);
