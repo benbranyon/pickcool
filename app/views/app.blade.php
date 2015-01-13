@@ -64,7 +64,7 @@
        }(document, 'script', 'facebook-jssdk'));
     </script>
     
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" style="{{{$_ENV['IS_BETA'] ? 'background-color: #F88' : ''}}}" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="{{route('home')}}"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /></a>
