@@ -209,6 +209,14 @@ h1.big {
 }
 .candidate-large .badges .badge {
   float: left;
+  font-size: 24px;
+  border-radius: 40px;
+  min-width: 32px;
+  margin-left: 2px;
+}
+.candidate-large .badges .badge .fa-heart {
+  position: relative;
+  top: 1px;
 }
 .candidate-large .overlay {
   position: absolute;
