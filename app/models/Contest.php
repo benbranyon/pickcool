@@ -262,7 +262,8 @@ class Contest extends Eloquent
     $user->vote_for($can);
     
     $client = new \GuzzleHttp\Client();
-    $client->post('http://graph.facebook.com', ['query'=>[
+    $client->post('https://graph.facebook.com/v2.2', ['query'=>[
+      'access_token'=>'1497159643900204|DJ6wUZoCJWlOWDHegW1fFNK9r-M',
       'id'=>$can->canonical_url($this),
       'scrape'=>'true',
     ]]);
