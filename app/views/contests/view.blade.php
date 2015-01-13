@@ -23,6 +23,11 @@
       |
       <a href="{{{$contest->realtime_url}}}">Realtime</a>
     </div>
+    <div style="width:100%; margin-left: auto; margin-right: auto; text-align: center">
+      <a href="?f=g"><i class="fa fa-heart"></i> View Givers</a>
+      |
+      ${{{$contest->total_charity_dollars}}} pledged | {{{$contest->total_charity_hours}}} volunteer hours pledged
+    </div>
     <div> 
       @if($contest->is_ended)
         <div class="text-danger" ng-if="$contest->is_ended">
@@ -107,6 +112,7 @@
         @endif
         
         @foreach($contest->candidates as $candidate)
+          <?php if(Input::get('f','')=='g' && !$candidate->charity_name) continue; ?>
           <li >
             @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >

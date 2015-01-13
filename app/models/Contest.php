@@ -5,6 +5,28 @@ class Contest extends Eloquent
 {
   static $intervals = [0,24];
   
+  function getTotalCharityDollarsAttribute()
+  {
+    $total = 0;
+    foreach($this->candidates as $c)
+    {
+      if(!$c->charity_name) continue;
+      $total++;
+    }
+    return $total * 300 * .25;
+  }
+
+  function getTotalCharityHoursAttribute()
+  {
+    $total = 0;
+    foreach($this->candidates as $c)
+    {
+      if(!$c->charity_name) continue;
+      $total++;
+    }
+    return $total * 4;
+  }
+    
   function getRealtimeUrlAttribute()
   {
     return route('contest.realtime', [$this->id, $this->slug]);
