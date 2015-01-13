@@ -8,7 +8,6 @@
 <meta property="og:url" content="{{{$candidate->canonical_url($contest)}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
 <meta property="og:image" content="{{{$candidate->image_url('facebook')}}}?_c={{microtime(true)}}"/>
-<meta property="fb:admins" content="{{{$candidate->user->fb_id}}}"/>
 @stop
 
 @section('content')
@@ -17,7 +16,7 @@
       {{{$candidate->name}}}
     </h1>
     <h2><a href="{{{$contest->canonical_url}}}">{{$contest->title}}</a></h2>
-    <h3>{{$candidate->vote_count_0}} votes | <a href="#comments"><fb:comments-count href="{{{$candidate->canonical_url}}}"></fb:comments-count> friendly comments</a></h3>
+    <h3>{{$candidate->vote_count_0}} votes</h3>
     <div id="candidate" class="candidate-large {{{$candidate->is_user_vote ? 'selected' : ''}}}">
       <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
     </div>
@@ -66,16 +65,6 @@
     @if(!Auth::user())
       <a href="{{{$candidate->login_url}}}">Is this you? Log in to edit.</a>
     @endif
-
-    <div id="comments" class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Friendly Comments</h3>
-      </div>
-      <div class="panel-body" style="padding-left: 0px; padding-right: 0px;padding-top:0px">
-        <div class="fb-comments" data-href="{{{$candidate->canonical_url}}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
-      </div>
-    </div>          
-    
 
   </div>
   <script>
