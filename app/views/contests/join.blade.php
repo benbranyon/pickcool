@@ -2,64 +2,69 @@
 
 @section('head')
 <title>Join {{{$contest->title}}} | pick.cool</title>
-<meta property="fb:app_id" content="1497159643900204"/>
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Join {{{$contest->title}}}"/>
-<meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$contest->canonical_url}}}"/>
-<meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
-<meta property="og:image" content="{{{$contest->image_url('facebook')}}}?_c={{microtime(true)}}"/>
-
-
 @stop
 
 @section('content')
-<div style="max-width: 320px; width: 100%; margin-left: auto;margin-right: auto">
-  <h1>Join the Pick</h1>
-  <h2>You are joining {{{$contest->title}}}</h2>
-  <div style="float: left;
-text-align: center;
-border: 1px solid rgb(223, 223, 223);
-border-radius: 3px;
-margin-right: 3px;">
-    <h2>{{{Auth::user()->full_name}}}</h2>
-    <div class="candidate-small" >
-      <img src="{{{Auth::user()->profile_img_url}}}" />
-      <span class='votes-count'>420</span>
+  <div style="max-width: 320px; width: 100%; margin-left: auto;margin-right: auto">
+    <h1>Join the Pick</h1>
+    <h2>{{{$contest->title}}}</h2>
+    @if($state==1)
+      <p>You are about to enter the pick and receive votes.</p>
+      <p>Proceed to entering this pick?</p>
+      <p>
+        <a href="{{{$contest->canonical_url}}}" class="btn btn-xl btn-danger"><i class="fa fa-arrow-left"></i> No</a>
+        <a href="?s=2" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, I want to Enter</a>
+      </p>
+    @endif
+    @if($state==2)
+      <p>Read and agree to the pick rules to make sure you are eligible.</p>
+      <div style="max-height: 300px;
+overflow-y: auto;
+border: 1px solid rgb(231, 230, 230);
+padding: 5px;
+margin: 5px;
+border-radius: 3px;">
+        <h2>PICK RULES</h2>
+        {{Markdown::render($contest->rules)}}
+      </div>
+      <p>Are you eligible to enter this pick?</p>
+      <p>
+        <a href="{{{$contest->canonical_url}}}" class="btn btn-xl btn-danger"><i class="fa fa-arrow-left"></i> No</a>
+        <a href="?s=3" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
+      </p>
+    @endif
+    @if($state==3)
+      <div class="clearfix">
+        <div style="float: left;
+      text-align: center;
+      border: 1px solid rgb(223, 223, 223);
+      border-radius: 3px;
+      margin-right: 3px;">
+          <h2>{{{Auth::user()->full_name}}}</h2>
+          <div class="candidate-small" >
+            <img src="{{{Auth::user()->profile_image_url}}}" alt="{{{Auth::user()->full_name}}}" title="Vote for {{{Auth::user()->full_name}}}">
+            <div class="clearfix">
+              <div class="badges pull-right">
+                <span class='badge badge-vote-count' title="420 votes">420</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-danger">This is really what they're going to see if you press Join. Seriously, if you don't like it, go change your Facebook profile.</p>
+      </div>
+      <p>Proceed to entering this pick?</p>
+      <p class="clearfix">
+        <a href="{{{$contest->canonical_url}}}" class="btn btn-xl btn-danger"><i class="fa fa-arrow-left"></i> No</a>
+        <a href="?s=4" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue already!</a>
+      </p>
     </div>
-  </div>
-  <p class="text-danger">This is really what they're going to see if you press Join. Seriously, if you don't like it, go change your Facebook profile.</p>
-  <p>
-    So you want to join the pick, eh? Well, it's pretty easy. Go change your Facebook profile to whatever you feel makes your **<em>BEST</em>** impression. If you don't like what you see below, go update your Facebook profile and then come back to join the pick.
-  </p>
-  <a class="btn btn-primary" onclick="join()">Join Now & Share</a>
-</div>
-<script>
-  function share(response)
-  {
-    FB.ui({
-      method: 'share',
-      href: {{json_encode($candidate->canonical_url($contest))}},
-    }, response);
-  }
-  function join()
-  {
-    xmlhttp=new XMLHttpRequest();
-    xmlhttp.onreadystatechange=function()
-    {
-      if (xmlhttp.readyState==4 && xmlhttp.status==200)
-      {
-        share(function(response){
-          if(!response.error_code)
-          {
-            window.location = {{json_encode($contest->canonical_url)}};
-          }
-        });
-      }
-    }    
-    xmlhttp.open("GET",{{json_encode($contest->join_url)}},true);
-    xmlhttp.send();
-  }
-</script>
+  @endif
+  @if($state==4)
+    <p>Congratulations, you are in the pick!</p>
+    <p class="clearfix">
+      <a href="{{{$candidate->canonical_url}}}" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> See Your Profile</a>
+    </p>
+  @endif
 
 @stop

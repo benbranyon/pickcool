@@ -6,6 +6,11 @@ class Candidate extends Eloquent
   public static $intervals = [0,24];
   public static $on_fire_threshold = .1;
 
+  function getRefreshUrlAttribute()
+  {
+    return r('contest.candidate.refresh', ['contest_id'=>$this->contest->id, 'contest_slug'=>$this->contest->slug, 'candidate_id'=>$this->id, 'candidate_slug'=>$this->slug]);
+  }
+  
   public function getDates()
   {
     return ['created_at', 'updated_at', 'first_voted_at', 'dropped_at'];
@@ -70,17 +75,17 @@ class Candidate extends Eloquent
   
   function getAfterJoinUrlAttribute()
   {
-    return route("candidates.after_join", [$this->id]);
+    return r("candidates.after_join", [$this->id]);
   }
 
   function getAfterVoteUrlAttribute()
   {
-    return route('candidates.after_vote', [$this->id]);
+    return r('candidates.after_vote', [$this->id]);
   }
   
   function getLoginUrlAttribute()
   {
-    return route('facebook.authorize', ['success'=>$this->canonical_url, 'cancel'=>$this->canonical_url]);
+    return r('facebook.authorize', ['success'=>$this->canonical_url, 'cancel'=>$this->canonical_url]);
   }
   
   function getIsWriteinAttribute()
@@ -106,12 +111,12 @@ class Candidate extends Eloquent
   
   function getVoteUrlAttribute()
   {
-    return route('candidates.vote', [$this->id, 'cancel'=>$this->canonical_url]);
+    return r('candidates.vote', [$this->id, 'cancel'=>$this->canonical_url]);
   }
   
   function getUnvoteUrlAttribute()
   {
-    return route('candidates.unvote', [$this->id]);
+    return r('candidates.unvote', [$this->id]);
   }
   
   function getCanonicalUrlAttribute()
@@ -121,12 +126,12 @@ class Candidate extends Eloquent
     
   function canonical_url($contest)
   {
-    return route('contest.candidate.view', [$contest->id, $contest->slug(), $this->id, $this->slug]);
+    return r('contest.candidate.view', [$contest->id, $contest->slug(), $this->id, $this->slug]);
   }
   
   function getUnfollowUrlAttribute()
   {
-    return route('contest.candidate.unfollow', [$this->id]);
+    return r('contest.candidate.unfollow', [$this->id]);
   }
   
   function getUserAttribute()
@@ -149,7 +154,7 @@ class Candidate extends Eloquent
   
   function image_url($size=thumb)
   {
-    return route('home').$this->image->image->url($size);
+    return r('home').$this->image->image->url($size);
   }
 
   function image()

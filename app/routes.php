@@ -1,5 +1,10 @@
 <?php
 
+function r($route_name, $params=[], $absolute=true)
+{
+  return preg_replace("/^http:/", "https:", route($route_name, $params, $absolute));
+}
+
 Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$size) 
 {
   $image = Image::find($id);
@@ -81,15 +86,28 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
   return View::make('contests.login')->with(['contest'=>$contest]);
 }]);
 
-Route::get('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
+Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
-  if(!$contest->has_dropped && ($contest->can_join || $contest->has_joined))
+  $state = Input::get('s',1);
+  if(!$contest->is_joinable)
+  {
+    Session::put('danger', "You can not join {$contest->title}.");
+    return Redirect::to($contest->canonical_url);
+  }
+  if($state==4)
   {
     $candidate = $contest->add_user();
-    return Redirect::to($candidate->after_join_url);
+    return View::make('contests.join')->with(['contest'=>$contest, 'candidate'=>$candidate, 'state'=>$state]);
   }
-  Session::put('error', "You can not join {$contest->title}.");
-  return Redirect::to($contest->canonical_url);
+  return View::make('contests.join')->with(['contest'=>$contest, 'state'=>$state]);
+}]);
+
+Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/refresh', ['as'=>'contest.candidate.refresh', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
+  $contest = Contest::find($contest_id);
+  $candidate = Candidate::find($candidate_id);
+  $contest->add_user();
+  Session::put('success', "Your information has been refreshed.");
+  return Redirect::to($candidate->canonical_url);
 }]);
 
 Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_join', 'uses'=>function($id) {
@@ -107,7 +125,7 @@ Route::get('/login', ['as'=>'login', 'uses'=>function() {
 Route::get('/logout', ['as'=>'logout', 'uses'=>function() {
   Session::flush();
   Session::put('success', 'You have been logged out.');
-  return Redirect::to(route('home'));
+  return Redirect::to(r('home'));
 }]);
 
 
@@ -123,7 +141,7 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
         Auth::fb_login($token);
       } catch (Exception $e) {
         Session::put('fb_retry', true);
-        return Redirect::to(route('facebook.authorize.retry'));
+        return Redirect::to(r('facebook.authorize.retry'));
       }
       Session::put('success', "Welcome, " . Auth::user()->full_name);
       $onsuccess=Session::get('onsuccess');

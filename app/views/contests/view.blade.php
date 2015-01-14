@@ -23,6 +23,17 @@
       |
       <a href="{{{$contest->realtime_url}}}">Realtime</a>
     </div>
+    @if($contest->total_charity_hours>0)
+      <div style="width:100%; margin-left: auto; margin-right: auto; text-align: center">
+        <a href="?f=g"><i class="fa fa-heart"></i> View Givers</a>
+        @if($contest->total_charity_dollars>0)
+          | ${{{$contest->total_charity_dollars}}} pledged
+        @endif
+        @if($contest->total_charity_hours>0)
+          | {{{$contest->total_charity_hours}}} volunteer hours pledged
+        @endif
+      </div>
+    @endif
     <div> 
       @if($contest->is_ended)
         <div class="text-danger" ng-if="$contest->is_ended">
@@ -107,6 +118,7 @@
         @endif
         
         @foreach($contest->candidates as $candidate)
+          <?php if(Input::get('f','')=='g' && !$candidate->charity_name) continue; ?>
           <li >
             @if(Session::get('contest_view_mode','s')=='s')
               <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
@@ -194,6 +206,26 @@
         </div>
       @endif
 
+      @if($contest->prizes)
+        <div >
+          <h2>Pick Prizes</h2>
+          <div class="description">
+            {{Markdown::render($contest->prizes)}}
+          </div>
+        </div>
+      @endif
+
+
+      @if($contest->rules)
+        <div >
+          <h2>Pick Rules</h2>
+          <div class="description">
+            {{Markdown::render($contest->rules)}}
+          </div>
+        </div>
+      @endif
+
+
 
       @if($contest->sponsors->count()>0)
         <div >
@@ -218,7 +250,7 @@
       
       
       @if($contest->is_editable)
-        <a class="btn btn-xs btn-success" href="{{route('contests.edit', [$contest->id])}}">Edit</a>
+        <a class="btn btn-xs btn-success" href="{{r('contests.edit', [$contest->id])}}">Edit</a>
       @endif
     
 
@@ -237,6 +269,15 @@
           <div class="fb-share-button"  data-layout="button_count"></div>
         </div>
       @endif
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Discussion</h3>
+        </div>
+        <div class="panel-body" style="padding-left: 0px; padding-right: 0px;padding-top:0px">
+          <div class="fb-comments" data-href="{{{$contest->canonical_url}}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
+        </div>
+      </div>          
     </div>
   </div>
 </div>
