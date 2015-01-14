@@ -17,7 +17,7 @@ Our sponsors are what make the pick possible. Please remember to support and spr
 Get in touch with these sponsors soon:
 
 @foreach($sponsors as $sponsor)
-* [{{{$sponsor->name}}}]({{{route('sponsor', [$sponsor->id])}}}) - {{{$sponsor->description}}}
+* [{{{$sponsor->name}}}]({{{r('sponsor', [$sponsor->id])}}}) - {{{$sponsor->description}}}
 @endforeach
 
 Best,  

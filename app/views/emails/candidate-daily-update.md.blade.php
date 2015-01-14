@@ -44,7 +44,7 @@ Example post text:
 Please remember to support and spread the word about our sponsors. This is one more way you can get involved in the pick and show your support for not only your own position, but the pick overall. It gives you another reason to share and talk about the pick.
 
 @foreach($sponsors as $sponsor)
-* [{{{$sponsor->name}}}]({{{route('sponsor', [$sponsor->id])}}}) - {{{$sponsor->description}}}
+* [{{{$sponsor->name}}}]({{{r('sponsor', [$sponsor->id])}}}) - {{{$sponsor->description}}}
 @endforeach
 
 Best,  

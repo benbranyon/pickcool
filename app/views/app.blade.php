@@ -64,17 +64,17 @@
        }(document, 'script', 'facebook-jssdk'));
     </script>
     
-    <nav class="navbar navbar-default navbar-fixed-top" style="{{{$_ENV['IS_BETA'] ? 'background-color: #F88' : ''}}}" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" style="{{{ $_ENV['IS_BETA'] ? "background-color: #F88" : "" }}}" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{{route('home')}}"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /></a>
+          <a class="navbar-brand" href="{{r('home')}}"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
           <ul class="nav navbar-nav navbar-right">
-            <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='contests.hot') ? 'active' : ''}}"><a href="{{{route('contests.hot')}}}">Hot</a></li>
-            <li class="{{Route::currentRouteName()=='contests.new' ? 'active' : ''}}"><a href="{{{route('contests.new')}}}"  >New</a></li>
-            <li class="{{Route::currentRouteName()=='contests.top' ? 'active' : ''}}"><a href="{{{route('contests.top')}}}" >Top</a></li>
+            <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='contests.hot') ? 'active' : ''}}"><a href="{{{r('contests.hot')}}}">Hot</a></li>
+            <li class="{{Route::currentRouteName()=='contests.new' ? 'active' : ''}}"><a href="{{{r('contests.new')}}}"  >New</a></li>
+            <li class="{{Route::currentRouteName()=='contests.top' ? 'active' : ''}}"><a href="{{{r('contests.top')}}}" >Top</a></li>
           </ul>
         </div>
       </div>
@@ -84,9 +84,9 @@
         <ul class="subnav list-inline pull-right">
           @if(Auth::user())
             <li>Welcome, {{{Auth::user()->first_name}}}.
-            <li><a href="{{{route('logout', ['success'=>route('home')])}}}">Logout
+            <li><a href="{{{r('logout', ['success'=>r('home')])}}}">Logout
           @else
-            <li><a href="{{{route('login', Route::currentRouteName()=='login' ? [] : ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in
+            <li><a href="{{{r('login', Route::currentRouteName()=='login' ? [] : ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in
           @endif
           <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
         </ul>

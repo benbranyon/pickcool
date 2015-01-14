@@ -29,12 +29,12 @@ class Contest extends Eloquent
     
   function getRealtimeUrlAttribute()
   {
-    return route('contest.realtime', [$this->id, $this->slug]);
+    return r('contest.realtime', [$this->id, $this->slug]);
   }
 
   function getJoinUrlAttribute()
   {
-    return route("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
+    return r("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
   }
   
   function getCanJoinAttribute()
@@ -81,7 +81,7 @@ class Contest extends Eloquent
   
   function getLoginUrlAttribute()
   {
-    return route('contest.login', [$this->id, $this->slug]);
+    return r('contest.login', [$this->id, $this->slug]);
   }
   
   function authorize_user($user = null)
@@ -120,7 +120,7 @@ class Contest extends Eloquent
   
   function getCanonicalUrlAttribute()
   {
-    return route('contest.view', [$this->id, $this->slug]);
+    return r('contest.view', [$this->id, $this->slug]);
   }
   
   function getSlugAttribute()

@@ -1,5 +1,10 @@
 <?php
 
+function r($route_name, $params=[], $absolute=true)
+{
+  return preg_replace("/^http:/", "https:", route($route_name, $params, $absolute));
+}
+
 Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$size) 
 {
   $image = Image::find($id);
@@ -118,7 +123,7 @@ Route::get('/login', ['as'=>'login', 'uses'=>function() {
 Route::get('/logout', ['as'=>'logout', 'uses'=>function() {
   Session::flush();
   Session::put('success', 'You have been logged out.');
-  return Redirect::to(route('home'));
+  return Redirect::to(r('home'));
 }]);
 
 
@@ -134,7 +139,7 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
         Auth::fb_login($token);
       } catch (Exception $e) {
         Session::put('fb_retry', true);
-        return Redirect::to(route('facebook.authorize.retry'));
+        return Redirect::to(r('facebook.authorize.retry'));
       }
       Session::put('success', "Welcome, " . Auth::user()->full_name);
       $onsuccess=Session::get('onsuccess');

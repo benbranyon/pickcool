@@ -13,14 +13,24 @@
 
 App::before(function($request)
 {
+  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
+  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
 });
-
 
 App::after(function($request, $response)
 {
 	$log = new ActivityLog();
 	$log->save();
 });
+
+App::before(function($request, $response)
+{
+  if(!$_ENV['USE_SSL']) return;
+  if(Request::server('HTTP_X_FORWARDED_PROTO')=='https') return;
+  $url = 'https://'.Request::server('HTTP_HOST').Request::server('REQUEST_URI');
+  return Redirect::to($url, 301);
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +50,7 @@ Route::filter('auth', function()
     Auth::fb_login(Input::get('fb_access_token'));
   }
   if(Auth::user()) return;
-  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
-  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
-  return Redirect::to(route('login'));
+  return Redirect::to(r('login'));
 });
 
 

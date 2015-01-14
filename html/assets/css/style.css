@@ -192,7 +192,6 @@ h1.big {
   border: 1px solid gray;
   border-radius: 3px;
   margin: 3px;
-  max-width: 300px;
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -200,7 +199,17 @@ h1.big {
 .candidate-large img {
   border-radius: 3px;
   width: 100%;
-  max-width: 320px;
+  height: 100%;
+}
+@media (min-width: 0px) {
+  .candidate-large {
+    width: 280px;
+  }
+}
+@media (min-width: 400px) {
+  .candidate-large {
+    width: 300px;
+  }
 }
 .candidate-large .badges {
   position: absolute;
