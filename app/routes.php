@@ -88,22 +88,15 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
 
 Route::any('/join/{id}/{step?}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
-  if(Input::get('stripeToken'))
+  if($contest->has_dropped || !$contest->can_join || $contest->has_joined)
   {
-    $s = new Stripe();
-    $s->token = Input::get('stripeToken');
-    $s->email = Input::get('stripeEmail');
-    $s->token_type = Input::get('stripeTokenType');
-  }
-  if(Input::get('c'))
-  {
-    if(!$contest->has_dropped && ($contest->can_join || $contest->has_joined))
-    {
-      $candidate = $contest->add_user();
-      return Redirect::to($candidate->after_join_url);
-    }
-    Session::put('error', "You can not join {$contest->title}.");
+    Session::put('danger', "You can not join {$contest->title}.");
     return Redirect::to($contest->canonical_url);
+  }
+  if(Input::get('s')==4)
+  {
+    $candidate = $contest->add_user();
+    return View::make('contests.join')->with(['contest'=>$contest, 'candidate'=>$candidate]);
   }
   return View::make('contests.join')->with(['contest'=>$contest]);
 }]);

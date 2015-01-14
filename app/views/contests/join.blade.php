@@ -11,7 +11,6 @@
     <h2>{{{$contest->title}}}</h2>
     @if(Input::get('s',1)==1)
       <p>You are about to enter the pick and receive votes.</p>
-      <p>There is a $10 entry fee to join this pick. Entree fees will be added to the grand prize cash pool.</p>
       <p>Proceed to entering this pick?</p>
       <p>
         <a href="{{{$contest->canonical_url}}}" class="btn btn-xl btn-danger"><i class="fa fa-arrow-left"></i> No</a>
@@ -62,27 +61,10 @@ border-radius: 3px;">
     </div>
   @endif
   @if(Input::get('s')==4)
-    <p>The last step is to collect your $10 entry fee. This fee is nonrefundable. If you are disqualified or dropped from the pick for some reason, your fees will still go toward the prize pool.</p>
-    <form action="?s=5" method="POST">
-      <script
-        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="pk_test_O3LF8zUtejLoTELSA3D0NPvC"
-        data-image="{{{Auth::user()->profile_image_url}}}"
-        data-name="Pick Entry Fee"
-        data-description="{{{$contest->title}}}"
-        data-amount="1000"
-        data-zip-code="true"
-        >
-      </script>
-    </form>
-    <p>Proceed to entering this pick?</p>
+    <p>Congratulations, you are in the pick!</p>
     <p class="clearfix">
-      <a href="{{{$contest->canonical_url}}}" class="btn btn-xl btn-danger"><i class="fa fa-arrow-left"></i> No</a>
-      <a href="?s=4" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue already!</a>
+      <a href="{{{$candidate->canonical_url}}}" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> See Your Profile</a>
     </p>
-  @endif
-  @if(Input::get('s')==5)
-    {{var_dump(Input::all())}}
   @endif
 
 @stop
