@@ -86,19 +86,28 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
   return View::make('contests.login')->with(['contest'=>$contest]);
 }]);
 
-Route::any('/join/{id}/{step?}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
+Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
-  if($contest->has_dropped || !$contest->can_join || $contest->has_joined)
+  $state = Input::get('s',1);
+  if(!$contest->is_joinable)
   {
     Session::put('danger', "You can not join {$contest->title}.");
     return Redirect::to($contest->canonical_url);
   }
-  if(Input::get('s')==4)
+  if($state==4)
   {
     $candidate = $contest->add_user();
-    return View::make('contests.join')->with(['contest'=>$contest, 'candidate'=>$candidate]);
+    return View::make('contests.join')->with(['contest'=>$contest, 'candidate'=>$candidate, 'state'=>$state]);
   }
-  return View::make('contests.join')->with(['contest'=>$contest]);
+  return View::make('contests.join')->with(['contest'=>$contest, 'state'=>$state]);
+}]);
+
+Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/refresh', ['as'=>'contest.candidate.refresh', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
+  $contest = Contest::find($contest_id);
+  $candidate = Candidate::find($candidate_id);
+  $contest->add_user();
+  Session::put('success', "Your information has been refreshed.");
+  return Redirect::to($candidate->canonical_url);
 }]);
 
 Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_join', 'uses'=>function($id) {

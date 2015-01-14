@@ -59,7 +59,7 @@
     @endif
     <a href="{{{$candidate->image_url('large')}}}" class="btn btn-warning btn-full btn-lg"><i class="fa fa-camera"></i> View Large</a>
     @if($candidate->is_writein)
-      <a class="btn btn-lg btn-warning btn-full" href="{{{$contest->join_url}}}"><i class="fa fa-facebook"></i> Refresh Your Picture</a>
+      <a class="btn btn-lg btn-warning btn-full" href="{{{$candidate->refresh_url}}}"><i class="fa fa-facebook"></i> Refresh Your Picture</a>
     @endif
     <a class="btn btn-default btn-lg btn-full"  href="{{{$contest->canonical_url}}}"><i class="fa fa-arrow-left"></i> Back to Pick</a>
     @if(!Auth::user())

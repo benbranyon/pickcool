@@ -9,7 +9,7 @@
   <div style="max-width: 320px; width: 100%; margin-left: auto;margin-right: auto">
     <h1>Join the Pick</h1>
     <h2>{{{$contest->title}}}</h2>
-    @if(Input::get('s',1)==1)
+    @if($state==1)
       <p>You are about to enter the pick and receive votes.</p>
       <p>Proceed to entering this pick?</p>
       <p>
@@ -17,7 +17,7 @@
         <a href="?s=2" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, I want to Enter</a>
       </p>
     @endif
-    @if(Input::get('s')==2)
+    @if($state==2)
       <p>Read and agree to the pick rules to make sure you are eligible.</p>
       <div style="max-height: 300px;
 overflow-y: auto;
@@ -34,7 +34,7 @@ border-radius: 3px;">
         <a href="?s=3" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
       </p>
     @endif
-    @if(Input::get('s')==3)
+    @if($state==3)
       <div class="clearfix">
         <div style="float: left;
       text-align: center;
@@ -60,7 +60,7 @@ border-radius: 3px;">
       </p>
     </div>
   @endif
-  @if(Input::get('s')==4)
+  @if($state==4)
     <p>Congratulations, you are in the pick!</p>
     <p class="clearfix">
       <a href="{{{$candidate->canonical_url}}}" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> See Your Profile</a>

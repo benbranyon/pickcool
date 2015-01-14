@@ -37,9 +37,14 @@ class Contest extends Eloquent
     return r("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
   }
   
+  function getIsJoinableAttribute()
+  {
+    return $this->writein_enabled && !$this->is_ended && !$this->has_dropped;
+  }
+  
   function getCanJoinAttribute()
   {
-    return $this->writein_enabled && !$this->is_ended && !$this->has_joined;
+    return $this->is_joinable && !$this->has_joined;
   }
   
   function getHasJoinedAttribute()
