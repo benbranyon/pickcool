@@ -70,17 +70,17 @@ class Candidate extends Eloquent
   
   function getAfterJoinUrlAttribute()
   {
-    return route("candidates.after_join", [$this->id]);
+    return r("candidates.after_join", [$this->id]);
   }
 
   function getAfterVoteUrlAttribute()
   {
-    return route('candidates.after_vote', [$this->id]);
+    return r('candidates.after_vote', [$this->id]);
   }
   
   function getLoginUrlAttribute()
   {
-    return route('facebook.authorize', ['success'=>$this->canonical_url, 'cancel'=>$this->canonical_url]);
+    return r('facebook.authorize', ['success'=>$this->canonical_url, 'cancel'=>$this->canonical_url]);
   }
   
   function getIsWriteinAttribute()
@@ -106,12 +106,12 @@ class Candidate extends Eloquent
   
   function getVoteUrlAttribute()
   {
-    return route('candidates.vote', [$this->id, 'cancel'=>$this->canonical_url]);
+    return r('candidates.vote', [$this->id, 'cancel'=>$this->canonical_url]);
   }
   
   function getUnvoteUrlAttribute()
   {
-    return route('candidates.unvote', [$this->id]);
+    return r('candidates.unvote', [$this->id]);
   }
   
   function getCanonicalUrlAttribute()
@@ -121,12 +121,12 @@ class Candidate extends Eloquent
     
   function canonical_url($contest)
   {
-    return route('contest.candidate.view', [$contest->id, $contest->slug(), $this->id, $this->slug]);
+    return r('contest.candidate.view', [$contest->id, $contest->slug(), $this->id, $this->slug]);
   }
   
   function getUnfollowUrlAttribute()
   {
-    return route('contest.candidate.unfollow', [$this->id]);
+    return r('contest.candidate.unfollow', [$this->id]);
   }
   
   function getUserAttribute()
@@ -149,7 +149,7 @@ class Candidate extends Eloquent
   
   function image_url($size=thumb)
   {
-    return route('home').$this->image->image->url($size);
+    return r('home').$this->image->image->url($size);
   }
 
   function image()

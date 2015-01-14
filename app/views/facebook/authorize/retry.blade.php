@@ -17,7 +17,7 @@
       };
     </script>
     <p style="text-align: center">
-      <a class="btn btn-primary btn-xl" href="{{{route('facebook.authorize')}}}" ><i class="fa fa-facebook-square"></i> Connect via Facebook</a>
+      <a class="btn btn-primary btn-xl" href="{{{r('facebook.authorize')}}}" ><i class="fa fa-facebook-square"></i> Connect via Facebook</a>
     </p>
     <p class="small">Your privacy and the security of this voting platform is our priority. Please see our <a href="/privacy">privacy policy</a> for more information.
     </p>

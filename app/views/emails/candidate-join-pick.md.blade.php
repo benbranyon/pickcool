@@ -32,7 +32,7 @@ Our sponsors are what make the pick possible. Please remember to support and spr
 Share and promote these sponsors as well as your own voting link:
 
 @foreach($sponsors as $sponsor)
-* [{{{$sponsor->name}}}]({{{route('sponsor', [$sponsor->id])}}}) - {{{$sponsor->description}}}
+* [{{{$sponsor->name}}}]({{{r('sponsor', [$sponsor->id])}}}) - {{{$sponsor->description}}}
 @endforeach
 
 Best,  
