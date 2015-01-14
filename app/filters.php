@@ -51,6 +51,18 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+Route::filter('auth.admin', function($route, $request){
+    // Check if the user is logged in, if not redirect to login url
+    if (Auth::guest()) return Redirect::guest('/facebook/authorize');
+
+    if(Auth::user()->is_admin)
+    {
+      return;
+    }
+
+    return Redirect::to(route('contests.hot'));// home
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter

@@ -220,10 +220,6 @@ Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>function($id) 
 
 Route::post('sponsor/create/', 'SponsorController@create');
 
-Route::get('/contests/{id}/edit', ['as'=>'contests.edit', 'uses'=>function() {
-  return "hi";
-}]);
-
 Route::get('/hot', ['as'=>'contests.hot', 'uses'=>function() {
   $contests = Contest::hot();
   return View::make('home')->with(['contests'=>$contests]);
@@ -274,3 +270,21 @@ Route::get('/privacy', ['as'=>'privacy', 'uses'=>function() {
 Route::get('/terms', ['as'=>'terms', 'uses'=>function() {
   return View::make('legal.terms');
 }]);
+
+// Admin Routes
+Route::group(array('prefix'=> 'admin', 'before' => 'auth.admin'), function() {
+
+    Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
+
+    // Resource Controller for user management, nested so it needs to be relative
+    Route::resource('users', 'Admin\\UserController');
+
+    Route::resource('contests', 'Admin\\ContestController');
+    Route::resource('contests/{id}/edit/', 'Admin\\ContestController@edit');
+
+    Route::resource('candidates', 'Admin\\CandidateController');
+    Route::resource('candidates/{id}/edit/', 'Admin\\CandidateController@edit');
+
+    Route::resource('sponsors', 'Admin\\SponsorController');
+
+});
