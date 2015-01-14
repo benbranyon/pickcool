@@ -13,8 +13,9 @@
 
 App::before(function($request)
 {
+  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
+  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
 });
-
 
 App::after(function($request, $response)
 {
@@ -40,8 +41,6 @@ Route::filter('auth', function()
     Auth::fb_login(Input::get('fb_access_token'));
   }
   if(Auth::user()) return;
-  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
-  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
   return Redirect::to(route('login'));
 });
 
