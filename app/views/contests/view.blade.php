@@ -200,6 +200,26 @@
         </div>
       @endif
 
+      @if($contest->prizes)
+        <div >
+          <h2>Pick Prizes</h2>
+          <div class="description">
+            {{Markdown::render($contest->prizes)}}
+          </div>
+        </div>
+      @endif
+
+
+      @if($contest->rules)
+        <div >
+          <h2>Pick Rules</h2>
+          <div class="description">
+            {{Markdown::render($contest->rules)}}
+          </div>
+        </div>
+      @endif
+
+
 
       @if($contest->sponsors->count()>0)
         <div >
