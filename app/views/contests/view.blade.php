@@ -239,7 +239,7 @@
                 {{{$sponsor->description}}}
               </div>
             @endforeach
-            @if(Auth::check() && Auth::user()->beta)
+            @if(Auth::check())
               <div class="text-center">
                 <a href="/sponsor/signup/{{$contest->id}}" class="btn btn-lg btn-primary">Sponsor Signup</a>
               </div>

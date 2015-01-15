@@ -2,7 +2,12 @@
 
 function r($route_name, $params=[], $absolute=true)
 {
-  return preg_replace("/^http:/", "https:", route($route_name, $params, $absolute));
+  if($_ENV['USE_SSL'])
+  {
+    return preg_replace("/^http:/", "https:", route($route_name, $params, $absolute));
+  }
+
+  return route($route_name, $params, $absolute);
 }
 
 Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$size) 
