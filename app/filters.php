@@ -25,7 +25,7 @@ App::before(function($request, $response)
 {
   //IP whitelist for next.pick.cool
   $ip = Request::getClientIp();
-  $allowed = array('50.37.27.223', '192.168.254.27');
+  $allowed = array('50.37.27.223', '192.168.254.27', '71.94.65.51', '65.128.92.223');
   if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ip, $allowed))
   {
     return Redirect::away('https://pick.cool');
