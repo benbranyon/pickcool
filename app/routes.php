@@ -257,6 +257,9 @@ Route::get('/top', ['as'=>'contests.top', 'uses'=>function() {
 }]);
 
 
+Route::get('/tips', ['as'=>'tips', 'uses'=>function() {
+  return View::make('tips');
+}]);
 
 Route::get('/unfollow/{contest_id}/{candidate_id}', ['as'=>'contest.candidate.unfollow', 'uses'=>function($contest_id, $candidate_id) {
   return "You are no longer following {$c->contest->name} and will not receive any further updates about it.";

@@ -18,6 +18,11 @@
     <h1>
       {{{$contest->title}}}
     </h1>
+    @if($contest->has_joined)
+      <div class="alert alert-success" style="width:100%; margin-left: auto; margin-right: auto; ">
+        You are in this pick! Read about <a href="/tips">how to win</a>.
+      </div>
+    @endif
     <div style="width:100%; margin-left: auto; margin-right: auto; text-align: center">
       <a href="?s=s">View Small</a>
       |
@@ -279,23 +284,6 @@
       
       @if($contest->is_editable)
         <a class="btn btn-xs btn-success" href="{{r('contests.edit', [$contest->id])}}">Edit</a>
-      @endif
-    
-
-      @if($contest->is_user_in)
-        <div class="alert alert-success">
-          <h1>You are in this pick!</h1>
-          <p>Your job now is to share, share, share, and encourage others to do so too. Here are some ideas that were successful for other users:</p>
-          <ul>
-            <li>Vote for someone. If not for yourself, then someone else in the pick.
-            <li>Share your link to everyone in the world.
-            <li>Not just once! Share every day.
-            <li>Ask others to share your link too.
-            <li>Make videos and other entertaining posts to raise awareness.
-            <li>Be a good sport. Promote others too, you'd be surprised what that can do for your own standing.
-          </ul>
-          <div class="fb-share-button"  data-layout="button_count"></div>
-        </div>
       @endif
     </div>
   </div>
