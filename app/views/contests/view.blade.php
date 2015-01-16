@@ -8,6 +8,8 @@
 <meta property="og:url" content="{{{$contest->canonical_url}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
 <meta property="og:image" content="{{{$contest->current_winner->image_url('facebook')}}}?_c={{microtime(true)}}"/>
+<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 @stop
 
 @section('content')
@@ -196,34 +198,60 @@
           </li>
         @endif
       </ul>
+  
+      <div style="max-width: 600px; margin-left: auto; margin-right: auto; text-align: left">
+        <div class="panel-group faq-accordion" id="accordion">
+          @if($contest->description)
+            <div class="panel panel-default">
+                <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#description">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            About this Pick
+                        </h4>
+                    </div>
+                </a>
+                <div id="description" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      {{Markdown::render($contest->description)}}
+                    </div>
+                </div>
+            </div>
+          @endif
+          @if($contest->prizes)
+            <div class="panel panel-default">
+                <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#prizes">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Prizes
+                        </h4>
+                    </div>
+                </a>
+                <div id="prizes" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {{Markdown::render($contest->prizes)}}
+                    </div>
+                </div>
+            </div>
+          @endif
+          @if($contest->rules)
+            <div class="panel panel-default">
+                <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#rules">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            Rules
+                        </h4>
+                    </div>
+                </a>
+                <div id="rules" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        {{Markdown::render($contest->rules)}}
+                    </div>
+                </div>
+            </div>
+          @endif
+        </div>
+      </div>
       
-      @if($contest->description)
-        <div >
-          <h2>About this Pick</h2>
-          <div class="description">
-            {{Markdown::render($contest->description)}}
-          </div>
-        </div>
-      @endif
-
-      @if($contest->prizes)
-        <div >
-          <h2>Pick Prizes</h2>
-          <div class="description">
-            {{Markdown::render($contest->prizes)}}
-          </div>
-        </div>
-      @endif
-
-
-      @if($contest->rules)
-        <div >
-          <h2>Pick Rules</h2>
-          <div class="description">
-            {{Markdown::render($contest->rules)}}
-          </div>
-        </div>
-      @endif
 
 
 
