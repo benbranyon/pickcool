@@ -297,15 +297,6 @@
           <div class="fb-share-button"  data-layout="button_count"></div>
         </div>
       @endif
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Discussion</h3>
-        </div>
-        <div class="panel-body" style="padding-left: 0px; padding-right: 0px;padding-top:0px">
-          <div class="fb-comments" data-href="{{{$contest->canonical_url}}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
-        </div>
-      </div>          
     </div>
   </div>
 </div>
