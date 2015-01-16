@@ -23,14 +23,17 @@ App::after(function($request, $response)
 
 App::before(function($request, $response)
 {
-  //IP whitelist for next.pick.cool
+  if(!$_ENV['IP_WHITELIST']) return;
+  $allowed = explode(',', $_ENV['IP_WHITELIST']);
   $ip = Request::getClientIp();
-  $allowed = array('50.37.27.223', '192.168.254.27', '71.94.65.51', '65.128.92.223');
   if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ip, $allowed))
   {
     return Redirect::away('https://pick.cool');
   }
+});
 
+App::before(function($request, $response)
+{
   if(!$_ENV['USE_SSL']) return;
   if(Request::server('HTTP_X_FORWARDED_PROTO')=='https') return;
   $url = 'https://'.Request::server('HTTP_HOST').Request::server('REQUEST_URI');
