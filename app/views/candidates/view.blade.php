@@ -16,6 +16,10 @@
       {{{$candidate->name}}}
     </h1>
     <h2><a href="{{{$contest->canonical_url}}}">{{$contest->title}}</a></h2>
+    @if($contest->sponsors->count()>0)
+      <?php $sponsor = $contest->random_sponsor; ?>
+      <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>
+    @endif
     <h3>{{$candidate->vote_count_0}} votes</h3>
     <div id="candidate" class="candidate-large {{{$candidate->is_user_vote ? 'selected' : ''}}}">
       <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
