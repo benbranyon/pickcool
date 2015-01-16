@@ -16,7 +16,12 @@ class CandidateController extends \BaseController {
 			$candidate->vote_boost = \Input::get('vote_boost');
 			$candidate->charity_name = \Input::get('charity_name');
 			$candidate->charity_url = \Input::get('charity_url');
-			$candidate->push();
+			if(\Input::get('image_url'))
+			{
+				$i = \Image::from_url(\Input::get('image_url'),true);
+				$candidate->image_id = $i->id;
+			}
+			$candidate->save();
 
 			\Session::put('success', "Candidate Saved!");
 			return \Redirect::to('admin/candidates');			

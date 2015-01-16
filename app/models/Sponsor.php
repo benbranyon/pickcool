@@ -10,7 +10,7 @@ class Sponsor extends Eloquent
   
   function image_url($size=thumb)
   {
-    return $this->image->image->url($size);
+    return r('home').$this->image->image->url($size);
   }
 
   function image()

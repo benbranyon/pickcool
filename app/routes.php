@@ -309,5 +309,6 @@ Route::group(array('prefix'=> 'admin', 'before' => 'auth.admin'), function() {
     Route::resource('candidates/{id}/edit/', 'Admin\\CandidateController@edit');
 
     Route::resource('sponsors', 'Admin\\SponsorController');
+    Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
 
 });

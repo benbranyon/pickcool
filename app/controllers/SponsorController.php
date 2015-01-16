@@ -39,9 +39,5 @@ class SponsorController extends BaseController
 	    return Redirect::to($redirect);
     }
 
-    public function edit()
-    {
-    	
-    }
 
 }

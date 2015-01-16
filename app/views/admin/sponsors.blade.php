@@ -21,12 +21,16 @@
 		<tbody>
 			<?php foreach ($sponsors as $sponsor):?>
 				<tr>
-					<td><img alt="{{{$sponsor->name}}}" src="#" align="left" /></td>
-					<td><?php echo $sponsor->name;?></td>
-					<td><?php echo $sponsor->description;?></td>
-					<td><?php echo $sponsor->url;?></td>
 					<td>
-						<a class="btn btn-sm" href="#">Edit</a>
+						@if (isset($sponsor->image_id))
+							<img alt="{{{$sponsor->name}}}" src="{{{$sponsor->image_url('thumb')}}}" />
+						@endif
+					</td>
+					<td>{{{$sponsor->name}}}</td>
+					<td>{{{$sponsor->description}}}</td>
+					<td>{{{$sponsor->url}}}</td>
+					<td>
+						<a class="btn btn-sm" href="{{Request::url()}}/{{{$sponsor->id}}}/edit/">Edit</a>
 					</td>
 				</tr>
 			<?php endforeach;?>

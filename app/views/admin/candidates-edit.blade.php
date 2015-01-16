@@ -18,6 +18,14 @@
 		        {{ $errors->first('name', '<p class="help-block">:message</p>') }}
 		    </div>
 
+		    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+		        {{ Form::label('image_url', 'Image URL') }}
+		        <br />
+		        <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+		        {{ Form::text('image_url', null, ['class' => 'form-control']) }}
+		        {{ $errors->first('name', '<p class="help-block">:message</p>') }}
+		    </div>
+
 		    <div class="form-group{{ $errors->has('vote_boost') ? ' has-error' : '' }}">
 		        {{ Form::label('vote_boost', 'Vote Boost') }}
 		        {{ Form::text('vote_boost', $candidate->vote_boost, ['class' => 'form-control']) }}
