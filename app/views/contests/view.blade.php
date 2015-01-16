@@ -18,8 +18,13 @@
     <h1>
       {{{$contest->title}}}
     </h1>
+    @if($contest->sponsors->count()>0)
+      <?php $sponsor = $contest->random_sponsor; ?>
+      <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>
+    @endif
+    
     @if($contest->has_joined)
-      <div class="alert alert-success" style="width:100%; margin-left: auto; margin-right: auto; ">
+      <div class="alert alert-success" style="max-width: 600px; margin-left: auto; margin-right: auto; ">
         You are in this pick! Read about <a href="/tips">how to win</a>.
       </div>
     @endif

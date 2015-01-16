@@ -59,6 +59,12 @@ class Contest extends Eloquent
     return Candidate::whereUserId($user->id)->whereContestId($this->id)->first() != null;
   }
 
+  function getRandomSponsorAttribute()
+  {
+    return $this->belongsToMany('Sponsor')->orderByRaw("RAND()")->first();
+    
+  }
+  
   function getHasDroppedAttribute()
   {
     return $this->has_dropped();
