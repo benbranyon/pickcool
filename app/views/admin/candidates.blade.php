@@ -25,12 +25,12 @@
 			<?php foreach ($candidates as $candidate):?>
 				<tr>
 					<td><img style="max-width:150px;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/></td>
-					<td><?php echo $candidate->name;?></td>
-					<td><?php echo $candidate->contest->title;?></td>
-					<td><?php echo $candidate->vote_boost;?></td>
-					<td><?php echo $candidate->charity_name;?></td>
-					<td><?php echo $candidate->charity_url;?></td>
-					<td><?php echo $candidate->dropped_at;?></td>
+					<td>{{{$candidate->name}}}</td>
+					<td>{{{ isset($candidate->contest->title) ? $candidate->contest->title : 'Default' }}}</td>
+					<td>{{{$candidate->vote_boost}}}</td>
+					<td>{{{$candidate->charity_name}}}</td>
+					<td>{{{$candidate->charity_url}}}</td>
+					<td>{{{$candidate->dropped_at}}}</td>
 					<td>
 						<a class="btn btn-sm" href="{{Request::url()}}/<?php echo $candidate->id;?>/edit/">Edit</a>
 					</td>
