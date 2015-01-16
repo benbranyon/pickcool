@@ -13,6 +13,12 @@ Dotenv::required([
   'MAIL_FROM_NAME',
   'FACEBOOK_APP_ID',
   'FACEBOOK_SECRET',
+  'IS_BETA',
+  'IP_WHITELIST',
+  'USE_SSL',
+  'BUGSNAG_ENABLED',
+  'BUGSNAG_API_KEY',
+  
 ]);
 
 /*
