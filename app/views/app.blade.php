@@ -135,6 +135,8 @@
         </div>
       </div>
     </div> <!-- // Container -->
+    @yield('foot')
+    
     <script src="/assets/js/echo.js"></script>
 
     <script>
