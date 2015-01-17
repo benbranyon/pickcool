@@ -710,16 +710,16 @@
         },
         {
             "name": "facebook/php-sdk-v4",
-            "version": "4.0.14",
+            "version": "4.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-sdk-v4.git",
-                "reference": "566c4ea8df82ba8bdd18abf5c0b66c23fe79b3e9"
+                "reference": "ebc82667ef953b98e2eca5dfb6784d6466a185cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/566c4ea8df82ba8bdd18abf5c0b66c23fe79b3e9",
-                "reference": "566c4ea8df82ba8bdd18abf5c0b66c23fe79b3e9",
+                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/ebc82667ef953b98e2eca5dfb6784d6466a185cd",
+                "reference": "ebc82667ef953b98e2eca5dfb6784d6466a185cd",
                 "shasum": ""
             },
             "require": {
@@ -755,7 +755,7 @@
                 "facebook",
                 "sdk"
             ],
-            "time": "2014-12-29 22:43:17"
+            "time": "2015-01-06 21:29:27"
         },
         {
             "name": "filp/whoops",
@@ -2839,7 +2839,6 @@
         "panique/laravel-sass": 20
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }

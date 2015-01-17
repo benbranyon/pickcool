@@ -14,7 +14,7 @@
       <p>To vote in a contest, enter a contest, or view a private contest, you must connect via Facebook.</p>
   
       <p>
-        <a class="btn btn-primary btn-xl" href="{{{route('facebook.authorize')}}}" ><i class="fa fa-facebook-square"></i> Connect via Facebook</a>
+        <a class="btn btn-primary btn-xl" href="{{{r('facebook.authorize')}}}" ><i class="fa fa-facebook-square"></i> Connect via Facebook</a>
       </p>
   
       <p><span class='text-danger'>Please authorize all the permissions requested. <span class="help" onclick="why()">Why?</span></span> </p>

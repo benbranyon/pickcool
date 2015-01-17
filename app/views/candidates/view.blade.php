@@ -16,6 +16,10 @@
       {{{$candidate->name}}}
     </h1>
     <h2><a href="{{{$contest->canonical_url}}}">{{$contest->title}}</a></h2>
+    @if($contest->sponsors->count()>0)
+      <?php $sponsor = $contest->random_sponsor; ?>
+      <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>
+    @endif
     <h3>{{$candidate->vote_count_0}} votes</h3>
     <div id="candidate" class="candidate-large {{{$candidate->is_user_vote ? 'selected' : ''}}}">
       <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
@@ -37,7 +41,7 @@
             <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span>
           </td>
           <td align=left>
-            {{{$candidate->name}}} is a Charitable Giver and has pledged 25% or more of cash winnings to <a href="{{{$candidate->charity_url}}}">{{{$candidate->charity_name}}}</a>.
+            {{{$candidate->name}}} is a Charitable Giver and has pledged either 25% of cash winnings or 4 hours of service, or more, to <a href="{{{$candidate->charity_url}}}">{{{$candidate->charity_name}}}</a>.
           </td>
         </tr>
       @endif
@@ -59,7 +63,7 @@
     @endif
     <a href="{{{$candidate->image_url('large')}}}" class="btn btn-warning btn-full btn-lg"><i class="fa fa-camera"></i> View Large</a>
     @if($candidate->is_writein)
-      <a class="btn btn-lg btn-warning btn-full" href="{{{$contest->join_url}}}"><i class="fa fa-facebook"></i> Refresh Your Picture</a>
+      <a class="btn btn-lg btn-warning btn-full" href="{{{$candidate->refresh_url}}}"><i class="fa fa-facebook"></i> Refresh Your Picture</a>
     @endif
     <a class="btn btn-default btn-lg btn-full"  href="{{{$contest->canonical_url}}}"><i class="fa fa-arrow-left"></i> Back to Pick</a>
     @if(!Auth::user())

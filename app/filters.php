@@ -15,12 +15,31 @@ App::before(function($request)
 {
 });
 
-
 App::after(function($request, $response)
 {
 	$log = new ActivityLog();
 	$log->save();
 });
+
+App::before(function($request, $response)
+{
+  if(!$_ENV['IP_WHITELIST']) return;
+  $allowed = explode(',', $_ENV['IP_WHITELIST']);
+  $ip = Request::getClientIp();
+  if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ip, $allowed))
+  {
+    return Redirect::away('https://pick.cool');
+  }
+});
+
+App::before(function($request, $response)
+{
+  if(!$_ENV['USE_SSL']) return;
+  if(Request::server('HTTP_X_FORWARDED_PROTO')=='https') return;
+  $url = 'https://'.Request::server('HTTP_HOST').Request::server('REQUEST_URI');
+  return Redirect::to($url, 301);
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +58,7 @@ Route::filter('auth', function()
   {
     Auth::fb_login(Input::get('fb_access_token'));
   }
-
+  
   if(Auth::user())
   {
   	$fb = OAuth::consumer( 'Facebook' );
@@ -57,15 +76,27 @@ Route::filter('auth', function()
   		return;
   	}
   }
-  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
-  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
-  return Redirect::to(route('login'));
+  Session::put('onsuccess', Input::get('success', Request::url()));
+  Session::put('oncancel', Input::get('cancel', Request::url()));
+  return Redirect::to(r('login'));
 });
 
 
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();
+});
+
+Route::filter('auth.admin', function($route, $request){
+    // Check if the user is logged in, if not redirect to login url
+    if (Auth::guest()) return Redirect::guest('/facebook/authorize');
+
+    if(Auth::user()->is_admin)
+    {
+      return;
+    }
+
+    return Redirect::to(route('contests.hot'));// home
 });
 
 /*

@@ -38,11 +38,17 @@
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <style type="text/css">
+      .logo-img {width:150px;float:left;}
+      .navbar-brand span {float:left;margin-left:5px;margin-top:5px;}
+      .navbar-right {margin-right:10px;margin-top:14px;}
+    </style>
+    <script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </head>
 
   <body>
-    <div id="fb-root"></div>
+      <div id="fb-root"></div>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
@@ -63,34 +69,36 @@
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
     </script>
-    
-    <nav class="navbar navbar-default navbar-fixed-top" style="{{{ $_ENV['IS_BETA'] ? "background-color: #F88" : "" }}}" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="{{r('home')}}"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /></a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div>
-          <ul class="nav navbar-nav navbar-right">
-            <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='contests.hot') ? 'active' : ''}}"><a href="{{{r('contests.hot')}}}">Hot</a></li>
-            <li class="{{Route::currentRouteName()=='contests.new' ? 'active' : ''}}"><a href="{{{r('contests.new')}}}"  >New</a></li>
-            <li class="{{Route::currentRouteName()=='contests.top' ? 'active' : ''}}"><a href="{{{r('contests.top')}}}" >Top</a></li>
-          </ul>
-        </div>
+
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <div class="container-fluid">      
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/admin"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /><span>Admin</span></a>
+            </div>
+            <!-- /.navbar-header -->
+            <div id="navbar" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="/admin/users">Users</a></li>
+                <li><a href="/admin/contests">Contests</a></li>
+                <li><a href="/admin/candidates">Candidates</a></li>
+                <li><a href="/admin/sponsors">Sponsors</a></li>
+              </ul>
+            </div>
       </div>
     </nav>
+
     <div class="container-fluid">
-      <div class="clearfix">
-        <ul class="subnav list-inline pull-right">
-          @if(Auth::user())
-            <li>Welcome, {{{Auth::user()->first_name}}}.
-            <li><a href="{{{r('logout', ['success'=>r('home')])}}}">Logout
-          @else
-            <li><a href="{{{r('login', Route::currentRouteName()=='login' ? [] : ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in
-          @endif
-          <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
-        </ul>
-      </div>
+            <ul class="pull-right">
+              @if(Auth::user())
+               <li>Welcome, {{{Auth::user()->first_name}}}.</li>
+              @endif
+            </ul>
       @foreach(['success', 'warning', 'danger'] as $kind)
         @if(Session::get($kind))
           <div class="alert alert-{{{$kind}}}">
@@ -99,44 +107,9 @@
         @endif
         <?php Session::forget($kind); ?>
       @endforeach
-          @yield('content')
-          
-          <div class="clearfix">
-            <ul class="login-list list-inline pull-right">
-              @if(Auth::check() && Auth::user()->is_contributor)
-                <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
-              @endif
-            </ul>
-          </div>
-
-          <footer class="footer">
-            <div class="row">
-              <div class="col-sm-12">
-                <ul class="pull-left nav nav-pills footer-nav">
-                  <li>&copy; pick.cool 2014 - Now with sour apple!</li>
-                </ul>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12 like-button-wrapper">
-                <div class="fb-like" data-href="https://www.facebook.com/pages/PickCool/310629329135330" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12 text-center">
-                <ul class="nav nav-pills footer-nav">
-                  <li><a href="/privacy">Privacy Policy</a></li>
-                  <li><a href="/terms">Terms of Service</a></li>
-                </ul>
-              </div>
-            </div>
-          </footer>
-
-        </div>
-      </div>
+      @yield('content')
     </div> <!-- // Container -->
-    @yield('foot')
-    
+
     <script src="/assets/js/echo.js"></script>
 
     <script>

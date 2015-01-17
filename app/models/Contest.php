@@ -5,19 +5,46 @@ class Contest extends Eloquent
 {
   static $intervals = [0,24];
   
+  function getTotalCharityDollarsAttribute()
+  {
+    $total = 0;
+    foreach($this->candidates as $c)
+    {
+      if(!$c->charity_name) continue;
+      $total++;
+    }
+    return $total * 300 * .25;
+  }
+
+  function getTotalCharityHoursAttribute()
+  {
+    $total = 0;
+    foreach($this->candidates as $c)
+    {
+      if(!$c->charity_name) continue;
+      $total++;
+    }
+    return $total * 4;
+  }
+    
   function getRealtimeUrlAttribute()
   {
-    return route('contest.realtime', [$this->id, $this->slug]);
+    return r('contest.realtime', [$this->id, $this->slug]);
   }
 
   function getJoinUrlAttribute()
   {
-    return route("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
+    return r("contest.join", [$this->id])."?cancel=".urlencode(Request::url());
+  }
+  
+  function getIsJoinableAttribute()
+  {
+    return $this->writein_enabled && !$this->is_ended && !$this->has_dropped;
   }
   
   function getCanJoinAttribute()
   {
-    return $this->writein_enabled && !$this->is_ended && !$this->has_joined;
+    return $this->is_joinable && !$this->has_joined;
   }
   
   function getHasJoinedAttribute()
@@ -32,6 +59,12 @@ class Contest extends Eloquent
     return Candidate::whereUserId($user->id)->whereContestId($this->id)->first() != null;
   }
 
+  function getRandomSponsorAttribute()
+  {
+    return $this->belongsToMany('Sponsor')->orderByRaw("RAND()")->first();
+    
+  }
+  
   function getHasDroppedAttribute()
   {
     return $this->has_dropped();
@@ -59,7 +92,7 @@ class Contest extends Eloquent
   
   function getLoginUrlAttribute()
   {
-    return route('contest.login', [$this->id, $this->slug]);
+    return r('contest.login', [$this->id, $this->slug]);
   }
   
   function authorize_user($user = null)
@@ -98,7 +131,7 @@ class Contest extends Eloquent
   
   function getCanonicalUrlAttribute()
   {
-    return route('contest.view', [$this->id, $this->slug]);
+    return r('contest.view', [$this->id, $this->slug]);
   }
   
   function getSlugAttribute()
@@ -210,7 +243,7 @@ class Contest extends Eloquent
   {
     $old = Candidate::$intervals;
     Candidate::$intervals[] = $interval;
-    $candidates = $this->candidates->withRanks();
+    $candidates = Candidate::whereContestId($this->id)->whereNull('dropped_at')->with('image')->get()->withRanks();
     Candidate::$intervals = $old;
     return $candidates;
   }
@@ -262,7 +295,8 @@ class Contest extends Eloquent
     $user->vote_for($can);
     
     $client = new \GuzzleHttp\Client();
-    $client->post('http://graph.facebook.com', ['query'=>[
+    $client->post('https://graph.facebook.com/v2.2', ['query'=>[
+      'access_token'=>'1497159643900204|DJ6wUZoCJWlOWDHegW1fFNK9r-M',
       'id'=>$can->canonical_url($this),
       'scrape'=>'true',
     ]]);

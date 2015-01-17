@@ -27,7 +27,8 @@ class Auth
       $token = new StdOAuth2Token();
       $token->setAccessToken($access_token);
     }
-    $fb->getStorage()->storeAccessToken($fb->service(), $token);
+    $fb->getStorage()->storeAccessToken("Facebook", $token);
+    $has_token = $fb->getStorage()->hasAccessToken("Facebook");
     $me = json_decode( $fb->request( '/me' ), true );
     self::$user = \User::from_fb($me);
     \Session::put('user_id', self::$user->id);

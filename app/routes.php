@@ -1,5 +1,15 @@
 <?php
 
+function r($route_name, $params=[], $absolute=true)
+{
+  if($_ENV['USE_SSL'])
+  {
+    return preg_replace("/^http:/", "https:", route($route_name, $params, $absolute));
+  }
+
+  return route($route_name, $params, $absolute);
+}
+
 Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$size) 
 {
   $image = Image::find($id);
@@ -82,15 +92,28 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
   return View::make('contests.login')->with(['contest'=>$contest]);
 }]);
 
-Route::get('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
+Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
-  if(!$contest->has_dropped && ($contest->can_join || $contest->has_joined))
+  $state = Input::get('s',1);
+  if(!$contest->is_joinable)
+  {
+    Session::put('danger', "You can not join {$contest->title}.");
+    return Redirect::to($contest->canonical_url);
+  }
+  if($state==4)
   {
     $candidate = $contest->add_user();
-    return Redirect::to($candidate->after_join_url);
+    return View::make('contests.join')->with(['contest'=>$contest, 'candidate'=>$candidate, 'state'=>$state]);
   }
-  Session::put('error', "You can not join {$contest->title}.");
-  return Redirect::to($contest->canonical_url);
+  return View::make('contests.join')->with(['contest'=>$contest, 'state'=>$state]);
+}]);
+
+Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/refresh', ['as'=>'contest.candidate.refresh', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
+  $contest = Contest::find($contest_id);
+  $candidate = Candidate::find($candidate_id);
+  $contest->add_user();
+  Session::put('success', "Your information has been refreshed.");
+  return Redirect::to($candidate->canonical_url);
 }]);
 
 Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_join', 'uses'=>function($id) {
@@ -108,7 +131,7 @@ Route::get('/login', ['as'=>'login', 'uses'=>function() {
 Route::get('/logout', ['as'=>'logout', 'uses'=>function() {
   Session::flush();
   Session::put('success', 'You have been logged out.');
-  return Redirect::to(route('home'));
+  return Redirect::to(r('home'));
 }]);
 
 
@@ -129,7 +152,7 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
         Auth::fb_login($token);
       } catch (Exception $e) {
         Session::put('fb_retry', true);
-        return Redirect::to(route('facebook.authorize.retry'));
+        return Redirect::to(r('facebook.authorize.retry'));
       }
       Session::put('success', "Welcome, " . Auth::user()->full_name);
       $onsuccess=Session::get('onsuccess');
@@ -186,9 +209,45 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
   return Redirect::to($contest->canonical_url);
 }]);
 
-Route::get('/contests/{id}/edit', ['as'=>'contests.edit', 'uses'=>function() {
-  return "hi";
+Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>function($id) {
+  $contest = Contest::find($id);
+  $fb = \OAuth::consumer( 'Facebook' );
+  //$has_token = $fb->getStorage()->hasAccessToken("Facebook");
+
+  try
+  {
+    $fb_token = $fb->getStorage()->retrieveAccessToken("Facebook"); 
+    $access_token = $fb_token->getAccessToken();
+    $client = new \GuzzleHttp\Client();
+    $fb_permissions =  $client->get('https://graph.facebook.com/me/permissions?access_token=' . $access_token); 
+    $fb_permissions = $fb_permissions->json();
+  }
+  catch (Exception $e) {
+    //Old token
+    //$fb->getStorage()->clearToken("Facebook");
+  }
+
+  $user_photos = false;
+  foreach($fb_permissions['data'] as $permission)
+  {
+    if(array_search('user_photos', $permission))
+    {
+      $user_photos = true;
+    }
+  }
+  if(!$user_photos)
+  {
+    $dialog = 'https://www.facebook.com/dialog/oauth?client_id='. $_ENV['FACEBOOK_APP_ID']. '&redirect_uri=' .Request::root() .'/sponsor/signup/'.$id.'&scope=user_photos';
+    return Redirect::to( (string) $dialog);
+  }
+  return View::make('sponsors.signup')->with(['contest'=>$contest]);
 }]);
+
+Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>function($id) {
+  return "hello";
+}]);
+
+Route::post('sponsor/create/', 'SponsorController@create');
 
 Route::get('/hot', ['as'=>'contests.hot', 'uses'=>function() {
   $contests = Contest::hot();
@@ -204,6 +263,9 @@ Route::get('/top', ['as'=>'contests.top', 'uses'=>function() {
 }]);
 
 
+Route::get('/tips', ['as'=>'tips', 'uses'=>function() {
+  return View::make('tips');
+}]);
 
 Route::get('/unfollow/{contest_id}/{candidate_id}', ['as'=>'contest.candidate.unfollow', 'uses'=>function($contest_id, $candidate_id) {
   return "You are no longer following {$c->contest->name} and will not receive any further updates about it.";
@@ -240,3 +302,22 @@ Route::get('/privacy', ['as'=>'privacy', 'uses'=>function() {
 Route::get('/terms', ['as'=>'terms', 'uses'=>function() {
   return View::make('legal.terms');
 }]);
+
+// Admin Routes
+Route::group(array('prefix'=> 'admin', 'before' => 'auth.admin'), function() {
+
+    Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
+
+    // Resource Controller for user management, nested so it needs to be relative
+    Route::resource('users', 'Admin\\UserController');
+
+    Route::resource('contests', 'Admin\\ContestController');
+    Route::resource('contests/{id}/edit/', 'Admin\\ContestController@edit');
+
+    Route::resource('candidates', 'Admin\\CandidateController');
+    Route::resource('candidates/{id}/edit/', 'Admin\\CandidateController@edit');
+
+    Route::resource('sponsors', 'Admin\\SponsorController');
+    Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
+
+});
