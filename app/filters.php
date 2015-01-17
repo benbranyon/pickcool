@@ -58,7 +58,24 @@ Route::filter('auth', function()
   {
     Auth::fb_login(Input::get('fb_access_token'));
   }
-  if(Auth::user()) return;
+  
+  if(Auth::user())
+  {
+  	$fb = OAuth::consumer( 'Facebook' );
+
+  	try {
+  		$me = json_decode( $fb->request( '/me' ), true );
+  	}
+  	catch(Exception $e)
+  	{
+  		$me = false;
+  	}
+
+  	if($me)
+  	{
+  		return;
+  	}
+  }
   Session::put('onsuccess', Input::get('success', Request::url()));
   Session::put('oncancel', Input::get('cancel', Request::url()));
   return Redirect::to(r('login'));
@@ -117,6 +134,14 @@ Route::filter('csrf', function()
 	}
 });
 
+Route::filter('forceHttps', function($req){
+    if($_ENV['USE_SSL'])
+  {
+    if (! Request::secure()) {
+        return Redirect::secure(Request::getRequestUri());
+    }
+  }
+});
 
 Route::filter('origin', function($route, $request) {
   header('Access-Control-Allow-Origin: '.Request::header('Origin'));

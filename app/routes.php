@@ -24,6 +24,7 @@ Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$s
 
 Route::get('/', ['as'=>'home', 'uses'=>function() {
   $contests = Contest::hot();
+  //Session::flush();
   return View::make('home')->with(['contests'=>$contests]);
 }]);
 
@@ -141,6 +142,11 @@ Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function(
     try
     {
       $token = $fb->requestAccessToken( $code );
+      //Trade for long-lived token
+      $long_token_url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id='. $_ENV['FACEBOOK_APP_ID'] .'&client_secret=' . $_ENV['FACEBOOK_SECRET'] . '&fb_exchange_token='.$token->getAccessToken(); 
+      $client = new \GuzzleHttp\Client();
+      $response = $client->get($long_token_url);
+      $long_token = $response->getBody()->__toString();
       try
       {
         Auth::fb_login($token);
@@ -309,7 +315,7 @@ Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'u
 }]);
 
 // Admin Routes
-Route::group(array('prefix'=> 'admin', 'before' => 'auth.admin'), function() {
+Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']), function() {
 
     Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
 
