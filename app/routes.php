@@ -304,7 +304,7 @@ Route::get('/terms', ['as'=>'terms', 'uses'=>function() {
 }]);
 
 // Admin Routes
-Route::group(array('prefix'=> 'admin', 'before' => 'auth.admin'), function() {
+Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']), function() {
 
     Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
 

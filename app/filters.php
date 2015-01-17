@@ -134,6 +134,14 @@ Route::filter('csrf', function()
 	}
 });
 
+Route::filter('forceHttps', function($req){
+    if($_ENV['USE_SSL'])
+  {
+    if (! Request::secure()) {
+        return Redirect::secure(Request::getRequestUri());
+    }
+  }
+});
 
 Route::filter('origin', function($route, $request) {
   header('Access-Control-Allow-Origin: '.Request::header('Origin'));
