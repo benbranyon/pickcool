@@ -21,10 +21,10 @@
 		<tbody>
 			<?php foreach ($users as $user):?>
 				<tr>
-					<td><?php echo $user->first_name;?></td>
-					<td><?php echo $user->last_name;?></td>
-					<td><?php echo $user->gender;?></td>
-					<td><?php echo $user->email;?></td>
+					<td>{{{$user->first_name}}}</td>
+					<td>{{{$user->last_name}}}</td>
+					<td>{{{$user->gender}}}</td>
+					<td>{{{$user->email}}}</td>
 					<td><a class="btn btn-small" href="#">Edit</a></td>
 				</tr>
 			<?php endforeach;?>

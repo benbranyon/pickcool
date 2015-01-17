@@ -7,8 +7,9 @@ class DashboardController extends \BaseController {
 	function index() {
 		$users = User::all();
 		$votes = Vote::all();
-		$new_users = User::where('created_at', '>=', new \DateTime('today'));
-		$new_votes = Vote::where('created_at', '>=', new \DateTime('today'));
+		$new_users = User::where('created_at', '<=', strtotime("-1 day"))->get();
+		$new_votes = Vote::where('created_at', '<=', strtotime("-1 day"))->get();
+
 		$data = array(
 			'users' => $users,
 			'new_users' => $new_users,

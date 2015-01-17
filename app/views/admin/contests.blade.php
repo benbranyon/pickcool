@@ -22,11 +22,11 @@
 		<tbody>
 			<?php foreach ($contests as $contest):?>
 				<tr>
-					<td><?php echo $contest->title;?></td>
-					<td><?php echo $contest->description;?></td>
-					<td><?php echo $contest->writein_enabled;?></td>
-					<td><?php echo $contest->password;?></td>
-					<td><?php echo $contest->ends_at;?></td>
+					<td>{{{$contest->title}}}</td>
+					<td>{{{$contest->description}}}</td>
+					<td>{{{$contest->writein_enabled}}}</td>
+					<td>{{{$contest->password}}}</td>
+					<td>{{{$contest->ends_at}}}</td>
 					<td>
 						<a class="btn btn-sm" href="{{Request::url()}}/<?php echo $contest->id;?>/edit/">Edit</a>
 					</td>

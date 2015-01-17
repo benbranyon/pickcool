@@ -24,7 +24,7 @@
 		<tbody>
 			<?php foreach ($candidates as $candidate):?>
 				<tr>
-					<td><img style="max-width:150px;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/></td>
+					<td><img style="max-width:150px;" src="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/></td>
 					<td>{{{$candidate->name}}}</td>
 					<td>{{{ isset($candidate->contest->title) ? $candidate->contest->title : 'Default' }}}</td>
 					<td>{{{$candidate->vote_boost}}}</td>

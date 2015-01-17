@@ -6,7 +6,7 @@
 
 @section('content')
 
-	<h1>Edit <?php echo $contest->title;?></h1>
+	<h1>Edit {{{$contest->title}}}</h1>
 
 	{{ Form::open(array('action' => array('Admin\\ContestController@edit', $contest->id), 'files' => true)) }}
     	<fieldset>
