@@ -96,7 +96,7 @@ Route::filter('auth.admin', function($route, $request){
       return;
     }
 
-    return Redirect::to(route('contests.hot'));// home
+    return Redirect::to(r('contests.hot'));// home
 });
 
 /*
