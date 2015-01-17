@@ -192,7 +192,6 @@ $config = [
 		'URL'               => 'Illuminate\Support\Facades\URL',
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
-    'Image'             => 'BenAllfree\LaravelStaplerImages\Image',
     'Carbon'            => 'Carbon\Carbon',
     'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
     'Markdown' => 'GrahamCampbell\Markdown\Facades\Markdown',

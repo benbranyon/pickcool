@@ -42,6 +42,27 @@ class User extends Eloquent
     return "https://graph.facebook.com/{$this->fb_id}/picture?width=1200&height=1200".$extra;
   }
   
+  function messages()
+  {
+    return $this->hasMany('Message')->orderBy('created_at', 'desc');
+  }
+  
+  function getHasUnreadMessagesAttribute()
+  {
+    return $this->messages()->whereNull('read_at')->count() > 0;
+  }
+  
+  function getHasMessagesAttribute()
+  {
+    return $this->messages()->count() > 0;
+  }
+  
+  function getHasReadMessagesAttribute()
+  {
+    return $this->messages()->whereNotNull('read_at')->count() > 0;
+    
+  }
+  
   static function from_fb($me)
   {
     $fb_id = $me['id'];

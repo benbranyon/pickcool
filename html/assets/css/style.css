@@ -169,6 +169,28 @@ h1.big {
   margin-left: 2px;
   margin-right: 2px;
 }
+.message.read h1 a {
+  color: gray;
+  font-weight: normal;
+}
+.message {
+  margin: 2px;
+  padding: 3px;
+}
+.message h1 {
+  display: inline-block;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.message .date {
+  font-size: 10px;
+  color: gray;
+  margin-left: 20px;
+  display: inline-block;
+}
+.unread {
+  color: red;
+}
 .badges .badge {
   background-color: rgba(232, 232, 232, 0.85);
   padding: 3px 3px;

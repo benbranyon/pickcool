@@ -297,11 +297,24 @@ Route::get('/terms', ['as'=>'terms', 'uses'=>function() {
   return View::make('legal.terms');
 }]);
 
+Route::get('/inbox', ['before'=>'auth', 'as'=>'inbox', 'users'=>function() {
+  return View::make('inbox.list', ['messages'=>Auth::user()->messages]);
+}]);
+
+Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'users'=>function($message_id) {
+  $message = Message::find($message_id);
+  $message->read_at = Carbon::now();
+  $message->save();
+  return View::make('inbox.read', ['message'=>$message]);
+}]);
+
 // Admin Routes
 Route::group(array('prefix'=> 'admin', 'before' => 'auth.admin'), function() {
 
     Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
 
+    Route::get('images', ['as'=>'admin.images', 'uses'=>'Admin\\ImageController@index']);
+    
     // Resource Controller for user management, nested so it needs to be relative
     Route::resource('users', 'Admin\\UserController');
 

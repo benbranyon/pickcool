@@ -3,6 +3,16 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  public function getDates()
+  {
+    return [
+      'created_at',
+      'updated_at',
+      'ends_at',
+    ];
+  }
+  
+
   static $intervals = [0,24];
   
   function getTotalCharityDollarsAttribute()
@@ -205,15 +215,6 @@ class Contest extends Eloquent
     return $this->belongsToMany('Sponsor')->with('image')->withPivot('weight')->orderBy('weight');
   }
   
-  public function getDates()
-  {
-    return [
-      'created_at',
-      'updated_at',
-      'ends_at',
-    ];
-  }
-  
   function can_enter()
   {
     if($this->ends_at)
@@ -236,7 +237,7 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
+    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
   }
 
   function ranked_candidates($interval)
@@ -288,19 +289,14 @@ class Contest extends Eloquent
       $can->user_id = $user->id;
       $is_new = true;
     }
-    $i = \Image::from_url($user->profile_image_url,true);
     $can->name = $user->full_name;
-    $can->image_id = $i->id;
     $can->save();
-    $user->vote_for($can);
     
-    $client = new \GuzzleHttp\Client();
-    $client->post('https://graph.facebook.com/v2.2', ['query'=>[
-      'access_token'=>'1497159643900204|DJ6wUZoCJWlOWDHegW1fFNK9r-M',
-      'id'=>$can->canonical_url($this),
-      'scrape'=>'true',
-    ]]);
-
+    $i = \Image::from_url($user->profile_image_url,true);
+    $i->candidate_id = $can->id;
+    $i->save();
+    
+    $user->vote_for($can);
     
     if($is_new)
     {
