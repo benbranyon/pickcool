@@ -244,7 +244,7 @@ class Contest extends Eloquent
   {
     $old = Candidate::$intervals;
     Candidate::$intervals[] = $interval;
-    $candidates = Candidate::whereContestId($this->id)->whereNull('dropped_at')->with('image')->get()->withRanks();
+    $candidates = Candidate::whereContestId($this->id)->whereNotNull('image_id')->whereNull('dropped_at')->with('image')->get()->withRanks();
     Candidate::$intervals = $old;
     return $candidates;
   }
