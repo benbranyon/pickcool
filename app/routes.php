@@ -30,6 +30,10 @@ Route::get('/', ['as'=>'home', 'uses'=>function() {
 
 Route::get('/est/{contest_id}/{slug}', ['as'=>'contest.view', 'uses'=>function($contest_id) {
   $contest = Contest::find($contest_id);
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   if(!$contest->can_view)
   {
     return Redirect::to($contest->login_url);
@@ -43,6 +47,10 @@ Route::get('/est/{contest_id}/{slug}', ['as'=>'contest.view', 'uses'=>function($
 
 Route::get('/est/{contest_id}/{slug}/realtime', ['as'=>'contest.realtime', 'uses'=>function($contest_id) {
   $contest = Contest::find($contest_id);
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   if(!$contest->can_view)
   {
     return Redirect::to($contest->login_url);
@@ -56,6 +64,10 @@ Route::get('/est/{contest_id}/{slug}/realtime', ['as'=>'contest.realtime', 'uses
 
 Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contest.candidate.view', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
   $contest = Contest::find($contest_id);
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   if(!$contest->can_view)
   {
     Session::put('r', Request::url());
@@ -76,6 +88,10 @@ Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slu
 
 Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest.login', 'uses'=>function($contest_id) {
   $contest = Contest::find($contest_id);
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   if($contest->can_view)
   {
     return Redirect::to($contest->canonical_url);
@@ -94,6 +110,10 @@ Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest
 
 Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   $state = Input::get('s',1);
   if(!$contest->is_joinable)
   {
@@ -111,6 +131,10 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
 Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/refresh', ['as'=>'contest.candidate.refresh', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
   $contest = Contest::find($contest_id);
   $candidate = Candidate::find($candidate_id);
+  if(!$contest || !$candidate)
+  {
+    App::abort(404);
+  }
   $contest->add_user();
   Session::put('success', "Your information has been refreshed.");
   return Redirect::to($candidate->canonical_url);
@@ -119,6 +143,10 @@ Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slu
 Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_join', 'uses'=>function($id) {
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
+  if(!$contest || !$candidate)
+  {
+    App::abort(404);
+  }
   return View::make('contests.after_join')->with(['candidate'=>$candidate, 'contest'=>$contest]);
 }]);
 
@@ -186,6 +214,10 @@ Route::get('/facebook/authorize/retry', ['as'=>'facebook.authorize.retry', 'uses
 Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>function($id) {
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
+  if(!$contest || !$candidate)
+  {
+    App::abort(404);
+  }
   list($result,$v) = Auth::user()->vote_for($candidate);
   $qs = [
     'v'=>$result,
@@ -197,6 +229,10 @@ Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>fun
 Route::get('/vote/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_vote', 'uses'=>function($id) {
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
+  if(!$contest || !$candidate)
+  {
+    App::abort(404);
+  }
   return View::make('candidates.after_vote')->with(['candidate'=>$candidate, 'contest'=>$contest]);
 }]);
 
@@ -204,6 +240,10 @@ Route::get('/vote/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_vote', 
 Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=>function($id) {
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
+  if(!$contest || !$candidate)
+  {
+    App::abort(404);
+  }
   Auth::user()->unvote_for($candidate);
   Session::put('success', "Ok, you unvoted {$candidate->name}");
   return Redirect::to($contest->canonical_url);
@@ -211,6 +251,10 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
 
 Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>function($id) {
   $contest = Contest::find($id);
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   $fb = \OAuth::consumer( 'Facebook' );
   //$has_token = $fb->getStorage()->hasAccessToken("Facebook");
 
@@ -251,14 +295,26 @@ Route::post('sponsor/create/', 'SponsorController@create');
 
 Route::get('/hot', ['as'=>'contests.hot', 'uses'=>function() {
   $contests = Contest::hot();
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   return View::make('home')->with(['contests'=>$contests]);
 }]);
 Route::get('/new', ['as'=>'contests.new', 'uses'=>function() {
   $contests = Contest::recent();
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   return View::make('home')->with(['contests'=>$contests]);
 }]);
 Route::get('/top', ['as'=>'contests.top', 'uses'=>function() {
   $contests = Contest::top();
+  if(!$contest)
+  {
+    App::abort(404);
+  }
   return View::make('home')->with(['contests'=>$contests]);
 }]);
 
@@ -309,6 +365,10 @@ Route::get('/inbox', ['before'=>'auth', 'as'=>'inbox', 'users'=>function() {
 
 Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'users'=>function($message_id) {
   $message = Message::find($message_id);
+  if(!$message)
+  {
+    App::abort(404);
+  }
   $message->read_at = Carbon::now();
   $message->save();
   return View::make('inbox.read', ['message'=>$message]);
