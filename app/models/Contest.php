@@ -296,6 +296,12 @@ class Contest extends Eloquent
     $i->candidate_id = $can->id;
     $i->save();
     
+    Message::create([
+      'user_id'=>$user->id,
+      'subject'=>"Image review in progress",
+      'body'=>View::make('admin.images.submitted', ['image'=>\Image::find($i->id),])
+    ]);
+    
     $user->vote_for($can);
     
     if($is_new)

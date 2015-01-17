@@ -6,14 +6,25 @@ class Candidate extends Eloquent
   public static $intervals = [0,24];
   public static $on_fire_threshold = .1;
 
-  function getRefreshUrlAttribute()
-  {
-    return r('contest.candidate.refresh', ['contest_id'=>$this->contest->id, 'contest_slug'=>$this->contest->slug, 'candidate_id'=>$this->id, 'candidate_slug'=>$this->slug]);
-  }
-  
   public function getDates()
   {
     return ['created_at', 'updated_at', 'first_voted_at', 'dropped_at'];
+  }
+  
+  public function images()
+  {
+    return $this->hasMany('Image');
+  }
+  
+
+  function getHasPendingImagesAttribute()
+  {
+    return $this->images()->whereNull('screened_at')->count() > 0;
+  }
+  
+  function getRefreshUrlAttribute()
+  {
+    return r('contest.candidate.refresh', ['contest_id'=>$this->contest->id, 'contest_slug'=>$this->contest->slug, 'candidate_id'=>$this->id, 'candidate_slug'=>$this->slug]);
   }
   
   public function getIsActiveAttribute()

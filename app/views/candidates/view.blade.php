@@ -23,6 +23,11 @@
         Please note - the image for this voting profile is under review. No voting can take place until the image has been approved.
       </div>
     @else
+      @if($candidate->user_id == Auth::user()->id && $candidate->has_pending_images)
+        <div class="alert alert-warning">
+          You recently submitted one or more images for review. We will notify you when our review is complete. Please allow 24-48 hours.
+        </div>
+      @endif
       @if($contest->sponsors->count()>0)
         <?php $sponsor = $contest->random_sponsor; ?>
         <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>

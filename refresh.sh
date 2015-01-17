@@ -7,7 +7,7 @@ mysqldump -uroot -pr00t coolbeta > db.sql
 rsync -avv ../pick.cool/html/i/ html/i
 
 # locally:
-# scp mediatemple:~/domains/next.pick.cool/db.sql .
-# rsync -avv mediatemple:~/domains/next.pick.cool/html/i/ html/i
+# scp user@ftp.pick.cool:~/next.pick.cool/db.sql .
+# rsync -avv user@ftp.pick.cool:~/next.pick.cool/html/i/ html/i
 
 
