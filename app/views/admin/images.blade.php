@@ -18,10 +18,16 @@
 		<tbody>
 			<?php foreach ($images as $image):?>
 				<tr>
-					<td><img style="max-width:150px;" src="{{{$image->url('thumb')}}}" /></td>
 					<td>
-						<a class="btn btn-sm btn-success" href="?a={{{$image->id}}}">Approve</a>
-						<a class="btn btn-sm btn-danger" href="?d={{{$image->id}}}">Decline</a>
+            <a href="{{{$image->url('original')}}}">
+              <img style="max-width:300px;" src="{{{$image->url('mobile')}}}" />
+            </a>
+          </td>
+					<td>
+						<a class="btn btn-sm btn-default" href="{{{r('admin.images.status', ['image_id'=>$image->id, 'status'=>'approved'])}}}"><i class="fa fa-check"></i> Approve Standard</a>
+						<a class="btn btn-sm btn-success" href="{{{r('admin.images.status', ['image_id'=>$image->id, 'status'=>'featured'])}}}"><i class="fa fa-user"></i> Approve Featured</a>
+						<a class="btn btn-sm btn-warning" href="{{{r('admin.images.status', ['image_id'=>$image->id, 'status'=>'adult'])}}}"><i class="fa fa-flag"></i> Approve 18+</a>
+						<a class="btn btn-sm btn-danger" href="{{{r('admin.images.status', ['image_id'=>$image->id, 'status'=>'declined'])}}}"><i class="fa fa-ban"></i> Decline</a>
 					</td>
 				</tr>
 			<?php endforeach;?>

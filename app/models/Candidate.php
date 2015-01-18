@@ -11,12 +11,46 @@ class Candidate extends Eloquent
     return ['created_at', 'updated_at', 'first_voted_at', 'dropped_at'];
   }
   
+  function manage_url($cmd_name, $cmd_id)
+  {
+    return r('contests.candidate.manage', [$this->contest->id, $this->contest->slug, $this->id, $this->slug, $cmd_name, $cmd_id]);
+  }
+  
+  function getAddImageUrlAttribute()
+  {
+    return r('contests.candidates.images.add', [$this->contest->id, $this->contest->slug, $this->id, $this->slug]);
+  }
+  
+  function getIsOwnerAttribute()
+  {
+    return $this->is_owner();
+  }
+  
+  function is_owner($user=null)
+  {
+    if(!$user) $user = Auth::user();
+    if(!$user) return false;
+    return $user->id == $this->user_id;
+  }
+
   public function images()
   {
     return $this->hasMany('Image');
   }
   
-
+  public function getWeightedImagesAttribute()
+  {
+    $candidate = $this;
+    $images = $this->images()->get()->sort(function($a,$b) use($candidate) {
+      if($candidate->image_id == $a->id) return -1;
+      if($candidate->image_id == $b->id) return 1;
+      $weight = $a->weight - $b->weight;
+      if($weight) return $weight;
+      return $a->created_at->timestamp - $b->created_at->timestamp;
+    })->values();
+    return $images;
+  }
+  
   function getHasPendingImagesAttribute()
   {
     return $this->images()->whereNull('screened_at')->count() > 0;
@@ -24,7 +58,7 @@ class Candidate extends Eloquent
   
   function getRefreshUrlAttribute()
   {
-    return r('contest.candidate.refresh', ['contest_id'=>$this->contest->id, 'contest_slug'=>$this->contest->slug, 'candidate_id'=>$this->id, 'candidate_slug'=>$this->slug]);
+    return r('contests.candidate.refresh', ['contest_id'=>$this->contest->id, 'contest_slug'=>$this->contest->slug, 'candidate_id'=>$this->id, 'candidate_slug'=>$this->slug]);
   }
   
   public function getIsActiveAttribute()
@@ -86,7 +120,7 @@ class Candidate extends Eloquent
   
   function getAfterJoinUrlAttribute()
   {
-    return r("candidates.after_join", [$this->id]);
+    return r("contests.candidates.after_join", [$this->id]);
   }
 
   function getAfterVoteUrlAttribute()
@@ -105,9 +139,7 @@ class Candidate extends Eloquent
   }
   function is_writein($user=null)
   {
-    if(!$user) $user = Auth::user();
-    if(!$user) return false;
-    return $this->user_id == $user->id;
+    return $this->is_owner($user);
   }
   
   function getIsVoteableAttribute()
@@ -137,12 +169,12 @@ class Candidate extends Eloquent
     
   function canonical_url($contest)
   {
-    return r('contest.candidate.view', [$contest->id, $contest->slug(), $this->id, $this->slug]);
+    return r('contests.candidate.view', [$contest->id, $contest->slug(), $this->id, $this->slug]);
   }
   
   function getUnfollowUrlAttribute()
   {
-    return r('contest.candidate.unfollow', [$this->id]);
+    return r('contests.candidate.unfollow', [$this->id]);
   }
   
   function getUserAttribute()

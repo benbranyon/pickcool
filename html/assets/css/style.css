@@ -2,18 +2,12 @@
   padding-top: 70px;
   padding-bottom: 20px;
 }
-/* Everything but the jumbotron gets side spacing for mobile first views */.header, .marketing, .footer {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-/* Custom page header */.header {
-  border-bottom: 1px solid #e5e5e5;
-}
-/* Make the masthead heading the same height as the navigation */.header h3 {
-  padding-bottom: 19px;
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
+.header {
+  border: 1px solid #e2e2e2;
+  border-radius: 5px;
+  padding: 3px;
+  background-color: #f7fbff;
+  margin-bottom: 10px;
 }
 .navbar.navbar-default {
   background-color: #fff;
@@ -139,17 +133,49 @@ button, input, optgroup, select, textarea {
 .fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget iframe[style] {
   width: 100% !important;
 }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
 h1 {
   font-size: 14px;
 }
 h2 {
   font-size: 12px;
 }
+h2 .badge {
+  font-size: 10px;
+}
 h3 {
   font-size: 11px;
 }
 h4 {
   font-size: 10px;
+}
+.header h1, .header h2, .header h3, .header h4, .header h5, .header h6 {
+  text-align: center;
+}
+@media screen and (min-width: 400px) {
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 15px;
+  }
+  h3 {
+    font-size: 14px;
+  }
+  h4 {
+    font-size: 13px;
+  }
+}
+.body h1, .body h2 {
+  text-align: center;
+}
+.body h3, .body h4, .body h5, .body h6 {
+  text-align: left;
+  border-bottom: 1px solid gray;
+  margin-top: 20px;
 }
 .realtime th {
   text-align: center;
@@ -158,10 +184,10 @@ h1.big {
   font-size: 20px;
 }
 .btn-full {
-  width: 100%;
+  width: 93%;
   margin-bottom: 5px;
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 .btn-half {
   width: 45%;
@@ -191,6 +217,20 @@ h1.big {
 .unread {
   color: red;
 }
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #e86f59;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #ececec;
+  border-radius: 10px;
+}
 .badges .badge {
   background-color: rgba(232, 232, 232, 0.85);
   padding: 3px 3px;
@@ -217,6 +257,7 @@ h1.big {
   margin-left: auto;
   margin-right: auto;
   display: block;
+  width: 100%;
 }
 .candidate-large img {
   border-radius: 3px;
@@ -225,12 +266,13 @@ h1.big {
 }
 @media (min-width: 0px) {
   .candidate-large {
-    width: 280px;
+    max-width: 280px;
+    max-width: 300px;
   }
 }
 @media (min-width: 400px) {
   .candidate-large {
-    width: 300px;
+    max-width: 300px;
   }
 }
 .candidate-large .badges {
@@ -305,16 +347,21 @@ h1.big {
   height: 81px;
   margin: 0px;
 }
+.body {
+  text-align: left;
+}
 .countdown {
   width: 100%;
   max-width: 380px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 0px;
 }
 .countdown .times td {
   font-size: 12px;
   color: #797979;
   width: 25%;
+  padding: 0px;
 }
 .countdown .times td.seconds {
   color: red;
@@ -322,6 +369,16 @@ h1.big {
 .countdown .labels {
   font-size: 10px;
   text-transform: uppercase;
+}
+.alert {
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  margin: 5px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .list .contest .candidate {
   border: 1px solid #ddd;

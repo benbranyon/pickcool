@@ -37,9 +37,20 @@ class Contest extends Eloquent
     return $total * 4;
   }
     
+
+  function getSmallUrlAttribute()
+  {
+    return r('contest.view', [$this->id, $this->slug, 'small']);
+  }
+
+  function getLargeUrlAttribute()
+  {
+    return r('contest.view', [$this->id, $this->slug, 'large']);
+  }
+
   function getRealtimeUrlAttribute()
   {
-    return r('contest.realtime', [$this->id, $this->slug]);
+    return r('contest.view', [$this->id, $this->slug, 'realtime']);
   }
 
   function getJoinUrlAttribute()
@@ -292,41 +303,21 @@ class Contest extends Eloquent
     $can->name = $user->full_name;
     $can->save();
     
-    $i = \Image::from_url($user->profile_image_url,true);
-    $i->candidate_id = $can->id;
-    $i->save();
-    
-    Message::create([
-      'user_id'=>$user->id,
-      'subject'=>"Image review in progress",
-      'body'=>View::make('admin.images.submitted', ['image'=>\Image::find($i->id),])
-    ]);
-    
-    $user->vote_for($can);
-    
     if($is_new)
     {
-      $u = $user;
-      $c = $can;
-      $contest = $this;
-      $vars = [
-        'subject'=>"[{$contest->title}] - Entry Confirmation",
-        'to_email'=>$u->email,
-        'candidate_full_name'=>$u->full_name,
-        'candidate_first_name'=>$u->first_name,
-        'contest_name'=>$contest->title,
-        'candidate_url'=>$c->canonical_url,
-        'help_url'=>'http://pick.cool/help/sharing',
-        'call_to_action'=>"Vote {$u->full_name} in {$contest->name}",
-        'hashtags'=>['PickCool', $u->hash_tag, $contest->hash_tag],
-        'sponsors'=>$contest->sponsors,
-      ];
-      $message = $contest->password ? 'emails.candidate-join-pick-earlybird' : 'emails.candidate-join-pick';
-      \Mail::send($message, $vars, function($message) use ($vars)
-      {
-          $message->to($vars['to_email'])->subject($vars['subject']);
-      });      
+      $can = Candidate::find($can->id);
+      Message::create([
+        'user_id'=>$user->id,
+        'subject'=>"Pick joined - pending verification",
+        'body'=>View::make('messages.join_verify')->with([
+          'candidate'=>$can,
+          'contest'=>$can->contest,
+        ]),
+      ]);
     }
+      
+    $user->vote_for($can);
+
     return $can;
   }
 }

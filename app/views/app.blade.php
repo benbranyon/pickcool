@@ -83,7 +83,12 @@
       <div class="clearfix">
         <ul class="subnav list-inline pull-right">
           @if(Auth::user())
-            <li>Welcome, {{{Auth::user()->first_name}}}.</li>
+            <?php $candidate = Candidate::whereUserId(Auth::user()->id)->orderBy('created_at', 'desc')->first(); ?>
+            @if($candidate)
+              <li><a href="{{{$candidate->canonical_url}}}">My Pick</a>
+            @else
+              <li>Welcome, {{{Auth::user()->first_name}}}.</li>
+            @endif
           @endif
           <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
           @if(Auth::user())
@@ -108,20 +113,11 @@
         <?php Session::forget($kind); ?>
       @endforeach
           @yield('content')
-          
-          <div class="clearfix">
-            <ul class="login-list list-inline pull-right">
-              @if(Auth::check() && Auth::user()->is_contributor)
-                <li ng-if="current_user.is_contributor" class="btn btn-xs btn-primary" ui-sref="contests-create"><i class="fa fa-plus"></i> Submit</li>
-              @endif
-            </ul>
-          </div>
-
           <footer class="footer">
             <div class="row">
               <div class="col-sm-12">
                 <ul class="pull-left nav nav-pills footer-nav">
-                  <li>&copy; pick.cool 2014 - Now with sour apple!</li>
+                  <li>&copy; pick.cool 2014 - Now with Green Apple!</li>
                 </ul>
               </div>
             </div>
