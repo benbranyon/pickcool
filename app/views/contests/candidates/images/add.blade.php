@@ -1,10 +1,14 @@
 @extends('contests.candidates.layout')
 
+@section('head')
+<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+@stop
+
 @section('contests.candidates.content')
   <h1>Add Picture</h1>
   <p>Upload a picture to display for voting. Our content approval team will review it ASAP.
   {{Form::open(['files'=>true])}}
-    Picture: {{Form::file('picture')}}<br/> {{Form::submit('Upload')}}
+    Picture: {{Form::file('picture', ['id'=>'picture'])}}<br/> {{Form::submit('Upload')}}
   {{Form::close()}}
   <h2>Picture Guidelines</h2>
   <h3>Standard Approval</h3>
@@ -26,4 +30,18 @@
   </ul>
   <h3>18+ Approval</h3>
   This means we approved the picture to be used in your portfolio. These pictures can be R or X rated, but are only visible to verified members 18+ years of age. They never show to anonymous visitors, on the leaderboard, or in share links.
+  <script>
+    if (navigator.userAgent.match(/FB/)) {
+      $('#picture').attr('multiple',true);
+      $('#picture').change(function(){
+          if ($('#picture')[0].files.length > 1) {
+            var control = $("#picture");
+            control.replaceWith( control = control.clone( true ) );
+            setTimeout(function() {
+              alert("Please upload 1 file at a time.");
+            },250)
+          }
+      });
+    }    
+  </script>
 @stop
