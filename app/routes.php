@@ -2,10 +2,12 @@
 
 function r($route_name, $params=[], $absolute=true)
 {
+/*
   if($_ENV['USE_SSL'])
   {
     return preg_replace("/^http:/", "https:", route($route_name, $params, $absolute));
   }
+*/
 
   return route($route_name, $params, $absolute);
 }

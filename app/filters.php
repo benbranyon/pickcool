@@ -25,7 +25,7 @@ App::before(function($request, $response)
 {
   if(!$_ENV['IP_WHITELIST']) return;
   $allowed = explode(',', $_ENV['IP_WHITELIST']);
-  $ip = Request::getClientIp();
+  $ip = Request::server('HTTP_X_FORWARDED_FOR', Request::getClientIp());
   if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ip, $allowed))
   {
     return Redirect::away('https://pick.cool');
