@@ -16,8 +16,9 @@
       <div class="contest">
         <h2 class="title-header"><a class="title" href="{{{$contest->canonical_url}}}">{{{$contest->title}}}</a></h2>
         <div class="votes-total">
-          <i class="fa fa-check-square"></i> {{{$contest->vote_count_0}}} 
-          Votes @if($contest->writein_enabled && !$contest->is_ended)| <span class="text-success">OPEN pick - Join Now</span>@endif      
+          <i class="fa fa-check-square"></i> 
+            {{{$contest->vote_count_0}}} Votes
+          @if($contest->writein_enabled && !$contest->is_ended)| <span class="text-success">OPEN pick - Join Now</span>@endif      
           @if($contest->is_ended)| <span class="text-danger" ng-if="$contest->is_ended">Voting has ended.</span>@endif
         </div>
         @if($contest->is_editable)
@@ -34,10 +35,12 @@
                     @if($candidate->is_on_fire)
                       <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
                     @endif
-                    @if($candidate->is_giver)
-                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span>
-                    @endif
-                    <span class='badge badge-vote-count' title="{{{$candidate->vote_count_0}}} votes">{{{$candidate->vote_count_0}}}</span>
+                    @foreach($candidate->badges as $badge)
+                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
+                    @endforeach
+                    <span class='badge badge-vote-count' title="{{{$candidate->vote_count_0}}} votes">
+                        {{{$candidate->vote_count_0}}}
+                    </span>
                   </div>
                 </div>
               </a>

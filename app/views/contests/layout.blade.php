@@ -22,7 +22,13 @@
       {{{$contest->title}}}
     </h1>
     <h2>
-      <span class="badge">{{{$contest->vote_count_0}}} votes</span>
+      <span class="badge">
+        @if(isset($contest->vote_count_boost))
+          {{{$contest->vote_count_boost}}} votes
+        @else
+          {{{$contest->vote_count_0}}} votes
+        @endif
+      </span>
       <span class="badge">{{{$contest->candidates->count()}}} picks</span>
       @if($contest->writein_enabled)
         <span class="badge"><span class="text-success">OPEN pick - Join below</span></span>

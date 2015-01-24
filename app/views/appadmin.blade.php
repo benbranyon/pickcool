@@ -88,6 +88,7 @@
                 <li><a href="/admin/contests">Contests</a></li>
                 <li><a href="/admin/candidates">Candidates</a></li>
                 <li><a href="/admin/sponsors">Sponsors</a></li>
+                <li><a href="{{{r('admin.badges')}}}">Badges</a></li>
                 <li><a href="{{{r('admin.images')}}}">Images</a></li>
               </ul>
             </div>

@@ -21,7 +21,9 @@
 		    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 		        {{ Form::label('image_url', 'Image URL') }}
 		        <br />
-		        <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+		        @if(isset($candidate->image_id))
+		        	<img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+		        @endif
 		        {{ Form::text('image_url', null, ['class' => 'form-control']) }}
 		        {{ $errors->first('name', '<p class="help-block">:message</p>') }}
 		    </div>

@@ -99,7 +99,8 @@ class Candidate extends Eloquent
   {
     foreach(self::$intervals as $interval)
     {
-      $columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+      //$columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+      $columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and updated_at < utc_timestamp() - interval {$interval} hour) + (select COALESCE(SUM(vote_weight),0) from badges b inner join badge_candidate cb on b.id = cb.badge_id inner join candidates c on cb.candidate_id = c.id where candidate_id = candidates.id and cb.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
     }
     $columns[] = DB::raw("(select updated_at from votes where candidate_id = candidates.id order by updated_at asc limit 1) as first_voted_at");
     if(Auth::user())
@@ -214,6 +215,11 @@ class Candidate extends Eloquent
   {
     return $this->hasMany('Vote');
   }
+
+  public function badges()
+  {
+    return $this->belongsToMany('Badge')->withPivot('charity_name', 'charity_url');
+  }
   
   function is_editable_by($user)
   {
@@ -223,6 +229,16 @@ class Candidate extends Eloquent
   function is_moderator($user)
   {
     return $this->contest->is_moderator($user);
+  }
+
+  function vote_boost_count()
+  {
+    $boost = 0;
+    foreach($this->badges as $badge)
+    {
+      $boost += $badge->vote_weight;
+    }
+    return $boost;
   }
   
   protected static function boot() {

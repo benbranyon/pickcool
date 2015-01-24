@@ -164,7 +164,8 @@ class Contest extends Eloquent
   {
     foreach(self::$intervals as $interval)
     {
-      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+      //$columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.updated_at < utc_timestamp() - interval {$interval} hour) + (select COALESCE(SUM(b.vote_weight),0) from badges b inner join badge_candidate cb on b.id = cb.badge_id inner join candidates c on cb.candidate_id = c.id where c.contest_id = contests.id and cb.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
     }
     return $columns;
   }

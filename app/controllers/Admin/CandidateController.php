@@ -4,7 +4,7 @@ use Candidate;
 class CandidateController extends \BaseController {
 
 	function index() {
-		$candidates = Candidate::paginate(15);
+		$candidates = Candidate::orderBy('updated_at', 'DESC')->paginate(15);
 		return \View::make('admin.candidates')->with('candidates', $candidates);
 	}
 

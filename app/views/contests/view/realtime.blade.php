@@ -100,11 +100,9 @@
                         <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i> </span> On fire
                       </div>
                     @endif
-                    @if($candidate->is_giver)
-                      <div>
-                        <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span> Charitable Giver
-                      </div>
-                    @endif
+                    @foreach($candidate->badges as $badge)
+                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
+                    @endforeach
                   </div>                  
               </td>
             </tr>
@@ -164,11 +162,9 @@
                         <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i> </span> On fire
                       </div>
                     @endif
-                    @if($candidate->is_giver)
-                      <div>
-                        <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span> Charitable Giver
-                      </div>
-                    @endif
+                    @foreach($candidate->badges as $badge)
+                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
+                    @endforeach
                   </div>                  
               </td>
             </tr>
@@ -228,11 +224,9 @@
                         <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i> </span> On fire
                       </div>
                     @endif
-                    @if($candidate->is_giver)
-                      <div>
-                        <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span> Charitable Giver
-                      </div>
-                    @endif
+                    @foreach($candidate->badges as $badge)
+                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
+                    @endforeach
                   </div>                  
               </td>
             </tr>
@@ -291,11 +285,9 @@
                         <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i> </span> On fire
                       </div>
                     @endif
-                    @if($candidate->is_giver)
-                      <div>
-                        <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span> Charitable Giver
-                      </div>
-                    @endif
+                    @foreach($candidate->badges as $badge)
+                      <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
+                    @endforeach
                   </div>                  
               </td>
             </tr>

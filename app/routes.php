@@ -451,6 +451,23 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
   return Redirect::to($candidate->canonical_url);
 }]);
 
+Route::get('/candidate/charity_boost/{id}', ['as'=>'candidate.charity_boost', 'uses'=>function($id) {
+  $candidate = Candidate::find($id);
+  $contest = $candidate->contest;
+  if(!$contest || !$candidate)
+  {
+    App::abort(404);
+  }
+  $badge = new Badge();
+  $badge->name = 'charity';
+  $badge->vote_weight = 25;
+  $badge->contest_id = $contest->id;
+  $badge->candidate_id = $candidate->id;
+  $badge->save();  
+  Session::put('success', "Ok, {$candidate->name} now has a charity badge");
+  return \Redirect::to('admin/candidates');
+}]);
+
 Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>function($id) {
   $contest = Contest::find($id);
   if(!$contest)
@@ -571,6 +588,8 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
 
     Route::get('images', ['as'=>'admin.images', 'uses'=>'Admin\\ImageController@index']);
     Route::get('images/{image_id}/{status}', ['as'=>'admin.images.status', 'uses'=>'Admin\\ImageController@set_status']);
+
+    Route::get('badges', ['as'=>'admin.badges', 'uses'=>'Admin\\BadgeController@index']);
     
     // Resource Controller for user management, nested so it needs to be relative
     Route::resource('users', 'Admin\\UserController');

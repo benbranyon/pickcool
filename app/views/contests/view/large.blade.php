@@ -22,9 +22,7 @@
           <h1 class="big">
             {{{$candidate->name}}}
           </h1>
-          <h2>
-            {{{$candidate->vote_count_0}}} votes
-          </h2>
+          <h2>{{{$candidate->vote_count_0}}} votes</h2>
           <a class="candidate-large {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >
             <img src="/loading.gif" data-echo="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
             <div class="clearfix">
@@ -32,9 +30,9 @@
                 @if($candidate->is_on_fire)
                   <span class="badge badge-fire" title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours."><i class="fa fa-fire"></i></span>
                 @endif
-                @if($candidate->is_giver)
-                  <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$candidate->charity_name}}}."><i class="fa fa-heart"></i></span>
-                @endif
+                @foreach($candidate->badges as $badge)
+                  <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
+                @endforeach
               </div>
             </div>
           </a>

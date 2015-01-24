@@ -20,7 +20,11 @@
           {{{$candidate->name}}}
         </a>
       </h1>
-      <h3>{{$candidate->vote_count_0}} votes</h3>
+      @if(isset($candidate->vote_count_boost))
+        <h3>{{$candidate->vote_count_boost}} votes</h3>
+      @else
+        <h3>{{$candidate->vote_count_0}} votes</h3>
+      @endif
       <h2><a href="{{{$contest->canonical_url}}}">{{$contest->title}}</a></h2>
       @if($contest->sponsors->count()>0)
         <?php $sponsor = $contest->random_sponsor; ?>
