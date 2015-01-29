@@ -7,7 +7,9 @@
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{r('home')}}}"/>
 <meta property="og:description" content="Vote and watch social contests in real time."/>
-<meta property="og:image" content="{{{$contests[0]->current_winner->image_url('facebook')}}}" />
+@if(isset($contest->current_winner))
+  <meta property="og:image" content="{{{$contests[0]->current_winner->image_url('facebook')}}}" />
+@endif
 @stop
 
 @section('content')
