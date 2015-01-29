@@ -52,6 +52,16 @@
       <?php $sponsor = $contest->random_sponsor; ?>
       <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>
     @endif
+    @if($contest->ticket_url)
+      <hr />
+      <div>
+        Musicians and Models Awards Ceremony. February 19.
+      </div>
+      <div class="text-center buy-tickets-button">
+        <a href="{{{$contest->ticket_url}}}" class="btn btn-md btn-primary">Buy Tickets</a>
+      </div>
+      <hr />     
+    @endif
     @if($contest->is_ended)
       <div class="text-danger" ng-if="$contest->is_ended">
         Voting has ended.
