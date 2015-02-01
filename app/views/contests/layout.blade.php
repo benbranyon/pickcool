@@ -7,7 +7,7 @@
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$contest->canonical_url}}}"/>
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
-@if(isset($contest->current_winner))
+@if(isset($contest->current_winner->image_url('facebook')))
   <meta property="og:image" content="{{{$contest->current_winner->image_url('facebook')}}}?_c={{microtime(true)}}"/>
 @else
   <meta property="og:image" content="{{{ URL::asset('assets/img/pick-cool-og-black.png') }}}"/>
