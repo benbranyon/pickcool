@@ -38,10 +38,18 @@
           </a>
         
           <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-camera"></i> {{{count($candidate->images)}}} More</a>
-          @if($candidate->is_user_vote)
-            <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}"><i class="fa fa-close"></i> Unvote</a>
+          @if($contest->is_ended)
+            @if($candidate->is_user_vote)
+              <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}" disabled="disabled"><i class="fa fa-close"></i> Unvote</a>
+            @else
+              <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->vote_url}}}" disabled="disabled"><i class="fa fa-check"></i> Vote</a>
+            @endif
           @else
-            <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->vote_url}}}"><i class="fa fa-check"></i> Vote</a>
+            @if($candidate->is_user_vote)
+              <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}"><i class="fa fa-close"></i> Unvote</a>
+            @else
+              <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->vote_url}}}"><i class="fa fa-check"></i> Vote</a>
+            @endif
           @endif
           <button class="btn btn-md btn-primary btn-half" onclick="share({{{json_encode($candidate->canonical_url)}}})"><i class="fa fa-facebook"></i> Share</button>
           <hr/>
