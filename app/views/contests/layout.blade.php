@@ -9,6 +9,8 @@
 <meta property="og:description" content="{{{preg_replace("/\n/","&nbsp;&nbsp;", strip_tags(Markdown::render($contest->description)))}}}"/>
 @if(isset($contest->current_winner))
   <meta property="og:image" content="{{{$contest->current_winner->image_url('facebook')}}}?_c={{microtime(true)}}"/>
+@else
+  <meta property="og:image" content="/assets/img/pick-cool-og-black.png"/>
 @endif
 <script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
 @stop
