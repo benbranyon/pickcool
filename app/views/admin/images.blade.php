@@ -12,7 +12,9 @@
 		<thead>
 			<tr>
 				<th>Image</th>
-				<th></th>
+				<th>Candidate</th>
+				<th>Contest</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -22,6 +24,9 @@
             <a href="{{{$image->url('original')}}}">
               <img style="max-width:300px;" src="{{{$image->url('mobile')}}}" />
             </a>
+          </td>
+          <td>{{{$image->candidate->name}}}</td>
+          <td>{{{$image->candidate->contest->title}}}
           </td>
 					<td>
 						<a class="btn btn-sm btn-default" href="{{{r('admin.images.status', ['image_id'=>$image->id, 'status'=>'approved'])}}}"><i class="fa fa-check"></i> Approve Standard</a>
