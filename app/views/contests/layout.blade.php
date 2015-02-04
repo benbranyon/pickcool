@@ -193,7 +193,8 @@
               {{{$sponsor->description}}}
               @if($sponsor->name == 'Marked Studios')
                 <br/>
-                Recommended Charity <a href="https://nvchildrenscancer.org/">NNCCF</a>
+                <br/>
+                <strong>Recommended Charity:</strong> <a href="https://nvchildrenscancer.org/">NNCCF</a>
               @endif
             </div>
           @endforeach
