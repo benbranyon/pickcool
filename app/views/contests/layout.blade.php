@@ -191,9 +191,13 @@
               <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a>
               <br/>
               {{{$sponsor->description}}}
+              @if($sponsor->name == 'Marked Studios')
+                <br/>
+                Recommended Charity <a href="https://nvchildrenscancer.org/">NNCCF</a>
+              @endif
             </div>
           @endforeach
-          @if(Auth::check())
+          @if(Auth::check() && NULL != NULL)
             <div class="text-center">
               <a href="/sponsor/signup/{{$contest->id}}" class="btn btn-lg btn-primary">Sponsor Signup</a>
             </div>
