@@ -194,7 +194,7 @@
               @if($sponsor->name == 'Marked Studios')
                 <br/>
                 <br/>
-                <strong>Recommended Charity:</strong> <a href="https://nvchildrenscancer.org/">Northern Nevada Children's Cancer Foundation (NNCCF)</a>
+                <strong>Recommended Charity:</strong> <a href="https://nvchildrenscancer.org/">Northern Nevada Children's Cancer Foundation</a>
               @endif
             </div>
           @endforeach
