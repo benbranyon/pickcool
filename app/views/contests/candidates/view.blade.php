@@ -115,7 +115,13 @@
                 <span class="badge badge-giver" title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
             </td>
             <td align=left>
-              {{{$candidate->name}}} is a Charitable Giver and has pledged either 25% of cash winnings or 4 hours of service, or more, to <a href="{{{$badge->pivot->charity_url}}}">{{{$badge->pivot->charity_name}}}</a>.
+              {{{$candidate->name}}} is a Charitable Giver and has pledged either 
+              @if($badge->pivot->charity_percent)
+                {{{$badge->pivot->charity_percent}}}%
+              @else
+                25%
+              @endif 
+              of cash winnings or 4 hours of service, or more, to <a href="{{{$badge->pivot->charity_url}}}">{{{$badge->pivot->charity_name}}}</a>.
             </td>
           </tr>
         @endforeach

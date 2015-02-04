@@ -218,7 +218,7 @@ class Candidate extends Eloquent
 
   public function badges()
   {
-    return $this->belongsToMany('Badge')->withPivot('charity_name', 'charity_url');
+    return $this->belongsToMany('Badge')->withPivot('charity_name', 'charity_url', 'charity_percent');
   }
   
   function is_editable_by($user)
