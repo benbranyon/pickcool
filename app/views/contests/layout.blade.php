@@ -57,7 +57,7 @@
     @if($contest->ticket_url)
       <hr />
       <div>
-        Musicians and Models Awards Ceremony. February 19.
+        Musicians, Models, and Ink Awards Ceremony. February 19.
       </div>
       <div class="text-center buy-tickets-button">
         <a href="{{{$contest->ticket_url}}}" class="btn btn-md btn-primary">Buy Tickets</a>
