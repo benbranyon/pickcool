@@ -27,8 +27,8 @@
       <p>Are you eligible to enter this pick?</p>
       <p>
         <a href="{{{$contest->canonical_url}}}" class="btn btn-xl btn-danger"><i class="fa fa-arrow-left"></i> No</a>
-          <a href="?s=bands" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
         @if($contest->category->name == 'Bands')
+          <a href="?s=bands" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
         @else
           <a href="?s=picture" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
         @endif
