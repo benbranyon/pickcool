@@ -10,7 +10,7 @@
       @if($candidate->has_pending_images)
         <div class="alert alert-warning">
           @if($contest->category->name == 'Bands')
-            Nobody can vorte or share your profile yet because we are reviewing your image and music submission. Once we have approved your submission voting can begin.
+            Nobody can vote or share your profile yet because we are reviewing your image and music submission. Once we have approved your submission voting can begin.
           @else
             Nobody can vote or share your profile yet because you don't have a FEATURED image. We are still reviewing your images, so sit tight and <a href="{{{$candidate->add_image_url}}}">add more images</a> while you wait. Once we have approved a FEATURED image, voting can begin.
           @endif
