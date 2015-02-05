@@ -9,7 +9,11 @@
     @if($candidate->is_owner)
       @if($candidate->has_pending_images)
         <div class="alert alert-warning">
-          Nobody can vote or share your profile yet because you don't have a FEATURED image. We are still reviewing your images, so sit tight and <a href="{{{$candidate->add_image_url}}}">add more images</a> while you wait. Once we have approved a FEATURED image, voting can begin.
+          @if($contest->category->name == 'Bands')
+            Nobody can vorte or share your profile yet because we are reviewing your image and music submission. Once we have approved your submission voting can begin.
+          @else
+            Nobody can vote or share your profile yet because you don't have a FEATURED image. We are still reviewing your images, so sit tight and <a href="{{{$candidate->add_image_url}}}">add more images</a> while you wait. Once we have approved a FEATURED image, voting can begin.
+          @endif
         </div>
       @else
         @if(!$candidate->image_id)
@@ -31,6 +35,9 @@
           @endif
           @if($contest->is_shareable)
             <a class="btn btn-lg btn-primary btn-half" onclick="share()"><i class="fa fa-facebook"></i> Share</a>
+          @endif
+          @if($contest->category->name == 'Bands')
+            <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->music_url}}}"><i class="fa fa-music"></i> Discover</a>
           @endif
         </div>
       </div>
@@ -128,7 +135,7 @@
       </table>
     @endif
   @endforeach
-  @if($candidate->is_owner)
+  @if($candidate->is_owner && $contest->category->name != 'Bands')
     <div class="clearfix">
       <div class="pull-right">
         <a href="{{{$candidate->add_image_url}}}" class="btn btn-xl btn-primary"><i class="fa fa-plus"></i> Add Image</a>

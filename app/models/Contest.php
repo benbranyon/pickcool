@@ -252,6 +252,11 @@ class Contest extends Eloquent
     return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
   }
 
+  function category()
+  {
+    return $this->belongsTo('Category');
+  }
+
   function ranked_candidates($interval)
   {
     $old = Candidate::$intervals;

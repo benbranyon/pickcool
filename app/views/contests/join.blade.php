@@ -20,19 +20,18 @@
     @endif
     @if($state=='rules')
       <p>Read and agree to the pick rules to make sure you are eligible.</p>
-      <div style="max-height: 300px;
-overflow-y: auto;
-border: 1px solid rgb(231, 230, 230);
-padding: 5px;
-margin: 5px;
-border-radius: 3px;">
+      <div style="max-height: 300px;overflow-y: auto;border: 1px solid rgb(231, 230, 230);padding: 5px;margin: 5px;border-radius: 3px;">
         <h2>PICK RULES</h2>
         {{Markdown::render($contest->rules)}}
       </div>
       <p>Are you eligible to enter this pick?</p>
       <p>
         <a href="{{{$contest->canonical_url}}}" class="btn btn-xl btn-danger"><i class="fa fa-arrow-left"></i> No</a>
-        <a href="?s=picture" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
+          <a href="?s=bands" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
+        @if($contest->category->name == 'Bands')
+        @else
+          <a href="?s=picture" class="btn btn-xl btn-success"><i class="fa fa-arrow-right"></i> Yes, continue</a>
+        @endif
       </p>
     @endif
     @if($state=='picture')
@@ -58,6 +57,22 @@ border-radius: 3px;">
         <li>No extreme angles 
         <li>Busy backgrounds or backgrounds featuring ordinary residential settings (couches, bathrooms, doors, etc).
       </ul>
+    @endif
+    @if($state=='bands')
+      <h1>Band Signup</h1>
+      {{Form::open(['url'=>Request::url()."?s=bands", 'files'=>true])}}
+        Name : {{ Form::text('name', null, ['id' => 'name']) }}
+        <br />
+        Picture: {{Form::file('image', ['id'=>'picture'])}}
+        <br/> 
+        Music URL: {{ Form::text('music_url', null, ['id' => 'name']) }}
+        <br />
+        {{Form::submit('Submit')}}
+      {{Form::close()}}
+      <h2>Music Guidelines</h2>
+      <p> 
+        Please enter the url to a page where voters can check out your music!
+      </p>
     @endif
     @if($state=='preview')
       <div class="clearfix">
