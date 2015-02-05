@@ -266,6 +266,22 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
   }
   if($state == 'bands')
   {
+    if (Request::isMethod('post'))
+    {
+      $rules = array(
+          'name' => array('required'),
+          'music_url'       => array('required', 'url')
+      );
+
+      $validation = Validator::make(Input::all(), $rules);
+
+      if ($validation->fails())
+      {
+          // Validation has failed.
+          return Redirect::to(r('contest.join', [$contest->id, 's'=>'bands']))->withErrors($validation);
+      }
+    }
+
     $file = Input::file('image');
     $name = Input::get('name');
     $music_url = Input::get('music_url');

@@ -62,10 +62,12 @@
       <h1>Band Signup</h1>
       {{Form::open(['url'=>Request::url()."?s=bands", 'files'=>true])}}
         Name : {{ Form::text('name', null, ['id' => 'name']) }}
+        {{ $errors->first('name', '<p class="help-block">:message</p>') }}
         <br />
         Picture: {{Form::file('image', ['id'=>'picture'])}}
         <br/> 
         Music URL: {{ Form::text('music_url', null, ['id' => 'name']) }}
+        {{ $errors->first('music_url', '<p class="help-block">:message</p>') }}
         <br />
         {{Form::submit('Submit')}}
       {{Form::close()}}
