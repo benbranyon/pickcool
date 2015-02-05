@@ -277,7 +277,6 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
 
       if ($validation->fails())
       {
-        print_r('here');exit;
           // Validation has failed.
           return Redirect::to(r('contest.join', [$contest->id, 's'=>'bands']))->withErrors($validation);
       }
