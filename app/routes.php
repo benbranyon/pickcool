@@ -284,6 +284,8 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
       $file = Input::file('image');
       $name = Input::get('name');
       $music_url = Input::get('music_url');
+      $bio = Input::get('bio');
+      $youtube_url = Input::get('youtube_url');
       if(!is_a($file, 'Symfony\Component\HttpFoundation\File\UploadedFile'))
       {
         Session::put('danger', 'Please upload an image file before continuing.');
@@ -305,6 +307,8 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
           $can->user_id = $user->id;
           $can->name = $name;
           $can->music_url = $music_url;
+          $can->youtube_url = $youtube_url;
+          $can->bio = $bio;
           $can->save();
           $can = Candidate::find($can->id);
           Message::create([

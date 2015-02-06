@@ -61,17 +61,37 @@
     @if($state=='bands')
       <h1>Band Signup</h1>
       {{Form::open(['url'=>Request::url()."?s=bands", 'files'=>true])}}
-        Name : {{ Form::text('name', null, ['id' => 'name']) }}
-
-        {{ $errors->first('name', '<p class="help-block">:message</p>') }}
+        <fieldset>
+          <legend>Required</legend>
+          <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+            <label for="name">Name</label>
+            {{ Form::text('name', null, ['id' => 'name', 'class' => 'form-control']) }}
+            {{ $errors->first('name', '<p class="help-block">:message</p>') }}
+          </div>
+          <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+            <label>Picture</label>
+            {{Form::file('image', ['id'=>'picture'])}}
+          </div> 
+          <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+            <label for="music_url">Music URL</label>
+            {{ Form::text('music_url', null, ['id' => 'name', 'class' => 'form-control']) }}
+          </div>
+          
+          {{ $errors->first('music_url', '<p class="help-block">:message</p>') }}
         <br />
-        Picture: {{Form::file('image', ['id'=>'picture'])}}
-        <br/> 
-        Music URL: {{ Form::text('music_url', null, ['id' => 'name']) }}
-        
-        {{ $errors->first('music_url', '<p class="help-block">:message</p>') }}
-        <br />
-        {{Form::submit('Submit')}}
+        </fieldset>
+        <fieldset>
+          <legend>Extras</legend>
+            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+              <label>Bio</label>
+              {{ Form::textarea('bio', null, ['id' => 'name', 'class'=>'form-control']) }}
+            </div>
+            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+              <label>Youtube URL</label>
+              {{ Form::text('youtube_url', null, ['id' => 'name', 'class'=>'form-control']) }}
+            </div>
+        </fieldset>
+        {{Form::submit('Submit', array('class' => 'btn btn-md btn-primary'))}}
       {{Form::close()}}
       <h2>Music Guidelines</h2>
       <p> 

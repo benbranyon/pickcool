@@ -104,6 +104,21 @@
           </div>      
         @endif
     </div>
+    @if($contest->category->name == 'Bands')
+      @if(isset($candidate->bio))
+        <div>
+          Bio: {{{$candidate->bio}}}
+        </div>
+        <br />
+      @endif
+      @if(isset($candidate->youtube_url))
+        <div style=" position: relative;width:100%;height:0;padding-bottom:60%;">
+          <?php preg_match('/[\\?\\&]v=([^\\?\\&]+)/',$candidate->youtube_url,$matches);?>
+          <iframe width="100%" height="100%" style="position: absolute;top: 0;left: 0;" src="http://www.youtube.com/embed/<?php echo $matches[1];?>" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <br />
+      @endif
+    @endif
     @if($is_featured)
       <table class="table badges">
         @if($candidate->is_on_fire)
