@@ -14,6 +14,8 @@
 				<th>Image</th>
 				<th>Candidate</th>
 				<th>Contest</th>
+				<th>Music URL</th>
+				<th>Youtube URL</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -25,8 +27,26 @@
               <img style="max-width:300px;" src="{{{$image->url('mobile')}}}" />
             </a>
           </td>
-          <td>{{{$image->candidate->name}}}</td>
-          <td>{{{$image->candidate->contest->title}}}
+          <td>
+          	@if(isset($image->candidate->name))
+          		{{{$image->candidate->name}}}
+          	@endif
+          </td>
+          <td>
+          	@if(isset($image->candidate->contest->title))
+          		{{{$image->candidate->contest->title}}}
+          	@endif
+          </td>
+          <td>
+          	@if(isset($image->candidate->youtube_url))
+          		{{{$image->candidate->youtube_url}}}
+          	@endif
+          </td>
+          <td>
+          	@if(isset($image->candidate->music_url))
+          		{{{$image->candidate->music_url}}}
+          	@endif
+          </td>
           </td>
 					<td>
 						<a class="btn btn-sm btn-default" href="{{{r('admin.images.status', ['image_id'=>$image->id, 'status'=>'approved'])}}}"><i class="fa fa-check"></i> Approve Standard</a>
