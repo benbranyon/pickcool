@@ -107,7 +107,7 @@
     @if($contest->category->name == 'Bands')
       @if(isset($candidate->bio))
         <div>
-          Bio: {{{$candidate->bio}}}
+          <strong>Bio:</strong> {{{$candidate->bio}}}
         </div>
         <br />
       @endif
