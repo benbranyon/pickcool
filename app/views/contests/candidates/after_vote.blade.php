@@ -24,7 +24,7 @@
   </div>
     @if($contest->ticket_url)
       <hr />
-      <div>
+      <div style="text-align:center;">
         Musicians, Models, and Ink Awards Ceremony. February 19.
         <img style="max-width:150px;margin:0 auto;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" />
       </div>
