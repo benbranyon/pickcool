@@ -58,6 +58,7 @@
       <hr />
       <div>
         Musicians, Models, and Ink Awards Ceremony. February 19.
+        <img style="max-width:150px;margin:0 auto;" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" />
       </div>
       <hr />     
     @endif
