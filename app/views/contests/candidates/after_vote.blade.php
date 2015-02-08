@@ -26,9 +26,7 @@
       <hr />
       <div>
         Musicians, Models, and Ink Awards Ceremony. February 19.
-      </div>
-      <div class="text-center buy-tickets-button">
-        <a href="{{{$contest->ticket_url}}}" class="btn btn-md btn-primary">Buy Tickets</a>
+        <img style="max-width:150px;margin:0 auto;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" />
       </div>
       <hr />     
     @endif
