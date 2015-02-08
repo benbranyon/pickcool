@@ -59,9 +59,6 @@
       <div>
         Musicians, Models, and Ink Awards Ceremony. February 19.
       </div>
-      <div class="text-center buy-tickets-button">
-        <a href="{{{$contest->ticket_url}}}" class="btn btn-md btn-primary">Buy Tickets</a>
-      </div>
       <hr />     
     @endif
     @if($contest->is_ended)
