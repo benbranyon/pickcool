@@ -14,8 +14,8 @@
 				<th>Image</th>
 				<th>Candidate</th>
 				<th>Contest</th>
-				<th>Music URL</th>
 				<th>Youtube URL</th>
+				<th>Music URL</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
