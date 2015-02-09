@@ -75,6 +75,7 @@
           <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
             <label for="music_url">Music URL</label>
             {{ Form::text('music_url', null, ['id' => 'name', 'class' => 'form-control']) }}
+            <p class="help-block">Enter the url to a page where people can check out more of your music.</p>
           </div>
           
           {{ $errors->first('music_url', '<p class="help-block">:message</p>') }}
@@ -89,6 +90,7 @@
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
               <label>Youtube URL</label>
               {{ Form::text('youtube_url', null, ['id' => 'name', 'class'=>'form-control']) }}
+              <p class="help-block">Enter the url to a youtube video you would like embeded on your profile page.</p>
             </div>
         </fieldset>
         {{Form::submit('Submit', array('class' => 'btn btn-md btn-primary'))}}
