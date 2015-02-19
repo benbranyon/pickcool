@@ -15,7 +15,6 @@
 @section('content')
   <div class="list">
     @foreach($contests as $contest)
-      @if($contest->id != 21)
       <div class="contest">
         <h2 class="title-header"><a class="title" href="{{{$contest->canonical_url}}}">{{{$contest->title}}}</a></h2>
         <div class="votes-total">
@@ -54,7 +53,6 @@
           @endif
         </ul>
       </div>
-      @endif
     @endforeach
   </div>
 @stop
