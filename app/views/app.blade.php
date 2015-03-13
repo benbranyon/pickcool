@@ -72,7 +72,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
           <ul class="nav navbar-nav navbar-right">
-            <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='contests.hot') ? 'active' : ''}}"><a href="{{{r('contests.hot')}}}">Hot</a></li>
+            <!-- <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='contests.hot') ? 'active' : ''}}"><a href="{{{r('contests.hot')}}}">Hot</a></li> -->
+            <li class="{{Route::currentRouteName()=='contests.hot' ? 'active' : ''}}"><a href="{{{r('contests.hot')}}}">Hot</a></li>
             <li class="{{Route::currentRouteName()=='contests.new' ? 'active' : ''}}"><a href="{{{r('contests.new')}}}"  >New</a></li>
             <li class="{{Route::currentRouteName()=='contests.top' ? 'active' : ''}}"><a href="{{{r('contests.top')}}}" >Top</a></li>
           </ul>
