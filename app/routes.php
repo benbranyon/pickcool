@@ -47,9 +47,10 @@ Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$s
 
 
 Route::get('/', ['as'=>'home', 'uses'=>function() {
-  $contests = Contest::hot();
+  //$contests = Contest::hot();
   //Session::flush();
-  return View::make('home')->with(['contests'=>$contests]);
+  return View::make('landing');
+  //return View::make('home')->with(['contests'=>$contests]);
 }]);
 
 Route::get('/est/{contest_id}/{slug}/{view_mode?}', ['as'=>'contest.view', 'uses'=>function($contest_id, $slug, $view_mode=null) {
