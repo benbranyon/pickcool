@@ -66,7 +66,7 @@
       <hr />
       <div>
         <a style="color:black;" href="https://www.facebook.com/ivyleague.allure?fref=ts">Ivy League Allure Presents Colorado's Favorite Female's Grand Prize of $500</a>
-        <a href="https://www.facebook.com/ivyleague.allure?fref=ts"><img style="max-width:150px;margin:0 auto;" alt="Ivy League Allure" class="img-responsive" src="/assets/img/ivy-league.jpg" /></a>
+        <a href="https://www.facebook.com/ivyleague.allure?fref=ts"><img style="max-width:200px;margin:0 auto;" alt="Ivy League Allure" class="img-responsive" src="/assets/img/ivy-league.jpg" /></a>
       </div>
       <hr />   
     @endif
