@@ -121,15 +121,13 @@
         You are in this pick! Read about <a href="/tips">how to win</a>.
       </div>
     @endif
-    @if(Request::url() === 'live')
-      <div style="max-width:300px; margin-left: auto; margin-right: auto; text-align: center">
-        <div class="btn-group btn-group-justified" role="group" >
-          <a href="{{{$contest->small_url}}}" role="button" class="btn btn-{{{$view_mode=='small' ? 'primary' : 'default'}}}">Small</a>
-          <a href="{{{$contest->large_url}}}" role="button" class="btn btn-{{{$view_mode=='large' ? 'primary' : 'default'}}}">Large</a>
-          <a href="{{{$contest->realtime_url}}}" role="button" class="btn btn-{{{$view_mode=='realtime' ? 'primary' : 'default'}}}">Realtime</a>
-        </div>
+    <div style="max-width:300px; margin-left: auto; margin-right: auto; text-align: center">
+      <div class="btn-group btn-group-justified" role="group" >
+        <a href="{{{$contest->small_url}}}" role="button" class="btn btn-{{{$view_mode=='small' ? 'primary' : 'default'}}}">Small</a>
+        <a href="{{{$contest->large_url}}}" role="button" class="btn btn-{{{$view_mode=='large' ? 'primary' : 'default'}}}">Large</a>
+        <a href="{{{$contest->realtime_url}}}" role="button" class="btn btn-{{{$view_mode=='realtime' ? 'primary' : 'default'}}}">Realtime</a>
       </div>
-    @endif
+    </div>
 
     @yield('contests.content')
     
