@@ -57,15 +57,16 @@
     @if($contest->ticket_url)
       <hr />
       <div>
-        <a style="color:black;" href="https://www.facebook.com/ivyleague.allure?fref=ts">Music, Models, and Ink Awards Ceremony. February 19.</a>
-        <a href="http://www.janugget.com/entertainment/celebrity-showroom.html"><img style="max-width:150px;margin:0 auto;" alt="Ivy League Allure" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" /></a>
+        <a style="color:black;" href="http://www.janugget.com/entertainment/celebrity-showroom.html">Music, Models, and Ink Awards Ceremony. February 19.</a>
+        <a href="http://www.janugget.com/entertainment/celebrity-showroom.html"><img style="max-width:150px;margin:0 auto;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" /></a>
       </div>
       <hr />     
     @endif
     @if($contest->id == 34)
       <hr />
       <div>
-        <a href="https://www.facebook.com/ivyleague.allure?fref=ts"><img style="max-width:150px;margin:0 auto;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/ivy-league.jpg" /></a>
+        <a style="color:black;" href="https://www.facebook.com/ivyleague.allure?fref=ts">Ivy League Allure Presents Colorado's Favorite Female's Grand Prize of $500</a>
+        <a href="https://www.facebook.com/ivyleague.allure?fref=ts"><img style="max-width:150px;margin:0 auto;" alt="Ivy League Allure" class="img-responsive" src="/assets/img/ivy-league.jpg" /></a>
       </div>
       <hr />   
     @endif
