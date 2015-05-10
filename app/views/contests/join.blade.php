@@ -131,7 +131,7 @@
   <script>
     if (navigator.userAgent.match(/FB/)) {
       $('#picture').attr('multiple',true);
-      $('#PictureInstructions').before( "<p>If the upload button is not responding please navigate back to this page using another browser. The FB in-app browser has known issues on Android with File Uploads.</p>" );
+      $('#PictureInstructions').before( "<p class='alert alert-danger'>If the upload button is not responding please navigate back to this page using another browser. The FB in-app browser has known issues on Android with File Uploads.</p>" );
       $('#picture').change(function(){
           if ($('#picture')[0].files.length > 1) {
             var control = $("#picture");
