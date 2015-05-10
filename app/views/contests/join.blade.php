@@ -38,7 +38,7 @@
       <h1>Picture Approval</h1>
       <p>Upload a picture to display for voting. Our content approval team will review it ASAP.
       {{Form::open(['url'=>Request::url()."?s=picture", 'files'=>true])}}
-        Picture: {{Form::file('image', ['id'=>'picture', 'multiple'=>'true'])}}<br/> {{Form::submit('Upload')}}
+        Picture: {{Form::file('image', ['id'=>'picture'])}}<br/> {{Form::submit('Upload')}}
       {{Form::close()}}
       <h2>Picture Guidelines</h2>
       <p>        We want everyone to look their best, including the pick as a whole. Your voting profile will not be active until your picture is approved by our content review team. For faster approval, follow the guidelines below. Our content team may approve or decline a picture at its sole discretion. In general, we like thoughtful, artistic pictures and dislike cell phone or selfie pictures.</p>
