@@ -68,6 +68,7 @@
             {{ Form::text('name', null, ['id' => 'name', 'class' => 'form-control']) }}
             {{ $errors->first('name', '<p class="help-block">:message</p>') }}
           </div>
+          <p id="PictureInstructions">Upload a picture to display for voting. Our content approval team will review it ASAP.</p>
           <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
             <label>Picture</label>
             {{Form::file('image', ['id'=>'picture'])}}
