@@ -33,7 +33,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0">
-    <meta name="description" content="Where you pick what’s cool." />
+    @if(isset($contest->title))
+      <meta name="description" content="{{{$contest->title}}}" /> 
+    @else
+      <meta name="description" content="Where you pick what’s cool." />
+    @endif
     @yield('head')
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
