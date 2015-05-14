@@ -13,7 +13,7 @@
 @stop
 
 @section('content')
-	<h1>Latest Pick Cool Events</h1>
+	<h1>Latest Pick.Cool Events</h1>
 	<hr />
 	<h2>Musicians, Models, and Ink</h2>
 	<h3 style="margin-bottom:10px;">Feb 19th 2015</h3>
