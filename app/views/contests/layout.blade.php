@@ -70,6 +70,14 @@
       </div>
       <hr />   
     @endif
+    @if($contest->id == 35)
+      <hr />
+      <div>
+        <a style="color:black;" href="https://www.facebook.com/pages/The-Decibel-Garden/249098465138620">The Decibel Garden Presents Colorado's Favorite Musicians Grand Prize of 8-hour recording session</a>
+        <a href="https://www.facebook.com/pages/The-Decibel-Garden/249098465138620"><img style="max-width:250px;margin:0 auto;margin-top:5px;" alt="The Decibel Garden" class="img-responsive" src="/assets/img/decibel-garden.jpg" /></a>
+      </div>
+      <hr />   
+    @endif    
     @if($contest->is_ended)
       <div class="text-danger" ng-if="$contest->is_ended">
         Voting has ended.
