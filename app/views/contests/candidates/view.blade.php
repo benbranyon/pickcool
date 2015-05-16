@@ -111,7 +111,7 @@
         </div>
         <br />
       @endif
-      @if(isset($candidate->youtube_url))
+      @if(isset($candidate->youtube_url) && $candidate->youtube_url != '')
         <div style=" position: relative;width:100%;height:0;padding-bottom:60%;">
           <?php preg_match('/[\\?\\&]v=([^\\?\\&]+)/',$candidate->youtube_url,$matches);?>
           <?php if (isset($matches[1])):?>
