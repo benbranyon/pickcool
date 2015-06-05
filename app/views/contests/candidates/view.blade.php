@@ -34,9 +34,9 @@
             @endif
           @else
             @if($candidate->is_user_vote)
-              <a class="btn btn-md btn-warning btn-half" href="{{{$candidate->unvote_url}}}" disabled="disabled"><i class="fa fa-close"></i> Unvote</a>
+              <a class="btn btn-lg btn-warning btn-half" href="{{{$candidate->unvote_url}}}" disabled="disabled"><i class="fa fa-close"></i> Unvote</a>
             @else
-               <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->vote_url}}}" disabled="disabled"><i class="fa fa-check"></i> Vote</a>
+               <a class="btn btn-lg btn-primary btn-half" href="{{{$candidate->vote_url}}}" disabled="disabled"><i class="fa fa-check"></i> Vote</a>
             @endif
           @endif
           @if($contest->is_shareable)
