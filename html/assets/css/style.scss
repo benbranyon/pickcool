@@ -436,9 +436,14 @@ h1.big
 .image-wrapper {
   @media (min-width: 768px) {
     float: left;
+    margin-right: 44px;
+    margin-left: 44px;
+    margin-top:10px;
+  }
+
+  @media (min-width: 800px) {
     margin-right: 51px;
     margin-left: 51px;
-    margin-top:10px;
   }
 }
 

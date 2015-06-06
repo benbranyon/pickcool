@@ -329,9 +329,15 @@ h1.big {
 @media (min-width: 768px) {
   .image-wrapper {
     float: left;
+    margin-right: 44px;
+    margin-left: 44px;
+    margin-top: 10px;
+  }
+}
+@media (min-width: 800px) {
+  .image-wrapper {
     margin-right: 51px;
     margin-left: 51px;
-    margin-top: 10px;
   }
 }
 .candidate-small {
