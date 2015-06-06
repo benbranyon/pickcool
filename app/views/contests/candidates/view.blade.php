@@ -56,7 +56,11 @@
       <?php $idx++; ?>
       <?php if(!$image->screened_at && !$candidate->is_owner) continue; ?>
       <?php $is_featured = ($candidate->image_id == $image->id); ?>
+      @if($is_featured)
+      <div class="clearfix"
+      @else
       <div class="clearfix image-wrapper"
+      @endif
         @if($candidate->is_owner)
           style="margin: 5px; margin-bottom: 20px;
             border: 1px solid rgb(219, 219, 219);
