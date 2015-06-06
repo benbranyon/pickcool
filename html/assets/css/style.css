@@ -263,6 +263,11 @@ h1.big {
   width: 272px;
   height: 272px;
 }
+@media (min-width: 768px) {
+  .candidate-large {
+    float: left;
+  }
+}
 .candidate-large img {
   border-radius: 3px;
   width: 100%;
@@ -297,6 +302,21 @@ h1.big {
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+@media (min-width: 768px) {
+  .candidate-large.featured {
+    width: auto;
+    height: auto;
+    float: left;
+    border: none;
+  }
+}
+@media (min-width: 768px) {
+  .image-wrapper {
+    float: left;
+    margin-right: 51px;
+    margin-left: 51px;
+  }
 }
 .candidate-small {
   position: relative;
@@ -418,6 +438,14 @@ ul.nav {
 }
 .nav-pills > li {
   width: auto;
+}
+.view {
+  max-width: 320px;
+}
+@media (min-width: 768px) {
+  .view {
+    max-width: 768px;
+  }
 }
 .view .contest {
   text-align: center;

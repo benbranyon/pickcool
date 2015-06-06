@@ -56,7 +56,7 @@
       <?php $idx++; ?>
       <?php if(!$image->screened_at && !$candidate->is_owner) continue; ?>
       <?php $is_featured = ($candidate->image_id == $image->id); ?>
-      <div class="clearfix"
+      <div class="clearfix image-wrapper"
         @if($candidate->is_owner)
           style="margin: 5px; margin-bottom: 20px;
             border: 1px solid rgb(219, 219, 219);
@@ -68,7 +68,11 @@
           <h2>Featured</h2>
           <h2>(shows on pick and share pages)</h2>
         @endif
-        <div id="candidate" class="candidate-large">
+        @if($is_featured)
+        <div class="candidate-large featured">
+        @else
+        <div class="candidate-large">
+        @endif
           <a href="{{{$image->url('original')}}}">
             <img src="{{{$image->url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
           </a>

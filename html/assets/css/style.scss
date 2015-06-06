@@ -352,6 +352,9 @@ h1.big
   margin-left: auto;
   margin-right: auto;
   display: block;
+  @media (min-width: 768px) {
+    float:left;
+  }
   img
   {
     border-radius: 3px;
@@ -404,6 +407,23 @@ h1.big
       margin-right: auto;
       display: block;
     }
+  }
+}
+
+.candidate-large.featured{
+  @media (min-width: 768px) {
+    width:auto;
+    height:auto;
+    float:left;
+    border:none;
+  }
+}
+
+.image-wrapper {
+  @media (min-width: 768px) {
+    float: left;
+    margin-right: 51px;
+    margin-left: 51px;
   }
 }
 
@@ -579,6 +599,12 @@ ul.nav
 
 .view
 {
+  max-width: 320px;
+
+  @media (min-width: 768px) {
+    max-width:768px;
+  }
+
   .contest
   {
     .modal-body
