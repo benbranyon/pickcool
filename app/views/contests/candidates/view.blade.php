@@ -43,7 +43,7 @@
             <a class="btn btn-lg btn-primary btn-half" onclick="share()"><i class="fa fa-facebook"></i> Share</a>
           @endif
           @if($contest->category->name == 'Bands')
-            <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->music_url}}}"><i class="fa fa-music"></i> Discover</a>
+            <a class="btn btn-md btn-primary btn-half discover" href="{{{$candidate->music_url}}}"><i class="fa fa-music"></i> Discover</a>
           @endif
         </div>
       </div>
