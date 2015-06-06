@@ -40,7 +40,7 @@
           @if($contest->category->name == 'Bands')
             <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-music"></i> Discover</a>
           @else
-            <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-camera"></i> {{{count($candidate->images)}}} More</a>
+            <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-camera"></i> {{{count($candidate->images) -1}}} More</a>
           @endif
           @if($contest->is_ended)
             @if($candidate->is_user_vote)
