@@ -78,7 +78,11 @@
         <div class="candidate-large">
         @endif
           <a href="{{{$image->url('original')}}}">
-            <img src="{{{$image->url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+            @if($is_featured)
+              <img src="{{{$image->url('original')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+            @else
+              <img src="{{{$image->url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+            @endif
           </a>
         </div>
         @if($candidate->is_owner)
