@@ -14,6 +14,16 @@
 
 @section('content')
   <div class="list">
+    @if($state == 'hot')
+      <h1>Hot Picks</h1>
+      <hr />
+    @elseif($state == 'new')
+      <h1>New Picks</h1>
+      <hr />
+    @elseif($state == 'top')
+      <h1>Top Picks</h1>
+      <hr />
+    @endif
     @foreach($contests as $contest)
       @if($contest->id != 33)
       <div class="contest">
