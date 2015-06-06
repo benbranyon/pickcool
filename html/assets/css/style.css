@@ -390,6 +390,10 @@ h1.big {
   height: 81px;
   margin: 0px;
 }
+.bio {
+  max-width: 600px;
+  margin: 0 auto;
+}
 .body {
   text-align: left;
 }
