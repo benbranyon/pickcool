@@ -439,11 +439,11 @@ ul.nav {
 .nav-pills > li {
   width: auto;
 }
-.view {
+.view.profile {
   max-width: 320px;
 }
 @media (min-width: 768px) {
-  .view {
+  .view.profile {
     max-width: 768px;
   }
 }

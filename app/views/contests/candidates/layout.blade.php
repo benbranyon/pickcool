@@ -13,7 +13,7 @@
 @stop
 
 @section('content')
-  <div class="view" style="text-align: center; width:100%; margin-left: auto; margin-right: auto;">
+  <div class="view profile" style="text-align: center; width:100%; margin-left: auto; margin-right: auto;">
     <div class="header">
       <h1>
         <a href="{{{$candidate->canonical_url}}}">
