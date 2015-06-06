@@ -303,6 +303,13 @@ h1.big {
   margin-right: auto;
   display: block;
 }
+.candidate-large.featured {
+  text-align: center;
+}
+.candidate-large.featured img {
+  height: auto;
+  width: auto;
+}
 @media (min-width: 768px) {
   .candidate-large.featured {
     width: 100%;
