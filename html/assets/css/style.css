@@ -323,6 +323,7 @@ h1.big {
   .candidate-large.featured img {
     height: auto;
     width: auto;
+    max-width: 50%;
   }
 }
 @media (min-width: 768px) {
