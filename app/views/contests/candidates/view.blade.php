@@ -172,7 +172,7 @@
   @endforeach
   @if($candidate->is_owner && $contest->category->name != 'Bands')
     <div class="clearfix">
-      <div class="pull-right" style="float:none;clear:both;">
+      <div class="pull-right" style="float:none!important;clear:both;">
         <a href="{{{$candidate->add_image_url}}}" class="btn btn-xl btn-primary"><i class="fa fa-plus"></i> Add Image</a>
       </div>
     </div>
