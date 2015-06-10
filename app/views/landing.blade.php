@@ -13,12 +13,22 @@
 @stop
 
 @section('content')
-	<h1>Latest Pick.Cool Events</h1>
-	<hr />
-	<h2>Musicians, Models, and Ink</h2>
-	<h3 style="margin-bottom:10px;">Feb 19th 2015</h3>
-	<a href="http://www.janugget.com/"><img style="max-width:150px;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" /></a>
-	<div id="fb-root"></div><script>(function(d, s, id) {  var js, fjs = d.getElementsByTagName(s)[0];  if (d.getElementById(id)) return;  js = d.createElement(s); js.id = id;  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";  fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script><div class="fb-post" data-href="https://www.facebook.com/media/set/?set=a.339808079550788.1073741831.310629329135330&amp;type=1" data-width="320"><div class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/media/set/?set=a.339808079550788.1073741831.310629329135330&amp;type=1">Post</a> by <a href="https://www.facebook.com/the.pick.cool">Pick.Cool</a>.</div></div>
-	<hr />
-	<br />
+	<div class="row">
+		<div class="col-sm-6">
+			<h1>Latest Pick.Cool Posts</h1>
+			<hr />
+			<div class="fb-page" data-href="https://www.facebook.com/the.pick.cool" data-width="320" data-height="765" data-hide-cover="false" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/the.pick.cool"><a href="https://www.facebook.com/the.pick.cool">Pick.Cool</a></blockquote></div></div>
+			<hr />
+		</div>
+		<div class="col-sm-6">
+			<h1>Latest Pick.Cool Events</h1>
+			<hr />
+			<h2>Musicians, Models, and Ink</h2>
+			<h3 style="margin-bottom:10px;">Feb 19th 2015</h3>
+			<a href="http://www.janugget.com/"><img style="max-width:150px;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" /></a>
+			<div id="fb-root"></div><script>(function(d, s, id) {  var js, fjs = d.getElementsByTagName(s)[0];  if (d.getElementById(id)) return;  js = d.createElement(s); js.id = id;  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";  fjs.parentNode.insertBefore(js, fjs);}(document, 'script', 'facebook-jssdk'));</script><div class="fb-post" data-href="https://www.facebook.com/media/set/?set=a.339808079550788.1073741831.310629329135330&amp;type=1" data-width="320"><div class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/media/set/?set=a.339808079550788.1073741831.310629329135330&amp;type=1">Post</a> by <a href="https://www.facebook.com/the.pick.cool">Pick.Cool</a>.</div></div>
+			<hr />
+		</div>
+		<br />
+	</div>
 @stop
