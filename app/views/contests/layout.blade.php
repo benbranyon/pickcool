@@ -62,7 +62,7 @@
       </div>
       <hr />     
     @endif
-    @if($contest->id == 34)
+    @if($contest->id == 34 || $contest->id == 37)
       <hr />
       <div>
         <a style="color:black;" href="https://www.facebook.com/ivyleague.allure?fref=ts">Ivy League Allure Presents Colorado's Favorite Female's Grand Prize of $500</a>
