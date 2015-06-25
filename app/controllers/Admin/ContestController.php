@@ -17,6 +17,7 @@ class ContestController extends \BaseController {
 			$contest->title = \Input::get('title');
 			$contest->description = \Input::get('description');
 			$contest->password = \Input::get('password');
+			$contest->state = \Input::get('state');
 			$contest->push();
 
 			\Session::put('success', "Contest Saved!");

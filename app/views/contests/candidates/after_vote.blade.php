@@ -33,11 +33,68 @@
   <h1>To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
   <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
 
-  <div style="color: gray; font-size: 12px">
+  <div style="color: gray; font-size: 14px">
     <p>Awesome sauce, you voted for {{{$candidate->name}}}.</p>
     <p>You can only vote for ONE person, but you can change your vote any time.</p>
     <p>To help even more, share this page with your friends.</p>
+    @if (isset($nextContest) && $nextContest != null)
+    <p>Now it is time to vote for {{ $nextContest->title }}</p>
+    @endif
   </div>
+  <div style="margin-top: 20px">
+  </div>
+  @if (isset($nextContest) && $nextContest != null)
+  <div class="contest">
+	<h2 class="title-header">
+	<a class="title" href="{{{$nextContest->canonical_url}}}">{{{$nextContest->title}}}</a>
+	</h2>
+	<div class="votes-total">
+	  <i class="fa fa-check-square"></i> 
+		{{{$nextContest->vote_count_0}}} Votes
+	  @if($nextContest->writein_enabled && !$nextContest->is_ended)| 
+	  	<span class="text-success">OPEN pick - Join Now</span>
+	  @endif      
+	  @if($nextContest->is_ended)| 
+	  	<span class="text-danger" ng-if="$contest->is_ended">Voting has ended.</span>
+	  @endif
+	</div>
+	@if($nextContest->is_editable)
+	  <a class="btn btn-xs btn-success" href="r('contest.edit', [$nextContest->id])">Edit</a>
+	@endif
+	<div class="clearfix"></div>
+	<ul class="list-inline" style="margin-left: 0px; margin-bottom: 15px">
+	  @foreach($nextContest->candidates->take(5) as $tmpCandidate)
+		<li>
+		  <a class="candidate-small" 
+		  	href="{{{$nextContest->canonical_url}}}"  
+		  	class="{{{$nextContest->current_user_candidate_id == $tmpCandidate->id ? 'selected' : '' }}}">
+			<img src="/loading.gif" data-echo="{{{$tmpCandidate->image_url('thumb')}}}" 
+				alt="{{{$tmpCandidate->name}}}" title="Vote for {{{$tmpCandidate->name}}}">
+			<div class="clearfix">
+			  <div class="badges pull-right">
+				@if($tmpCandidate->is_on_fire)
+				  <span class="badge badge-fire" 
+				  	title="On fire! Gained {{{Candidate::$on_fire_threshold*100}}}% or more votes in the last 24 hours.">
+				  <i class="fa fa-fire"></i></span>
+				@endif
+				@foreach($tmpCandidate->badges as $badge)
+				  <span class="badge badge-giver" 
+				  title="Pledges 25% or more of cash winnings to {{{$badge->pivot->charity_name}}}."><i class="fa fa-heart"></i></span>
+				@endforeach
+				<span class='badge badge-vote-count' title="{{{$tmpCandidate->vote_count_0}}} votes">
+					{{{$tmpCandidate->vote_count_0}}}
+				</span>
+			  </div>
+			</div>
+		  </a>
+		</li>
+	  @endforeach
+	  @if($nextContest->candidates->count()>5)
+		<li ><a href="{{{$nextContest->canonical_url}}}">...{{{$nextContest->candidates->count()-5}}} more</a></li>
+	  @endif
+	</ul>
+	</div>
+    @endif
   <script>
     function share(response)
     {

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 function r($route_name, $params=[], $absolute=true)
 {
 /*
@@ -518,7 +519,32 @@ Route::get('/vote/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_vote', 
   {
     App::abort(404);
   }
-  return View::make('contests.candidates.after_vote')->with(['candidate'=>$candidate, 'contest'=>$contest]);
+  
+  $today = Carbon::now();
+  
+  if ($contest->state != null && $contest->state != '') {
+  	
+  	$nextContest = Contest::where('state','=', $contest->state)
+  		->where('id','!=',$contest->id)
+  		->whereNotNull('ends_at')
+  		->where('ends_at','>=',$today)
+  		->orderBy('ends_at', 'ASC')->first();
+  	
+  	if ($nextContest == null) {
+  		$nextContest = Contest::where('id','!=',$contest->id)
+	  		->whereNotNull('ends_at')
+	  		->where('ends_at','>=',$today)
+	  		->orderBy('ends_at', 'ASC')->first();
+  	}
+  	
+  } else {
+  	$nextContest = Contest::where('id','!=',$contest->id)
+  		->whereNotNull('ends_at')
+	  	->where('ends_at','>=',$today)
+	  	->orderBy('ends_at', 'ASC')->first();
+  }
+  
+  return View::make('contests.candidates.after_vote')->with(['candidate'=>$candidate, 'contest'=>$contest, 'nextContest' => $nextContest]);
 }]);
 
 
@@ -665,6 +691,7 @@ Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'u
 }]);
 
 // Admin Routes
+
 Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']), function() {
 
     Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
@@ -687,3 +714,28 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
     Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
 
 });
+
+/*
+Route::group(array('prefix'=> 'admin'), function() {
+	
+	Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
+
+    Route::get('images', ['as'=>'admin.images', 'uses'=>'Admin\\ImageController@index']);
+    Route::get('images/{image_id}/{status}', ['as'=>'admin.images.status', 'uses'=>'Admin\\ImageController@set_status']);
+
+    Route::get('badges', ['as'=>'admin.badges', 'uses'=>'Admin\\BadgeController@index']);
+    
+    // Resource Controller for user management, nested so it needs to be relative
+    Route::resource('users', 'Admin\\UserController');
+
+    Route::resource('contests', 'Admin\\ContestController');
+    Route::resource('contests/{id}/edit/', 'Admin\\ContestController@edit');
+
+    Route::resource('candidates', 'Admin\\CandidateController');
+    Route::resource('candidates/{id}/edit/', 'Admin\\CandidateController@edit');
+
+    Route::resource('sponsors', 'Admin\\SponsorController');
+    Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
+		
+});
+*/

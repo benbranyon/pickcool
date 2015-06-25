@@ -16,7 +16,8 @@
 				<th class="col-sm-1">Write-In</th>
 				<th class="col-sm-2">Password</th>
 				<th class="col-sm-1">Ends</th>
-				<th class="col-sm-2">Actions</th>
+				<th class="col-sm-1">State</th>
+				<th class="col-sm-1">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +28,7 @@
 					<td>{{{$contest->writein_enabled}}}</td>
 					<td>{{{$contest->password}}}</td>
 					<td>{{{$contest->ends_at}}}</td>
+					<td>{{{$contest->state}}}</td>
 					<td>
 						<a class="btn btn-sm" href="{{Request::url()}}/<?php echo $contest->id;?>/edit/">Edit</a>
 					</td>
