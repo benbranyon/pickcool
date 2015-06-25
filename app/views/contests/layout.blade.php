@@ -62,10 +62,18 @@
       </div>
       <hr />     
     @endif
-    @if($contest->id == 34 || $contest->id == 37)
+    @if($contest->id == 34)
       <hr />
       <div>
         <a style="color:black;" href="https://www.facebook.com/ivyleague.allure?fref=ts">Ivy League Allure Presents Colorado's Favorite Female's Grand Prize of $500</a>
+        <a href="https://www.facebook.com/ivyleague.allure?fref=ts"><img style="max-width:250px;margin:0 auto;margin-top:5px;" alt="Ivy League Allure" class="img-responsive" src="/assets/img/ivy-league.jpg" /></a>
+      </div>
+      <hr />   
+    @endif
+    @if($contest->id == 37)
+      <hr />
+      <div>
+        <a style="color:black;" href="https://www.facebook.com/ivyleague.allure?fref=ts">Ivy League Allure Presents Texas' Favorite Female's Grand Prize of $500</a>
         <a href="https://www.facebook.com/ivyleague.allure?fref=ts"><img style="max-width:250px;margin:0 auto;margin-top:5px;" alt="Ivy League Allure" class="img-responsive" src="/assets/img/ivy-league.jpg" /></a>
       </div>
       <hr />   
