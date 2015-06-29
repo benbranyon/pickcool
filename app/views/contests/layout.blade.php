@@ -34,7 +34,7 @@
         @endif
       </span>
       <span class="badge">{{{$contest->candidates->count()}}} picks</span>
-      @if($contest->writein_enabled)
+      @if($contest->writein_enabled && !$contest->is_ended)
         <span class="badge"><span class="text-success">OPEN pick - Join below</span></span>
       @endif
     </h2>
