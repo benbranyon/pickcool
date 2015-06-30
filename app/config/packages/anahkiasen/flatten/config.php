@@ -10,12 +10,16 @@
 
 	// The different pages to be ignored when caching
 	// They're all regexes so go crazy
-	'ignore'       => array('.*',),
+	'ignore'       => [],
 
 	// List only specific pages to cache, useful if you have a lot of
 	// pages you don't want to see cached
 	// The ignored pages will still be substracted from this array
-	'only'         => array(),
+	'only'         => [
+	  '/hot',
+	  '/new',
+	  '/top',
+	],
 
 	// Here you can put variables that will be taken into account when
 	// checking if Flatten should run. If the sum of the array is not

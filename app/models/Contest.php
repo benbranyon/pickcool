@@ -332,3 +332,10 @@ class Contest extends Eloquent
     return $can;
   }
 }
+
+
+Contest::saved(function() {
+  Flatten::flushRoute('contests.hot');
+  Flatten::flushRoute('contests.new');
+  Flatten::flushRoute('contests.top');
+});

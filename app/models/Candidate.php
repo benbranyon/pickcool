@@ -248,3 +248,9 @@ class Candidate extends Eloquent
     });
   }
 }
+
+Candidate::saved(function($candidate) {
+  Flatten::flushRoute('contests.hot');
+  Flatten::flushRoute('contests.new');
+  Flatten::flushRoute('contests.top');
+});
