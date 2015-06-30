@@ -18,8 +18,14 @@
 		        {{ $errors->first('title', '<p class="help-block">:message</p>') }}
 		    </div>
 
+		    <div class="form-group{{ $errors->has('callout') ? ' has-error' : '' }}">
+		        {{ Form::label('callout', 'Callout (at top)') }}
+		        {{ Form::textarea('callout', $contest->callout, ['class' => 'form-control']) }}
+		        {{ $errors->first('callout', '<p class="help-block">:message</p>') }}
+		    </div>
+
 		    <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-		        {{ Form::label('description', 'Description') }}
+		        {{ Form::label('description', 'Description (at bottom)') }}
 		        {{ Form::textarea('description', $contest->description, ['class' => 'form-control']) }}
 		        {{ $errors->first('description', '<p class="help-block">:message</p>') }}
 		    </div>
