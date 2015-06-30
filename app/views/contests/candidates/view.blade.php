@@ -105,20 +105,22 @@
                 <span class="text-warning"><i class="fa fa-eye"></i> In Review</span>
               @endif
             </div>
-            <div class="pull-right">
-              @if(!$is_featured)
-                @if($idx>=3)
-                  <a href="{{{$candidate->manage_url('moveup', $image->id)}}}" class="btn btn-default btn-xl"><i class="fa fa-arrow-up"></i></a>
+            @if(!$contest->is_ended)
+              <div class="pull-right">
+                @if(!$is_featured)
+                  @if($idx>=3)
+                    <a href="{{{$candidate->manage_url('moveup', $image->id)}}}" class="btn btn-default btn-xl"><i class="fa fa-arrow-up"></i></a>
+                  @endif
+                  @if($idx < count($images))
+                    <a href="{{{$candidate->manage_url('movedown', $image->id)}}}" class="btn btn-default btn-xl"><i class="fa fa-arrow-down"></i></a>
+                  @endif
+                  @if($image->status=='featured')
+                    <a href="{{{$candidate->manage_url('featured', $image->id)}}}" class="btn btn-xl btn-success"><i class='fa fa-user'></i> Feature</a>
+                  @endif
+                  <a href="{{{$candidate->manage_url('delete', $image->id)}}}" onclick="return confirm('Really delete this image?', 'Yes', 'No');" class="btn btn-xl btn-danger"><i class='fa fa-close'></i></a>
                 @endif
-                @if($idx < count($images))
-                  <a href="{{{$candidate->manage_url('movedown', $image->id)}}}" class="btn btn-default btn-xl"><i class="fa fa-arrow-down"></i></a>
-                @endif
-                @if($image->status=='featured')
-                  <a href="{{{$candidate->manage_url('featured', $image->id)}}}" class="btn btn-xl btn-success"><i class='fa fa-user'></i> Feature</a>
-                @endif
-                <a href="{{{$candidate->manage_url('delete', $image->id)}}}" onclick="return confirm('Really delete this image?', 'Yes', 'No');" class="btn btn-xl btn-danger"><i class='fa fa-close'></i></a>
-              @endif
-            </div>
+              </div>
+            @endif
           </div>      
         @endif
     </div>
@@ -170,7 +172,7 @@
       </table>
     @endif
   @endforeach
-  @if($candidate->is_owner && $contest->category->name != 'Bands')
+  @if(!$contest->is_ended && $candidate->is_owner && $contest->category->name != 'Bands')
     <div class="clearfix">
       <div class="pull-right" style="float:none!important;clear:both;margin-bottom:10px;">
         <a href="{{{$candidate->add_image_url}}}" class="btn btn-xl btn-primary"><i class="fa fa-plus"></i> Add Image</a>

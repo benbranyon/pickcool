@@ -83,7 +83,6 @@ class Contest extends Eloquent
   function getRandomSponsorAttribute()
   {
     return $this->belongsToMany('Sponsor')->orderByRaw("RAND()")->first();
-    
   }
   
   function getHasDroppedAttribute()
@@ -183,8 +182,11 @@ class Contest extends Eloquent
   {
     self::$intervals[] = 72;
     $contests = self::query()
+      ->whereIsArchived(false)
+      ->whereRaw('(ends_at is null or ends_at > now())')
       ->havingRaw('vote_count_0 > vote_count_72')
       ->orderByRaw('vote_count_0 - vote_count_72 desc')
+      
       ->get();
     return $contests;
   }
@@ -192,6 +194,8 @@ class Contest extends Eloquent
   static function recent()
   {
     $contests = self::query()
+      ->whereIsArchived(false)
+      ->whereRaw('ends_at > now()')
       ->orderBy('created_at', 'desc')
       ->get();
     return $contests;
@@ -200,6 +204,7 @@ class Contest extends Eloquent
   static function top()
   {
     $contests = self::query()
+      ->whereIsArchived(false)
       ->orderBy('vote_count_0', 'desc')
       ->get();
     return $contests;
@@ -249,7 +254,7 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
+    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image', 'images', 'badges');
   }
 
   function category()

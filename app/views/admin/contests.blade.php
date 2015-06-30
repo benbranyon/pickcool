@@ -21,7 +21,7 @@
 		</thead>
 		<tbody>
 			<?php foreach ($contests as $contest):?>
-				<tr>
+				<tr class='<?php echo($contest->is_archived ? 'archived' : '')?>'>
 					<td>{{{$contest->title}}}</td>
 					<td>{{{$contest->description}}}</td>
 					<td>{{{$contest->writein_enabled}}}</td>
