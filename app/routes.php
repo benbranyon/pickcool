@@ -653,7 +653,7 @@ Route::get('/inbox', ['before'=>'auth', 'as'=>'inbox', 'users'=>function() {
   return View::make('inbox.list', ['messages'=>Auth::user()->messages]);
 }]);
 
-Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'users'=>function($message_id) {
+Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'uses'=>function($message_id) {
   $message = Message::find($message_id);
   if(!$message)
   {
@@ -687,3 +687,7 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
     Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
 
 });
+
+Route::get('/userheader.js', ['uses'=>function() {
+  return Response::view('userheader-js')->header('Content-Type', 'application/javascript');
+}]);
