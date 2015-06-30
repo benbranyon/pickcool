@@ -36,4 +36,21 @@ class CandidateController extends \BaseController {
 
 		}
 	}
+  
+  function charity_boost($id) {
+    $candidate = Candidate::find($id);
+    $contest = $candidate->contest;
+    if(!$contest || !$candidate)
+    {
+      App::abort(404);
+    }
+    $badge = new Badge();
+    $badge->name = 'charity';
+    $badge->vote_weight = 25;
+    $badge->contest_id = $contest->id;
+    $badge->candidate_id = $candidate->id;
+    $badge->save();  
+    Session::put('success', "Ok, {$candidate->name} now has a charity badge");
+    return \Redirect::to('admin/candidates');
+  }
 }

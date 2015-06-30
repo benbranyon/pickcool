@@ -182,8 +182,11 @@ class Contest extends Eloquent
   {
     self::$intervals[] = 72;
     $contests = self::query()
+      ->whereIsArchived(false)
+      ->whereRaw('(ends_at is null or ends_at > now())')
       ->havingRaw('vote_count_0 > vote_count_72')
       ->orderByRaw('vote_count_0 - vote_count_72 desc')
+      
       ->get();
     return $contests;
   }
@@ -191,6 +194,8 @@ class Contest extends Eloquent
   static function recent()
   {
     $contests = self::query()
+      ->whereIsArchived(false)
+      ->whereRaw('ends_at > now()')
       ->orderBy('created_at', 'desc')
       ->get();
     return $contests;
@@ -199,6 +204,7 @@ class Contest extends Eloquent
   static function top()
   {
     $contests = self::query()
+      ->whereIsArchived(false)
       ->orderBy('vote_count_0', 'desc')
       ->get();
     return $contests;

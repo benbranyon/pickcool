@@ -6,7 +6,7 @@ use Image;
 class ContestController extends \BaseController {
 
 	function index() {
-		$contests = Contest::paginate(15);
+		$contests = Contest::query()->orderBy('is_archived', 'ASC')->orderBy('ends_at', 'ASC')->paginate(15);
 		return \View::make('admin.contests')->with('contests', $contests);
 	}
 
@@ -17,6 +17,7 @@ class ContestController extends \BaseController {
 			$contest->title = \Input::get('title');
 			$contest->description = \Input::get('description');
 			$contest->password = \Input::get('password');
+			$contest->is_archived = \Input::get('is_archived');
 			$contest->push();
 
 			\Session::put('success', "Contest Saved!");
