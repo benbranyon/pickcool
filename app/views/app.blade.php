@@ -43,7 +43,6 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
-    <script src="/userheader.js"></script>
   </head>
 
   <body>
@@ -87,6 +86,8 @@
     </nav>
     <div class="container-fluid">
       <div id="userheader"></div>
+      <script src="/userheader.js"></script>
+      
 
       @yield('content')
       <footer class="footer">
