@@ -503,6 +503,11 @@ Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>fun
   {
     App::abort(404);
   }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($candidate->canonical_url);
+  }
   list($result,$v) = Auth::user()->vote_for($candidate);
   $qs = [
     'v'=>$result,
@@ -528,6 +533,11 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
   if(!$contest || !$candidate)
   {
     App::abort(404);
+  }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($candidate->canonical_url);
   }
   Auth::user()->unvote_for($candidate);
   Session::put('success', "Ok, you unvoted {$candidate->name}");
