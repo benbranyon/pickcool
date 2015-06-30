@@ -100,6 +100,11 @@ Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slu
   {
     App::abort(404);
   }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($contest->canonical_url);
+  }
   if(!$contest->can_view)
   {
     Session::put('r', Request::url());
@@ -212,6 +217,11 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
   if(!$contest)
   {
     App::abort(404);
+  }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($contest->canonical_url);
   }
   $state = Input::get('s','begin');
   if(!$contest->is_joinable)
@@ -369,6 +379,11 @@ Route::any('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slu
   {
     App::abort(404);
   }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($contest->canonical_url);
+  }
   
   if(Request::isMethod('post'))
   {
@@ -432,6 +447,11 @@ Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'contests.candidates.afte
   {
     App::abort(404);
   }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($contest->canonical_url);
+  }  
   return View::make('contests.after_join')->with(['candidate'=>$candidate, 'contest'=>$contest]);
 }]);
 
@@ -506,7 +526,7 @@ Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>fun
   if($contest->is_ended)
   {
     Session::put('danger', "Sorry, voting has ended.");
-    return Redirect::to($candidate->canonical_url);
+    return Redirect::to($contest->canonical_url);
   }
   list($result,$v) = Auth::user()->vote_for($candidate);
   $qs = [
@@ -537,7 +557,7 @@ Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=
   if($contest->is_ended)
   {
     Session::put('danger', "Sorry, voting has ended.");
-    return Redirect::to($candidate->canonical_url);
+    return Redirect::to($contest->canonical_url);
   }
   Auth::user()->unvote_for($candidate);
   Session::put('success', "Ok, you unvoted {$candidate->name}");
