@@ -83,7 +83,6 @@ class Contest extends Eloquent
   function getRandomSponsorAttribute()
   {
     return $this->belongsToMany('Sponsor')->orderByRaw("RAND()")->first();
-    
   }
   
   function getHasDroppedAttribute()
@@ -249,7 +248,7 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
+    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image', 'images', 'badges');
   }
 
   function category()

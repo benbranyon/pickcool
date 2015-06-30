@@ -14,6 +14,7 @@
     @endif
   
     @foreach($contest->candidates as $candidate)
+      <?php $candidate->contest = $contest; ?>
       <?php if(Input::get('f','')=='g' && !$candidate->charity_name) continue; ?>
       <li >
         <a class="candidate-small {{ $candidate->is_user_vote ? 'selected' : ''}}" href="{{{$candidate->canonical_url($contest)}}}"  >

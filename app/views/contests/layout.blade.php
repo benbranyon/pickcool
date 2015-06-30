@@ -51,7 +51,7 @@
     
     
     @if($contest->sponsors->count()>0)
-      <?php $sponsor = $contest->random_sponsor; ?>
+      <?php $sponsor = $contest->sponsors->get(0,$contest->sponsors->count()-1); ?>
       <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>
     @endif
     @if($contest->ticket_url)

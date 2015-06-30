@@ -54,7 +54,7 @@ Route::get('/', ['as'=>'home', 'uses'=>function() {
 }]);
 
 Route::get('/est/{contest_id}/{slug}/{view_mode?}', ['as'=>'contest.view', 'uses'=>function($contest_id, $slug, $view_mode=null) {
-  $contest = Contest::find($contest_id);
+  $contest = Contest::with('category', 'sponsors')->whereId($contest_id)->first();
   if(!$contest)
   {
     App::abort(404);
