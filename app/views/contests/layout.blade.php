@@ -51,8 +51,20 @@
     
     
     @if($contest->sponsors->count()>0)
-      <?php $sponsor = $contest->sponsors->get(0,$contest->sponsors->count()-1); ?>
-      <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>
+      <script>
+        var sponsors = {{json_encode(array_map(function($s) { return ['name'=>$s->name, 'url'=>$s->url]; }, $contest->sponsors->all()))}}
+      </script>
+      <h2>Sponsored by: <script>
+        var idx = parseInt(Math.random() * sponsors.length);
+        var sponsor = sponsors[idx];
+        console.log(idx);
+        var a = document.createElement('a');
+        var linkText = document.createTextNode(sponsor.name);
+        a.appendChild(linkText);
+        a.title = sponsor.name;
+        a.href = sponsor.url;
+        document.write(a.outerHTML);
+      </script></h2>
     @endif
     @if($contest->ticket_url)
       <hr />
