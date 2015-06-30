@@ -94,7 +94,7 @@
         <div class="row">
           <div class="col-sm-12">
             <ul class="pull-left nav nav-pills footer-nav">
-              <li>&copy; pick.cool 2014 - Now with Green Apple!</li>
+              <li>&copy; pick.cool {{date('Y')}} - Now with Green Apple!</li>
             </ul>
           </div>
         </div>
