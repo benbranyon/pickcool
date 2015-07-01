@@ -6,6 +6,7 @@ mysql -uroot -pr00t -D coolbeta < db.sql
 mysql -uroot -pr00t -D coolbeta  -e "update users set email=concat('user',id,'@benallfree.com');"
 ./artisan migrate
 mysqldump -uroot -pr00t coolbeta > db.sql
+gzip -9 db.sql
 rsync -avv ../pick.cool/html/i/ html/i
 
 # locally:
