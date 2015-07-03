@@ -12,7 +12,7 @@ class Contest extends Eloquent
     ];
   }
   
-
+  var $_current_user_candidate_id = null;
   static $intervals = [0,24];
   
   function getTotalCharityDollarsAttribute()
@@ -267,6 +267,15 @@ class Contest extends Eloquent
     $candidates = Candidate::whereContestId($this->id)->whereNotNull('image_id')->whereNull('dropped_at')->with('image')->get()->withRanks();
     Candidate::$intervals = $old;
     return $candidates;
+  }
+  
+  function getCurrentUserCandidateIdAttribute()
+  {
+    if($this->_current_user_candidate_id!==null) return $this->_current_user_candidate_id;
+    if(!Auth::user()) return null;
+    $vote = Auth::user()->current_vote_for($this);
+    if(!$vote) return $this->_current_user_candidate_id = false;
+    return $this->_current_user_candidate_id = $vote->candidate_id;
   }
   
   function getIsEditableAttribute()

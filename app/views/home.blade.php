@@ -40,7 +40,7 @@
         <ul class="list-inline" style="margin-left: 0px; margin-bottom: 15px">
           @foreach($contest->candidates->take(5) as $candidate)
             <li>
-              <a class="candidate-small" href="{{{$contest->canonical_url}}}"  class="{{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}">
+              <a class="candidate-small {{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}" href="{{{$contest->canonical_url}}}" >
                 <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <div class="clearfix">
                   <div class="badges pull-right">
