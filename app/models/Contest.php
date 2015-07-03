@@ -185,9 +185,7 @@ class Contest extends Eloquent
       ->whereIsArchived(false)
       ->whereRaw('(ends_at is null or ends_at > now())')
       ->havingRaw('vote_count_0 > vote_count_72')
-      ->orderByRaw('vote_count_0 - vote_count_72 desc')
-      
-      ->get();
+      ->orderByRaw('vote_count_0 - vote_count_72 desc');
     return $contests;
   }
   
@@ -269,6 +267,11 @@ class Contest extends Eloquent
     $candidates = Candidate::whereContestId($this->id)->whereNotNull('image_id')->whereNull('dropped_at')->with('image')->get()->withRanks();
     Candidate::$intervals = $old;
     return $candidates;
+  }
+  
+  function getIsEditableAttribute()
+  {
+    return $this->is_editable_by(Auth::user());
   }
   
   function is_editable_by($user)
