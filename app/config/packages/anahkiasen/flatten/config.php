@@ -1,7 +1,7 @@
 <?php return array(
 
 	// Whether Flatten should be enabled in this environment
-	'enabled' => true,
+	'enabled' => env('USE_FLATTEN',false),
 
 	// Cache checks
 	//
