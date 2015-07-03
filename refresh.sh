@@ -14,6 +14,8 @@ mysql -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST $DEV_DB_NAME < db.sql
 mysql -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST $DEV_DB_NAME -e "update users set email=concat('user',id,'@benallfree.com');"
 ./artisan migrate
 mysqldump -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST --skip-tz-utc --add-drop-table $DEV_DB_NAME > db.sql
+rm db.sql.gz
+gzip -9 db.sql
 rsync -avv ../pick.cool/html/i/ html/i
 
 # locally:
