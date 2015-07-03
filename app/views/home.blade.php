@@ -34,7 +34,7 @@
           @if($contest->is_ended)| <span class="text-danger" ng-if="$contest->is_ended">Voting has ended.</span>@endif
         </div>
         @if($contest->is_editable)
-          <a class="btn btn-xs btn-success" href="r('contest.edit', [$contest->id])">Edit</a>
+          <a class="btn btn-xs btn-success" href="{{r('admin.contests.edit', [$contest->id])}}">Edit</a>
         @endif
         <div class="clearfix"></div>
         <ul class="list-inline" style="margin-left: 0px; margin-bottom: 15px">
