@@ -13,7 +13,7 @@
       <li><a href="{{{r('inbox')}}}" class="{{{Auth::user()->has_unread_messages ? 'unread' : ''}}}"><i class="fa fa-envelope"></i></a></li>
       <li><a href="{{{r('logout', ['success'=>r('home')])}}}">Logout</a></li>
     @else
-      <li><a href="{{{r('login', Route::currentRouteName()=='login' ? [] : ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in</a></li>
+      <li><a href="{{{r('login', Input::get('r')==route('login') ? [] : ['success'=>Input::get('r'), 'cancel'=>Input::get('r')])}}}">Log in</a></li>
     @endif
   </ul>
 </div>

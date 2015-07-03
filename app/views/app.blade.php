@@ -86,7 +86,7 @@
     </nav>
     <div class="container-fluid">
       <div id="userheader"></div>
-      <script src="/userheader.js"></script>
+      <script src="/userheader.js?r={{Request::url()}}"></script>
       
 
       @yield('content')
