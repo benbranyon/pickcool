@@ -10,7 +10,7 @@
       </div>
     @endif
     <div class="col-xs-6">
-      <div class="candidate-small" style="width:100%;border:none;">
+      <div class="candidate-small" style="width:100%;height:auto;border:none;">
         <img style="width:100%;height:auto;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
       </div>
     </div>
