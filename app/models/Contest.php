@@ -3,8 +3,11 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  
+  var $_current_user_candidate_id = null;
+  static $intervals = [0,24];
 
-  public function nextContest()
+  function nextContest()
   {
     $today = Carbon::now();
     if ($this->state != null && $this->state != '') {
@@ -13,20 +16,20 @@ class Contest extends Eloquent
         ->where('id','!=',$this->id)
         ->whereNotNull('ends_at')
         ->where('ends_at','>=',$today)
-        ->orderBy('ends_at', 'ASC')->first();
+        ->orderByRaw("RAND()")->first();
       
       if ($nextContest == null) {
         $nextContest = Contest::where('id','!=',$this->id)
           ->whereNotNull('ends_at')
           ->where('ends_at','>=',$today)
-          ->orderBy('ends_at', 'ASC')->first();
+          ->orderByRaw("RAND()")->first();
       }
       
     } else {
       $nextContest = Contest::where('id','!=',$this->id)
         ->whereNotNull('ends_at')
         ->where('ends_at','>=',$today)
-        ->orderBy('ends_at', 'ASC')->first();
+        ->orderByRaw("RAND()")->first();
     }
 
     return $nextContest;
@@ -40,9 +43,6 @@ class Contest extends Eloquent
       'ends_at',
     ];
   }
-  
-  var $_current_user_candidate_id = null;
-  static $intervals = [0,24];
   
   function getTotalCharityDollarsAttribute()
   {
