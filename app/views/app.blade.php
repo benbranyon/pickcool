@@ -29,6 +29,7 @@
       data-apikey="{{$_ENV['BUGSNAG_API_KEY']}}">
       </script>
     @endif
+    <script src="/pick.cool.js"></script>
     <meta property="fb:app_id" content="1497159643900204"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -86,10 +87,8 @@
     </nav>
     <div class="container-fluid">
       <div id="userheader"></div>
-      <script src="/userheader.js?r={{Request::url()}}"></script>
-      
-
       @yield('content')
+      <script src="{{route('usercontext', ['r'=>Request::url()])}}"></script>
       <footer class="footer">
         <div class="row">
           <div class="col-sm-12">

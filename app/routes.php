@@ -326,6 +326,10 @@ Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'u
   return View::make('inbox.read', ['message'=>$message]);
 }]);
 
+Route::get('/my', ['as'=>'my.picks']);
+
+Route::get('/usercontext', ['as'=>'usercontext', 'uses'=>'UserContextController@go']);
+
 // Admin Routes
 Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']), function() {
 
@@ -350,6 +354,3 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
 
 });
 
-Route::get('/userheader.js', ['uses'=>function() {
-  return Response::view('userheader-js')->header('Content-Type', 'application/javascript');
-}]);
