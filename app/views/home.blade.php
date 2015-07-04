@@ -25,7 +25,6 @@
       <hr />
     @endif
     @foreach($contests as $contest)
-      @if($contest->id != 33)
       <div class="contest">
         <h2 class="title-header"><a class="title" href="{{{$contest->canonical_url}}}">{{{$contest->title}}}</a></h2>
         <div class="votes-total">
@@ -35,13 +34,13 @@
           @if($contest->is_ended)| <span class="text-danger" ng-if="$contest->is_ended">Voting has ended.</span>@endif
         </div>
         @if($contest->is_editable)
-          <a class="btn btn-xs btn-success" href="r('contest.edit', [$contest->id])">Edit</a>
+          <a class="btn btn-xs btn-success" href="{{r('admin.contests.edit', [$contest->id])}}">Edit</a>
         @endif
         <div class="clearfix"></div>
         <ul class="list-inline" style="margin-left: 0px; margin-bottom: 15px">
           @foreach($contest->candidates->take(5) as $candidate)
             <li>
-              <a class="candidate-small" href="{{{$contest->canonical_url}}}"  class="{{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}">
+              <a class="candidate-small {{{$contest->current_user_candidate_id == $candidate->id ? 'selected' : '' }}}" href="{{{$contest->canonical_url}}}" >
                 <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <div class="clearfix">
                   <div class="badges pull-right">
@@ -64,7 +63,6 @@
           @endif
         </ul>
       </div>
-      @endif
     @endforeach
   </div>
 @stop

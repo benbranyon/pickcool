@@ -18,19 +18,25 @@
 		        {{ $errors->first('title', '<p class="help-block">:message</p>') }}
 		    </div>
 
-		    <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-		        {{ Form::label('description', 'Description') }}
+		    <div class="form-group{{ $errors->has('callout') ? ' has-error' : '' }}">
+		        {{ Form::label('callout', 'Callout (at top)') }}
+		        {{ Form::textarea('callout', $contest->callout, ['class' => 'form-control']) }}
+		        {{ $errors->first('callout', '<p class="help-block">:message</p>') }}
+		    </div>
+
+		    <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+		        {{ Form::label('description', 'Description (at bottom)') }}
 		        {{ Form::textarea('description', $contest->description, ['class' => 'form-control']) }}
 		        {{ $errors->first('description', '<p class="help-block">:message</p>') }}
 		    </div>
 
-		    <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+		    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
 		        {{ Form::label('password', 'Password') }}
 		        {{ Form::text('password', $contest->password, ['class' => 'form-control']) }}
 		        {{ $errors->first('password', '<p class="help-block">:message</p>') }}
 		    </div>
 
-		    <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+		    <div class="form-group{{ $errors->has('ends_at') ? ' has-error' : '' }}">
 		        {{ Form::label('ends_at', 'End Date') }}
 		        <input type="datetime" name="ends_at" value="<?php echo $contest->ends_at;?>">
 		        {{ $errors->first('ends_at', '<p class="help-block">:message</p>') }}
@@ -95,6 +101,13 @@
 		        {{ $errors->first('state', '<p class="help-block">:message</p>') }}
 		    </div>
 		    
+		    <div class="form-group{{ $errors->has('is_archived') ? ' has-error' : '' }}">
+		        {{ Form::label('is_archived', 'Archived') }}
+		        <input type="hidden" name="is_archived" value="0"/>
+		        <input type="checkbox" name="is_archived" value="1" <?php echo($contest->is_archived ? 'checked' : '')?>/>
+		        {{ $errors->first('is_archived', '<p class="help-block">:message</p>') }}
+		    </div>
+
 	    </fieldset>
 	    <fieldset>
 	    	<legend>Candidate Info</legend>

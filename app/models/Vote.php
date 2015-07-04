@@ -7,3 +7,10 @@ class Vote extends Eloquent
     return $this->belongsTo('Contest');
   }
 }
+
+
+Vote::saved(function($vote) {
+  Flatten::flushRoute('contests.hot');
+  Flatten::flushRoute('contests.new');
+  Flatten::flushRoute('contests.top');
+});

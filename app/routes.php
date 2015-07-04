@@ -54,165 +54,31 @@ Route::get('/', ['as'=>'home', 'uses'=>function() {
   //return View::make('home')->with(['contests'=>$contests]);
 }]);
 
-Route::get('/est/{contest_id}/{slug}/{view_mode?}', ['as'=>'contest.view', 'uses'=>function($contest_id, $slug, $view_mode=null) {
-  $contest = Contest::find($contest_id);
-  if(!$contest)
-  {
-    App::abort(404);
-  }
-  if(!$contest->can_view)
-  {
-    return Redirect::to($contest->login_url);
-  }
-  if(!$view_mode)
-  {
-    $view_mode = session_get('contest_view_mode', ['small', 'large', 'realtime']);
-  }
-  Session::put('contest_view_mode', $view_mode);
-  return View::make('contests.view.'.$view_mode)->with(['contest'=>$contest, 'view_mode'=>$view_mode]);
-}]);
+Route::group(['prefix'=>'/est/{contest_id}/{contest_slug}'], function() {
+  Route::group(['prefix'=>'/picks/{candidate_id}/{candidate_slug}'], function() {
+    Route::get('/', ['as'=>'contests.candidate.view', 'uses'=>'CandidateController@view']);
+    Route::get('/refresh', ['as'=>'contests.candidate.refresh', 'uses'=>'CandidateController@refresh']);
+    Route::any('/images', ['as'=>'contests.candidates.images', 'uses'=>'CandidateImagesController@images']);
+    Route::any('/images/add', ['as'=>'contests.candidates.images.add', 'uses'=>'CandidateImagesController@add']);
+    Route::get('/manage/{cmd}/{cmd_id}', ['before'=>'auth', 'as'=>'contests.candidate.manage', 'uses'=>'CandidateManagerController@manage']);
+  });
 
-Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}', ['as'=>'contests.candidate.view', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
-  $contest = Contest::find($contest_id);
-  if(!$contest)
-  {
-    App::abort(404);
-  }
-  if(!$contest->can_view)
-  {
-    Session::put('r', Request::url());
-    return Redirect::to($contest->login_url);
-  }
-  $candidate = Candidate::find($candidate_id);
-  if(!$candidate || !$candidate->is_active)
-  {
-    App::abort(404);
-  }
-  if(Auth::user() && Input::get('v'))
-  {
-    Auth::user()->vote_for($candidate);
-  }
-  return View::make('contests.candidates.view')->with(['contest'=>$contest, 'candidate'=>$candidate]);
-}]);
-
-Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/manage/{cmd}/{cmd_id}', ['before'=>'auth', 'as'=>'contests.candidate.manage', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug, $cmd_name, $cmd_id) {
-  $contest = Contest::find($contest_id);
-  if(!$contest)
-  {
-    App::abort(404);
-  }
-  if(!$contest->can_view)
-  {
-    Session::put('r', Request::url());
-    return Redirect::to($contest->login_url);
-  }
-  $candidate = Candidate::find($candidate_id);
-  if(!$candidate)
-  {
-    App::abort(404);
-  }
-  if(Auth::user() && Input::get('v'))
-  {
-    Auth::user()->vote_for($candidate);
-  }
-  if(!$candidate->is_active)
-  {
-    App::abort(404);
-  }
-  if($candidate->user_id != Auth::user()->id)
-  {
-    Session::put('danger', "You are not authorized to manage this candidate.");
-    return Redirect::to($candidate->canonical_url);
-  }
-  $image = Image::find($cmd_id);
-  if(!$image || !$image->candidate_id == $candidate->id)
-  {
-    Session::put('danger', "You are not authorized to manage this candidate.");
-    return Redirect::to($candidate->canonical_url);
-  }
-  if($image->id == $candidate->image_id)
-  {
-    Session::put('danger', "You cannot manage the featured picture. Change the featured picture, then manage it.");
-    return Redirect::to($candidate->canonical_url);
-  }
-  
-  switch($cmd_name)
-  {
-    case 'featured':
-      if($image->status != 'featured')
-      {
-        Session::put('danger', "You cannot feature this image.");
-        return Redirect::to($candidate->canonical_url);
-      }
-      Session::put('success', 'Featured image updated.');
-      $candidate->image_id = $image->id;
-      $candidate->save();
-      break;
-    case 'delete':
-      Session::put('success', 'Image deleted.');
-      $image->delete();
-      break;
-    case 'moveup':
-      $images = $candidate->weighted_images;
-      $weight = 0;
-      for($i=0;$i<count($images);$i++)
-      {
-        $images[$i]->weight = $weight++;
-        if($images[$i]->id == $image->id)
-        {
-          if($i>0) $images[$i-1]->weight++;
-          $images[$i]->weight--;
-        }
-      }
-      foreach($images as $i) $i->save();
-      break;
-    case 'movedown':
-      $images = $candidate->weighted_images;
-      $weight = 0;
-      for($i=0;$i<count($images);$i++)
-      {
-        $images[$i]->weight = $weight++;
-        if($i>0 && $images[$i-1]->id == $image->id)
-        {
-          $images[$i-1]->weight++;
-          $images[$i]->weight--;
-        }
-      }
-      foreach($images as $i) $i->save();
-      break;
-      
-  }
-  return Redirect::to($candidate->canonical_url);
-}]);
-
-Route::any('/est/{contest_id}/{slug}/login', ['before'=>['auth'], 'as'=>'contest.login', 'uses'=>function($contest_id) {
-  $contest = Contest::find($contest_id);
-  if(!$contest)
-  {
-    App::abort(404);
-  }
-  if($contest->can_view)
-  {
-    return Redirect::to($contest->canonical_url);
-  }
-  if(Input::get('password'))
-  {
-    $pw = trim(Input::get('password'));
-    if($pw == $contest->password)
-    {
-      $contest->authorize_user();
-      return Redirect::to($contest->canonical_url);
-    }
-  }
-  return View::make('contests.login')->with(['contest'=>$contest]);
-}]);
+  Route::get('/{view_mode?}', ['as'=>'contest.view', 'uses'=>'ContestController@view']);
+  Route::any('/login', ['before'=>['auth'], 'as'=>'contest.login', 'uses'=>'ContestController@login']);
+});
 
 
+//Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>'ContestController@join']);
 Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>function($id) {
   $contest = Contest::find($id);
   if(!$contest)
   {
     App::abort(404);
+  }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($contest->canonical_url);
   }
   $state = Input::get('s','begin');
   if(!$contest->is_joinable)
@@ -350,82 +216,10 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
 }]);
 
 
-Route::any('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/images', ['as'=>'contests.candidates.images', 
-'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
-  $contest = Contest::find($contest_id);
-  $candidate = Candidate::find($candidate_id);
-  if(!$contest || !$candidate)
-  {
-    App::abort(404);
-  }
-  
-  return View::make('contests.candidates.images.list')->with(['contest'=>$contest, 'candidate'=>$candidate]);
-}]);
 
-Route::any('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/images/add', ['as'=>'contests.candidates.images.add', 
-'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
-  $contest = Contest::find($contest_id);
-  $candidate = Candidate::find($candidate_id);
-  if(!$contest || !$candidate)
-  {
-    App::abort(404);
-  }
-  
-  if(Request::isMethod('post'))
-  {
-    $file = Input::file('picture');
-    if(!is_a($file, 'Symfony\Component\HttpFoundation\File\UploadedFile'))
-    {
-      Session::put('danger', 'Please upload an image file before continuing.');
-    } else {
-      try
-      {
-        $image = new Image();
-        $image->image = $file;
-        $image->candidate_id = $candidate->id;
-        $image->save();
-        Session::put('success', 'Your image has been sumbitted and will be reviewed in the next 24-48 hours.');
-        return Redirect::to($candidate->canonical_url);
-      } catch (Exception $e) {
-        Session::put('danger', 'We were unable to recognize that image file format. Please try uploading a different file.');
-      }
-    }
-  }  
-  return View::make('contests.candidates.images.add')->with(['contest'=>$contest, 'candidate'=>$candidate]);
-}]);
+Route::get('/live/', ['as'=>'contest.live.view', 'uses'=>'LiveController@view']); 
 
-Route::get('/est/{contest_id}/{contest_slug}/picks/{candidate_id}/{candidate_slug}/refresh', ['as'=>'contests.candidate.refresh', 'uses'=>function($contest_id, $contest_slug, $candidate_id, $candidate_slug) {
-  $contest = Contest::find($contest_id);
-  $candidate = Candidate::find($candidate_id);
-  if(!$contest || !$candidate)
-  {
-    App::abort(404);
-  }
-  $contest->add_user();
-  Session::put('success', "Your information has been refreshed.");
-  return Redirect::to($candidate->canonical_url);
-}]);
-
-Route::get('/live/', ['as'=>'contest.live.view', 'uses'=>function($view_mode='large') {
-  $contest_id = 33;
-  $contest = Contest::find($contest_id);
-  //print_r($contest);exit;
-  if(!$contest)
-  {
-    App::abort(404);
-  }
-  if(!$contest->can_view)
-  {
-    return Redirect::to($contest->login_url);
-  }
-  if(!$view_mode)
-  {
-    $view_mode = session_get('contest_view_mode', ['small', 'large', 'realtime']);
-  }
-  Session::put('contest_view_mode', $view_mode);
-  return View::make('contests.view.'.$view_mode)->with(['contest'=>$contest, 'view_mode'=>'large']);
-}]); 
-
+//Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'contests.candidates.after_join', 'uses'=>'JoinController@done']);
 Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'contests.candidates.after_join', 'uses'=>function($id) {
   $candidate = Candidate::find($id);
   $contest = $candidate->contest;
@@ -433,198 +227,41 @@ Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'contests.candidates.afte
   {
     App::abort(404);
   }
+  if($contest->is_ended)
+  {
+    Session::put('danger', "Sorry, voting has ended.");
+    return Redirect::to($contest->canonical_url);
+  }  
   return View::make('contests.after_join')->with(['candidate'=>$candidate, 'contest'=>$contest]);
 }]);
 
 
-Route::get('/login', ['as'=>'login', 'uses'=>function() {
-  Session::put('onsuccess', Input::get('success', Session::get('onsuccess', Request::url())));
-  Session::put('oncancel', Input::get('cancel', Session::get('oncancel', Request::url())));
-  return View::make('login');
-}]);
-Route::get('/logout', ['as'=>'logout', 'uses'=>function() {
-  Session::flush();
-  Session::put('success', 'You have been logged out.');
-  return Redirect::to(r('home'));
-}]);
+Route::get('/login', ['as'=>'login', 'uses'=>'AuthController@login']);
+Route::get('/logout', ['as'=>'logout', 'uses'=>'AuthController@logout']);
 
 
-Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>function() {
-  $code = Input::get( 'code' );
-  $fb = OAuth::consumer( 'Facebook' );
-  if ( !empty( $code ) ) {
-    try
-    {
-      $token = $fb->requestAccessToken( $code );
-      //Trade for long-lived token
-      $long_token_url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id='. $_ENV['FACEBOOK_APP_ID'] .'&client_secret=' . $_ENV['FACEBOOK_SECRET'] . '&fb_exchange_token='.$token->getAccessToken(); 
-      $client = new \GuzzleHttp\Client();
-      $response = $client->get($long_token_url);
-      $long_token = $response->getBody()->__toString();
-      try
-      {
-        Auth::fb_login($token);
-      } catch (Exception $e) {
-        Session::put('fb_retry', true);
-        return Redirect::to(r('facebook.authorize.retry'));
-      }
-      Session::put('success', "Welcome, " . Auth::user()->full_name);
-      $onsuccess=Session::get('onsuccess');
-      Session::forget('onsuccess');
-      Session::forget('oncancel');
-      return Redirect::to($onsuccess);
-    } catch (OAuth\Common\Http\Exception\TokenResponseException $e) {
-    }
-  }
-  if(Input::get('error')) {
-    Session::put('warning', "You must connect with Facebook before continuing.");
-    $oncancel = Session::get('oncancel');
-    Session::forget('onsuccess');
-    Session::forget('oncancel');
-    return Redirect::to($oncancel);
-  }
-  $params = [];
-  if(Session::get('fb_retry'))
-  {
-    Session::forget('fb_retry');
-    $params['auth_type'] = 'rerequest';
-  }
-  $url = $fb->getAuthorizationUri($params);
-  return Redirect::to( (string)$url );
-}]);
+Route::get('/facebook/authorize', ['as'=>'facebook.authorize', 'uses'=>'AuthController@authorize']);
 
 Route::get('/facebook/authorize/retry', ['as'=>'facebook.authorize.retry', 'uses'=>function() {
   return View::make('facebook.authorize.retry');
 }]);
 
-Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>function($id) {
-  $candidate = Candidate::find($id);
-  $contest = $candidate->contest;
-  if(!$contest || !$candidate)
-  {
-    App::abort(404);
-  }
-  list($result,$v) = Auth::user()->vote_for($candidate);
-  $qs = [
-    'v'=>$result,
-  ];
-  $qs = http_build_query($qs);
-  return Redirect::to($candidate->after_vote_url."?{$qs}");
-}]);
+Route::get('/vote/{id}', ['before'=>'auth', 'as'=>'candidates.vote', 'uses'=>'VoteController@vote']);
 
-Route::get('/vote/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_vote', 'uses'=>function($id) {
-  $candidate = Candidate::find($id);
-  $contest = $candidate->contest;
-  if(!$contest || !$candidate)
-  {
-    App::abort(404);
-  }
-  
-  $today = Carbon::now();
-  
-  if ($contest->state != null && $contest->state != '') {
-  	
-  	$nextContest = Contest::where('state','=', $contest->state)
-  		->where('id','!=',$contest->id)
-  		->whereNotNull('ends_at')
-  		->where('ends_at','>=',$today)
-  		->orderBy('ends_at', 'ASC')->first();
-  	
-  	if ($nextContest == null) {
-  		$nextContest = Contest::where('id','!=',$contest->id)
-	  		->whereNotNull('ends_at')
-	  		->where('ends_at','>=',$today)
-	  		->orderBy('ends_at', 'ASC')->first();
-  	}
-  	
-  } else {
-  	$nextContest = Contest::where('id','!=',$contest->id)
-  		->whereNotNull('ends_at')
-	  	->where('ends_at','>=',$today)
-	  	->orderBy('ends_at', 'ASC')->first();
-  }
-  
-  return View::make('contests.candidates.after_vote')->with(['candidate'=>$candidate, 'contest'=>$contest, 'nextContest' => $nextContest]);
-}]);
+Route::get('/vote/{id}/done', ['before'=>'auth', 'as'=>'candidates.after_vote', 'uses'=>'VoteController@done']);
 
 
-Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=>function($id) {
-  $candidate = Candidate::find($id);
-  $contest = $candidate->contest;
-  if(!$contest || !$candidate)
-  {
-    App::abort(404);
-  }
-  Auth::user()->unvote_for($candidate);
-  Session::put('success', "Ok, you unvoted {$candidate->name}");
-  return Redirect::to($candidate->canonical_url);
-}]);
+Route::get('/unvote/{id}', ['before'=>'auth', 'as'=>'candidates.unvote', 'uses'=>'VoteController@unvote']);
 
-Route::get('/candidate/charity_boost/{id}', ['as'=>'candidate.charity_boost', 'uses'=>function($id) {
-  $candidate = Candidate::find($id);
-  $contest = $candidate->contest;
-  if(!$contest || !$candidate)
-  {
-    App::abort(404);
-  }
-  $badge = new Badge();
-  $badge->name = 'charity';
-  $badge->vote_weight = 25;
-  $badge->contest_id = $contest->id;
-  $badge->candidate_id = $candidate->id;
-  $badge->save();  
-  Session::put('success', "Ok, {$candidate->name} now has a charity badge");
-  return \Redirect::to('admin/candidates');
-}]);
+Route::get('/candidate/charity_boost/{id}', ['as'=>'candidate.charity_boost', 'uses'=>'Admin\CandidateController@charity_boost']);
 
-Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>function($id) {
-  $contest = Contest::find($id);
-  if(!$contest)
-  {
-    App::abort(404);
-  }
-  $fb = \OAuth::consumer( 'Facebook' );
-  //$has_token = $fb->getStorage()->hasAccessToken("Facebook");
+Route::get('/sponsor/signup/{id}', ['before'=>'auth', 'as'=>'sponsors.signup', 'uses'=>'SponsorController@signup']);
 
-  try
-  {
-    $fb_token = $fb->getStorage()->retrieveAccessToken("Facebook"); 
-    $access_token = $fb_token->getAccessToken();
-    $client = new \GuzzleHttp\Client();
-    $fb_permissions =  $client->get('https://graph.facebook.com/me/permissions?access_token=' . $access_token); 
-    $fb_permissions = $fb_permissions->json();
-  }
-  catch (Exception $e) {
-    //Old token
-    //$fb->getStorage()->clearToken("Facebook");
-  }
-
-  $user_photos = false;
-  foreach($fb_permissions['data'] as $permission)
-  {
-    if(array_search('user_photos', $permission))
-    {
-      $user_photos = true;
-    }
-  }
-  if(!$user_photos)
-  {
-    $dialog = 'https://www.facebook.com/dialog/oauth?client_id='. $_ENV['FACEBOOK_APP_ID']. '&redirect_uri=' .Request::root() .'/sponsor/signup/'.$id.'&scope=user_photos';
-    return Redirect::to( (string) $dialog);
-  }
-  return View::make('sponsors.signup')->with(['contest'=>$contest]);
-}]);
-
-Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>function($id) {
-  return "hello";
-}]);
+Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>'SponsorController@edit']);
 
 Route::post('sponsor/create/', 'SponsorController@create');
 
-Route::get('/hot', ['as'=>'contests.hot', 'uses'=>function() {
-  $contests = Contest::hot();
-  return View::make('home')->with(['contests'=>$contests, 'state'=>'hot']);
-}]);
+Route::get('/hot', ['as'=>'contests.hot', 'uses'=>'HomeController@hot']);
 Route::get('/new', ['as'=>'contests.new', 'uses'=>function() {
   $contests = Contest::recent();
   return View::make('home')->with(['contests'=>$contests, 'state'=>'new']);
@@ -679,7 +316,7 @@ Route::get('/inbox', ['before'=>'auth', 'as'=>'inbox', 'users'=>function() {
   return View::make('inbox.list', ['messages'=>Auth::user()->messages]);
 }]);
 
-Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'users'=>function($message_id) {
+Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'uses'=>function($message_id) {
   $message = Message::find($message_id);
   if(!$message)
   {
@@ -715,27 +352,6 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
 
 });
 
-/*
-Route::group(array('prefix'=> 'admin'), function() {
-	
-	Route::get('/', array('uses' => 'Admin\\DashboardController@index', 'as' => 'admin.home'));
-
-    Route::get('images', ['as'=>'admin.images', 'uses'=>'Admin\\ImageController@index']);
-    Route::get('images/{image_id}/{status}', ['as'=>'admin.images.status', 'uses'=>'Admin\\ImageController@set_status']);
-
-    Route::get('badges', ['as'=>'admin.badges', 'uses'=>'Admin\\BadgeController@index']);
-    
-    // Resource Controller for user management, nested so it needs to be relative
-    Route::resource('users', 'Admin\\UserController');
-
-    Route::resource('contests', 'Admin\\ContestController');
-    Route::resource('contests/{id}/edit/', 'Admin\\ContestController@edit');
-
-    Route::resource('candidates', 'Admin\\CandidateController');
-    Route::resource('candidates/{id}/edit/', 'Admin\\CandidateController@edit');
-
-    Route::resource('sponsors', 'Admin\\SponsorController');
-    Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
-		
-});
-*/
+Route::get('/userheader.js', ['uses'=>function() {
+  return Response::view('userheader-js')->header('Content-Type', 'application/javascript');
+}]);

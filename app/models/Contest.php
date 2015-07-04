@@ -3,6 +3,35 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+
+  public function nextContest()
+  {
+    $today = Carbon::now();
+    if ($this->state != null && $this->state != '') {
+      
+      $nextContest = Contest::where('state','=', $this->state)
+        ->where('id','!=',$this->id)
+        ->whereNotNull('ends_at')
+        ->where('ends_at','>=',$today)
+        ->orderBy('ends_at', 'ASC')->first();
+      
+      if ($nextContest == null) {
+        $nextContest = Contest::where('id','!=',$this->id)
+          ->whereNotNull('ends_at')
+          ->where('ends_at','>=',$today)
+          ->orderBy('ends_at', 'ASC')->first();
+      }
+      
+    } else {
+      $nextContest = Contest::where('id','!=',$this->id)
+        ->whereNotNull('ends_at')
+        ->where('ends_at','>=',$today)
+        ->orderBy('ends_at', 'ASC')->first();
+    }
+
+    return $nextContest;
+  }
+
   public function getDates()
   {
     return [
@@ -12,7 +41,7 @@ class Contest extends Eloquent
     ];
   }
   
-
+  var $_current_user_candidate_id = null;
   static $intervals = [0,24];
   
   function getTotalCharityDollarsAttribute()
@@ -83,7 +112,6 @@ class Contest extends Eloquent
   function getRandomSponsorAttribute()
   {
     return $this->belongsToMany('Sponsor')->orderByRaw("RAND()")->first();
-    
   }
   
   function getHasDroppedAttribute()
@@ -183,15 +211,18 @@ class Contest extends Eloquent
   {
     self::$intervals[] = 72;
     $contests = self::query()
+      ->whereIsArchived(false)
+      ->whereRaw('(ends_at is null or ends_at > now())')
       ->havingRaw('vote_count_0 > vote_count_72')
-      ->orderByRaw('vote_count_0 - vote_count_72 desc')
-      ->get();
+      ->orderByRaw('vote_count_0 - vote_count_72 desc');
     return $contests;
   }
   
   static function recent()
   {
     $contests = self::query()
+      ->whereIsArchived(false)
+      ->whereRaw('ends_at > now()')
       ->orderBy('created_at', 'desc')
       ->get();
     return $contests;
@@ -200,6 +231,7 @@ class Contest extends Eloquent
   static function top()
   {
     $contests = self::query()
+      ->whereIsArchived(false)
       ->orderBy('vote_count_0', 'desc')
       ->get();
     return $contests;
@@ -249,7 +281,7 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image');
+    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image', 'images', 'badges');
   }
 
   function category()
@@ -264,6 +296,20 @@ class Contest extends Eloquent
     $candidates = Candidate::whereContestId($this->id)->whereNotNull('image_id')->whereNull('dropped_at')->with('image')->get()->withRanks();
     Candidate::$intervals = $old;
     return $candidates;
+  }
+  
+  function getCurrentUserCandidateIdAttribute()
+  {
+    if($this->_current_user_candidate_id!==null) return $this->_current_user_candidate_id;
+    if(!Auth::user()) return null;
+    $vote = Auth::user()->current_vote_for($this);
+    if(!$vote) return $this->_current_user_candidate_id = false;
+    return $this->_current_user_candidate_id = $vote->candidate_id;
+  }
+  
+  function getIsEditableAttribute()
+  {
+    return $this->is_editable_by(Auth::user());
   }
   
   function is_editable_by($user)
@@ -327,3 +373,10 @@ class Contest extends Eloquent
     return $can;
   }
 }
+
+
+Contest::saved(function() {
+  Flatten::flushRoute('contests.hot');
+  Flatten::flushRoute('contests.new');
+  Flatten::flushRoute('contests.top');
+});

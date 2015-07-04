@@ -1,6 +1,6 @@
 <?php
   
-class RankedCandidatecollection extends Illuminate\Support\Collection
+class RankedCandidatecollection extends Illuminate\Database\Eloquent\Collection
 {
 	public function __construct(array $items = array())
 	{

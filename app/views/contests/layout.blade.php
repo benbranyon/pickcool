@@ -34,7 +34,7 @@
         @endif
       </span>
       <span class="badge">{{{$contest->candidates->count()}}} picks</span>
-      @if($contest->writein_enabled)
+      @if($contest->writein_enabled && !$contest->is_ended)
         <span class="badge"><span class="text-success">OPEN pick - Join below</span></span>
       @endif
     </h2>
@@ -51,33 +51,22 @@
     
     
     @if($contest->sponsors->count()>0)
-      <?php $sponsor = $contest->random_sponsor; ?>
-      <h2>Sponsored by: <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a></h2>
+      <script>
+        var sponsors = {{json_encode(array_map(function($s) { return ['name'=>$s->name, 'url'=>$s->url]; }, $contest->sponsors->all()))}}
+      </script>
+      <h2>Sponsored by: <script>
+        var idx = parseInt(Math.random() * sponsors.length);
+        var sponsor = sponsors[idx];
+        console.log(idx);
+        var a = document.createElement('a');
+        var linkText = document.createTextNode(sponsor.name);
+        a.appendChild(linkText);
+        a.title = sponsor.name;
+        a.href = sponsor.url;
+        document.write(a.outerHTML);
+      </script></h2>
     @endif
-    @if($contest->ticket_url)
-      <hr />
-      <div>
-        <a style="color:black;" href="http://www.janugget.com/entertainment/celebrity-showroom.html">Music, Models, and Ink Awards Ceremony. February 19.</a>
-        <a href="http://www.janugget.com/entertainment/celebrity-showroom.html"><img style="max-width:150px;margin:0 auto;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" /></a>
-      </div>
-      <hr />     
-    @endif
-    @if($contest->id == 34)
-      <hr />
-      <div>
-        <a style="color:black;" href="https://www.facebook.com/ivyleague.allure?fref=ts">Ivy League Allure Presents Colorado's Favorite Female's Grand Prize of $500</a>
-        <a href="https://www.facebook.com/ivyleague.allure?fref=ts"><img style="max-width:250px;margin:0 auto;margin-top:5px;" alt="Ivy League Allure" class="img-responsive" src="/assets/img/ivy-league.jpg" /></a>
-      </div>
-      <hr />   
-    @endif
-    @if($contest->id == 35)
-      <hr />
-      <div>
-        <a style="color:black;" href="https://www.facebook.com/pages/The-Decibel-Garden/249098465138620">The Decibel Garden Presents Colorado's Favorite Musicians Grand Prize of 8-hour recording session</a>
-        <a href="https://www.facebook.com/pages/The-Decibel-Garden/249098465138620"><img style="max-width:250px;margin:0 auto;margin-top:5px;" alt="The Decibel Garden" class="img-responsive" src="/assets/img/decibel-garden.jpg" /></a>
-      </div>
-      <hr />   
-    @endif    
+    {{$contest->callout}}
     @if($contest->is_ended)
       <div class="text-danger" ng-if="$contest->is_ended">
         Voting has ended.
@@ -223,7 +212,7 @@
     
     
     @if($contest->is_editable)
-      <a class="btn btn-xs btn-success" href="{{r('contests.edit', [$contest->id])}}">Edit</a>
+      <a class="btn btn-xs btn-success" href="{{r('admin.contests.edit', [$contest->id])}}">Edit</a>
     @endif
   </div>
 </div>

@@ -2,8 +2,50 @@
 
 class SponsorController extends BaseController
 {
+  
+  function edit($id) {    return "hello";
+  }
+  
+  function create($id) {
+    $contest = Contest::find($id);
+    if(!$contest)
+    {
+      App::abort(404);
+    }
+    $fb = \OAuth::consumer( 'Facebook' );
+    //$has_token = $fb->getStorage()->hasAccessToken("Facebook");
 
-	public function create()
+    try
+    {
+      $fb_token = $fb->getStorage()->retrieveAccessToken("Facebook"); 
+      $access_token = $fb_token->getAccessToken();
+      $client = new \GuzzleHttp\Client();
+      $fb_permissions =  $client->get('https://graph.facebook.com/me/permissions?access_token=' . $access_token); 
+      $fb_permissions = $fb_permissions->json();
+    }
+    catch (Exception $e) {
+      //Old token
+      //$fb->getStorage()->clearToken("Facebook");
+    }
+
+    $user_photos = false;
+    foreach($fb_permissions['data'] as $permission)
+    {
+      if(array_search('user_photos', $permission))
+      {
+        $user_photos = true;
+      }
+    }
+    if(!$user_photos)
+    {
+      $dialog = 'https://www.facebook.com/dialog/oauth?client_id='. $_ENV['FACEBOOK_APP_ID']. '&redirect_uri=' .Request::root() .'/sponsor/signup/'.$id.'&scope=user_photos';
+      return Redirect::to( (string) $dialog);
+    }
+    return View::make('sponsors.signup')->with(['contest'=>$contest]);
+  }
+    
+
+	public function signup()
     {
 	    $rules = array(
 	        'name' => array('required'),

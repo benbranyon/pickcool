@@ -125,6 +125,7 @@ $config = [
     'BenAllfree\LaravelStaplerImages\LaravelStaplerImagesServiceProvider',
     'GrahamCampbell\Markdown\MarkdownServiceProvider',
     'Artdarek\OAuth\OAuthServiceProvider',
+    'Flatten\FlattenServiceProvider',
     
 	),
 
@@ -196,6 +197,7 @@ $config = [
     'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
     'Markdown' => 'GrahamCampbell\Markdown\Facades\Markdown',
     'OAuth' => 'Artdarek\OAuth\Facade\OAuth',
+    'Flatten' => 'Flatten\Facades\Flatten',
 	),
 ];
 

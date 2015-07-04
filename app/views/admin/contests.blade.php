@@ -12,7 +12,6 @@
 		<thead>
 			<tr>
 				<th class="col-sm-2">Title</th>
-				<th class="col-sm-4">Description</th>
 				<th class="col-sm-1">Write-In</th>
 				<th class="col-sm-2">Password</th>
 				<th class="col-sm-1">Ends</th>
@@ -22,9 +21,8 @@
 		</thead>
 		<tbody>
 			<?php foreach ($contests as $contest):?>
-				<tr>
+				<tr class='<?php echo($contest->is_archived ? 'archived' : '')?>'>
 					<td>{{{$contest->title}}}</td>
-					<td>{{{$contest->description}}}</td>
 					<td>{{{$contest->writein_enabled}}}</td>
 					<td>{{{$contest->password}}}</td>
 					<td>{{{$contest->ends_at}}}</td>

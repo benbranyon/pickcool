@@ -17,7 +17,7 @@
           while (length--) {
             method = methods[length];
             // Only stub undefined methods.
-            if (console[method]) {
+            if (!console[method]) {
                 console[method] = noop;
             }
           }
@@ -36,7 +36,7 @@
     @if(isset($contest->title))
       <meta name="description" content="{{{$contest->title}}}" /> 
     @else
-      <meta name="description" content="Where you pick what’s cool." />
+      <meta name="description" content="Where you pick what's cool." />
     @endif
     @yield('head')
 
@@ -85,64 +85,33 @@
       </div>
     </nav>
     <div class="container-fluid">
-      <div class="clearfix">
-        <ul class="subnav list-inline pull-right">
-          @if(Auth::user())
-            <?php $candidate = Candidate::whereUserId(Auth::user()->id)->orderBy('created_at', 'desc')->first(); ?>
-            @if($candidate)
-              <li><a href="{{{$candidate->canonical_url}}}">My Pick</a>
-            @else
-              <li>Welcome, {{{Auth::user()->first_name}}}.</li>
-            @endif
-          @endif
-          <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
-          @if(Auth::user())
-            <li><a href="{{{r('inbox')}}}" class="{{{Auth::user()->has_unread_messages ? 'unread' : ''}}}"><i class="fa fa-envelope"></i></a></li>
-            <li><a href="{{{r('logout', ['success'=>r('home')])}}}">Logout</a></li>
-          @else
-            <li><a href="{{{r('login', Route::currentRouteName()=='login' ? [] : ['success'=>Request::url(), 'cancel'=>Request::url()])}}}">Log in</a></li>
-          @endif
-        </ul>
-      </div>
-      @if(Auth::user() && Auth::user()->has_messages && !Auth::user()->has_read_messages && Route::currentRouteName()!='inbox')
-        <div class="alert alert-warning">
-          You have important unread messages. <a href="{{{r('inbox')}}}">Check your inbox now.</a>
-        </div>
-      @endif
-      @foreach(['success', 'warning', 'danger'] as $kind)
-        @if(Session::get($kind))
-          <div class="alert alert-{{{$kind}}}">
-            {{{Session::get($kind)}}}
-          </div>
-        @endif
-        <?php Session::forget($kind); ?>
-      @endforeach
-          @yield('content')
-          <footer class="footer">
-            <div class="row">
-              <div class="col-sm-12">
-                <ul class="pull-left nav nav-pills footer-nav">
-                  <li>&copy; pick.cool 2014 - Now with Green Apple!</li>
-                </ul>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12 like-button-wrapper">
-                <div class="fb-like" data-href="https://www.facebook.com/pages/PickCool/310629329135330" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-12 text-center">
-                <ul class="nav nav-pills footer-nav">
-                  <li><a href="/privacy">Privacy Policy</a></li>
-                  <li><a href="/terms">Terms of Service</a></li>
-                </ul>
-              </div>
-            </div>
-          </footer>
+      <div id="userheader"></div>
+      <script src="/userheader.js?r={{Request::url()}}"></script>
+      
 
+      @yield('content')
+      <footer class="footer">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="pull-left nav nav-pills footer-nav">
+              <li>&copy; pick.cool {{date('Y')}} - Now with Green Apple!</li>
+            </ul>
+          </div>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-sm-12 like-button-wrapper">
+            <div class="fb-like" data-href="https://www.facebook.com/pages/PickCool/310629329135330" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <ul class="nav nav-pills footer-nav">
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/terms">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
     </div> <!-- // Container -->
     @yield('foot')
     

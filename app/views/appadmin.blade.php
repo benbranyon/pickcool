@@ -42,6 +42,9 @@
       .logo-img {width:150px;float:left;}
       .navbar-brand span {float:left;margin-left:5px;margin-top:5px;}
       .navbar-right {margin-right:10px;margin-top:14px;}
+      .archived { background-color: rgb(255, 226, 226);}
+      .table-hover>tbody>tr.archived:hover { background-color: rgb(253, 170, 170);}
+      .left-margin-10 { margin-left: 10px; margin-top: 10px; }
     </style>
     <script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>

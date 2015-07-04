@@ -16,6 +16,7 @@
     @endif
   
     @foreach($contest->candidates as $candidate)
+      <?php $candidate->contest = $contest; ?>
       <?php if(Input::get('f','')=='g' && !$candidate->charity_name) continue; ?>
       <li >
         <div >

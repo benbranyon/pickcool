@@ -1,4 +1,5 @@
 db.sql
+db.sql.gz
 /bootstrap/compiled.php
 composer.phar
 .DS_Store
