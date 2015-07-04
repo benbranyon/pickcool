@@ -27,23 +27,28 @@
       </div>
     </div>
   </div>
-  <p style="text-align:center;">You can only vote for ONE person, but you can change your vote any time.</p>
-  <h1 style="margin-bottom:10px;">To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
-  <button class="btn btn-primary btn-lg btn-full" onclick="share()" style="max-width:275px;margin:0 auto;display:block;margin-bottom:10px"><i class="fa fa-facebook"></i> Share Now</button>
-
-  <div style="margin-top: 20px">
+  <div class="row">
+  <p style="text-align: left;margin: 0 auto;max-width: 275px;margin-bottom: 10px;">You can only vote for ONE person, but you can change your vote any time.</p>
+  <div class="after-vote-share col-sm-6">
+    <h1 style="text-align: left;max-width: 275px;margin: 0 auto;margin-bottom: 10px;">To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
+    <button class="btn btn-primary btn-lg btn-full" onclick="share()" style="max-width:275px;margin:0 auto;display:block;margin-bottom:10px"><i class="fa fa-facebook"></i> Share Now</button>
+  </div>
+  <div class="col-sm-6">
     @if ($contest->nextContest() != null)
-      <h1 style="margin-bottom:10px;">Now it is time to vote for {{ $contest->nextContest()->title }}.</h1>
+      <h1 style="text-align: left;max-width: 275px;margin: 0 auto;margin-bottom: 10px;">Now it is time to vote for {{ $contest->nextContest()->title }}.</h1>
       <a class="btn btn-lg btn-success btn-full" style="display:block;max-width:275px;margin:0 auto;margin-bottom:10px;" href="{{{$contest->nextContest()->canonical_url}}}">Next Contest</a>
     @endif
   </div>
+  </div>
     @if($contest->ticket_url)
+      <div class="col-sm-12">
       <hr />
       <div style="text-align:center;">
         <a style="color:black;" href="http://www.janugget.com/entertainment/celebrity-showroom.html">Music, Models, and Ink Awards Ceremony. February 19.</a>
         <a href="http://www.janugget.com/entertainment/celebrity-showroom.html"><img style="max-width:150px;margin:0 auto;" alt="John Ascuaga's Nugget" class="img-responsive" src="/assets/img/nugget-color-logo.jpg" /></a>
       </div>
       <hr />     
+      </div>
     @endif
   <script>
     function share(response)
