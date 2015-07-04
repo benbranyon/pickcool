@@ -13,12 +13,33 @@ class VoteController extends \BaseController {
       Session::put('danger', "Sorry, voting has ended.");
       return Redirect::to($contest->canonical_url);
     }
+
     list($result,$v) = Auth::user()->vote_for($candidate);
     $qs = [
       'v'=>$result,
     ];
     $qs = http_build_query($qs);
+
     return Redirect::to($candidate->after_vote_url."?{$qs}");
+    //return View::make('contests.candidates.after_vote')->with(['candidate'=>$candidate, 'contest'=>$contest, 'nextContest' => $nextContest]);
+
+    /*$candidate = Candidate::find($id);
+    $contest = $candidate->contest;
+    if(!$contest || !$candidate)
+    {
+      App::abort(404);
+    }
+    if($contest->is_ended)
+    {
+      Session::put('danger', "Sorry, voting has ended.");
+      return Redirect::to($contest->canonical_url);
+    }
+    list($result,$v) = Auth::user()->vote_for($candidate);
+    $qs = [
+      'v'=>$result,
+    ];
+    $qs = http_build_query($qs);
+    return Redirect::to($candidate->after_vote_url."?{$qs}");*/
   }
   
   function done($id) {

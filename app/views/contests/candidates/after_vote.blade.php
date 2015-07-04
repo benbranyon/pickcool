@@ -33,10 +33,16 @@
   <h1>To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
   <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
 
-  <div style="color: gray; font-size: 12px">
+  <div style="color: gray; font-size: 14px">
     <p>Awesome sauce, you voted for {{{$candidate->name}}}.</p>
     <p>You can only vote for ONE person, but you can change your vote any time.</p>
     <p>To help even more, share this page with your friends.</p>
+  </div>
+  <div style="margin-top: 20px">
+    @if ($contest->nextContest() != null)
+      <strong>Now it is time to vote for {{ $contest->nextContest()->title }}</strong>
+      <a class="btn btn-lg btn-success btn-full" style="display:inline-block;max-width:none;" href="{{{$contest->nextContest()->canonical_url}}}">Next Contest</a>
+    @endif
   </div>
   <script>
     function share(response)

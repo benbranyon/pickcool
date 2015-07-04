@@ -17,8 +17,9 @@ class ContestController extends \BaseController {
 			$contest->title = \Input::get('title');
 			$contest->description = \Input::get('description');
 			$contest->password = \Input::get('password');
+			$contest->state = \Input::get('state');
 			$contest->is_archived = \Input::get('is_archived');
-      $contest->callout =  \Input::get('callout');
+      		$contest->callout =  \Input::get('callout');
 			$contest->push();
 
 			\Session::put('success', "Contest Saved!");

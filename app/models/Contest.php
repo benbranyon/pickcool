@@ -3,6 +3,38 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  
+  var $_current_user_candidate_id = null;
+  static $intervals = [0,24];
+
+  function nextContest()
+  {
+    $today = Carbon::now();
+    if ($this->state != null && $this->state != '') {
+      
+      $nextContest = Contest::where('state','=', $this->state)
+        ->where('id','!=',$this->id)
+        ->whereNotNull('ends_at')
+        ->where('ends_at','>=',$today)
+        ->orderByRaw("RAND()")->first();
+      
+      if ($nextContest == null) {
+        $nextContest = Contest::where('id','!=',$this->id)
+          ->whereNotNull('ends_at')
+          ->where('ends_at','>=',$today)
+          ->orderByRaw("RAND()")->first();
+      }
+      
+    } else {
+      $nextContest = Contest::where('id','!=',$this->id)
+        ->whereNotNull('ends_at')
+        ->where('ends_at','>=',$today)
+        ->orderByRaw("RAND()")->first();
+    }
+
+    return $nextContest;
+  }
+
   public function getDates()
   {
     return [
@@ -11,9 +43,6 @@ class Contest extends Eloquent
       'ends_at',
     ];
   }
-  
-  var $_current_user_candidate_id = null;
-  static $intervals = [0,24];
   
   function getTotalCharityDollarsAttribute()
   {
