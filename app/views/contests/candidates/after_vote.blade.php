@@ -23,7 +23,7 @@
     </div>
     <div class="col-xs-12">
       <div class="candidate-small" style="width:100%;height:auto;border:none;">
-        <img style="max-width:275px;height:auto;display:block;margin:0 auto;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+        <img style="width:auto;max-width:275px;height:auto;display:block;margin:0 auto;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
       </div>
     </div>
   </div>
