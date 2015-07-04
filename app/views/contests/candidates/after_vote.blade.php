@@ -4,12 +4,17 @@
 
 @section('contests.candidates.content')
   <div class="row">
-    <div class="col-xs-4">
-      <div class="candidate-small">
-        <img src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+    @if(Input::get('v')=='new')
+      <div class="col-xs-12">
+        <p style="text-align:center;">Awesome sauce, you voted for {{{$candidate->name}}}. To help even more, share this page with your friends.</p>
+      </div>
+    @endif
+    <div class="col-xs-6">
+      <div class="candidate-small" style="width:100%;border:none;">
+        <img style="width:100%;height:auto;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
       </div>
     </div>
-    <div class="col-xs-8 text-success" style="font-size: 19px;">
+    <div class="col-xs-6 text-success" style="font-size: 19px;">
       <i class="fa fa-check"></i>
       @if(Input::get('v')=='new')
         You voted for {{$candidate->name}}
@@ -22,6 +27,16 @@
       @endif
     </div>
   </div>
+  <p style="text-align:center;">You can only vote for ONE person, but you can change your vote any time.</p>
+  <h1 style="margin-bottom:10px;">To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
+  <button class="btn btn-primary btn-lg btn-full" onclick="share()" style="max-width:275px;margin:0 auto;display:block;margin-bottom:10px"><i class="fa fa-facebook"></i> Share Now</button>
+
+  <div style="margin-top: 20px">
+    @if ($contest->nextContest() != null)
+      <h1 style="margin-bottom:10px;">Now it is time to vote for {{ $contest->nextContest()->title }}.</h1>
+      <a class="btn btn-lg btn-success btn-full" style="display:block;max-width:275px;margin:0 auto;margin-bottom:10px;" href="{{{$contest->nextContest()->canonical_url}}}">Next Contest</a>
+    @endif
+  </div>
     @if($contest->ticket_url)
       <hr />
       <div style="text-align:center;">
@@ -30,20 +45,6 @@
       </div>
       <hr />     
     @endif
-  <h1>To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
-  <button class="btn btn-primary btn-lg btn-full" onclick="share()"><i class="fa fa-facebook"></i> Share Now</button>
-
-  <div style="color: gray; font-size: 14px">
-    <p>Awesome sauce, you voted for {{{$candidate->name}}}.</p>
-    <p>You can only vote for ONE person, but you can change your vote any time.</p>
-    <p>To help even more, share this page with your friends.</p>
-  </div>
-  <div style="margin-top: 20px">
-    @if ($contest->nextContest() != null)
-      <strong>Now it is time to vote for {{ $contest->nextContest()->title }}</strong>
-      <a class="btn btn-lg btn-success btn-full" style="display:inline-block;max-width:none;" href="{{{$contest->nextContest()->canonical_url}}}">Next Contest</a>
-    @endif
-  </div>
   <script>
     function share(response)
     {
