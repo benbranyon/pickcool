@@ -9,22 +9,22 @@
         <p style="text-align:center;">Awesome sauce, you voted for {{{$candidate->name}}}. To help even more, share this page with your friends.</p>
       </div>
     @endif
-    <div class="col-xs-6">
-      <div class="candidate-small" style="width:100%;height:auto;border:none;">
-        <img style="width:100%;height:auto;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
-      </div>
-    </div>
-    <div class="col-xs-6 text-success" style="font-size: 19px;">
+    <div class="col-xs-12 text-success" style="font-size: 19px;text-align:center;">
       <i class="fa fa-check"></i>
       @if(Input::get('v')=='new')
-        You voted for {{$candidate->name}}
+        You voted for <br/>{{$candidate->name}}
       @else
         @if(Input::get('v')=='changed')
-          You changed your vote to {{$candidate->name}}
+          You changed your vote to <br/>{{$candidate->name}}
         @else
-          You already voted for {{$candidate->name}}
+          You already voted for <br/>{{$candidate->name}}
         @endif
       @endif
+    </div>
+    <div class="col-xs-12">
+      <div class="candidate-small" style="width:100%;height:auto;border:none;">
+        <img style="max-width:275px;height:auto;display:block;margin:0 auto;" src="{{{$candidate->image_url('mobile')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}"/>
+      </div>
     </div>
   </div>
   <p style="text-align:center;">You can only vote for ONE person, but you can change your vote any time.</p>
