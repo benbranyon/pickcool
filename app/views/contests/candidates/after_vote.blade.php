@@ -30,13 +30,13 @@
   <div class="row">
   <p style="text-align: left;margin: 0 auto;max-width: 275px;margin-bottom: 10px;">You can only vote for ONE person, but you can change your vote any time.</p>
   <div class="after-vote-share col-sm-6">
-    <h1 style="text-align: left;max-width: 275px;margin: 0 auto;margin-bottom: 10px;">To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h1>
     <button class="btn btn-primary btn-lg btn-full" onclick="share()" style="max-width:275px;margin:0 auto;display:block;margin-bottom:10px"><i class="fa fa-facebook"></i> Share Now</button>
+    <h2 style="text-align: left;max-width: 275px;margin: 0 auto;margin-bottom: 10px;">To vote is awesome, to share is divine. Help your pick win by sharing with friends.</h2>
   </div>
   <div class="col-sm-6">
     @if ($contest->nextContest() != null)
-      <h1 style="text-align: left;max-width: 275px;margin: 0 auto;margin-bottom: 10px;">Now it is time to vote for {{ $contest->nextContest()->title }}.</h1>
       <a class="btn btn-lg btn-success btn-full" style="display:block;max-width:275px;margin:0 auto;margin-bottom:10px;" href="{{{$contest->nextContest()->canonical_url}}}">Next Contest</a>
+      <h2 style="text-align: left;max-width: 275px;margin: 0 auto;margin-bottom: 10px;">Now it is time to vote for {{ $contest->nextContest()->title }}.</h2>
     @endif
   </div>
   </div>
