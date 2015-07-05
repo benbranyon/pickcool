@@ -12,31 +12,23 @@ class CreateStats extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('candidate_stats', function(Blueprint $table)
-		{
-			$table->integer('id');
+    Schema::table('candidates', function(Blueprint $table)
+    {
       foreach(Contest::$intervals as $i)
       {
         $table->integer('vote_count_'.$i)->default(0);
         $table->integer('rank_'.$i)->default(0);
-        $table->index('vote_count_'.$i);
-        $table->index('rank_'.$i);
       }
       $table->datetime('first_voted_at')->nullable();
-      $table->unique('id');
-		});
-    
-		Schema::create('contest_stats', function(Blueprint $table)
-		{
-			$table->integer('id');
+    });
+
+    Schema::table('contests', function(Blueprint $table)
+    {
       foreach(Contest::$intervals as $i)
       {
         $table->integer('vote_count_'.$i)->default(0);
-        $table->index('vote_count_'.$i);
       }
-      $table->unique('id');
-		});
-    
+    });
     
 	}
 
@@ -47,8 +39,22 @@ class CreateStats extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('candidate_stats');
-		Schema::drop('contest_stats');
+		Schema::table('candidates', function(Blueprint $table)
+		{
+      foreach(Contest::$intervals as $i)
+      {
+        $table->dropColumn('vote_count_'.$i);
+        $table->dropColumn('rank_'.$i);
+      }
+      $table->dropColumn('first_voted_at');
+		});
+		Schema::table('contests', function(Blueprint $table)
+		{
+      foreach(Contest::$intervals as $i)
+      {
+        $table->dropColumn('vote_count_'.$i);
+      }
+		});
 	}
 
 }

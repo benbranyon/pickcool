@@ -191,82 +191,58 @@ class Contest extends Eloquent
   static function calc_stats()
   {
     $sqls = [];
-    $sqls[] = "
-      replace into candidate_stats (id, first_voted_at) 
-        select 
-          c.id, 
-          min(v.updated_at) 
-        from 
-          candidates c 
-            left outer join 
-          votes v 
-            on 
-          v.candidate_id = c.id  group by c.id
-    ";    
+    
+    $sqls[] = "update candidates set first_voted_at = (select min(updated_at) from votes v where v.candidate_id = candidates.id)";
     foreach(self::$intervals as $interval)
     {
       $sqls[] = "
-        update candidate_stats cs set
+        update candidates c set
         	vote_count_{$interval} = 
-            (select count(v.id) from votes v where v.candidate_id = cs.id and v.updated_at < utc_timestamp() - interval {$interval} hour) 
+            (select count(v.id) from votes v where v.candidate_id = c.id and v.updated_at < utc_timestamp() - interval {$interval} hour) 
             + 
             ifnull(
-              (select b.vote_weight from badges b join badge_candidate bc on b.id = bc.badge_id where bc.candidate_id = cs.id and bc.updated_at < utc_timestamp() - interval {$interval} hour)
+              (select b.vote_weight from badges b join badge_candidate bc on b.id = bc.badge_id where bc.candidate_id = c.id and bc.updated_at < utc_timestamp() - interval {$interval} hour)
               ,0)
       ";
       $sqls[] = "set @rn:=0;";
       $sqls[] = "set @old_contest_id:=0";
       $sqls[] = "
-        update candidate_stats ucs join
-          (select
-            d.candidate_id,
+        update candidates c join
+         (
+          select 
+          	contest_id, 
+          	id as candidate_id,
           	case 
           		when @old_contest_id <> contest_id and @old_contest_id:=contest_id then @rn:=1
           		when @old_contest_id = contest_id then (@rn:=@rn+1)
-          	end AS rank
-            from
-             (
-              select 
-              	c.contest_id, 
-              	c.id as candidate_id,
-              	cs.vote_count_{$interval}
-              from 
-              	candidates c join candidate_stats cs on c.id=cs.id
-              order by 
-              	c.contest_id, 
-              	cs.vote_count_{$interval} desc, 
-              	cs.first_voted_at asc, 
-              	c.id asc
-             ) d
-          ) d2
-         on ucs.id = d2.candidate_id
-         set ucs.rank_{$interval} = d2.rank;
+          	end AS rank, 
+          	vote_count_{$interval}
+          from 
+          	candidates 
+          order by 
+          	contest_id, 
+          	vote_count_{$interval} desc, 
+          	first_voted_at asc, 
+          	id asc
+         ) d
+         on c.id = d.candidate_id
+         set c.rank_{$interval} = d.rank;
       ";
       $sqls[] = "
-        replace into contest_stats (id, vote_count_{$interval}) select c.contest_id, sum(vote_count_{$interval}) from candidate_stats cs join candidates c on c.id=cs.id group by c.contest_id
+        update contests set vote_count_{$interval} = (select sum(vote_count_{$interval}) from candidates where contest_id = contests.id)
       ";
     }
     
     foreach($sqls as $sql)
     {
-      $sql = trim(preg_replace('/\s*\n\s*/', ' ', $sql));
+      $sql = preg_replace('/\s*\n\s*/', ' ', $sql);
       DB::statement($sql);
     }
   }
 
   
-	public function newEloquentBuilder($query)
-	{
-    $builder = parent::newEloquentBuilder($query);
-    $builder
-      ->select($this->add_vote_count_columns(['contests.*']))
-    ;
-    return $builder;
-	}
-  
   static function hot()
   {
-    self::$intervals[] = 72;
     $contests = self::query()
       ->whereIsArchived(false)
       ->whereRaw('(ends_at is null or ends_at > now())')
@@ -336,7 +312,7 @@ class Contest extends Eloquent
   
   function candidates()
   {
-    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('vote_count_0', 'desc')->orderBy('first_voted_at', 'asc')->orderBy('created_at', 'asc')->with('image', 'images', 'badges');
+    return $this->hasMany('Candidate')->whereNotNull('image_id')->whereNull('dropped_at')->orderBy('rank_0')->with('image', 'images', 'badges');
   }
 
   function category()
@@ -346,11 +322,7 @@ class Contest extends Eloquent
 
   function ranked_candidates($interval)
   {
-    $old = Candidate::$intervals;
-    Candidate::$intervals[] = $interval;
-    $candidates = Candidate::whereContestId($this->id)->whereNotNull('image_id')->whereNull('dropped_at')->with('image')->get()->withRanks();
-    Candidate::$intervals = $old;
-    return $candidates;
+    return $this->candidates()->orderBy('rank_0');
   }
   
   function getCurrentUserCandidateIdAttribute()
