@@ -13,7 +13,6 @@ class MigrateVoteCounts extends Migration {
 	public function up()
 	{
     Contest::calc_stats();
-    dd('done');
 	}
 
 	/**
