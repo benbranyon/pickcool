@@ -209,9 +209,7 @@
     @endif
     
     
-    @if($contest->is_editable)
-      <a class="btn btn-xs btn-success" href="{{r('admin.contests.edit', [$contest->id])}}">Edit</a>
-    @endif
+    <a class="btn btn-xs btn-success edit-contest hidden" href="{{r('admin.contests.edit', [$contest->id])}}">Edit</a>
   </div>
 </div>
 @stop
