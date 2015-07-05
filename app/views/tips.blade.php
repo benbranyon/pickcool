@@ -21,7 +21,7 @@
 <p>The biggest winners create their own 'Vote for Me' style Facebook event. People can indicate that they are 'going', meaning they voted, and that spreads the news.
   
 <p><b>Get Friends to Share</b></p>
-<p>This is the signle most powerful difference we see between the people at the top of the pick and the people at the bottom. Once your friends begin to share your pick link, it catches fire. You begin to get votes from friends of friends, etc.
+<p>This is the single most powerful difference we see between the people at the top of the pick and the people at the bottom. Once your friends begin to share your pick link, it catches fire. You begin to get votes from friends of friends, etc.
   
 <p><b>Share Outside Facebook</b></p>
 <p>Think about Twitter and other places you hang out. Spread the link far and wide.
@@ -38,6 +38,16 @@
 <p><b>Start a Friendly Rivalry</b></p>
 <p>The most successful pick winners make videos and start friendly rivalries to cook up voter interest.
 
-<p><b>Promote the Sponsors</b></p>
-<p>Be a good sport. Promote others too, you'd be surprised what that can do for your own standing. Promote a sponsor, they might just promote you back.
+<p><b>Team up with other Picks</b></p>
+<p>Is there another pick running? If there is, partner up with someone from that pick for cross-promotion. One brilliant pick winner partnered with the same type of pick happening in a different state. She made a pact with the front-runner in the other pick that they would cross-promote each other. It worked.
+
+<p><b>Team up with other Picks</b></p>
+<p>Is there another pick running? If there is, partner up with someone from that pick for cross-promotion. One brilliant pick winner partnered with the same type of pick happening in a different state. She made a pact with the front-runner in the other pick that they would cross-promote each other. It worked.
+
+<p><b>Team up with publications and groups</b></p>
+<p>Can you get the support of an online or print publication or group? That will go a million miles toward winning.
+
+<p><b>Endorsements from public figures</b></p>
+<p>Get people talking about you. If you can get a public figure to endorse you, that can be huge.
+
 @stop
