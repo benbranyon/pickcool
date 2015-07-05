@@ -1,4 +1,11 @@
 <?php
+$ini = parse_ini_file(__DIR__.'/../.env');
+if($ini['USE_FLATTEN'])
+{
+  require __DIR__.'/../vendor/anahkiasen/flatten/src/Flatten/Flatten.php';
+  Flatten\Flatten::kickstart();
+}
+
 
 define('LARAVEL_START', microtime(true));
 

@@ -1,12 +1,8 @@
 <div class="clearfix">
   <ul class="subnav list-inline pull-right">
     @if(Auth::user())
-      <?php $candidate = Candidate::whereUserId(Auth::user()->id)->orderBy('created_at', 'desc')->first(); ?>
-      @if($candidate)
-        <li><a href="{{{$candidate->canonical_url}}}">My Pick</a>
-      @else
-        <li>Welcome, {{{Auth::user()->first_name}}}.</li>
-      @endif
+      <li>Welcome, {{{Auth::user()->first_name}}}.</li>
+      <li><a href="{{{route('my.picks')}}}">My Picks</a>
     @endif
     <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
     @if(Auth::user())
@@ -17,7 +13,7 @@
     @endif
   </ul>
 </div>
-@if(Auth::user() && Auth::user()->has_messages && !Auth::user()->has_read_messages && Route::currentRouteName()!='inbox')
+@if(Auth::user() && Auth::user()->has_messages && Auth::user()->has_unread_messages && Route::currentRouteName()!='inbox')
   <div class="alert alert-warning">
     You have important unread messages. <a href="{{{r('inbox')}}}">Check your inbox now.</a>
   </div>
