@@ -88,7 +88,8 @@
     <div class="container-fluid">
       <div id="userheader"></div>
       @yield('content')
-      <script src="{{route('usercontext', ['r'=>Request::url()])}}"></script>
+      <script src="{{route('usercontext', ['r'=>Route::currentRouteName(), 'p'=>Route::current()->parameters()])}}"></script>
+      
       <footer class="footer">
         <div class="row">
           <div class="col-sm-12">
