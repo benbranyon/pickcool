@@ -262,14 +262,8 @@ Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>'SponsorContro
 Route::post('sponsor/create/', 'SponsorController@create');
 
 Route::get('/hot', ['as'=>'contests.hot', 'uses'=>'HomeController@hot']);
-Route::get('/new', ['as'=>'contests.new', 'uses'=>function() {
-  $contests = Contest::recent();
-  return View::make('home')->with(['contests'=>$contests, 'state'=>'new']);
-}]);
-Route::get('/top', ['as'=>'contests.top', 'uses'=>function() {
-  $contests = Contest::top();
-  return View::make('home')->with(['contests'=>$contests, 'state'=>'top']);
-}]);
+Route::get('/new', ['as'=>'contests.new', 'uses'=>'HomeController@newest']);
+Route::get('/top', ['as'=>'contests.top', 'uses'=>'HomeController@top']);
 
 
 Route::get('/tips', ['as'=>'tips', 'uses'=>function() {
