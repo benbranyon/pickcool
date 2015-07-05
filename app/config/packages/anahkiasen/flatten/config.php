@@ -16,9 +16,9 @@
 	// pages you don't want to see cached
 	// The ignored pages will still be substracted from this array
 	'only'         => [
-	  '/hot',
-	  '/new',
-	  '/top',
+	  '\/hot$',
+	  '\/new$',
+	  '\/top$',
 	],
 
 	// Here you can put variables that will be taken into account when
