@@ -21,14 +21,18 @@ App::after(function($request, $response)
 	$log->save();
 });
 
+
 App::before(function($request, $response)
 {
-  if(!$_ENV['IP_WHITELIST']) return;
-  $allowed = explode(',', $_ENV['IP_WHITELIST']);
-  $ip = Request::server('HTTP_X_FORWARDED_FOR', Request::getClientIp());
-  if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ip, $allowed))
+  if(!env('IP_WHITELIST',false)) return;
+  $allowed = explode(',', env('IP_WHITELIST'));
+  $ips = array_map('trim', explode(',', Request::server('HTTP_X_FORWARDED_FOR', Request::getClientIp())));
+  if(!array_intersect($allowed, $ips))
   {
-    return Redirect::away('https://pick.cool');
+    if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ip, $allowed))
+    {
+      return Redirect::away('https://pick.cool');
+    }
   }
 });
 
