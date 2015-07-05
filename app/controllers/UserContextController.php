@@ -1,20 +1,52 @@
 <?php
 
+use Illuminate\Http\Response as IlluminateResponse;
+
+class ExtendedResponse extends IlluminateResponse
+{
+  function addContent($s)
+  {
+    $this->setContent($this->getOriginalContent().$s);
+    return $this;
+  }
+}
 class UserContextController extends \BaseController {
   function __construct()
   {
     $this->content = View::make('usercontext.app.header-js');
+    $this->response = new ExtendedResponse($this->content, 200, ['Content-Type'=>'application/javascript']);
   }
   
   function go()
   {
-    if(!Auth::user())
-    {
-      $response = Response::make($this->content, 200);
-      $response->header('Content-Type', 'application/javascript');
-      return $response;
-    }
+    if(!Auth::user()) return $this->response->addContent('/* Not authenticated */');
     
+    $route_name = Input::get('r', null);
+    if(!$route_name) return $this->response->addContent("/* No route specified */");
+    
+    $params = Input::get('p',[]);
+    
+    switch($route_name)
+    {
+      case 'contests.hot':
+      case 'contests.new':
+      case 'contests.top':
+        $this->contest_listing();
+        break;
+      case 'contest.view':
+        $contest = Contest::find($params['contest_id']);
+        $content = View::make('usercontext.contests.view')->with('contest', $contest);
+        $this->response->addContent($content);
+        break;
+      default:
+        return $this->response->addContent("/* No handler for route {$route_name} */");
+    }
+
+    return $this->response;
+  }
+  
+  function contest_listing()
+  {
     $sql = sprintf("
       select 
         c.id, 
@@ -31,13 +63,10 @@ class UserContextController extends \BaseController {
       Auth::user()->is_admin,
       Auth::user()->id
     );
-    
-    $recs = DB::select(DB::raw($sql));
-    
-    $this->content .= View::make('usercontext.contests.list')->with('recs', $recs);
 
-    $response = Response::make($this->content, 200);
-    $response->header('Content-Type', 'application/javascript');
-    return $response;
+    $recs = DB::select(DB::raw($sql));
+
+    $content = View::make('usercontext.contests.list')->with('recs', $recs);
+    $this->response->addContent($content);
   }
 }

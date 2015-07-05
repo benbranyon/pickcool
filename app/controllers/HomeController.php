@@ -22,4 +22,14 @@ class HomeController extends \BaseController {
     $contests = Contest::hot()->with('candidates')->get();
     return View::make('home')->with(['contests'=>$contests, 'state'=>'hot']);
   }
+
+  function top() {
+    $contests = Contest::top()->with('candidates')->get();
+    return View::make('home')->with(['contests'=>$contests, 'state'=>'top']);
+  }
+  
+  function newest() {
+    $contests = Contest::recent()->with('candidates')->get();
+    return View::make('home')->with(['contests'=>$contests, 'state'=>'new']);
+  }
 }

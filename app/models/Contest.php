@@ -223,8 +223,7 @@ class Contest extends Eloquent
     $contests = self::query()
       ->whereIsArchived(false)
       ->whereRaw('ends_at > now()')
-      ->orderBy('created_at', 'desc')
-      ->get();
+      ->orderBy('created_at', 'desc');
     return $contests;
   }
 
@@ -232,8 +231,7 @@ class Contest extends Eloquent
   {
     $contests = self::query()
       ->whereIsArchived(false)
-      ->orderBy('vote_count_0', 'desc')
-      ->get();
+      ->orderBy('vote_count_0', 'desc');
     return $contests;
   }
   

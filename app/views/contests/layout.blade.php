@@ -113,11 +113,9 @@
     @endif
     
     
-    @if($contest->has_joined)
-      <div class="alert alert-success">
-        You are in this pick! Read about <a href="/tips">how to win</a>.
-      </div>
-    @endif
+    <div class="alert alert-success hidden user-in-pick">
+      You are in this pick! Read about <a href="/tips">how to win</a>.
+    </div>
     <div style="max-width:300px; margin-left: auto; margin-right: auto; text-align: center">
       <div class="btn-group btn-group-justified" role="group" >
         <a href="{{{$contest->small_url}}}" role="button" class="btn btn-{{{$view_mode=='small' ? 'primary' : 'default'}}}">Small</a>
@@ -211,9 +209,7 @@
     @endif
     
     
-    @if($contest->is_editable)
-      <a class="btn btn-xs btn-success" href="{{r('admin.contests.edit', [$contest->id])}}">Edit</a>
-    @endif
+    <a class="btn btn-xs btn-success edit-contest hidden" href="{{r('admin.contests.edit', [$contest->id])}}">Edit</a>
   </div>
 </div>
 @stop
