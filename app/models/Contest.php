@@ -3,9 +3,9 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
+  public static $intervals = [0,1,12,24,72,120,240];
   
   var $_current_user_candidate_id = null;
-  static $intervals = [0,24];
 
   function nextContest()
   {
@@ -188,15 +188,72 @@ class Contest extends Eloquent
     return $this->slug();
   }
   
-  static function add_vote_count_columns($columns)
+  static function calc_stats()
   {
+    $sqls = [];
+    $sqls[] = "
+      replace into candidate_stats (id, first_voted_at) 
+        select 
+          c.id, 
+          min(v.updated_at) 
+        from 
+          candidates c 
+            left outer join 
+          votes v 
+            on 
+          v.candidate_id = c.id  group by c.id
+    ";    
     foreach(self::$intervals as $interval)
     {
-      //$columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
-      $columns[] = DB::raw("(select count(*) from votes v join candidates c on v.candidate_id = c.id where c.contest_id = contests.id and v.updated_at < utc_timestamp() - interval {$interval} hour) + (select COALESCE(SUM(b.vote_weight),0) from badges b inner join badge_candidate cb on b.id = cb.badge_id inner join candidates c on cb.candidate_id = c.id where c.contest_id = contests.id and cb.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
+      $sqls[] = "
+        update candidate_stats cs set
+        	vote_count_{$interval} = 
+            (select count(v.id) from votes v where v.candidate_id = cs.id and v.updated_at < utc_timestamp() - interval {$interval} hour) 
+            + 
+            ifnull(
+              (select b.vote_weight from badges b join badge_candidate bc on b.id = bc.badge_id where bc.candidate_id = cs.id and bc.updated_at < utc_timestamp() - interval {$interval} hour)
+              ,0)
+      ";
+      $sqls[] = "set @rn:=0;";
+      $sqls[] = "set @old_contest_id:=0";
+      $sqls[] = "
+        update candidate_stats ucs join
+          (select
+            d.candidate_id,
+          	case 
+          		when @old_contest_id <> contest_id and @old_contest_id:=contest_id then @rn:=1
+          		when @old_contest_id = contest_id then (@rn:=@rn+1)
+          	end AS rank
+            from
+             (
+              select 
+              	c.contest_id, 
+              	c.id as candidate_id,
+              	cs.vote_count_{$interval}
+              from 
+              	candidates c join candidate_stats cs on c.id=cs.id
+              order by 
+              	c.contest_id, 
+              	cs.vote_count_{$interval} desc, 
+              	cs.first_voted_at asc, 
+              	c.id asc
+             ) d
+          ) d2
+         on ucs.id = d2.candidate_id
+         set ucs.rank_{$interval} = d2.rank;
+      ";
+      $sqls[] = "
+        replace into contest_stats (id, vote_count_{$interval}) select c.contest_id, sum(vote_count_{$interval}) from candidate_stats cs join candidates c on c.id=cs.id group by c.contest_id
+      ";
     }
-    return $columns;
+    
+    foreach($sqls as $sql)
+    {
+      $sql = trim(preg_replace('/\s*\n\s*/', ' ', $sql));
+      DB::statement($sql);
+    }
   }
+
   
 	public function newEloquentBuilder($query)
 	{
