@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x
+
 LIVE_DB_USER=www
 LIVE_DB_PASSWORD=yeqWaDdlDbAu1VKyxfaS
 LIVE_DB_NAME=www
@@ -17,6 +19,8 @@ mysqldump -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST --skip-tz-utc --add-d
 rm db.sql.gz
 gzip -9 db.sql
 rsync -avv ../pick.cool/html/i/ html/i
+./artisan cache:clear
+./artisan cache:views:clear
 
 # locally:
 # scp user@ftp.pick.cool:~/next.pick.cool/db.sql .
