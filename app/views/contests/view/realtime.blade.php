@@ -20,12 +20,10 @@
       }
       ?>
       <p>
-        {{mlink(1)}} |
-        {{mlink(12)}} |
-        {{mlink(24)}} |
-        {{mlink(72)}} |
-        {{mlink(120)}} |
-        {{mlink(240)}}
+        <?php
+        $links = array_map(function($i) { return mlink($i); }, Contest::$intervals);
+        echo join(' | ', $links);
+        ?>
       </p>
       
       <style>
@@ -41,7 +39,7 @@
         $interval = Input::get("h",12);
         $rank_key = "rank_{$interval}";
         $vote_key = "vote_count_{$interval}";
-        $candidates = $contest->ranked_candidates($interval);
+        $candidates = $contest->candidates()->get();
           
         ?>
         

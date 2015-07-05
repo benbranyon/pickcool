@@ -322,7 +322,7 @@ class Contest extends Eloquent
 
   function ranked_candidates($interval)
   {
-    return $this->candidates()->orderBy('rank_0');
+    return $this->candidates()->orderBy('rank_'.$interval);
   }
   
   function getCurrentUserCandidateIdAttribute()
