@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x
+git pull
 LIVE_DB_USER=www
 LIVE_DB_PASSWORD=yeqWaDdlDbAu1VKyxfaS
 LIVE_DB_NAME=www
