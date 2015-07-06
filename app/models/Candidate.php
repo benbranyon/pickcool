@@ -234,4 +234,6 @@ Candidate::saved(function($candidate) {
   Flatten::flushRoute('contests.hot');
   Flatten::flushRoute('contests.new');
   Flatten::flushRoute('contests.top');
+  Contest::calc_stats();
+  
 });

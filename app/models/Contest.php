@@ -198,10 +198,10 @@ class Contest extends Eloquent
       $sqls[] = "
         update candidates c set
         	vote_count_{$interval} = 
-            (select count(v.id) from votes v where v.candidate_id = c.id and v.updated_at < utc_timestamp() - interval {$interval} hour) 
+            (select count(v.id) from votes v where v.candidate_id = c.id and v.updated_at <= utc_timestamp() - interval {$interval} hour) 
             + 
             ifnull(
-              (select b.vote_weight from badges b join badge_candidate bc on b.id = bc.badge_id where bc.candidate_id = c.id and bc.updated_at < utc_timestamp() - interval {$interval} hour)
+              (select b.vote_weight from badges b join badge_candidate bc on b.id = bc.badge_id where bc.candidate_id = c.id and bc.updated_at <= utc_timestamp() - interval {$interval} hour)
               ,0)
       ";
       $sqls[] = "set @rn:=0;";
@@ -406,4 +406,5 @@ Contest::saved(function() {
   Flatten::flushRoute('contests.hot');
   Flatten::flushRoute('contests.new');
   Flatten::flushRoute('contests.top');
+  Contest::calc_stats();
 });
