@@ -3,7 +3,6 @@ use Cocur\Slugify\Slugify;
   
 class Candidate extends Eloquent
 {
-  public static $intervals = [0,24];
   public static $on_fire_threshold = .1;
 
   public function getDates()
@@ -66,6 +65,9 @@ class Candidate extends Eloquent
     return $this->dropped_at == null;
   }
   
+  
+
+  
   function getIsOnFireAttribute()
   {
     $delta = $this->vote_count_0 - $this->vote_count_24;
@@ -90,19 +92,8 @@ class Candidate extends Eloquent
     return $this->vote_count_0 - $this->$vote_key;
   }
   
-	public function newCollection(array $models = array())
-	{
-		return new RankedCandidateCollection($models);
-	}
-  
   function add_columns($columns)
   {
-    foreach(self::$intervals as $interval)
-    {
-      //$columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
-      $columns[] = DB::raw("(select count(id) from votes where candidate_id = candidates.id and updated_at < utc_timestamp() - interval {$interval} hour) + (select COALESCE(SUM(vote_weight),0) from badges b inner join badge_candidate cb on b.id = cb.badge_id inner join candidates c on cb.candidate_id = c.id where candidate_id = candidates.id and cb.updated_at < utc_timestamp() - interval {$interval} hour) as vote_count_{$interval}");
-    }
-    $columns[] = DB::raw("(select updated_at from votes where candidate_id = candidates.id order by updated_at asc limit 1) as first_voted_at");
     if(Auth::user())
     {
       $user_id = Auth::user()->id;
@@ -231,16 +222,6 @@ class Candidate extends Eloquent
     return $this->contest->is_moderator($user);
   }
 
-  function vote_boost_count()
-  {
-    $boost = 0;
-    foreach($this->badges as $badge)
-    {
-      $boost += $badge->vote_weight;
-    }
-    return $boost;
-  }
-  
   protected static function boot() {
     parent::boot();
     static::deleting(function($candidate) { // called BEFORE delete()
@@ -253,4 +234,6 @@ Candidate::saved(function($candidate) {
   Flatten::flushRoute('contests.hot');
   Flatten::flushRoute('contests.new');
   Flatten::flushRoute('contests.top');
+  Contest::calc_stats();
+  
 });
