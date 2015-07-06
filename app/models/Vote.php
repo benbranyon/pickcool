@@ -13,5 +13,5 @@ Vote::saved(function($vote) {
   Flatten::flushRoute('contests.hot');
   Flatten::flushRoute('contests.new');
   Flatten::flushRoute('contests.top');
-  Contest::calculate_stats();
+  Contest::calc_stats();
 });
