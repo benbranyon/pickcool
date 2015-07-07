@@ -4,8 +4,8 @@ use Vote;
 
 class DashboardController extends \BaseController {
 
-	/*function index() {
-		$users = User::all();
+	function index() {
+		/*$users = User::all();
 		$votes = Vote::all();
 		$new_users = User::where('created_at', '>', \DB::raw('NOW() - INTERVAL 1 DAY'))->get();
 		$new_votes = Vote::where('updated_at', '>', \DB::raw('NOW() - INTERVAL 1 DAY'))->get();
@@ -15,7 +15,7 @@ class DashboardController extends \BaseController {
 			'new_users' => $new_users,
 			'votes' => $votes,
 			'new_votes' => $new_votes
-		);
-		return \View::make('admin.dashboard')->with('data', $data);
-	}*/
+		);*/
+		return \View::make('admin.dashboard');
+	}
 }
