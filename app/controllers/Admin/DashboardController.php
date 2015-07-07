@@ -12,7 +12,9 @@ class DashboardController extends \BaseController {
 
 		$data = array(
 			'users' => $users,
-			'new_users' => $new_users
+			'new_users' => $new_users,
+      'votes'=>$votes,
+      'new_votes'=>$new_votes,
 		);
 		return \View::make('admin.dashboard')->with('data', $data);
 	}
