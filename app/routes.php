@@ -51,12 +51,7 @@ Route::get('/my/set_visible', ['as'=>'my.set_visible', 'uses'=>'ProfileControlle
 Route::get('/api/profile/settings', ['as'=>'api.profile.settings', 'uses'=>'ProfileController@settings']);
 Route::get('/profiles/{id}', ['as'=>'profile', 'uses'=>'ProfileController@home']);
 
-Route::get('/', ['as'=>'home', 'uses'=>function() {
-  //$contests = Contest::hot();
-  //Session::flush();
-  return View::make('landing');
-  //return View::make('home')->with(['contests'=>$contests]);
-}]);
+Route::get('/', ['as'=>'home', 'uses'=>'HomeController@live']);
 
 Route::group(['prefix'=>'/est/{contest_id}/{contest_slug}'], function() {
   Route::group(['prefix'=>'/picks/{candidate_id}/{candidate_slug}'], function() {
@@ -221,7 +216,7 @@ Route::any('/join/{id}', ['before'=>'auth', 'as'=>'contest.join', 'uses'=>functi
 
 
 
-Route::get('/live/', ['as'=>'contest.live.view', 'uses'=>'LiveController@view']); 
+//Route::get('/live/', ['as'=>'contest.live.view', 'uses'=>'LiveController@view']); 
 
 //Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'contests.candidates.after_join', 'uses'=>'JoinController@done']);
 Route::get('/join/{id}/done', ['before'=>'auth', 'as'=>'contests.candidates.after_join', 'uses'=>function($id) {

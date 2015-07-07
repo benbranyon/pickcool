@@ -12,7 +12,7 @@ class CalcCoolPoints extends Migration {
 	 */
 	public function up()
 	{
-		User::calc_ranks();
+		User::calc_stats();
 	}
 
 	/**

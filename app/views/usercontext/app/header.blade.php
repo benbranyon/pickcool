@@ -28,8 +28,6 @@ $the_url = route(Input::get('r'), Input::get('p'));
   <ul class="subnav list-inline pull-right">
       @if($u->is_visible)
         <li><a href="{{{route('leaderboard')}}}">You are in {{nth($u->rank)}} place with {{$u->total_points}} points. What's this?</a>
-      @else
-        <li><a href="{{{route('my', ['id'=>$u->id])}}}">Activate</a>
       @endif
   </ul>
 </div>
