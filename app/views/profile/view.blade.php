@@ -27,17 +27,29 @@
         </div>
       </div>
       <hr/>
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>How to Play</h1>
+          <p><b class="text-success">Earn points by picking winners early.</b></p>
+          <p>Prove you are the arbiter of cool by voting on Pick.Cool.
+          <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.
+          <p>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.
+        </div>
+      </div>
+      <hr/>
       <h1>Track Record</h1>
-      @foreach(Contest::whereHas('votes', function($q) use ($user) {
-          $q->where('user_id', '=', $user->id);
-      })->whereRaw('ends_at >= utc_timestamp()')->orderBy('ends_at')->get() as $contest)
-        {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'muted', 'status'=>'pending'])}}
-      @endforeach
-      @foreach(Contest::whereHas('votes', function($q) use ($user) {
-          $q->where('user_id', '=', $user->id);
-      })->whereRaw('ends_at < utc_timestamp()')->orderBy('ends_at')->get() as $contest)
-        {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'success', 'status'=>'earned'])}}
-      @endforeach
+      <div class="track-record">
+        @foreach(Contest::whereHas('votes', function($q) use ($user) {
+            $q->where('user_id', '=', $user->id);
+        })->whereRaw('ends_at >= utc_timestamp()')->orderBy('ends_at')->get() as $contest)
+          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'muted', 'status'=>'pending'])}}
+        @endforeach
+        @foreach(Contest::whereHas('votes', function($q) use ($user) {
+            $q->where('user_id', '=', $user->id);
+        })->whereRaw('ends_at < utc_timestamp()')->orderBy('ends_at')->get() as $contest)
+          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'success', 'status'=>'earned'])}}
+        @endforeach
+      </div>
     @endif
         
     @if($is_self)

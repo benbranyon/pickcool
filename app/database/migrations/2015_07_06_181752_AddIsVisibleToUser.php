@@ -14,8 +14,9 @@ class AddIsVisibleToUser extends Migration {
 	{
 		Schema::table('users', function(Blueprint $table)
 		{
-			$table->boolean('is_visible')->default(false);
+			$table->boolean('is_visible')->default(true);
 		});
+    User::query()->update(['is_visible'=>false]);
 	}
 
 	/**

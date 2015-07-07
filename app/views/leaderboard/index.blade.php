@@ -3,7 +3,14 @@
 @section('content')
 <div class="leaderboard">
   <h1>Leaderboard</h1>
-  <p>You earn points for playing on Pick.Cool. The more earn, the more powerful of an influencer you become. 
+  <hr/>
+  <h2>How to Play</h2>
+  <p><b class="text-success">Earn points by picking winners early.</b></p>
+  <p>Prove you are the arbiter of cool by voting on Pick.Cool.
+  <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.
+  <p>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.
+  <hr/>
+
   <table>
     <thead>
       <tr>
@@ -29,11 +36,11 @@
             {{$u->full_name}}
           </a>
         </td>
-        <td>
+        <td class="text-success">
           {{$u->total_points}}
         </td>
-        <td>
-          {{$u->pending_points}}
+        <td class="text-muted">
+          {{$u->pending_points or ''}}
         </td>
       </tr>
     @endforeach

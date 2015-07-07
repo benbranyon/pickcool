@@ -1,3 +1,4 @@
+db-live.*
 db.sql
 db.sql.gz
 /bootstrap/compiled.php
