@@ -17,19 +17,14 @@ function objectify($fields, $src)
 }
 class HomeController extends \BaseController {
 
-  public function hot()
+  public function live()
   {
-    $contests = Contest::hot()->with('candidates')->get();
-    return View::make('home')->with(['contests'=>$contests, 'state'=>'hot']);
+    $contests = Contest::live()->with('candidates')->get();
+    return View::make('home')->with(['contests'=>$contests, 'state'=>'live']);
   }
 
-  function top() {
-    $contests = Contest::top()->with('candidates')->get();
-    return View::make('home')->with(['contests'=>$contests, 'state'=>'top']);
-  }
-  
-  function newest() {
-    $contests = Contest::recent()->with('candidates')->get();
-    return View::make('home')->with(['contests'=>$contests, 'state'=>'new']);
+  function archived() {
+    $contests = Contest::archived()->with('candidates')->get();
+    return View::make('home')->with(['contests'=>$contests, 'state'=>'archived']);
   }
 }

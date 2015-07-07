@@ -15,6 +15,9 @@ class UserContextController extends \BaseController {
   {
     $this->content = View::make('usercontext.app.header-js');
     $this->response = new ExtendedResponse($this->content, 200, ['Content-Type'=>'application/javascript']);
+    $this->afterFilter(function() {
+      foreach(['success', 'warning', 'danger'] as $kind) Session::forget($kind);
+    });
   }
   
   function go()
@@ -28,9 +31,8 @@ class UserContextController extends \BaseController {
     
     switch($route_name)
     {
-      case 'contests.hot':
-      case 'contests.new':
-      case 'contests.top':
+      case 'contests.live':
+      case 'contests.archived':
         $this->contest_listing();
         break;
       case 'contest.view':

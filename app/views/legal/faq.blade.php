@@ -30,15 +30,14 @@
                     <a class="panel-header-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                2. What does Beta mean?
+                                2. How do I play?
                             </h4>
                         </div>
                     </a>
                     <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <p> Websites will often introduce themselves to the world by selecting a small to mid-sized market (ie. Reno which happens to be our home town) and launching a few features at a time in a gradual rollout. This way, we can find any issues (bugs) which we may have missed during our internal testing and fix them before they’re seen millions of times. You are our beta users and for that we thank you. If you find a bug, please reach out to us <a href="https://www.facebook.com/the.pick.cool">on Facebook</a> and try to be as specific as possible about any problems you may encounter. This will help us make Pick.Cool as reliable as possible for every user on every platform as we rollout the rest of our system to the world.
- 
-                            <p>Remember, we just launched in Mid-December 2014 so we’re still a very young site and we already have several thousand members! Thanks Reno for your support!  We can’t wait to see your faces when we hand out all the sponsorship prizes and awards at our first wrap party on January 31st!</p>
+                          <p>Earn glory and fame by proving your reputation as a detective of cool. When you cast a vote, you earn Cool Points for every vote cast after yours until the pick ends. The earlier you cast your vote for a winner, the more Cool Points you will earn.
+                          <p>Compete (in a friendly way of course) with others on Pick.Cool to see who can predict the crowd favorites with the most accuracy. The better you vote, the higher your rank will be.
                         </div>
                     </div>
                 </div>

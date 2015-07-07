@@ -6,6 +6,11 @@ class Vote extends Eloquent
   {
     return $this->belongsTo('Contest');
   }
+  
+  function candidate()
+  {
+    return $this->belongsTo('Candidate');
+  }
 }
 
 

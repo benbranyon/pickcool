@@ -15,6 +15,167 @@ class User extends Eloquent
   {
     return "http://graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
   }
+
+  static function execute($sqls)
+  {
+    foreach($sqls as $sql)
+    {
+      $sql = self::sanitize_sql($sql);
+      DB::statement($sql);
+    }
+  }
+  
+  static function calc_vote_counts()
+  {
+    $sqls = [];
+    $sqls[] = "
+      update users join (
+      	select 
+      		v2.user_id, 
+      		count(v.id) as total_points 
+      	from 
+      		contests c 
+      			join 
+      		votes v  
+      			on 
+      		c.ends_at <= utc_timestamp() 
+      			and 
+      		v.contest_id = c.id 
+      			join 
+      		votes v2 
+      			on 
+      		v.contest_id = v2.contest_id 
+      			and 
+      		v.candidate_id = v2.candidate_id 
+      			and 
+      		v.updated_at > v2.updated_at 
+      			and v2.user_id not in (0,v.user_id) 
+      	group by 
+      		v2.user_id
+      	) d 
+      		on 
+      	users.id = d.user_id
+      set users.total_points = d.total_points
+    ";
+    self::execute($sqls);
+    
+  }
+  
+  static function calc_ranks()
+  {
+    
+    $sqls = [];
+    $sqls[] = "
+      set @r:=0;
+    ";
+    $sqls[] = "
+      update users u join (
+      select 
+      	id,
+      	total_points, 
+      	(
+      		select 
+      			max(v.updated_at) 
+      		from 
+      			votes v
+      				join 
+      			contests c 
+      				on 
+      			c.id = v.contest_id 
+      		where 
+      			v.user_id = users.id 
+      				and 
+      			c.ends_at <= utc_timestamp()
+      	) as latest_vote, 
+      	case 
+      		when is_visible then
+      			@r:=@r+1
+      		when is_visible = 0 then
+      			0 
+      	end as rank 
+      from 
+      	users 
+      order by 
+      	total_points desc, 
+      	latest_vote asc, 
+      	users.id asc
+      ) d
+      on u.id = d.id
+      set u.rank = d.rank
+    ";
+    self::execute($sqls);
+  }
+  
+  function getProfileUrlAttribute()
+  {
+    return route('profile', [$this->id]);
+  }
+  
+  static function calc_stats()
+  {
+    self::calc_vote_counts();
+    self::calc_ranks();
+  }
+  
+  static function sanitize_sql($sql)
+  {
+    $sql = preg_replace('/\s*\n\s*/', ' ', $sql);
+    return $sql;
+  }
+  
+  function pending_points_for($c)
+  {
+    $sql = "
+    	select 
+    		count(v2.user_id) as pending_points
+    	from 
+    		votes v
+    			join
+    		votes v2
+    			on
+    		v.candidate_id = v2.candidate_id
+    			and
+    		v.user_id = {$this->id}
+    			and
+    		v2.user_id not in (0,{$this->id})
+    			and
+    		v2.updated_at > v.updated_at
+    			and
+    		v.contest_id = {$c->id}
+      ";
+    $sql = self::sanitize_sql($sql);
+    $res = DB::selectOne($sql);
+    return $res->pending_points;
+  }
+  
+  function getPendingPointsAttribute()
+  {
+    $sql = "
+    	select 
+    		count(v2.user_id) as pending_points
+    	from 
+    		votes v
+    			join
+    		votes v2
+    			on
+    		v.candidate_id = v2.candidate_id
+    			and
+    		v.user_id = {$this->id}
+    			and
+    		v2.user_id not in (0,{$this->id})
+    			and
+    		v2.updated_at > v.updated_at
+    			join
+    		contests c
+    			on
+    		c.ends_at > utc_timestamp()
+    			and
+    		c.id = v.contest_id
+      ";
+    $sql = self::sanitize_sql($sql);
+    $res = DB::selectOne($sql);
+    return $res->pending_points;
+  }
   
   function votes()
   {
@@ -38,7 +199,7 @@ class User extends Eloquent
   
   function current_vote_for($contest)
   {
-    return Vote::whereUserId(Auth::user()->id)->whereContestId($contest->id)->first();
+    return Vote::whereUserId($this->id)->whereContestId($contest->id)->first();
   }
   
   function profile_image_url($cache_bust = false)

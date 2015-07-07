@@ -47,6 +47,10 @@ Route::get("/images/{id}/{size}", ['as'=>'image.view', 'uses'=>  function($id,$s
 }]);
 
 
+Route::get('/my/set_visible', ['as'=>'my.set_visible', 'uses'=>'ProfileController@set_visible']);
+Route::get('/api/profile/settings', ['as'=>'api.profile.settings', 'uses'=>'ProfileController@settings']);
+Route::get('/profiles/{id}', ['as'=>'profile', 'uses'=>'ProfileController@home']);
+
 Route::get('/', ['as'=>'home', 'uses'=>function() {
   //$contests = Contest::hot();
   //Session::flush();
@@ -261,10 +265,10 @@ Route::post('/sponsor/edit/{id}', ['as'=>'sponsors.edit', 'uses'=>'SponsorContro
 
 Route::post('sponsor/create/', 'SponsorController@create');
 
-Route::get('/hot', ['as'=>'contests.hot', 'uses'=>'HomeController@hot']);
-Route::get('/new', ['as'=>'contests.new', 'uses'=>'HomeController@newest']);
-Route::get('/top', ['as'=>'contests.top', 'uses'=>'HomeController@top']);
+Route::get('/live', ['as'=>'contests.live', 'uses'=>'HomeController@live']);
+Route::get('/archived', ['as'=>'contests.archived', 'uses'=>'HomeController@archived']);
 
+Route::get('/leaderboard', ['as'=>'leaderboard', 'uses'=>'LeaderboardController@index']);
 
 Route::get('/tips', ['as'=>'tips', 'uses'=>function() {
   return View::make('tips');
@@ -302,6 +306,10 @@ Route::get('/privacy', ['as'=>'privacy', 'uses'=>function() {
   return View::make('legal.privacy');
 }]);
 
+Route::get('/advertise', ['as'=>'privacy', 'uses'=>function() {
+  return View::make('legal.advertise');
+}]);
+
 Route::get('/terms', ['as'=>'terms', 'uses'=>function() {
   return View::make('legal.terms');
 }]);
@@ -321,7 +329,6 @@ Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'u
   return View::make('inbox.read', ['message'=>$message]);
 }]);
 
-Route::get('/my', ['as'=>'my.picks']);
 
 Route::get('/usercontext', ['as'=>'usercontext', 'uses'=>'UserContextController@go']);
 

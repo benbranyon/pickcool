@@ -114,6 +114,11 @@ class Contest extends Eloquent
     return $this->belongsToMany('Sponsor')->orderByRaw("RAND()")->first();
   }
   
+  public function votes()
+  {
+      return $this->hasMany('Vote');
+  }
+      
   function getHasDroppedAttribute()
   {
     return $this->has_dropped();
@@ -241,29 +246,20 @@ class Contest extends Eloquent
   }
 
   
-  static function hot()
+  static function live()
   {
     $contests = self::query()
       ->whereIsArchived(false)
-      ->whereRaw('(ends_at is null or ends_at > now())')
-      ->havingRaw('vote_count_0 > vote_count_72')
+      ->whereRaw('(ends_at is null or ends_at > utc_timestamp())')
       ->orderByRaw('vote_count_0 - vote_count_72 desc');
     return $contests;
   }
   
-  static function recent()
+  static function archived()
   {
     $contests = self::query()
       ->whereIsArchived(false)
-      ->whereRaw('ends_at > now()')
-      ->orderBy('created_at', 'desc');
-    return $contests;
-  }
-
-  static function top()
-  {
-    $contests = self::query()
-      ->whereIsArchived(false)
+      ->whereRaw('(ends_at <= utc_timestamp())')
       ->orderBy('vote_count_0', 'desc');
     return $contests;
   }
@@ -333,6 +329,14 @@ class Contest extends Eloquent
     if(!$vote) return $this->_current_user_candidate_id = false;
     return $this->_current_user_candidate_id = $vote->candidate_id;
   }
+
+  function getCurrentUserCandidateAttribute()
+  {
+    if($this->_current_user_candidate!==null) return $this->_current_user_candidate;
+    if(!$this->current_user_candidate_id) return null;
+    return Candidate::find($this->current_user_candidate_id);
+  }
+
   
   function getIsEditableAttribute()
   {

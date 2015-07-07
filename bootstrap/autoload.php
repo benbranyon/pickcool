@@ -1,4 +1,12 @@
 <?php
+function nth($number) {
+    $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+    if ((($number % 100) >= 11) && (($number%100) <= 13))
+        return $number. 'th';
+    else
+        return $number. $ends[$number % 10];
+}
+
 $ini = parse_ini_file(__DIR__.'/../.env');
 if($ini['USE_FLATTEN'])
 {

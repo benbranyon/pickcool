@@ -39,11 +39,11 @@
     @else
       <meta name="description" content="Where you pick what's cool." />
     @endif
-    @yield('head')
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    @yield('head')
+
   </head>
 
   <body>
@@ -77,10 +77,8 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
           <ul class="nav navbar-nav navbar-right">
-            <!-- <li class="{{(Route::currentRouteName()=='home' || Route::currentRouteName()=='contests.hot') ? 'active' : ''}}"><a href="{{{r('contests.hot')}}}">Hot</a></li> -->
-            <li class="{{Route::currentRouteName()=='contests.hot' ? 'active' : ''}}"><a href="{{{r('contests.hot')}}}">Hot</a></li>
-            <li class="{{Route::currentRouteName()=='contests.new' ? 'active' : ''}}"><a href="{{{r('contests.new')}}}"  >New</a></li>
-            <li class="{{Route::currentRouteName()=='contests.top' ? 'active' : ''}}"><a href="{{{r('contests.top')}}}" >Top</a></li>
+            <li class="{{Route::currentRouteName()=='contests.live' ? 'active' : ''}}"><a href="{{{r('contests.live')}}}">Live</a></li>
+            <li class="{{Route::currentRouteName()=='contests.archived' ? 'active' : ''}}"><a href="{{{r('contests.archived')}}}"  >Archived</a></li>
           </ul>
         </div>
       </div>
@@ -108,6 +106,7 @@
             <ul class="nav nav-pills footer-nav">
               <li><a href="/privacy">Privacy Policy</a></li>
               <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/advertise">Advertise</a></li>
             </ul>
           </div>
         </div>

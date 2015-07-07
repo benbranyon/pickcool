@@ -468,7 +468,6 @@ ul.nav {
 .nav > li {
   position: relative;
   display: inline-block;
-  width: 55px;
 }
 .nav-pills > li {
   width: auto;
@@ -725,4 +724,56 @@ ul.nav {
 .panel-heading {
   background-color: #0085ca;
   color: white;
+}
+@media (min-width: 768px) {
+  .profile .row {
+    margin-right: -15px;
+    margin-left: -15px;
+    display: inline-block;
+    width: 360px;
+  }
+}
+.profile .profile-img {
+  width: 100%;
+}
+.profile h1.big {
+  font-size: 15px;
+}
+.profile h1 {
+  font-size: 24px;
+}
+.profile .fa-large {
+  font-size: 24px;
+}
+.profile .contest {
+  margin-bottom: 5px;
+}
+.profile .contest img {
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 3px;
+}
+.profile .contest .title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.profile .contest .col-xs-1, .profile .contest .col-xs-10, .profile .contest .col-xs-11, .profile .contest .col-xs-12, .profile .contest .col-xs-2, .profile .contest .col-xs-3, .profile .contest .col-xs-4, .profile .contest .col-xs-5, .profile .contest .col-xs-6, .profile .contest .col-xs-7, .profile .contest .col-xs-8, .profile .contest .col-xs-9 {
+  padding: 2px;
+}
+@media (min-width: 400px) {
+  .profile .contest .col-xs-1, .profile .contest .col-xs-10, .profile .contest .col-xs-11, .profile .contest .col-xs-12, .profile .contest .col-xs-2, .profile .contest .col-xs-3, .profile .contest .col-xs-4, .profile .contest .col-xs-5, .profile .contest .col-xs-6, .profile .contest .col-xs-7, .profile .contest .col-xs-8, .profile .contest .col-xs-9 {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+.leaderboard h1 {
+  font-size: 25px;
+}
+.leaderboard td, .leaderboard th {
+  padding: 2px;
+}
+.leaderboard .profile-img {
+  width: 100%;
+  max-width: 25px;
 }
