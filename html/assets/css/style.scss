@@ -633,13 +633,6 @@ ul.nav
   width:auto;
 }
 
-.view.profile {
-  max-width: 320px;
-
-  @media (min-width: 768px) {
-    max-width:768px;
-  }
-}
 
 .view
 {
@@ -1000,6 +993,16 @@ ul.nav
 
 .candidate-single
 {
+  .candidate-large
+  {
+    img
+    {
+      width: 100%;
+    }
+    width: 100%;
+    height: auto;
+    
+  }
   .voters
   {
     border: 1px solid rgb(226, 226, 226);

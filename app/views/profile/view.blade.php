@@ -42,12 +42,12 @@
         @foreach(Contest::whereHas('votes', function($q) use ($user) {
             $q->where('user_id', '=', $user->id);
         })->whereRaw('ends_at >= utc_timestamp()')->orderBy('ends_at')->get() as $contest)
-          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'muted', 'status'=>'pending'])}}
+          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'muted', 'status'=>'pending', 'icon'=>'plus'])}}
         @endforeach
         @foreach(Contest::whereHas('votes', function($q) use ($user) {
             $q->where('user_id', '=', $user->id);
         })->whereRaw('ends_at < utc_timestamp()')->orderBy('ends_at')->get() as $contest)
-          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'success', 'status'=>'earned'])}}
+          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'success', 'status'=>'earned', 'icon'=>'star',])}}
         @endforeach
       </div>
     @endif
