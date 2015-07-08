@@ -767,6 +767,20 @@ ul.nav {
     padding-right: 15px;
   }
 }
+.leaderboard table {
+  font-size: 10px;
+}
+.leaderboard table .badge {
+  font-size: 10px;
+}
+@media (min-width: 400px) {
+  .leaderboard table {
+    font-size: 13px;
+  }
+  .leaderboard table .badge {
+    font-size: 13px;
+  }
+}
 .leaderboard h1 {
   font-size: 25px;
 }

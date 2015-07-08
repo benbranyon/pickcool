@@ -977,6 +977,25 @@ ul.nav
 
 .leaderboard
 {
+  table
+  {
+    font-size: 10px;
+    .badge
+    {
+      font-size: 10px;
+    }
+  }
+  @media(min-width: 400px)
+  {
+    table
+    {
+      font-size: 13px;
+      .badge
+      {
+        font-size: 13px;
+      }
+    }
+  }
   h1
   {
     font-size: 25px;
