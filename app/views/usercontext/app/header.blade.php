@@ -6,11 +6,12 @@ $the_url = route(Input::get('r'), Input::get('p'));
   <ul class="subnav list-inline pull-right">
     @if($u)
       <li>Welcome, {{{$u->first_name}}}.</li>
-      <li><a href="{{$u->profile_url}}"><span class="badge">{{nth($u->rank)}}</span>|<span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}</span>|<span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}</span></a></li>
+      <li><a href="{{$u->profile_url}}">Profile</a></li>
     @endif
+    <li><a href="/faq"><i class="fa fa-question-circle"></i> F.A.Q.</a>
     @if($u)
       <li><a href="{{{r('inbox')}}}" class="{{{$u->has_unread_messages ? 'unread' : ''}}}"><i class="fa fa-envelope"></i></a></li>
-      <li><a href="{{{r('logout', ['success'=>r('home')])}}}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+      <li><a href="{{{r('logout', ['success'=>r('home')])}}}">Logout</a></li>
     @else
       <li><a href="{{{
         r(
@@ -20,13 +21,13 @@ $the_url = route(Input::get('r'), Input::get('p'));
             'cancel'=>$the_url
           ]
         )
-      }}}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a></li>
+      }}}">Log in</a></li>
     @endif
   </ul>
   <div class="clearfix"></div>
   <ul class="subnav list-inline pull-right">
       @if($u && $u->is_visible)
-        <li><a href="{{{route('leaderboard')}}}">You are in <span class="badge">{{nth($u->rank)}}</span> place with <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}</span> earned and <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}</span> pending points. What's this?</a>
+        <li><a href="{{{route('leaderboard')}}}">You are in {{nth($u->rank)}} place with <span class="text-primary">+{{$u->earned_points}} earned</span> and <span class="text-muted">+{{$u->total_pending}}</span> points. What's this?</a>
       @endif
   </ul>
 </div>

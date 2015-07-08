@@ -472,6 +472,14 @@ ul.nav {
 .nav-pills > li {
   width: auto;
 }
+.view.profile {
+  max-width: 320px;
+}
+@media (min-width: 768px) {
+  .view.profile {
+    max-width: 768px;
+  }
+}
 .view .contest {
   text-align: center;
 }
@@ -771,13 +779,6 @@ ul.nav {
 .leaderboard .profile-img {
   width: 100%;
   max-width: 25px;
-}
-.candidate-single .candidate-large {
-  width: 100%;
-  height: auto;
-}
-.candidate-single .candidate-large img {
-  width: 100%;
 }
 .candidate-single .voters {
   border: 1px solid #e2e2e2;
