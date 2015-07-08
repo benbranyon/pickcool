@@ -8,7 +8,7 @@ class DashboardController extends \BaseController {
 		$users = User::count();
 		$votes = Vote::count();
 		$new_users = User::whereRaw('created_at > utc_timestamp() - interval 1 day')->count();
-		$new_votes = Vote::whereRaw('updated_at > utc_timestamp() - interval 1 day')->count();
+		$new_votes = Vote::whereRaw('voted_at > utc_timestamp() - interval 1 day')->count();
 
 		$data = array(
 			'users' => $users,

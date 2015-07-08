@@ -997,3 +997,37 @@ ul.nav
   }
   
 }
+
+.candidate-single
+{
+  .voters
+  {
+    border: 1px solid rgb(226, 226, 226);
+    border-radius: 5px;
+    padding: 3px;
+    margin-bottom: 10px;
+    
+    .voter
+    {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      img
+      {
+        width: 100%;
+      }
+    }
+    
+    .vote:hover
+    {
+      position: relative;
+      width:30px;
+      height: 30px;
+      border: 1px solid red;
+      cursor: pointer;
+      left: -5px;
+      top: -5px;
+    }
+  }
+
+}

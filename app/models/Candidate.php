@@ -60,6 +60,11 @@ class Candidate extends Eloquent
     return r('contests.candidate.refresh', ['contest_id'=>$this->contest->id, 'contest_slug'=>$this->contest->slug, 'candidate_id'=>$this->id, 'candidate_slug'=>$this->slug]);
   }
   
+  function getVotersUrlAttribute()
+  {
+    return r('contests.candidate.voters.view', ['contest_id'=>$this->contest->id, 'contest_slug'=>$this->contest->slug, 'candidate_id'=>$this->id, 'candidate_slug'=>$this->slug]);
+  }
+  
   public function getIsActiveAttribute()
   {
     return $this->dropped_at == null;

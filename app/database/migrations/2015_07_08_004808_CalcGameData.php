@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CalcCoolPoints extends Migration {
+class CalcGameData extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,6 +12,7 @@ class CalcCoolPoints extends Migration {
 	 */
 	public function up()
 	{
+    Vote::calc_votes_ahead();
 		User::calc_stats();
 	}
 

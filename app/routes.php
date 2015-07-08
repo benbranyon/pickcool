@@ -56,6 +56,7 @@ Route::get('/', ['as'=>'home', 'uses'=>'HomeController@live']);
 Route::group(['prefix'=>'/est/{contest_id}/{contest_slug}'], function() {
   Route::group(['prefix'=>'/picks/{candidate_id}/{candidate_slug}'], function() {
     Route::get('/', ['as'=>'contests.candidate.view', 'uses'=>'CandidateController@view']);
+    Route::get('/voters', ['as'=>'contests.candidate.voters.view', 'uses'=>'CandidateController@view_voters']);
     Route::get('/refresh', ['as'=>'contests.candidate.refresh', 'uses'=>'CandidateController@refresh']);
     Route::any('/images', ['as'=>'contests.candidates.images', 'uses'=>'CandidateImagesController@images']);
     Route::any('/images/add', ['as'=>'contests.candidates.images.add', 'uses'=>'CandidateImagesController@add']);

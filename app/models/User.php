@@ -5,6 +5,8 @@ use NinjaMutex\Mutex;
 
 class User extends Eloquent
 {
+  use RawDb;
+  
   function log_activity()
   {
     $log = new ActivityLog();
@@ -16,47 +18,65 @@ class User extends Eloquent
     return "http://graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
   }
 
-  static function execute($sqls)
-  {
-    foreach($sqls as $sql)
-    {
-      $sql = self::sanitize_sql($sql);
-      DB::statement($sql);
-    }
-  }
+
   
-  static function calc_vote_counts()
+  
+  
+  static function calc_points()
   {
     $sqls = [];
     $sqls[] = "
-      update users join (
-      	select 
-      		v2.user_id, 
-      		count(v.id) as total_points 
-      	from 
-      		contests c 
-      			join 
-      		votes v  
-      			on 
-      		c.ends_at <= utc_timestamp() 
-      			and 
-      		v.contest_id = c.id 
-      			join 
-      		votes v2 
-      			on 
-      		v.contest_id = v2.contest_id 
-      			and 
-      		v.candidate_id = v2.candidate_id 
-      			and 
-      		v.updated_at > v2.updated_at 
-      			and v2.user_id not in (0,v.user_id) 
-      	group by 
-      		v2.user_id
-      	) d 
-      		on 
-      	users.id = d.user_id
-      set users.total_points = d.total_points
+      update users u 
+        join (
+          select 
+            u.id, 
+            sum(v.votes_ahead) as earned_points,
+            max(v.voted_at) as most_recent_voted_at
+          from 
+            users u 
+              join 
+            votes v 
+              on u.id = v.user_id 
+              join
+            contests c
+              on 
+            c.id=v.contest_id
+              and
+            c.ends_at < utc_timestamp()
+          group by 
+            u.id
+        ) d
+          on 
+        u.id = d.id
+  	set 
+      u.earned_points = d.earned_points, 
+      u.most_recent_voted_at = d.most_recent_voted_at
     ";
+    $sqls[] = "
+      update users u 
+        join (
+          select 
+            u.id, 
+            sum(v.votes_ahead) as pending_points
+          from 
+            users u 
+              join 
+            votes v 
+              on u.id = v.user_id 
+              join
+            contests c
+              on 
+            c.id=v.contest_id
+              and
+            c.ends_at > utc_timestamp()
+          group by 
+            u.id
+        ) d
+          on 
+        u.id = d.id
+  	set 
+      u.pending_points = d.pending_points
+    ";    
     self::execute($sqls);
     
   }
@@ -72,21 +92,8 @@ class User extends Eloquent
       update users u join (
       select 
       	id,
-      	total_points, 
-      	(
-      		select 
-      			max(v.updated_at) 
-      		from 
-      			votes v
-      				join 
-      			contests c 
-      				on 
-      			c.id = v.contest_id 
-      		where 
-      			v.user_id = users.id 
-      				and 
-      			c.ends_at <= utc_timestamp()
-      	) as latest_vote, 
+      	earned_points, 
+      	most_recent_voted_at, 
       	case 
       		when is_visible then
       			@r:=@r+1
@@ -96,8 +103,8 @@ class User extends Eloquent
       from 
       	users 
       order by 
-      	total_points desc, 
-      	latest_vote asc, 
+      	earned_points desc, 
+      	most_recent_voted_at asc, 
       	users.id asc
       ) d
       on u.id = d.id
@@ -113,70 +120,24 @@ class User extends Eloquent
   
   static function calc_stats()
   {
-    self::calc_vote_counts();
+    self::calc_points();
     self::calc_ranks();
-  }
-  
-  static function sanitize_sql($sql)
-  {
-    $sql = preg_replace('/\s*\n\s*/', ' ', $sql);
-    return $sql;
   }
   
   function pending_points_for($c)
   {
-    $sql = "
-    	select 
-    		count(v2.user_id) as pending_points
-    	from 
-    		votes v
-    			join
-    		votes v2
-    			on
-    		v.candidate_id = v2.candidate_id
-    			and
-    		v.user_id = {$this->id}
-    			and
-    		v2.user_id not in (0,{$this->id})
-    			and
-    		v2.updated_at > v.updated_at
-    			and
-    		v.contest_id = {$c->id}
-      ";
-    $sql = self::sanitize_sql($sql);
-    $res = DB::selectOne($sql);
-    return $res->pending_points;
+    if($this->is_in_contest($c)) return 0;
+    $v = $this->votes()->whereContestId($c->id)->whereUserId($this->id)->first();
+    if(!$v) return 0;
+    return $v->votes_ahead;
   }
   
-  function getPendingPointsAttribute()
+  function is_in_contest($c)
   {
-    $sql = "
-    	select 
-    		count(v2.user_id) as pending_points
-    	from 
-    		votes v
-    			join
-    		votes v2
-    			on
-    		v.candidate_id = v2.candidate_id
-    			and
-    		v.user_id = {$this->id}
-    			and
-    		v2.user_id not in (0,{$this->id})
-    			and
-    		v2.updated_at > v.updated_at
-    			join
-    		contests c
-    			on
-    		c.ends_at > utc_timestamp()
-    			and
-    		c.id = v.contest_id
-      ";
-    $sql = self::sanitize_sql($sql);
-    $res = DB::selectOne($sql);
-    return $res->pending_points;
+    return $c->candidates()->where('user_id', '=', $this->id)->count()>0;
   }
   
+
   function votes()
   {
     return $this->hasMany('Vote');
@@ -277,6 +238,7 @@ class User extends Eloquent
         $result = 'unchanged';
       }
     }
+    $v->voted_at = Carbon::now();
     $v->save();
     return [$result, $v];
   }

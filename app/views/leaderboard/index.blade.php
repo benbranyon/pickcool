@@ -37,10 +37,10 @@
           </a>
         </td>
         <td class="text-success">
-          {{$u->total_points}}
+          {{$u->earned_points}}
         </td>
         <td class="text-muted">
-          {{$u->pending_points or ''}}
+          {{$u->pending_points}}
         </td>
       </tr>
     @endforeach

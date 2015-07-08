@@ -197,13 +197,13 @@ class Contest extends Eloquent
   {
     $sqls = [];
     
-    $sqls[] = "update candidates set first_voted_at = (select min(updated_at) from votes v where v.candidate_id = candidates.id)";
+    $sqls[] = "update candidates set first_voted_at = (select min(voted_at) from votes v where v.candidate_id = candidates.id)";
     foreach(self::$intervals as $interval)
     {
       $sqls[] = "
         update candidates c set
         	vote_count_{$interval} = 
-            (select count(v.id) from votes v where v.candidate_id = c.id and v.updated_at <= utc_timestamp() - interval {$interval} hour) 
+            (select count(v.id) from votes v where v.candidate_id = c.id and v.voted_at <= utc_timestamp() - interval {$interval} hour) 
             + 
             ifnull(
               (select b.vote_weight from badges b join badge_candidate bc on b.id = bc.badge_id where bc.candidate_id = c.id and bc.updated_at <= utc_timestamp() - interval {$interval} hour)

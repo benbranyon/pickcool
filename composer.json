@@ -43,7 +43,8 @@
       "app/models",
       "app/database/migrations",
       "app/tests/TestCase.php",
-      "app/classes"
+      "app/classes",
+      "app/traits"
     ]
   },
   "minimum-stability": "stable"

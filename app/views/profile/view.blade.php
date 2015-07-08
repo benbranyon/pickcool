@@ -15,13 +15,13 @@
   <div class="profile">
     @if($user->is_visible)
       <div class="row">
-        <div class="col-xs-5">
+        <div class="col-xs-5 col-sm-3">
           <img class="profile-img" src="{{$user->profile_image_url}}"/>
         </div>
         <div class="col-xs-7">
           <h1>{{$user->full_name}}</h1>
           <h2>Overall Standing: #{{$user->rank}}</h2>
-          <h2>Total Earned Points: {{$user->total_points}}</h2>
+          <h2>Total Earned Points: {{$user->earned_points}}</h2>
           <h2>Total Pending Points: {{$user->pending_points}}</h2>
           <h2><a href="https://www.facebook.com/app_scoped_user_id/{{$user->fb_id}}"><i class='fa fa-large fa-facebook-square'></i></a>
         </div>

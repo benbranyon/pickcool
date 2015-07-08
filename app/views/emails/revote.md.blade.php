@@ -8,7 +8,7 @@ Due to a system error, your recent vote was not properly recorded.
 
 -------
 
-Our records indicate that on {{$vote->updated_at}} your recent vote in {{{$contest->title}}} was not recorded properly. Our top priority is to keep voting absolutely fair, so we monitor our systems to ensure that all votes are recorded correctly. In a few cases since 1/7/2015, some votes by some users were not recorded properly, even though it may have appeared to work. This problem did not affect all users, but it did affect your vote.
+Our records indicate that on {{$vote->voted_at}} your recent vote in {{{$contest->title}}} was not recorded properly. Our top priority is to keep voting absolutely fair, so we monitor our systems to ensure that all votes are recorded correctly. In a few cases since 1/7/2015, some votes by some users were not recorded properly, even though it may have appeared to work. This problem did not affect all users, but it did affect your vote.
 
 I want to personally apologize for this inconvenience. It was my own programming error that caused the problem, and it is fixed now. I know every line of code inside and out, and this one just got by me. So I apologize for this inconvenience and understand how important voting accuracy is. That is why I am being totally honest and sending this message to all affected voters. I have a great deal of care and enthusiasm for every model in the pick and want to see them all succeed.
 
