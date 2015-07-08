@@ -15,7 +15,7 @@ class User extends Eloquent
   
   function getProfileImageUrlAttribute()
   {
-    return "http://graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
+    return "//graph.facebook.com/v2.2/{$this->fb_id}/picture?type=square&width=1500&height=1500";
   }
 
 
