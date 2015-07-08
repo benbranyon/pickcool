@@ -24,7 +24,7 @@
     @foreach($users as $u)
       <tr>
         <td>
-          #{{$u->rank}}
+          <span class="badge">{{nth($u->rank)}}</span>
         </td>
         <td>
           <a href="{{$u->profile_url}}">
@@ -37,10 +37,10 @@
           </a>
         </td>
         <td class="text-success">
-          {{$u->earned_points}}
+          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}
         </td>
         <td class="text-muted">
-          {{$u->pending_points}}
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
         </td>
       </tr>
     @endforeach
