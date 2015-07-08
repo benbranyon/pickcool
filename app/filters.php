@@ -29,7 +29,7 @@ App::before(function($request, $response)
   $ips = array_map('trim', explode(',', Request::server('HTTP_X_FORWARDED_FOR', Request::getClientIp())));
   if(!array_intersect($allowed, $ips))
   {
-    if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ip, $allowed))
+    if(Request::server('HTTP_HOST') != 'pick.cool'  && !in_array($ips, $allowed))
     {
       return Redirect::away('https://pick.cool');
     }
