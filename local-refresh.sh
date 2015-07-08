@@ -9,3 +9,5 @@ mysql -uroot -pr00t coolfactor < db-live.sql
 ./artisan migrate
 ./artisan cache:clear
 ./artisan cache:views:clear
+./composer install
+./artisan dump-autoload

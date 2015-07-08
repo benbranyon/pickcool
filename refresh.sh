@@ -1,6 +1,15 @@
 #!/bin/bash
 set -x
+
+rsync -avv ../pick.cool/html/i/ html/i
+
 git pull
+./composer install
+./artisan dump-autoload
+./artisan migrate
+./artisan cache:clear
+./artisan cache:views:clear
+
 LIVE_DB_USER=www
 LIVE_DB_PASSWORD=yeqWaDdlDbAu1VKyxfaS
 LIVE_DB_NAME=www
@@ -16,7 +25,3 @@ rm db-live.sql.gz
 gzip -9 db-live.sql
 mysql -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST $DEV_DB_NAME < db-live.sql
 mysql -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST $DEV_DB_NAME -e "update users set email=concat('user',id,'@benallfree.com');"
-./artisan migrate
-rsync -avv ../pick.cool/html/i/ html/i
-./artisan cache:clear
-./artisan cache:views:clear
