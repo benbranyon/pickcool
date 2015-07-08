@@ -1,3 +1,6 @@
+<?php
+$cache_bust = '?_r='.env('CACHE_BUST', uniqid());
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,11 +28,11 @@
     </script>
     @if($_ENV['BUGSNAG_ENABLED'])
       <script
-      src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
+      src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js{{$cache_bust}}"
       data-apikey="{{$_ENV['BUGSNAG_API_KEY']}}">
       </script>
     @endif
-    <script src="/pick.cool.js"></script>
+    <script src="/pick.cool.js{{$cache_bust}}"></script>
     <meta property="fb:app_id" content="1497159643900204"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,9 +42,9 @@
     @else
       <meta name="description" content="Where you pick what's cool." />
     @endif
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css{{env('RUN_MODE')=='development' ? '?r='.uniqid() : ''}}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css{{$cache_bust}}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css{{$cache_bust}}">
+    <link rel="stylesheet" href="/assets/css/style.css{{$cache_bust}}">
     @yield('head')
 
   </head>
@@ -64,7 +67,7 @@
          var js, fjs = d.getElementsByTagName(s)[0];
          if (d.getElementById(id)) {return;}
          js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
+         js.src = "//connect.facebook.net/en_US/sdk.js{{$cache_bust}}";
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
     </script>
@@ -115,7 +118,7 @@
     </div> <!-- // Container -->
     @yield('foot')
     
-    <script src="/assets/js/echo.js"></script>
+    <script src="/assets/js/echo.js{{$cache_bust}}"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
