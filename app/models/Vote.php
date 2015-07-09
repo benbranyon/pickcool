@@ -24,8 +24,14 @@ class Vote extends Eloquent
     return $this->belongsTo('User');
   }
   
-  static function calc_votes_ahead()
+  static function calc_votes_ahead($candidate_ids=[])
   {
+    $extra = '';
+    if(count($candidate_ids)>0)
+    {
+      $candidate_ids = join(',',$candidate_ids);
+      $extra = "and v1.candidate_id in ({$candidate_ids})";
+    }
     $sqls = [];
     $sqls[] = "drop temporary table if exists eligible_votes;";
     $sqls[] = "create temporary table eligible_votes like votes;";
@@ -44,6 +50,7 @@ class Vote extends Eloquent
     		eligible_votes v1  
     			on 
     		v1.contest_id = c.id 
+          $extra
     			join 
     		eligible_votes2 v2 
     			on 
@@ -64,10 +71,29 @@ class Vote extends Eloquent
   }
 }
 
-
 Vote::saved(function($vote) {
-  Flatten::flushRoute('contests.hot');
-  Flatten::flushRoute('contests.new');
-  Flatten::flushRoute('contests.top');
+  Vote::query()
+    ->whereCandidateId($vote->getOriginal()['candidate_id'])
+    ->where('voted_at', '<', $vote->getOriginal()['voted_at'])
+    ->whereNotIn('user_id', $vote->contest->candidates->lists('user_id'))
+    ->update(['votes_ahead'=>DB::raw('votes_ahead - 1')]);
+
+  Vote::query()
+    ->whereCandidateId($vote->candidate_id)
+    ->where('voted_at', '<', $vote->voted_at)
+    ->whereNotIn('user_id', $vote->contest->candidates->lists('user_id'))
+    ->update(['votes_ahead'=>DB::raw('votes_ahead + 1')]);
+  
+  $pending_points = Vote::query()
+    ->join('contests', 'votes.contest_id', '=', 'contests.id')
+    ->whereRaw('contests.ends_at > utc_timestamp()')
+    ->where('votes.user_id', '=', $vote->user_id)
+    ->sum('votes_ahead');
+  
+  $vote->user->pending_points = $pending_points;
+  $vote->user->save();
+  
+  Flatten::flushRoute('contests.live');
+  Flatten::flushRoute('contests.archived');
   Contest::calc_stats();
 });

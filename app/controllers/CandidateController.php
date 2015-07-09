@@ -58,7 +58,11 @@ class CandidateController extends \BaseController {
       return Redirect::to($candidate->canonical_url);
     }
 
-    $votes = $candidate->votes()->whereHas('user', function($q) { $q->where('is_visible', '=', 1); })->with('user')->orderBy('updated_at', 'desc')->paginate(20);
+    $votes = $candidate->votes()
+//      ->whereHas('user', function($q) { $q->where('is_visible', '=', 1); })
+      ->with('user')
+      ->orderBy('voted_at', 'desc')
+      ->paginate(20);
     
     return View::make('contests.candidates.voters', ['contest'=>$contest, 'candidate'=>$candidate, 'votes'=>$votes]);
   }

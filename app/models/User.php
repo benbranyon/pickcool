@@ -24,6 +24,12 @@ class User extends Eloquent
   
   static function calc_points()
   {
+    self::calc_earned();
+    self::calc_pending();
+  }
+  
+  static function calc_earned()
+  {
     $sqls = [];
     $sqls[] = "
       update users u 
@@ -52,6 +58,13 @@ class User extends Eloquent
       u.earned_points = d.earned_points, 
       u.most_recent_voted_at = d.most_recent_voted_at
     ";
+    self::execute($sqls);
+
+  }
+  
+  static function calc_pending()
+  {
+    $sqls = [];
     $sqls[] = "
       update users u 
         join (
@@ -78,7 +91,6 @@ class User extends Eloquent
       u.pending_points = d.pending_points
     ";    
     self::execute($sqls);
-    
   }
   
   static function calc_ranks()
@@ -238,6 +250,7 @@ class User extends Eloquent
         $result = 'unchanged';
       }
     }
+    $v->votes_ahead = 0;
     $v->voted_at = Carbon::now();
     $v->save();
     return [$result, $v];

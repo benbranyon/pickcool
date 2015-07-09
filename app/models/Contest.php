@@ -407,8 +407,7 @@ class Contest extends Eloquent
 
 
 Contest::saved(function() {
-  Flatten::flushRoute('contests.hot');
-  Flatten::flushRoute('contests.new');
-  Flatten::flushRoute('contests.top');
+  Flatten::flushRoute('contests.live');
+  Flatten::flushRoute('contests.archived');
   Contest::calc_stats();
 });
