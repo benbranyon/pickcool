@@ -39,15 +39,11 @@
       <hr/>
       <h1>Track Record</h1>
       <div class="track-record">
-        @foreach(Contest::whereHas('votes', function($q) use ($user) {
-            $q->where('user_id', '=', $user->id);
-        })->whereRaw('ends_at >= utc_timestamp()')->orderBy('ends_at')->get() as $contest)
-          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'muted', 'status'=>'pending', 'icon'=>'plus'])}}
+        @foreach($open_candidates as $candidate)
+          {{View::make('profile.row', ['user'=>$user, 'contest'=>$candidate->contest, 'candidate'=>$candidate, 'style'=>'muted', 'status'=>'pending', 'icon'=>'plus'])}}
         @endforeach
-        @foreach(Contest::whereHas('votes', function($q) use ($user) {
-            $q->where('user_id', '=', $user->id);
-        })->whereRaw('ends_at < utc_timestamp()')->orderBy('ends_at')->get() as $contest)
-          {{View::make('profile.row', ['user'=>$user, 'contest'=>$contest, 'candidate'=>$user->current_vote_for($contest)->candidate, 'style'=>'success', 'status'=>'earned', 'icon'=>'star',])}}
+        @foreach($closed_candidates as $candidate)
+          {{View::make('profile.row', ['user'=>$user, 'contest'=>$candidate->contest, 'candidate'=>$candidate, 'style'=>'success', 'status'=>'earned', 'icon'=>'star',])}}
         @endforeach
       </div>
     @endif

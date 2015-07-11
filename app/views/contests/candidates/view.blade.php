@@ -28,15 +28,17 @@
       $voters = $candidate->votes()->whereHas('user', function($q) { $q->where('is_visible', '=', 1); })->with('user')->orderBy('voted_at', 'desc');
       $voter_count = $voters->count();
       ?>
-      <div class="voters">
-        <?php foreach($voters->limit(5)->get() as $v): ?><a class="voter" href="{{$v->user->profile_url}}"><img class="profile-img" title="{{$v->user->full_name}}" src="{{$v->user->profile_image_url}}"/></a><?php endforeach; ?>
-        <a href="{{$candidate->voters_url}}">
-          @if($voter_count>10)
-            ...and {{$voter_count-10}} more
-          @endif
-            voters publicly support {{$candidate->name}}.
-        </a>
-      </div>
+      @if($voter_count>0)
+        <div class="voters">
+          <?php foreach($voters->limit(5)->get() as $v): ?><a class="voter" href="{{$v->user->profile_url}}"><img class="profile-img" title="{{$v->user->full_name}}" src="{{$v->user->profile_image_url}}"/></a><?php endforeach; ?>
+          <a href="{{$candidate->voters_url}}">
+            @if($voter_count>5)
+              ...and {{$voter_count-5}} more
+            @endif
+              voters publicly support {{$candidate->name}}.
+          </a>
+        </div>
+      @endif
       @if($candidate->image_id)
         <div class="row">
           <div class="col-xs-12" style="text-align: center">

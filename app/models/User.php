@@ -159,7 +159,7 @@ class User extends Eloquent
   {
     return "{$this->first_name} {$this->last_name}";
   }
-  
+
   function getHashTagAttribute()
   {
     return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->full_name));

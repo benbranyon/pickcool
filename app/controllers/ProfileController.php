@@ -11,7 +11,25 @@ class ProfileController extends \BaseController {
       return Redirect::home();
     }
     
-    return View::make('profile.view', ['user'=>$u, 'is_self'=>Auth::user() ? $u->id==Auth::user()->id : false]);
+    $open_candidates = Candidate::open_active_candidates()
+      ->join('votes', 'votes.candidate_id', '=', 'candidates.id')
+      ->where('votes.user_id', '=', $u->id)
+      ->with(['contest', 'image'])
+      ->get();
+
+    $closed_candidates = Candidate::closed_active_candidates()
+      ->join('votes', 'votes.candidate_id', '=', 'candidates.id')
+      ->where('votes.user_id', '=', $u->id)
+      ->with(['contest', 'image'])
+      ->get();
+      
+    
+    return View::make('profile.view', [
+      'open_candidates'=>$open_candidates, 
+      'closed_candidates'=>$closed_candidates, 
+      'user'=>$u, 
+      'is_self'=>Auth::user() ? $u->id==Auth::user()->id : false
+    ]);
     
   }
   
