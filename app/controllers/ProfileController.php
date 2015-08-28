@@ -27,6 +27,7 @@ class ProfileController extends \BaseController {
             ->join('contests', 'contests.id', '=', 'candidates.contest_id')
             ->where('candidates.user_id', '=', $u->id)
             ->where('contests.ends_at', '>=', new DateTime('today'))
+            ->where('contests.is_archived', '=', false)
             ->select('candidates.id', 'contests.title', 'contests.id as contest_id')
             ->get();
 
@@ -34,6 +35,7 @@ class ProfileController extends \BaseController {
             ->join('contests', 'contests.id', '=', 'candidates.contest_id')
             ->where('candidates.user_id', '=', $u->id)
             ->where('contests.ends_at', '<', new DateTime('today'))
+            ->where('contests.is_archived', '=', false)
             ->select('candidates.id', 'contests.title', 'contests.id as contest_id')
             ->get();
     
