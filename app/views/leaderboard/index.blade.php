@@ -4,14 +4,16 @@
   <h1>Pick.Cool Leaderboard</h1>
   <hr/>
 <div class="leaderboard">
-  <table>
+  <div class="table-responsive">
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th>Rank</th>
-        <th></th>
-        <th>Name</th>
-        <th>Earned</th>
-        <th>Pending</th>
+        <th class="col-sm-1">Rank</th>
+        <th class="col-sm-1 profile-image-label"></th>
+        <th class="col-sm-2">Name</th>
+        <th class="col-sm-1">Earned</th>
+        <th class="col-sm-1">Pending</th>
+        <th class="hidden-xs col-sm-6"></th>
       </tr>
     </thead>
     @foreach($users as $u)
@@ -35,9 +37,11 @@
         <td class="text-muted">
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
         </td>
+        <td class="hidden-xs"></td>
       </tr>
     @endforeach
   </table>
+  </div>
   <hr />
 
   <h2>How to Play</h2>

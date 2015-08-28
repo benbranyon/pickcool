@@ -82,7 +82,7 @@
     <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
   @elseif(!$u)
     <h2>Join the Game!</h2>
-    <p>To climb the Pick.Cool ranks or enter a pick you must first <a href="/login?success=/">log in</a>.</p>
+    <p>To climb the Pick.Cool ranks or enter a pick you must first <a href="/login?success=/">Log In</a>.</p>
   @else
     <h2>Join the Game!</h2>
     <p>See your Pick.Cool rank by <a href="/my/set_visible?r=/">making your profile visible.</a></p>
