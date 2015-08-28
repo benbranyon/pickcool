@@ -51,7 +51,7 @@ Route::get('/my/set_visible', ['as'=>'my.set_visible', 'uses'=>'ProfileControlle
 Route::get('/api/profile/settings', ['as'=>'api.profile.settings', 'uses'=>'ProfileController@settings']);
 Route::get('/profiles/{id}', ['as'=>'profile', 'uses'=>'ProfileController@home']);
 
-Route::get('/', ['as'=>'home', 'uses'=>'HomeController@live']);
+Route::get('/', ['as'=>'home', 'uses'=>'HomeController@home']);
 
 Route::group(['prefix'=>'/est/{contest_id}/{contest_slug}'], function() {
   Route::group(['prefix'=>'/picks/{candidate_id}/{candidate_slug}'], function() {

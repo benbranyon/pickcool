@@ -27,4 +27,10 @@ class HomeController extends \BaseController {
     $contests = Contest::archived()->with('candidates')->get();
     return View::make('home')->with(['contests'=>$contests, 'state'=>'archived']);
   }
+
+  function home() {
+    $contests = Contest::live()->with('candidates')->get();
+    $users = User::query()->whereIsVisible(1)->orderBy('rank')->simplePaginate(20);
+    return View::make('home')->with(['contests'=>$contests, 'state'=>'home', 'users'=>$users]);
+  }
 }
