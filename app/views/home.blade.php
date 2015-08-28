@@ -98,11 +98,11 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-xs-2 col-sm-1">Rank</th>
-        <th class="col-xs-2 col-sm-1"></th>
-        <th class="col-xs-4 col-sm-2">Name</th>
-        <th class="col-xs-2 col-sm-1">Earned</th>
-        <th class="col-xs-2 col-sm-1">Pending</th>
+        <th class="col-sm-1">Rank</th>
+        <th class="col-sm-1 profile-image-label"></th>
+        <th class="col-sm-2">Name</th>
+        <th class="col-sm-1">Earned</th>
+        <th class="col-sm-1">Pending</th>
         <th class="hidden-xs col-sm-6"></th>
       </tr>
     </thead>
@@ -111,7 +111,7 @@
         <td>
           <span class="badge">{{nth($u->rank)}}</span>
         </td>
-        <td>
+        <td class="td-no-padding">
           <a href="{{$u->profile_url}}">
             <img class="profile-img" src="{{$u->profile_image_url}}"/>
           </a>
