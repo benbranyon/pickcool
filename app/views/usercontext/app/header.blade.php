@@ -23,7 +23,7 @@ $login_url =         r(
   <div class="clearfix"></div>
   <ul class="subnav list-inline pull-right">
       @if($u && $u->is_visible)
-        <li><a href="{{{route('leaderboard')}}}">You are in <span class="badge">{{nth($u->rank)}}</span> place with <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{number_format($u->earned_points)}}</span> earned and <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{number_format($u->pending_points)}}</span> pending points. What's this?</a>
+        <li>You are in <span class="badge">{{nth($u->rank)}}</span> place with <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{number_format($u->earned_points)}}</span> earned and <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{number_format($u->pending_points)}}</span> pending points.<a href="{{{route('leaderboard')}}}"> What's this?</a>
       @else
         <div class="alert alert-success">
           {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites. Check out the 
