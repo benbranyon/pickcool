@@ -94,14 +94,16 @@
   <p><strong class="text-danger">Changing your vote will reset your Pending score.</strong></p>
   <hr/>
   <h2>Pick.Cool Leaderboard</h2>
-  <table>
+  <div class="table-responsive">
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th>Rank</th>
-        <th></th>
-        <th>Name</th>
-        <th>Earned</th>
-        <th>Pending</th>
+        <th class="col-sm-1">Rank</th>
+        <th class="col-sm-1"></th>
+        <th class="col-sm-2">Name</th>
+        <th class="col-sm-1">Earned</th>
+        <th class="col-sm-1">Pending</th>
+        <th class="col-sm-6"></th>
       </tr>
     </thead>
     @foreach($users as $u)
@@ -120,14 +122,16 @@
           </a>
         </td>
         <td class="text-success">
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}
+          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}} points
         </td>
         <td class="text-muted">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}} points
         </td>
+        <td></td>
       </tr>
     @endforeach
   </table>
+  </div>
   {{$users->links()}}
 </div>
 @elseif($state == 'live')
