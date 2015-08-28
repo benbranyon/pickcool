@@ -82,7 +82,7 @@
     <p>To join the ranks you must first <a href="/login?success=/">log in</a>.</p>
   @else
     <h2>Join the Game!</h2>
-    <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
+    <p>See your cool rank by <a href="/my/set_visible?r=/">making your profile visible.</a></p>
   @endif
   <h2>How to Play</h2>
   <p><b class="text-success">Earn points by picking winners early.</b></p>
