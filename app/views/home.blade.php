@@ -6,7 +6,7 @@
 <meta property="og:title" content="Pick.Cool"/>
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{r('home')}}}"/>
-<meta property="og:description" content="Vote and watch social contests in real time."/>
+<meta property="og:description" content="Prove you are the arbiter of cool by voting on Pick.Cool. Vote and be a part of realtime social contests."/>
 @if(isset($contest->current_winner))
   <meta property="og:image" content="{{{$contests[0]->current_winner->image_url('facebook')}}}" />
 @else
