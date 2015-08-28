@@ -98,12 +98,12 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-sm-1">Rank</th>
-        <th class="col-sm-1"></th>
-        <th class="col-sm-2">Name</th>
-        <th class="col-sm-1">Earned</th>
-        <th class="col-sm-1">Pending</th>
-        <th class="col-sm-6"></th>
+        <th class="col-xs-2 col-sm-1">Rank</th>
+        <th class="col-xs-2 col-sm-1"></th>
+        <th class="col-xs-4 col-sm-2">Name</th>
+        <th class="col-xs-2 col-sm-1">Earned</th>
+        <th class="col-xs-2 col-sm-1">Pending</th>
+        <th class="col-xs-0 col-sm-6"></th>
       </tr>
     </thead>
     @foreach($users as $u)
