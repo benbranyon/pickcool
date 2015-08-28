@@ -22,8 +22,15 @@
       <h1>Archived Picks</h1>
       <hr />
     @elseif($state == 'home')
-      <h1>Live Picks</h1>
+      <?php $u = Auth::user();?>
+      <div class="leaderboard">       
+        @if($u && $u->is_visible)
+          <h2>Game Time!</h2>
+          <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
+        @endif
+      </div>
       <hr />
+      <h1>Live Picks</h1>
     @endif
     @foreach($contests as $contest)
       <div class="contest contest-{{$contest->id}}">
