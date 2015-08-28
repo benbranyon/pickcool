@@ -21,7 +21,7 @@
         <td>
           <span class="badge">{{nth($u->rank)}}</span>
         </td>
-        <td>
+        <td class="td-no-padding">
           <a href="{{$u->profile_url}}">
             <img class="profile-img" src="{{$u->profile_image_url}}"/>
           </a>
