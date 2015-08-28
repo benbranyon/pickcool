@@ -24,11 +24,16 @@ $login_url =         r(
   <ul class="subnav list-inline pull-right">
       @if($u && $u->is_visible)
         <li>You are in <span class="badge">{{nth($u->rank)}}</span> place with <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{number_format($u->earned_points)}}</span> earned and <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{number_format($u->pending_points)}}</span> pending points.<a href="{{{route('leaderboard')}}}"> What's this?</a>
-      @else
+      @elseif(!$u)
         <div class="alert alert-success">
           {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites. Check out the 
           <a href="{{{route('leaderboard')}}}">leaderboard</a> and <a href="{{{$login_url}}}">log in</a> to play.
         </div>
+      @else
+        <div class="alert alert-success">
+          {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites. Check out the 
+          <a href="{{{route('leaderboard')}}}">leaderboard</a> and <a href="{{route('my.set_visible', ['r'=>$the_url])}}">Make your voting profile visible</a> to play.
+        </div>      
       @endif
   </ul>
 </div>
