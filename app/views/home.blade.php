@@ -10,7 +10,7 @@
 @if(isset($contest->current_winner))
   <meta property="og:image" content="{{{$contests[0]->current_winner->image_url('facebook')}}}" />
 @else
-  <meta property="og:image" content="/assets/img/pick-cool-og-black.png" />
+  <meta property="og:image" content="https://pick.cool/assets/img/pick-cool-og-black.png" />
 @endif
 @stop
 
