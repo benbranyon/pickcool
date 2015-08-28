@@ -19,6 +19,7 @@
               <?php
               $u = $v->user;
               ?>
+              @if(isset($u))
               <tr>
                 <td>
                   <a href="{{$u->profile_url}}">
@@ -46,6 +47,7 @@
                   
                 </td>
               </tr>
+            @endif
             @endforeach
           </table>
           {{$votes->links()}}
