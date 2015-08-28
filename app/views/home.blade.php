@@ -149,6 +149,7 @@
   <div class="row">
     <div style="margin-bottom:20px;" class="col-sm-12">
       <h1>Live Picks</h1>
+      <hr />
       <h2>Bummer. We don't have any live picks. Check back with us soon! You can explore the <a href="/archived">archive</a> while you wait.</h2>
     </div>
   </div>
