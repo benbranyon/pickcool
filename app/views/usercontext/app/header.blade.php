@@ -33,12 +33,7 @@ $login_url =         r(
         <div class="alert alert-success">
           {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites. Check out the 
           <a href="{{{route('leaderboard')}}}">leaderboard</a> and <a href="{{{$login_url}}}">log in</a> to play.
-        </div>
-      @else
-        <div class="alert alert-success">
-          {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites. Check out the 
-          <a href="{{{route('leaderboard')}}}">leaderboard</a> and <a href="{{route('my.set_visible', ['r'=>$the_url])}}">Make your voting profile visible</a> to play.
-        </div>      
+        </div> 
       @endif
   </ul>
 </div>
