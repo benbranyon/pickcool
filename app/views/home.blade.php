@@ -29,9 +29,14 @@
         @if($u && $u->is_visible)
           <h2>Game Time!</h2>
           <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
+        @elseif(!$u)
+          <h2>Join the Game!</h2>
+          <p>To climb the Pick.Cool ranks or enter a pick you must first <a href="/login?success=/">Log In</a>.</p>
+        @else
+          <h2>Join the Game!</h2>
+          <p>See your Pick.Cool rank by <a href="/my/set_visible?r=/">making your profile visible.</a></p>
         @endif
       </div>
-      <hr />
       <h1>Live Picks</h1>
     @endif
     @foreach($contests as $contest)
@@ -76,6 +81,50 @@
         </ul>
       </div>
     @endforeach
+    @if($state == 'home')
+    <div class="leaderboard">
+      <hr/>
+      <h2>Pick.Cool Leaderboard</h2>
+      <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="col-sm-1">Rank</th>
+            <th class="col-sm-1 profile-image-label"></th>
+            <th class="col-sm-2">Name</th>
+            <th class="col-sm-1">Earned</th>
+            <th class="col-sm-1">Pending</th>
+            <th class="hidden-xs col-sm-6"></th>
+          </tr>
+        </thead>
+        @foreach($users as $u)
+          <tr>
+            <td>
+              <span class="badge">{{nth($u->rank)}}</span>
+            </td>
+            <td class="td-no-padding">
+              <a href="{{$u->profile_url}}">
+                <img class="profile-img" src="{{$u->profile_image_url}}"/>
+              </a>
+            </td>
+            <td>
+              <a href="{{$u->profile_url}}">
+                {{$u->full_name}}
+              </a>
+            </td>
+            <td class="text-success">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}
+            </td>
+            <td class="text-muted">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
+            </td>
+            <td class="hidden-xs"></td>
+          </tr>
+        @endforeach
+      </table>
+      </div>
+    </div>
+    @endif
   </div>
 @elseif($state == 'home')
   <?php $u = Auth::user();?>
