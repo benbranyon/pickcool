@@ -3,7 +3,7 @@
 @section('head')
 <title>pick.cool</title>
 <meta property="og:type" content="website" />
-<meta property="og:title" content="pick.cool"/>
+<meta property="og:title" content="Pick.Cool"/>
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{r('home')}}}"/>
 <meta property="og:description" content="Vote and watch social contests in real time."/>
