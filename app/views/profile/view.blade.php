@@ -34,16 +34,6 @@
         </div>
       </div>
       <hr/>
-      <div class="row">
-        <div class="col-xs-12">
-          <h1>How to Play</h1>
-          <p><b class="text-success">Earn points by picking winners early.</b></p>
-          <p>Prove you are the arbiter of cool by voting on Pick.Cool.
-          <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.
-          <p>The <b class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true">Earned</b> score is from closed picks. The <b class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true">Pending</b> score is from open picks and may still change.
-        </div>
-      </div>
-      <hr/>
       <h1>Track Record</h1>
       <div class="track-record">
         @foreach($open_candidates as $candidate)
