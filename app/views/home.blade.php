@@ -73,7 +73,12 @@
   <hr />
 
 <div class="leaderboard">
-  <h2>Join the Game!</h2>
+  <?php $u = Auth::user();?>
+  @if($u && $u->is_visible)
+    <h2>Game Time!</h2>
+  @else
+    <h2>Join the Game!</h2>
+  @endif
   <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
   <h2>How to Play</h2>
   <p><b class="text-success">Earn points by picking winners early.</b></p>
