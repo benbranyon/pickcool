@@ -68,7 +68,7 @@
       </div>
     @endforeach
   </div>
-@else
+@elseif($state == 'home')
   <h1>Welcome to Pick.Cool</h1>
   <hr />
 
