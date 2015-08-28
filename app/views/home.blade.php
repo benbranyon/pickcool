@@ -122,10 +122,10 @@
           </a>
         </td>
         <td class="text-success">
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}} points
+          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}
         </td>
         <td class="text-muted">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}} points
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
         </td>
         <td></td>
       </tr>
