@@ -69,11 +69,14 @@
     @endforeach
   </div>
 @elseif($state == 'home')
+  <?php $u = Auth::user();?>
+  @if(!$u)
   <h1>Welcome to Pick.Cool</h1>
   <hr />
+  @endif
 
 <div class="leaderboard">
-  <?php $u = Auth::user();?>
+  
   @if($u && $u->is_visible)
     <h2>Game Time!</h2>
     <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
