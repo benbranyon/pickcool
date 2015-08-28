@@ -22,11 +22,26 @@ class ProfileController extends \BaseController {
       ->where('votes.user_id', '=', $u->id)
       ->with(['contest', 'image'])
       ->get();
-      
+     
+    $current_contests =  DB::table('candidates')
+            ->join('contests', 'contests.id', '=', 'candidates.contest_id')
+            ->where('candidates.user_id', '=', $u->id)
+            ->where('contests.ends_at', '>=', new DateTime('today'))
+            ->select('candidates.id', 'contests.title', 'contests.id as contest_id')
+            ->get();
+
+    $past_contests = DB::table('candidates')
+            ->join('contests', 'contests.id', '=', 'candidates.contest_id')
+            ->where('candidates.user_id', '=', $u->id)
+            ->where('contests.ends_at', '<', new DateTime('today'))
+            ->select('candidates.id', 'contests.title', 'contests.id as contest_id')
+            ->get();
     
     return View::make('profile.view', [
       'open_candidates'=>$open_candidates, 
-      'closed_candidates'=>$closed_candidates, 
+      'closed_candidates'=>$closed_candidates,
+      'current_contests'=>$current_contests,
+      'past_contests'=>$past_contests, 
       'user'=>$u, 
       'is_self'=>Auth::user() ? $u->id==Auth::user()->id : false
     ]);

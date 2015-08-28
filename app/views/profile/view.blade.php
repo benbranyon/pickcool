@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css">
     <script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
     <title>{{{$user->full_name}}} | pick.cool</title>
-<meta property="og:type" content="website" />
-<meta property="og:title" content="{{{$user->full_name}}}"/>
-<meta property="og:site_name" content="pick.cool"/>
-<meta property="og:url" content="{{{$user->profile_url}}}"/>
-<meta property="og:description" content="{{{$user->full_name}}} Pick.Cool #{{{$user->rank}}} Picker | Total Earned Points: {{{$user->earned_points}}}"/>
-<meta property="og:image" content="https:{{{$user->profile_image_url}}}"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{{$user->full_name}}}"/>
+    <meta property="og:site_name" content="pick.cool"/>
+    <meta property="og:url" content="{{{$user->profile_url}}}"/>
+    <meta property="og:description" content="{{{$user->full_name}}} Pick.Cool #{{{$user->rank}}} Picker | Total Earned Points: {{{$user->earned_points}}}"/>
+    <meta property="og:image" content="https:{{{$user->profile_image_url}}}"/>
 @stop
 
 
@@ -30,10 +30,33 @@
           <h2>Overall Standing: #{{$user->rank}}</h2>
           <h2>Total Earned Points: {{$user->earned_points}}</h2>
           <h2>Total Pending Points: {{$user->pending_points}}</h2>
-          <h2><a href="https://www.facebook.com/app_scoped_user_id/{{$user->fb_id}}"><i class='fa fa-large fa-facebook-square'></i></a>
+          <p><a href="https://www.facebook.com/app_scoped_user_id/{{$user->fb_id}}"><i class='fa fa-large fa-facebook-square'></i></a></p>
         </div>
       </div>
       <hr/>
+      @if(isset($current_contests))
+        <h1>Active Picks</h1>
+        <ul>
+        @foreach($current_contests as $contest)
+          <?php $candidate = Candidate::find($contest->id);?>
+          <?php $contest_data = Contest::find($contest->contest_id);?>
+          <li><a href="{{{$candidate->canonical_url($contest_data)}}}"  >{{$contest->title}}</a></li>
+        @endforeach
+        </ul>
+        <hr/>
+      @endif
+      
+      @if(isset($past_contests))
+        <h1>Past Picks</h1>
+        <ul>
+        @foreach($past_contests as $past_contest)
+          <?php $candidate = Candidate::find($past_contest->id);?>
+          <?php $contest_data = Contest::find($past_contest->contest_id);?>
+          <li><a href="{{{$candidate->canonical_url($contest_data)}}}"  >{{$past_contest->title}}</a></li>
+        @endforeach
+        </ul>
+        <hr/>
+      @endif
       <h1>Track Record</h1>
       <div class="track-record">
         @foreach($open_candidates as $candidate)
