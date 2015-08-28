@@ -130,5 +130,11 @@
   </table>
   {{$users->links()}}
 </div>
+@elseif($state == 'live')
+  <div class="row">
+    <div style="margin-bottom:20px;" class="col-sm-12">
+      <h2>Bummer. We don't have any live picks. Check back with us soon! You can explore the <a href="/archived">archive</a> while you wait.</h2>
+    </div>
+  </div>
 @endif
 @stop
