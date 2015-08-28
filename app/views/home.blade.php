@@ -76,10 +76,14 @@
   <?php $u = Auth::user();?>
   @if($u && $u->is_visible)
     <h2>Game Time!</h2>
+    <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
+  @elseif(!$u)
+    <h2>Join the Game!</h2>
+    <p>To join the ranks you must first <a href="{{{$login_url}}}">log in</a>.</p>
   @else
     <h2>Join the Game!</h2>
+    <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
   @endif
-  <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
   <h2>How to Play</h2>
   <p><b class="text-success">Earn points by picking winners early.</b></p>
   <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.</p>
