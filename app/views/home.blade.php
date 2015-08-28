@@ -103,7 +103,7 @@
         <th class="col-xs-4 col-sm-2">Name</th>
         <th class="col-xs-2 col-sm-1">Earned</th>
         <th class="col-xs-2 col-sm-1">Pending</th>
-        <th class="col-xs-0 col-sm-6"></th>
+        <th class="hidden-xs col-sm-6"></th>
       </tr>
     </thead>
     @foreach($users as $u)
@@ -127,7 +127,7 @@
         <td class="text-muted">
           <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
         </td>
-        <td></td>
+        <td class="hidden-xs"></td>
       </tr>
     @endforeach
   </table>
