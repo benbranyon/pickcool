@@ -12,24 +12,24 @@ $login_url =         r(
 <div class="clearfix">
   <ul class="subnav list-inline pull-right">
     @if($u)
-      <li>Welcome, {{{$u->first_name}}}.</li>
-      @if($u->is_visible)
-        <li><a href="{{$u->profile_url}}"><span class="badge">{{nth($u->rank)}}</span>|<span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}</span>|<span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}</span></a></li>
-      @endif
+      <li><a href="{{$u->profile_url}}">Welcome, {{{$u->first_name}}}.</a></li>
+      <li><span class="badge">{{nth($u->rank)}}</span> | <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}</span> | <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}</span></li>
+    @endif
+    @if($u)
       <li><a href="{{{r('inbox')}}}" class="{{{$u->has_unread_messages ? 'unread' : ''}}}"><i class="fa fa-envelope"></i></a></li>
       <li><a href="{{{r('logout', ['success'=>r('home')])}}}"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
     @endif
   </ul>
   <div class="clearfix"></div>
   <ul class="subnav list-inline pull-right">
-    <li class="alert alert-success">
-      {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites.
-      <p>  
-      <a class="btn btn-primary btn-xs" href="{{{route('leaderboard')}}}">Go to the Leaderboard</a>
-      @if(!$u)
-        <a class="btn btn-success btn-xs" href="{{{$login_url}}}">Log In</a>
+      @if($u && $u->is_visible)
+        <li>You are in <span class="badge">{{nth($u->rank)}}</span> place with <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{number_format($u->earned_points)}}</span> earned and <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{number_format($u->pending_points)}}</span> pending points.<a href="{{{route('leaderboard')}}}"> What's this?</a>
+      @else
+        <div class="alert alert-success">
+          {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites. Check out the 
+          <a href="{{{route('leaderboard')}}}">leaderboard</a> and <a href="{{{$login_url}}}">log in</a> to play.
+        </div>
       @endif
-    </li>
   </ul>
 </div>
 @if($u && $u->has_messages && $u->has_unread_messages && Route::currentRouteName()!='inbox')

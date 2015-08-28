@@ -59,7 +59,7 @@ class CandidateController extends \BaseController {
     }
 
     $votes = $candidate->votes()
-//      ->whereHas('user', function($q) { $q->where('is_visible', '=', 1); })
+      ->whereHas('user', function($q) { $q->where('is_visible', '=', 1); })
       ->with('user')
       ->orderBy('voted_at', 'desc')
       ->paginate(20);
