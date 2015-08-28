@@ -79,7 +79,7 @@
     <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
   @elseif(!$u)
     <h2>Join the Game!</h2>
-    <p>To join the ranks you must first <a href="{{{$login_url}}}">log in</a>.</p>
+    
   @else
     <h2>Join the Game!</h2>
     <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
