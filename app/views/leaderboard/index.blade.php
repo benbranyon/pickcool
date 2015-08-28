@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="leaderboard">
-  <h1>Picker Leaderboard</h1>
+  <h1>Pick.Cool Leaderboard</h1>
   <hr/>
   <h2>How to Play</h2>
   <p><b class="text-success">Earn points by picking winners early.</b></p>
