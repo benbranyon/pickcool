@@ -30,6 +30,18 @@
 		        {{ $errors->first('description', '<p class="help-block">:message</p>') }}
 		    </div>
 
+		    <div class="form-group{{ $errors->has('prizes') ? ' has-error' : '' }}">
+		        {{ Form::label('prizes', 'Prizes') }}
+		        {{ Form::textarea('prizes', $contest->prizes, ['class' => 'form-control']) }}
+		        {{ $errors->first('prizes', '<p class="help-block">:message</p>') }}
+		    </div>
+
+		    <div class="form-group{{ $errors->has('rules') ? ' has-error' : '' }}">
+		        {{ Form::label('rules', 'Rules') }}
+		        {{ Form::textarea('rules', $contest->rules, ['class' => 'form-control']) }}
+		        {{ $errors->first('rules', '<p class="help-block">:message</p>') }}
+		    </div>
+
 		    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
 		        {{ Form::label('password', 'Password') }}
 		        {{ Form::text('password', $contest->password, ['class' => 'form-control']) }}

@@ -10,6 +10,17 @@ class ContestController extends \BaseController {
 		return \View::make('admin.contests')->with('contests', $contests);
 	}
 
+	function add() {
+		if (\Request::isMethod('post'))
+		{
+			return \Redirect::to('admin/contests');	
+		}
+		else
+		{
+			return \View::make('admin.contests-add');
+		}
+	}
+
 	function edit($id) {
 		if (\Request::isMethod('post'))
 		{
