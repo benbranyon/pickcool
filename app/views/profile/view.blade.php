@@ -8,7 +8,7 @@
 <meta property="og:title" content="{{{$user->full_name}}}"/>
 <meta property="og:site_name" content="pick.cool"/>
 <meta property="og:url" content="{{{$user->profile_url}}}"/>
-<meta property="og:description" content="{{{$user->full_name}}} #{{{$user->rank}}} Total Earned Points: {{{$user->earned_points}}}"/>
+<meta property="og:description" content="{{{$user->full_name}}} Pick.Cool #{{{$user->rank}}} Picker | Total Earned Points: {{{$user->earned_points}}}"/>
 <meta property="og:image" content="https:{{{$user->profile_image_url}}}"/>
 @stop
 
