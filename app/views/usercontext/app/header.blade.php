@@ -12,8 +12,8 @@ $login_url =         r(
 <div class="clearfix">
   <ul class="subnav list-inline pull-right">
     @if($u)
-      <li>Welcome, {{{$u->first_name}}}.</li>
-      <li><a href="{{$u->profile_url}}"><span class="badge">{{nth($u->rank)}}</span>|<span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}</span>|<span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}</span></a></li>
+      <li><a href="{{$u->profile_url}}">Welcome, {{{$u->first_name}}}.</a></li>
+      <li><span class="badge">{{nth($u->rank)}}</span> | <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}</span> | <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}</span></li>
     @endif
     @if($u)
       <li><a href="{{{r('inbox')}}}" class="{{{$u->has_unread_messages ? 'unread' : ''}}}"><i class="fa fa-envelope"></i></a></li>
