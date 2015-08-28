@@ -34,7 +34,7 @@
         </div>
       </div>
       <hr/>
-      @if(isset($current_contests))
+      @if(isset($current_contests) && !empty($current_contests))
         <h1>Active Picks</h1>
         <ul>
         @foreach($current_contests as $contest)
@@ -46,7 +46,7 @@
         <hr/>
       @endif
       
-      @if(isset($past_contests))
+      @if(isset($past_contests) && !empty($past_contests))
         <h1>Past Picks</h1>
         <ul>
         @foreach($past_contests as $past_contest)
