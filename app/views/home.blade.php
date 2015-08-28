@@ -74,11 +74,11 @@
 
 <div class="leaderboard">
   <h2>Join the Game!</h2>
-  <h3>How to Play</h3>
+  <p>Prove you are the arbiter of cool by voting on Pick.Cool.</p>
+  <h2>How to Play</h2>
   <p><b class="text-success">Earn points by picking winners early.</b></p>
-  <p>Prove you are the arbiter of cool by voting on Pick.Cool.
-  <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.
-  <p>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.
+  <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.</p>
+  <p>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.</p>
   <hr/>
   <h2>Leaderboard</h2>
   <table>
