@@ -79,6 +79,7 @@
   <p><b class="text-success">Earn points by picking winners early.</b></p>
   <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.</p>
   <p>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.</p>
+  <p><strong class="text-danger">Changing your vote will reset your Pending score.</strong></p>
   <hr/>
   <h2>Leaderboard</h2>
   <table>
