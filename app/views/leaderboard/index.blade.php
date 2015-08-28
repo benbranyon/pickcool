@@ -45,12 +45,12 @@
   <hr />
 
   <h2>How to Play</h2>
-  <p><b class="text-success">Earn points by picking winners early.</b></p>
-  <p>Prove you are the arbiter of cool by voting on Pick.Cool.
-  <p>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.
-  <p>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.
-  <p><strong class="text-danger">Changing your vote will reset your Pending score.</strong></p>
-
+  <ul>
+  <li><b class="text-success">Earn points by picking winners early.</b></li>
+  <li>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.</li>
+  <li>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.</li>
+  <li><strong class="text-danger">Changing your vote will reset your Pending score.</strong></li>
+  </ul>
   {{$users->links()}}
 </div>
 @stop
