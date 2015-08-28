@@ -4,7 +4,9 @@
 @stop
 
 @section('content')
-<div class="col-sm-8">
+<div class="container">
+    <div class="row">
+<div class="col-sm-12">
 <h1>Privacy Policy</h1>
 <hr />
 <p>This privacy policy has been compiled to better serve those who are 
@@ -252,5 +254,7 @@ contact us using the information below.
          PO Box 792<br/>
          Silverton, Colorado 81433
 </address>
+</div>
+</div>
 </div>
 @stop

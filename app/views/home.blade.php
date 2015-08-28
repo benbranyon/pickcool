@@ -36,8 +36,8 @@
           <h2>Join the Game!</h2>
           <p>See your Pick.Cool rank by <a href="/my/set_visible?r=/">making your profile visible.</a></p>
         @endif
+        <h2>Live Picks</h2>
       </div>
-      <h1>Live Picks</h1>
     @endif
     @foreach($contests as $contest)
       <div class="contest contest-{{$contest->id}}">
