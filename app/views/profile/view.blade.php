@@ -2,7 +2,14 @@
 
 @section('head')
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css">
-<script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+    <title>{{{$user->full_name}}} | pick.cool</title>
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{{$user->full_name}}}"/>
+<meta property="og:site_name" content="pick.cool"/>
+<meta property="og:url" content="{{{$user->profile_url}}}"/>
+<meta property="og:description" content="{{{$user->full_name}}} #{{{$user->rank}}} Total Earned Points: {{{$user->earned_points}}}"/>
+<meta property="og:image" content="{{{$user->profile_image_url}}}"/>
 @stop
 
 
