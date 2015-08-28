@@ -9,6 +9,8 @@
 <meta property="og:description" content="Vote and watch social contests in real time."/>
 @if(isset($contest->current_winner))
   <meta property="og:image" content="{{{$contests[0]->current_winner->image_url('facebook')}}}" />
+@else
+  <meta property="og:image" content="/assets/img/pick-cool-og-black.png" />
 @endif
 @stop
 
