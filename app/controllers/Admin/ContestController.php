@@ -13,6 +13,20 @@ class ContestController extends \BaseController {
 	function add() {
 		if (\Request::isMethod('post'))
 		{
+			$contest = new Contest;
+			$contest->title = \Input::get('title');
+			$contest->description = \Input::get('description');
+			$contest->prizes = \Input::get('prizes');
+			$contest->rules = \Input::get('rules');
+			$contest->password = \Input::get('password');
+			$contest->state = \Input::get('state');
+			$contest->is_archived = \Input::get('is_archived');
+      		$contest->callout =  \Input::get('callout');
+      		$contest->ends_at = \Input::get('ends_at');
+      		$contest->category_id = \Input::get('category_id');
+			$contest->save();
+
+			\Session::put('success', "Contest Saved!");
 			return \Redirect::to('admin/contests');	
 		}
 		else
@@ -27,10 +41,14 @@ class ContestController extends \BaseController {
 			$contest = Contest::where('id', '=', $id)->firstOrFail();
 			$contest->title = \Input::get('title');
 			$contest->description = \Input::get('description');
+			$contest->prizes = \Input::get('prizes');
+			$contest->rules = \Input::get('rules');
 			$contest->password = \Input::get('password');
 			$contest->state = \Input::get('state');
 			$contest->is_archived = \Input::get('is_archived');
       		$contest->callout =  \Input::get('callout');
+      		$contest->ends_at = \Input::get('ends_at');
+      		$contest->category_id = \Input::get('category_id');
 			$contest->push();
 
 			\Session::put('success', "Contest Saved!");

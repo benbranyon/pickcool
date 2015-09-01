@@ -340,14 +340,13 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
     Route::get('images/{image_id}/{status}', ['as'=>'admin.images.status', 'uses'=>'Admin\\ImageController@set_status']);
 
     Route::get('badges', ['as'=>'admin.badges', 'uses'=>'Admin\\BadgeController@index']);
-
-    Route::get('contests/add', 'Admin\\ContestController@add');
     
     // Resource Controller for user management, nested so it needs to be relative
     Route::resource('users', 'Admin\\UserController');
 
     Route::resource('contests', 'Admin\\ContestController');
     Route::resource('contests/{id}/edit/', 'Admin\\ContestController@edit');
+    Route::resource('contests/add', 'Admin\\ContestController@add');
 
 
     Route::resource('candidates', 'Admin\\CandidateController');
