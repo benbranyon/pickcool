@@ -257,6 +257,7 @@ class Candidate extends Eloquent
     return    Candidate::query()
       ->join('contests', 'contests.id', '=', 'candidates.contest_id')
       ->whereNotNull('image_id')
+      //->whereNull('dropped_at')
       ->whereIsArchived(0);
   }
   
