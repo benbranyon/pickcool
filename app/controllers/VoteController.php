@@ -51,8 +51,11 @@ class VoteController extends \BaseController {
   }
 
   function calcstats() {
-    //Vote::calc_votes_ahead();
-    //User::calc_stats();
+    Vote::calc_votes_ahead();
+    User::calc_stats();
+    Flatten::flushRoute('contests.live');
+    Flatten::flushRoute('contests.archived');
     Contest::calc_stats();
+    print_r('done');exit;
   }
 }
