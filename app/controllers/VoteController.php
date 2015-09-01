@@ -51,7 +51,7 @@ class VoteController extends \BaseController {
   }
 
   function calcstats() {
-    Vote::calc_votes_ahead();
-    User::calc_stats();
+    //Vote::calc_votes_ahead();
+    //User::calc_stats();
   }
 }
