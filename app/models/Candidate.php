@@ -54,6 +54,11 @@ class Candidate extends Eloquent
   {
     return $this->images()->whereNull('screened_at')->count() > 0;
   }
+
+  function getHasFeaturedImageAttribute()
+  {
+    return $this->images()->where('status', '=', 'featured')->count() > 0;
+  }
   
   function getRefreshUrlAttribute()
   {

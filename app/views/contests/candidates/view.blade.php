@@ -8,13 +8,17 @@
       </div>
     @else
       @if($candidate->is_owner)
-        @if($candidate->has_pending_images)
+        @if($candidate->has_pending_images && !$candidate->has_featured_image)
           <div class="alert alert-warning">
             @if($contest->category->name == 'Bands')
               Nobody can vote or share your profile yet because we are reviewing your image and music submission. Once we have approved your submission voting can begin.
             @else
               Nobody can vote or share your profile yet because you don't have a FEATURED image. We are still reviewing your images, so sit tight and <a href="{{{$candidate->add_image_url}}}">add more images</a> while you wait. Once we have approved a FEATURED image, voting can begin.
             @endif
+          </div>
+        @elseif($candidate->has_pending_images && $candidate->has_featured_image)
+          <div class="alert alert-warning">
+            We are reviewing the image(s) you submitted. This process should take no more than 24 hours.
           </div>
         @else
           @if(!$candidate->image_id)
