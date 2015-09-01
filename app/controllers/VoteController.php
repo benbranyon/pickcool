@@ -50,7 +50,8 @@ class VoteController extends \BaseController {
     return Redirect::to($candidate->canonical_url);
   }
 
-  function calstats() {
+  function calcstats() {
+    Vote::calc_votes_ahead();
     User::calc_stats();
   }
 }
