@@ -71,6 +71,7 @@
       @foreach($images as $image)
         <?php $idx++; ?>
         <?php if(!$image->screened_at && !$candidate->is_owner) continue; ?>
+        <?php if($image->status == 'declined') continue;?>
         <?php $is_featured = ($candidate->image_id == $image->id); ?>
         @if($is_featured)
         <div class="clearfix"
