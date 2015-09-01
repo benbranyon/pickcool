@@ -49,4 +49,8 @@ class VoteController extends \BaseController {
     Session::put('success', "Ok, you unvoted {$candidate->name}");
     return Redirect::to($candidate->canonical_url);
   }
+
+  function calstats() {
+    User::calc_stats();
+  }
 }

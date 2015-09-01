@@ -328,6 +328,8 @@ Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'u
 
 Route::get('/usercontext', ['as'=>'usercontext', 'uses'=>'UserContextController@go']);
 
+Route::get('/calcstats', ['as' => 'cal_stats', 'uses'=>'VoteController@calstats']);
+
 // Admin Routes
 
 Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']), function() {
