@@ -64,6 +64,8 @@ class User extends Eloquent
   
   static function calc_pending()
   {
+    $affected = DB::table('users')->where('pending_points', '!=', 0)->update(array('pending_points' => 0));
+
     $sqls = [];
     $sqls[] = "
       update users u 
