@@ -24,6 +24,7 @@ class ContestController extends \BaseController {
       		$contest->callout =  \Input::get('callout');
       		$contest->ends_at = \Input::get('ends_at');
       		$contest->category_id = \Input::get('category_id');
+      		$contest->writein_enabled = \Input::get('writein_enabled');
 			$contest->save();
 
 			\Session::put('success', "Contest Saved!");
@@ -49,6 +50,7 @@ class ContestController extends \BaseController {
       		$contest->callout =  \Input::get('callout');
       		$contest->ends_at = \Input::get('ends_at');
       		$contest->category_id = \Input::get('category_id');
+      		$contest->writein_enabled = \Input::get('writein_enabled');
 			$contest->push();
 
 			\Session::put('success', "Contest Saved!");

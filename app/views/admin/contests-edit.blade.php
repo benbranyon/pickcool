@@ -123,6 +123,13 @@
 		        {{ $errors->first('category_id', '<p class="help-block">:message</p>') }}
 		    </div>
 		    
+		    <div class="form-group{{ $errors->has('writein_enabled') ? ' has-error' : '' }}">
+		        {{ Form::label('writein_enabled', 'Writein Enabled') }}
+		        <input type="hidden" name="writein_enabled" value="0"/>
+		        <input type="checkbox" name="writein_enabled" value="1" <?php echo($contest->writein_enabled ? 'checked' : '')?>/>
+		        {{ $errors->first('writein_enabled', '<p class="help-block">:message</p>') }}
+		    </div>
+		    
 		    <div class="form-group{{ $errors->has('is_archived') ? ' has-error' : '' }}">
 		        {{ Form::label('is_archived', 'Archived') }}
 		        <input type="hidden" name="is_archived" value="0"/>
