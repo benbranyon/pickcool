@@ -41,7 +41,7 @@
     @endif
     @foreach($contests as $contest)
       <div class="contest contest-{{$contest->id}}">
-        <h2 class="title-header"><a class="title" href="{{{$contest->canonical_url}}}">{{{$contest->title}}}</a></h2>
+        <h2 class="title-header"><a class="title" href="{{{$contest->canonical_url}}}/large">{{{$contest->title}}}</a></h2>
         <div class="votes-total">
           <i class="fa fa-check-square"></i> 
           {{{$contest->vote_count_0}}} votes
@@ -57,7 +57,7 @@
         <ul class="list-inline" style="margin-left: 0px; margin-bottom: 15px">
           @foreach($contest->candidates->take(5) as $candidate)
             <li>
-              <a class="candidate-small candidate-{{$candidate->id}}" href="{{{$contest->canonical_url}}}" >
+              <a class="candidate-small candidate-{{$candidate->id}}" href="{{{$contest->canonical_url}}}/large" >
                 <img src="/loading.gif" data-echo="{{{$candidate->image_url('thumb')}}}" alt="{{{$candidate->name}}}" title="Vote for {{{$candidate->name}}}">
                 <div class="clearfix">
                   <div class="badges pull-right">
