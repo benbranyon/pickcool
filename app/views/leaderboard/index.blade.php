@@ -42,8 +42,8 @@
     @endforeach
   </table>
   </div>
-  <hr />
   {{$users->links()}}
+  <hr />
   <h2>How to Play</h2>
   <ul>
   <li><b class="text-success">Earn points by picking winners early.</b></li>
