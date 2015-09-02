@@ -15,6 +15,7 @@
       }
       function mlink($interval)
       {
+        if($interval == 0) return "";
         if(Input::get('h',12)==$interval) return hinterval($interval);
         return "<a href='?h={$interval}'>".hinterval($interval)."</a>";
       }
