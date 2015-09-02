@@ -3,7 +3,7 @@ use Cocur\Slugify\Slugify;
   
 class Contest extends Eloquent
 {
-  public static $intervals = [1,12,24,72,120,240];
+  public static $intervals = [0,1,12,24,72,120,240];
   
   var $_current_user_candidate_id = null;
 
