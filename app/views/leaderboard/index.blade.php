@@ -43,7 +43,7 @@
   </table>
   </div>
   <hr />
-
+  {{$users->links()}}
   <h2>How to Play</h2>
   <ul>
   <li><b class="text-success">Earn points by picking winners early.</b></li>
@@ -51,6 +51,5 @@
   <li>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.</li>
   <li><strong class="text-danger">Changing your vote will reset your Pending score.</strong></li>
   </ul>
-  {{$users->links()}}
 </div>
 @stop
