@@ -342,6 +342,7 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
     Route::get('badges', ['as'=>'admin.badges', 'uses'=>'Admin\\BadgeController@index']);
 
     Route::get('contests/add', 'Admin\\ContestController@add');
+    Route::get('sponsors/add', 'Admin\\SponsorController@add');
     
     // Resource Controller for user management, nested so it needs to be relative
     Route::resource('users', 'Admin\\UserController');
@@ -356,6 +357,7 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
 
     Route::resource('sponsors', 'Admin\\SponsorController');
     Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
+    Route::resource('sponsors/add', 'Admin\\SponsorController@add');
 
 });
 

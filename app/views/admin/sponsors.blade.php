@@ -7,7 +7,10 @@
 @section('content')
 
 	<h1>Sponsors</h1>
-	Total: <?php echo $sponsors->getTotal();?>
+	<p>Total: <?php echo $sponsors->getTotal();?></p>
+
+	<a href="{{Request::url()}}/add">Add Sponsor</a>
+
 	<table class="table table-hover table-responsive">
 		<thead>
 			<tr>
