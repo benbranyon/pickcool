@@ -15,7 +15,6 @@
       }
       function mlink($interval)
       {
-        if($interval == 0) return "";
         if(Input::get('h',12)==$interval) return hinterval($interval);
         return "<a href='?h={$interval}'>".hinterval($interval)."</a>";
       }
@@ -23,6 +22,7 @@
       <p>
         <?php
         $links = array_map(function($i) { return mlink($i); }, Contest::$intervals);
+        array_shift($links);
         echo join(' | ', $links);
         ?>
       </p>
