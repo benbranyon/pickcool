@@ -53,7 +53,7 @@ class VoteController extends \BaseController {
   }
 
   function calcstats() {
-    //Contest::calc_stats();
+    Contest::calc_stats();
     //Vote::calc_votes_ahead();
     User::calc_pending();
     Flatten::flushRoute('contests.live');
