@@ -47,7 +47,7 @@
   <ul>
   <li><b class="text-success">Earn points by picking winners early.</b></li>
   <li>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.</li>
-  <li>The <b class="text-success">Points</b> are final when the pick closes. If you have points in open picks, they still count but are shown <b class="text-muted">(like this)</b> next to your score since they may change.</li>
+  <li>The <b class="text-success">Points</b> are final when the pick closes. If you have points in open picks, they still count but are shown <b class="text-muted">(like this<i class="fa fa-level-up"></i>)</b> next to your score since they may change.</li>
   <li><strong class="text-danger">If you change your vote in an open pick, you restart the points you've earned for that pick.</strong></li>
   </ul>
 </div>
