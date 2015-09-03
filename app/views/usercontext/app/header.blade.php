@@ -17,9 +17,9 @@ $login_url =         r(
         @if($u && $u->is_visible)
           <span class="badge">{{nth($u->rank)}}</span> | 
         @endif
-        <span class="text-success">{{$u->earned_points+$u->pending_points}}</span>
+        <strong><span class="text-success">{{$u->earned_points+$u->pending_points}}</span></strong>
         @if($u->pending_points)
-          <span class="text-muted">({{$u->pending_points}}<i class="fa fa-level-up"></i>)</span>
+          <span class="text-muted">(<i class="fa fa-arrow-up"></i>{{$u->pending_points}})</span>
         @endif
         points
       </li>
@@ -36,9 +36,9 @@ $login_url =         r(
           You are in 
           <span class="badge">{{nth($u->rank)}}</span> 
           place with 
-          <span class="text-success">{{number_format($u->earned_points+$u->pending_points)}}</span> 
+          <strong><span class="text-success">{{number_format($u->earned_points+$u->pending_points)}}</span></strong> 
           @if($u->pending_points)
-            <span class="text-muted">({{$u->pending_points}}<i class="fa fa-level-up"></i>)</span>
+            <span class="text-muted">(<i class="fa fa-arrow-up"></i>{{$u->pending_points}})</span>
           @endif
           points.
           <a href="{{{route('leaderboard')}}}">What's this?</a>
