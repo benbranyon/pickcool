@@ -22,6 +22,7 @@ class VoteController extends \BaseController {
 
     //Update user pending score
     User::calc_pending();
+    User::calc_ranks();
     return Redirect::to($candidate->after_vote_url."?{$qs}");
   }
   
