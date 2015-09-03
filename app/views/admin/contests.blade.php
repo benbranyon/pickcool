@@ -7,7 +7,10 @@
 @section('content')
 
 	<h1>Contests</h1>
-	Total: <?php echo $contests->getTotal();?>
+	<p>Total: <?php echo $contests->getTotal();?></p>
+
+	<a href="{{Request::url()}}/add">Add contest</a>
+
 	<table class="table table-hover table-responsive">
 		<thead>
 			<tr>

@@ -1,7 +1,7 @@
 <?php
 
 class CandidateManagerController extends \BaseController {
-  function view($contest_id, $contest_slug, $candidate_id, $candidate_slug, $cmd_name, $cmd_id) {
+  function manage($contest_id, $contest_slug, $candidate_id, $candidate_slug, $cmd_name, $cmd_id) {
     $contest = Contest::find($contest_id);
     if(!$contest)
     {

@@ -95,7 +95,7 @@ $cache_bust = '?_r='.env('CACHE_BUST', uniqid());
         <div class="row">
           <div class="col-sm-12">
             <ul class="pull-left nav nav-pills footer-nav">
-              <li>&copy; pick.cool {{date('Y')}} - Now with Green Apple!</li>
+              <li>&copy; Pick.Cool {{date('Y')}}</li>
             </ul>
           </div>
         </div>

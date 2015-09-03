@@ -72,12 +72,14 @@ class Vote extends Eloquent
 }
 
 Vote::saved(function($vote) {
+  if(isset($vote->getOriginal()['candidate_id']))
+  {
   Vote::query()
     ->whereCandidateId($vote->getOriginal()['candidate_id'])
     ->where('voted_at', '<', $vote->getOriginal()['voted_at'])
     ->whereNotIn('user_id', $vote->contest->candidates->lists('user_id'))
     ->update(['votes_ahead'=>DB::raw('votes_ahead - 1')]);
-
+  }
   Vote::query()
     ->whereCandidateId($vote->candidate_id)
     ->where('voted_at', '<', $vote->voted_at)

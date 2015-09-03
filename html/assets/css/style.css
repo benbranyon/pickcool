@@ -792,7 +792,11 @@ ul.nav {
 }
 .leaderboard .profile-img {
   width: 100%;
-  max-width: 25px;
+  width: 25px;
+}
+.td-no-padding {
+  padding-left: 0px !important;
+  padding-right: 1px !important;
 }
 .candidate-single .voters {
   border: 1px solid #e2e2e2;

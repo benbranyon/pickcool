@@ -20,6 +20,8 @@ class VoteController extends \BaseController {
     ];
     $qs = http_build_query($qs);
 
+    //Update user pending score
+    User::calc_pending();
     return Redirect::to($candidate->after_vote_url."?{$qs}");
   }
   
@@ -48,5 +50,15 @@ class VoteController extends \BaseController {
     Auth::user()->unvote_for($candidate);
     Session::put('success', "Ok, you unvoted {$candidate->name}");
     return Redirect::to($candidate->canonical_url);
+  }
+
+  function calcstats() {
+    //Contest::calc_stats();
+    //Vote::calc_votes_ahead();
+    User::calc_pending();
+    //Flatten::flushRoute('contests.live');
+    //Flatten::flushRoute('contests.archived');
+    //Contest::calc_stats();
+    print_r('done');exit;
   }
 }

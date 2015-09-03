@@ -11,7 +11,42 @@ class ProfileController extends \BaseController {
       return Redirect::home();
     }
     
-    return View::make('profile.view', ['user'=>$u, 'is_self'=>Auth::user() ? $u->id==Auth::user()->id : false]);
+    $open_candidates = Candidate::open_active_candidates()
+      ->join('votes', 'votes.candidate_id', '=', 'candidates.id')
+      ->where('votes.user_id', '=', $u->id)
+      ->with(['contest', 'image'])
+      ->get();
+
+    $closed_candidates = Candidate::closed_active_candidates()
+      ->join('votes', 'votes.candidate_id', '=', 'candidates.id')
+      ->where('votes.user_id', '=', $u->id)
+      ->with(['contest', 'image'])
+      ->get();
+     
+    $current_contests =  DB::table('candidates')
+            ->join('contests', 'contests.id', '=', 'candidates.contest_id')
+            ->where('candidates.user_id', '=', $u->id)
+            ->where('contests.ends_at', '>=', new DateTime('today'))
+            ->where('contests.is_archived', '=', false)
+            ->select('candidates.id', 'contests.title', 'contests.id as contest_id')
+            ->get();
+
+    $past_contests = DB::table('candidates')
+            ->join('contests', 'contests.id', '=', 'candidates.contest_id')
+            ->where('candidates.user_id', '=', $u->id)
+            ->where('contests.ends_at', '<', new DateTime('today'))
+            ->where('contests.is_archived', '=', false)
+            ->select('candidates.id', 'contests.title', 'contests.id as contest_id')
+            ->get();
+    
+    return View::make('profile.view', [
+      'open_candidates'=>$open_candidates, 
+      'closed_candidates'=>$closed_candidates,
+      'current_contests'=>$current_contests,
+      'past_contests'=>$past_contests, 
+      'user'=>$u, 
+      'is_self'=>Auth::user() ? $u->id==Auth::user()->id : false
+    ]);
     
   }
   

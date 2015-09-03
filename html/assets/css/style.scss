@@ -1012,8 +1012,17 @@ ul.nav
   .profile-img
   {
     width: 100%;
-    max-width: 25px;
+    width: 25px;
   }
+  
+}
+
+.td-no-padding {
+  padding-left:0px!important;
+  padding-right:1px!important;
+}
+
+.profile-image-label {
   
 }
 

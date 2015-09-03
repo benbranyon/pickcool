@@ -51,7 +51,7 @@ Route::get('/my/set_visible', ['as'=>'my.set_visible', 'uses'=>'ProfileControlle
 Route::get('/api/profile/settings', ['as'=>'api.profile.settings', 'uses'=>'ProfileController@settings']);
 Route::get('/profiles/{id}', ['as'=>'profile', 'uses'=>'ProfileController@home']);
 
-Route::get('/', ['as'=>'home', 'uses'=>'HomeController@live']);
+Route::get('/', ['as'=>'home', 'uses'=>'HomeController@home']);
 
 Route::group(['prefix'=>'/est/{contest_id}/{contest_slug}'], function() {
   Route::group(['prefix'=>'/picks/{candidate_id}/{candidate_slug}'], function() {
@@ -328,6 +328,8 @@ Route::get('/inbox/{message_id}/read', ['before'=>'auth', 'as'=>'inbox.read', 'u
 
 Route::get('/usercontext', ['as'=>'usercontext', 'uses'=>'UserContextController@go']);
 
+Route::get('/calcstats', ['as' => 'cal_stats', 'uses'=>'VoteController@calcstats']);
+
 // Admin Routes
 
 Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']), function() {
@@ -338,18 +340,24 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
     Route::get('images/{image_id}/{status}', ['as'=>'admin.images.status', 'uses'=>'Admin\\ImageController@set_status']);
 
     Route::get('badges', ['as'=>'admin.badges', 'uses'=>'Admin\\BadgeController@index']);
+
+    Route::get('contests/add', 'Admin\\ContestController@add');
+    Route::get('sponsors/add', 'Admin\\SponsorController@add');
     
     // Resource Controller for user management, nested so it needs to be relative
     Route::resource('users', 'Admin\\UserController');
 
     Route::resource('contests', 'Admin\\ContestController');
     Route::resource('contests/{id}/edit/', 'Admin\\ContestController@edit');
+    Route::resource('contests/add', 'Admin\\ContestController@add');
+
 
     Route::resource('candidates', 'Admin\\CandidateController');
     Route::resource('candidates/{id}/edit/', 'Admin\\CandidateController@edit');
 
     Route::resource('sponsors', 'Admin\\SponsorController');
     Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
+    Route::resource('sponsors/add', 'Admin\\SponsorController@add');
 
 });
 

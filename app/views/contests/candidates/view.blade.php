@@ -8,13 +8,17 @@
       </div>
     @else
       @if($candidate->is_owner)
-        @if($candidate->has_pending_images)
+        @if($candidate->has_pending_images && !$candidate->has_featured_image)
           <div class="alert alert-warning">
             @if($contest->category->name == 'Bands')
               Nobody can vote or share your profile yet because we are reviewing your image and music submission. Once we have approved your submission voting can begin.
             @else
               Nobody can vote or share your profile yet because you don't have a FEATURED image. We are still reviewing your images, so sit tight and <a href="{{{$candidate->add_image_url}}}">add more images</a> while you wait. Once we have approved a FEATURED image, voting can begin.
             @endif
+          </div>
+        @elseif($candidate->has_pending_images && $candidate->has_featured_image)
+          <div class="alert alert-warning">
+            We are reviewing the image(s) you submitted. This process should take no more than 24 hours.
           </div>
         @else
           @if(!$candidate->image_id)
@@ -28,15 +32,17 @@
       $voters = $candidate->votes()->whereHas('user', function($q) { $q->where('is_visible', '=', 1); })->with('user')->orderBy('voted_at', 'desc');
       $voter_count = $voters->count();
       ?>
-      <div class="voters">
-        <?php foreach($voters->limit(5)->get() as $v): ?><a class="voter" href="{{$v->user->profile_url}}"><img class="profile-img" title="{{$v->user->full_name}}" src="{{$v->user->profile_image_url}}"/></a><?php endforeach; ?>
-        <a href="{{$candidate->voters_url}}">
-          @if($voter_count>10)
-            ...and {{$voter_count-10}} more
-          @endif
-            voters publicly support {{$candidate->name}}.
-        </a>
-      </div>
+      @if($voter_count>0)
+        <div class="voters">
+          <?php foreach($voters->limit(5)->get() as $v): ?><a class="voter" href="{{$v->user->profile_url}}"><img class="profile-img" title="{{$v->user->full_name}}" src="{{$v->user->profile_image_url}}"/></a><?php endforeach; ?>
+          <a href="{{$candidate->voters_url}}">
+            @if($voter_count>5)
+              ...and {{$voter_count-5}} more
+            @endif
+              voters publicly support {{$candidate->name}}.
+          </a>
+        </div>
+      @endif
       @if($candidate->image_id)
         <div class="row">
           <div class="col-xs-12" style="text-align: center">
@@ -69,6 +75,7 @@
       @foreach($images as $image)
         <?php $idx++; ?>
         <?php if(!$image->screened_at && !$candidate->is_owner) continue; ?>
+        <?php if($image->status == 'declined') continue;?>
         <?php $is_featured = ($candidate->image_id == $image->id); ?>
         @if($is_featured)
         <div class="clearfix"

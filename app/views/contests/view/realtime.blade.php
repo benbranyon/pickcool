@@ -22,6 +22,7 @@
       <p>
         <?php
         $links = array_map(function($i) { return mlink($i); }, Contest::$intervals);
+        array_shift($links);
         echo join(' | ', $links);
         ?>
       </p>

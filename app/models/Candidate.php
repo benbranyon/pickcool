@@ -54,6 +54,11 @@ class Candidate extends Eloquent
   {
     return $this->images()->whereNull('screened_at')->count() > 0;
   }
+
+  function getHasFeaturedImageAttribute()
+  {
+    return $this->images()->where('status', '=', 'featured')->count() > 0;
+  }
   
   function getRefreshUrlAttribute()
   {
@@ -192,9 +197,10 @@ class Candidate extends Eloquent
     return $this->image_url();
   }
   
-  function image_url($size=thumb)
+  function image_url($size='thumb')
   {
-    return r('home').$this->image->image->url($size);
+    $url = r('home').$this->image->image->url($size);
+    return $url;
   }
 
   function image()
@@ -233,6 +239,29 @@ class Candidate extends Eloquent
       $candidate->votes()->delete();
     });
   }
+  
+  static function open_active_candidates()
+  {
+    return    self::active_candidates()
+      ->whereRaw('contests.ends_at >= utc_timestamp()');
+  }
+  
+  static function closed_active_candidates()
+  {
+    return    self::active_candidates()
+      ->whereRaw('contests.ends_at < utc_timestamp()');
+  }
+  
+  static function active_candidates()
+  {
+    return    Candidate::query()
+      ->join('contests', 'contests.id', '=', 'candidates.contest_id')
+      ->whereNotNull('image_id')
+      //->whereNull('dropped_at')
+      ->whereIsArchived(0);
+  }
+  
+  
 }
 
 Candidate::saved(function($candidate) {

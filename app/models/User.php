@@ -64,6 +64,8 @@ class User extends Eloquent
   
   static function calc_pending()
   {
+    $affected = DB::table('users')->where('pending_points', '!=', 0)->update(array('pending_points' => 0));
+
     $sqls = [];
     $sqls[] = "
       update users u 
@@ -159,7 +161,7 @@ class User extends Eloquent
   {
     return "{$this->first_name} {$this->last_name}";
   }
-  
+
   function getHashTagAttribute()
   {
     return preg_replace("/[^A-Za-z0-9]/", "", ucwords($this->full_name));
@@ -207,8 +209,10 @@ class User extends Eloquent
     $fb_id = $me['id'];
     $user = Lock::go('create_'.$fb_id, function() use ($fb_id, $me) {
       $user = User::whereFbId($fb_id)->first();
+      $new_user = false;
       if(!$user)
       {
+        $new_user = true;
         $user = new User();
       }
       $user->fb_id = $fb_id;
@@ -221,6 +225,10 @@ class User extends Eloquent
         $user->$field_name = $me[$field_name];
       }
       $user->save();
+      if($new_user)
+      {
+        User::calc_ranks();
+      }
       return $user;
     }, $fb_id, $me);
     return $user;

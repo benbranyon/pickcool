@@ -1,10 +1,13 @@
 @extends('app')
 
 @section('head')
+	<title>Terms | pick.cool</title>
 @stop
 
 @section('content')
-<div class="col-sm-8">
+<div class="container">
+    <div class="row">
+<div class="col-sm-12">
 <h1>Web Site Terms and Conditions of Use</h1>
 <hr />
 <ol>
@@ -46,5 +49,7 @@ Pick.cool may revise these terms of use for its web site at any time without not
 Any claim relating to Pick.cool's web site shall be governed by the laws of the State of Nevada without regard to its conflict of law provisions.
 </li>
 </ol>
+</div>
+</div>
 </div>
 @stop
