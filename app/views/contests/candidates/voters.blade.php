@@ -21,10 +21,11 @@
               ?>
               @if(isset($u))
               <tr>
-                <td>
+                <td style="text-align:center;" class="td-no-padding">
                   <a href="{{$u->profile_url}}">
                     <img class="profile-img" src="{{$u->profile_image_url}}"/>
                   </a>
+                  <br/>
                   <a href="{{$u->profile_url}}">
                     {{$u->full_name}}
                   </a>
