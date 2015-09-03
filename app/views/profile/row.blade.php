@@ -12,7 +12,7 @@
       @else
         <span class="text-{{$style}}">
           @if($status=='pending')
-            {{$user->pending_points_for($contest)}}<i class="fa fa-level-up"></i>
+            <i class="fa fa-arrow-up"></i>{{$user->pending_points_for($contest)}}
           @else
             {{$user->pending_points_for($contest)}} 
           @endif
@@ -28,7 +28,7 @@
       <span class="text-{{$style}}">
         <span class="text-{{$style}}">
           @if($status=='pending')
-            {{$user->pending_points_for($contest)}}<i class="fa fa-level-up"></i>
+            <i class="fa fa-arrow-up"></i>{{$user->pending_points_for($contest)}}
           @else
             {{$user->pending_points_for($contest)}} 
           @endif
