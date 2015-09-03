@@ -10,9 +10,9 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th class="col-sm-6" style="text-align:center;">Name</th>
-                <th class="col-sm-3">Vote Time</th>
-                <th class="col-sm-3">Points</th>
+                <th class="col-sm-4" style="text-align:center;">Name</th>
+                <th class="col-sm-4">Vote Time</th>
+                <th class="col-sm-4">Points</th>
               </tr>
             </thead>
             @foreach($votes as $v)
