@@ -31,9 +31,9 @@
           </a>
         </td>
         <td>
-          <span class="text-success">{{$u->earned_points+$u->pending_points}}</span>
+          <strong><span class="text-success">{{$u->earned_points+$u->pending_points}}</span></strong>
           @if($u->pending_points)
-            <span class="text-muted">({{$u->pending_points}}<i class="fa fa-level-up"></i>)</span>
+            <span class="text-muted">(<i class="fa fa-arrow-up"></i>{{$u->pending_points}})</span>
           @endif
         </td>
         <td class="hidden-xs"></td>

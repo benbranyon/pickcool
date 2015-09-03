@@ -44,7 +44,7 @@
                     @if($contest->is_ended)
                       <span class="text-success">{{$v->votes_ahead}}</span>
                     @else
-                      <span class="text-muted">{{$v->votes_ahead}}<i class="fa fa-level-up"></i></span>
+                      <span class="text-muted"><i class="fa fa-arrow-up"></i> {{$v->votes_ahead}}</span>
                     @endif
                     points
                   @endif
