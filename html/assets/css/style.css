@@ -535,6 +535,13 @@ ul.nav {
   border-radius: 3px;
   margin: 5px;
 }
+.view .contest .sponsors .sponsor-thumb {
+  float: left;
+}
+.view .contest .sponsors .sponsor-info {
+  float: left;
+  width: 75%;
+}
 .view .contest .alert {
   margin-left: auto;
   margin-right: auto;

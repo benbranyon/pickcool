@@ -188,15 +188,19 @@
         <div class="sponsors">
           @foreach($contest->sponsors as $sponsor)
             <div class="sponsor clearfix">
-              <a href="{{{$sponsor->url}}}" target="_self"><img alt="{{{$sponsor->name}}}" src="{{{$sponsor->image_url('thumb')}}}" align="left" /></a>
-              <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a>
-              <br/>
-              {{{$sponsor->description}}}
-              @if($sponsor->name == 'Marked Studios')
+              <div class="sponsor-thumb">
+                <a href="{{{$sponsor->url}}}" target="_self"><img alt="{{{$sponsor->name}}}" src="{{{$sponsor->image_url('thumb')}}}" /></a>
+              </div>
+              <div class="sponsor-info">
+                <a href="{{{$sponsor->url}}}" target="_self">{{{$sponsor->name}}}</a>
                 <br/>
-                <br/>
-                <strong>Recommended Charity:</strong> <a href="https://nvchildrenscancer.org/">Northern Nevada Children's Cancer Foundation</a>
-              @endif
+                {{{$sponsor->description}}}
+                @if($sponsor->name == 'Marked Studios')
+                  <br/>
+                  <br/>
+                  <strong>Recommended Charity:</strong> <a href="https://nvchildrenscancer.org/">Northern Nevada Children's Cancer Foundation</a>
+                @endif
+              </div>
             </div>
           @endforeach
           @if(Auth::check() && NULL != NULL)
