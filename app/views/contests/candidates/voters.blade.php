@@ -38,10 +38,11 @@
                     <span class="text-warning"><i>in pick</i></span>
                   @else
                     @if($contest->is_ended)
-                      <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$v->votes_ahead}} earned</span>
+                      <span class="text-success">{{$v->votes_ahead}}</span>
                     @else
-                      <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$v->votes_ahead}} pending</span>
+                      <span class="text-muted">{{$v->votes_ahead}}<i class="fa fa-level-up"></i></span>
                     @endif
+                    points
                   @endif
                   
                 </td>

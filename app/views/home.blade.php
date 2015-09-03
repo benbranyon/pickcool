@@ -92,8 +92,7 @@
             <th class="col-sm-1">Rank</th>
             <th class="col-sm-1 profile-image-label"></th>
             <th class="col-sm-2">Name</th>
-            <th class="col-sm-1">Earned</th>
-            <th class="col-sm-1">Pending</th>
+            <th class="col-sm-1">Points</th>
             <th class="hidden-xs col-sm-6"></th>
           </tr>
         </thead>
@@ -112,11 +111,11 @@
                 {{$u->full_name}}
               </a>
             </td>
-            <td class="text-success">
-              <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}
-            </td>
-            <td class="text-muted">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
+            <td>
+              <span class="text-success">{{number_format($u->earned_points+$u->pending_points)}}</span> 
+              @if($u->pending_points)
+                <span class="text-muted">({{$u->pending_points}}<i class="fa fa-level-up"></i>)</span>
+              @endif
             </td>
             <td class="hidden-xs"></td>
           </tr>

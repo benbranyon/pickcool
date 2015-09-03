@@ -31,7 +31,7 @@
           <h2>Total Points: 
             <span class="text-success">{{$user->earned_points+$user->pending_points}}
             @if($user->pending_points)
-              <span class="text-muted">({{$user->pending_points}})</span>
+              <span class="text-muted">({{$user->pending_points}}<i class="fa fa-level-up"></i>)</span>
             @endif
           </h2>
           <p><a href="https://www.facebook.com/app_scoped_user_id/{{$user->fb_id}}"><i class='fa fa-large fa-facebook-square'></i></a></p>

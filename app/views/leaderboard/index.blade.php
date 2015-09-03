@@ -33,7 +33,7 @@
         <td>
           <span class="text-success">{{$u->earned_points+$u->pending_points}}</span>
           @if($u->pending_points)
-            <span class="text-muted">({{$u->pending_points}})</span>
+            <span class="text-muted">({{$u->pending_points}}<i class="fa fa-level-up"></i>)</span>
           @endif
         </td>
         <td class="hidden-xs"></td>
