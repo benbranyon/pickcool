@@ -30,7 +30,7 @@ class HomeController extends \BaseController {
 
   function home() {
     $contests = Contest::live()->with('candidates')->get();
-    $users = User::query()->whereIsVisible(1)->orderBy('rank')->simplePaginate(10);
+    $users = User::query()->whereIsVisible(1)->orderBy('rank')->orderBy('pending_points')->simplePaginate(10);
     return View::make('home')->with(['contests'=>$contests, 'state'=>'home', 'users'=>$users]);
   }
 }
