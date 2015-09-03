@@ -10,8 +10,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th class="col-sm-1"></th>
-                <th class="col-sm-4">Name</th>
+                <th class="col-sm-6">Name</th>
                 <th class="col-sm-3">Vote Time</th>
                 <th class="col-sm-3">Points</th>
               </tr>
@@ -22,12 +21,10 @@
               ?>
               @if(isset($u))
               <tr>
-                <td class="td-no-padding">
+                <td>
                   <a href="{{$u->profile_url}}">
                     <img class="profile-img" src="{{$u->profile_image_url}}"/>
                   </a>
-                </td>
-                <td>
                   <a href="{{$u->profile_url}}">
                     {{$u->full_name}}
                   </a>
