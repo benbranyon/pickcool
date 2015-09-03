@@ -359,5 +359,7 @@ Route::group(array('prefix'=> 'admin', 'before' => ['auth.admin'],['forceHttps']
     Route::resource('sponsors/{id}/edit/', 'Admin\\SponsorController@edit');
     Route::resource('sponsors/add', 'Admin\\SponsorController@add');
 
+    Route::resource('/upload_image', 'Admin\\DashboardController@upload_image');
+
 });
 

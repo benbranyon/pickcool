@@ -14,4 +14,11 @@
 	<li class="list-group-item">Total Votes: {{{$data['votes']}}}</li>
 	<li class="list-group-item">New Votes: {{{$data['new_votes']}}}</li>
 </ul>
+
+<div>
+	Upload Image
+      {{Form::open(['url'=>Request::url()."/upload_image", 'files'=>true])}}
+        Picture: {{Form::file('image', ['id'=>'picture'])}}<br/> {{Form::submit('Upload')}}
+      {{Form::close()}}
+</div>
 @stop
