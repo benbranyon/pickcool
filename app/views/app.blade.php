@@ -77,6 +77,7 @@ $cache_bust = '?_r='.env('CACHE_BUST', uniqid());
         <div class="navbar-header">
           <a class="navbar-brand" href="{{r('home')}}"><img class="logo-img" alt="Pick.Cool" src="/assets/img/pick-cool-logo.png" /></a>
         </div>
+        <div style="width:85px!important;float:left;margin-top:15px;margin-left:5px;" class="fb-like" data-href="https://www.facebook.com/pages/PickCool/310629329135330" data-layout="button_count" data-action="like" data-show-faces="true"></div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div>
           <ul class="nav navbar-nav navbar-right">
