@@ -43,10 +43,7 @@ class StandingsGenerate extends Command {
 	 */
 	public function fire()
 	{
-    $contests = Contest::all();
-    foreach($contests as $contest)
-    {
-      $contest->calc_ranks('0 day', true);
-    }
+    Contest::calc_stats();
+    User::calc_stats();
 	}
 }

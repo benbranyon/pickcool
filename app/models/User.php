@@ -117,7 +117,7 @@ class User extends Eloquent
       from 
       	users 
       order by 
-      	earned_points desc, 
+      	earned_points + pending_points desc,
       	most_recent_voted_at asc, 
       	users.id asc
       ) d
