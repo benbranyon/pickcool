@@ -10,7 +10,6 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th class="col-sm-1">Rank</th>
                 <th class="col-sm-1"></th>
                 <th class="col-sm-4">Name</th>
                 <th class="col-sm-3">Vote Time</th>
@@ -23,9 +22,6 @@
               ?>
               @if(isset($u))
               <tr>
-                <td>
-                  <span class="badge">{{nth($u->rank)}}</span>
-                </td>
                 <td class="td-no-padding">
                   <a href="{{$u->profile_url}}">
                     <img class="profile-img" src="{{$u->profile_image_url}}"/>
