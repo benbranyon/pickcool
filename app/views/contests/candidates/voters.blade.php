@@ -12,7 +12,7 @@
               <tr>
                 <th class="col-sm-4" style="text-align:center;">Name</th>
                 <th class="col-sm-4">Vote Time</th>
-                <th class="col-sm-4">Points</th>
+                <th class="col-sm-4">Points This Pick</th>
               </tr>
             </thead>
             @foreach($votes as $v)
@@ -28,6 +28,10 @@
                   <br/>
                   <a href="{{$u->profile_url}}">
                     {{$u->full_name}}
+                    <div>
+                      <span class="text-success">{{$u->earned_points+$u->pending_points}}</span>
+                      points
+                    </div>
                   </a>
                 </td>
                 <td>
