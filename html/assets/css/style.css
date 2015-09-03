@@ -791,8 +791,8 @@ ul.nav {
   padding: 2px;
 }
 .leaderboard .profile-img {
-  width: 100%;
   width: 25px;
+  height: 25px;
 }
 .td-no-padding {
   padding-left: 0px !important;
