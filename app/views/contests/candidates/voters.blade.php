@@ -10,7 +10,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th class="col-sm-6">Name</th>
+                <th class="col-sm-6" style="text-align:center;">Name</th>
                 <th class="col-sm-3">Vote Time</th>
                 <th class="col-sm-3">Points</th>
               </tr>
