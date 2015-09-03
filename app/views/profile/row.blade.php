@@ -10,7 +10,7 @@
       @if($user->is_in_contest($contest))
         <span class="text-warning"><i>in pick</i></span>
       @else
-        <span class="text-{{$style}}"><span class="glyphicon glyphicon-{{$icon}}" aria-hidden="true"></span>{{$user->pending_points_for($contest)}}</span>
+        <span class="text-{{$style}}">{{$user->pending_points_for($contest)}} {{$status}}</span>
       @endif
     </div>
   </div>
@@ -18,7 +18,7 @@
     @if($user->is_in_contest($contest))
       <span class="text-warning"><i>in pick</i></span>
     @else
-      <span class="text-{{$style}}"><span class="glyphicon glyphicon-{{$icon}}" aria-hidden="true"></span>{{$user->pending_points_for($contest)}}</span>
+      <span class="text-{{$style}}">{{$user->pending_points_for($contest)}} {{$status}}</span>
     @endif
   </div>
 </div>

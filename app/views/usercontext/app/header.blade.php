@@ -12,7 +12,7 @@ $login_url =         r(
 <div class="clearfix">
   <ul class="subnav list-inline pull-right">
     @if($u)
-      <li><a href="{{$u->profile_url}}">Welcome, {{{$u->first_name}}}.</a></li>
+      <li><a href="{{$u->profile_url}}">Welcome, {{{$u->first_name}}}</a>.</li>
       <li>
         @if($u && $u->is_visible)
         <span class="badge">{{nth($u->rank)}}</span> | 
@@ -28,7 +28,16 @@ $login_url =         r(
   <div class="clearfix"></div>
   <ul class="subnav list-inline pull-right">
       @if($u && $u->is_visible)
-        <li>You are in <span class="badge">{{nth($u->rank)}}</span> place with <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{number_format($u->earned_points)}}</span> earned and <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{number_format($u->pending_points)}}</span> pending points.<a href="{{{route('leaderboard')}}}"> What's this?</a>
+        <li>
+          You are in 
+          <span class="badge">{{nth($u->rank)}}</span> 
+          place with 
+          <span class="text-success">{{number_format($u->earned_points+$u->pending_points)}}</span> 
+          @if($u->pending_points)
+            <span class="text-muted">({{$u->pending_points}})</span>
+          @endif
+          points.
+          <a href="{{{route('leaderboard')}}}">What's this?</a>
       @elseif(!$u)
         <div class="alert alert-success">
           {{number_format(User::count())}} users are earning points on Pick.Cool by voting for their favorites. Check out the 

@@ -11,8 +11,7 @@
         <th class="col-sm-1">Rank</th>
         <th class="col-sm-1 profile-image-label"></th>
         <th class="col-sm-2">Name</th>
-        <th class="col-sm-1">Earned</th>
-        <th class="col-sm-1">Pending</th>
+        <th class="col-sm-1">Points</th>
         <th class="hidden-xs col-sm-6"></th>
       </tr>
     </thead>
@@ -31,11 +30,11 @@
             {{$u->full_name}}
           </a>
         </td>
-        <td class="text-success">
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}
-        </td>
-        <td class="text-muted">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}
+        <td>
+          <span class="text-success">{{$u->earned_points+$u->pending_points}}</span>
+          @if($u->pending_points)
+            <span class="text-muted">({{$u->pending_points}})</span>
+          @endif
         </td>
         <td class="hidden-xs"></td>
       </tr>
@@ -48,8 +47,8 @@
   <ul>
   <li><b class="text-success">Earn points by picking winners early.</b></li>
   <li>You earn points by voting. When someone votes for your pick after you did, you get a point. Earn maximum points by picking winners early.</li>
-  <li>The <b class="text-success">Earned</b> score is from closed picks. The <b class="text-muted">Pending</b> score is from open picks and may still change.</li>
-  <li><strong class="text-danger">Changing your vote will reset your Pending score.</strong></li>
+  <li>The <b class="text-success">Points</b> are final when the pick closes. If you have points in open picks, they still count but are shown <b class="text-muted">(like this)</b> next to your score since they may change.</li>
+  <li><strong class="text-danger">If you change your vote in an open pick, you restart the points you've earned for that pick.</strong></li>
   </ul>
 </div>
 @stop
