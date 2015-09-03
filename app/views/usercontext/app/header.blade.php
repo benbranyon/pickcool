@@ -15,9 +15,13 @@ $login_url =         r(
       <li><a href="{{$u->profile_url}}">Welcome, {{{$u->first_name}}}</a>.</li>
       <li>
         @if($u && $u->is_visible)
-        <span class="badge">{{nth($u->rank)}}</span> | 
+          <span class="badge">{{nth($u->rank)}}</span> | 
         @endif
-        <span class="text-success"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>{{$u->earned_points}}</span> | <span class="text-muted"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{$u->pending_points}}</span>
+        <span class="text-success">{{$u->earned_points+$u->pending_points}}</span>
+        @if($u->pending_points)
+          <span class="text-muted">({{$u->pending_points}})</span>
+        @endif
+        points
       </li>
     @endif
     @if($u)
