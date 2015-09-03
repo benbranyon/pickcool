@@ -37,6 +37,8 @@
               </div>
             </div>
           </a>
+
+          <div style="clear:both;"></div>
           
           @if($contest->category->name == 'Bands')
             <a class="btn btn-md btn-primary btn-half" href="{{{$candidate->canonical_url($contest)}}}"><i class="fa fa-music"></i> Discover</a>
