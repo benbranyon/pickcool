@@ -14,4 +14,4 @@ mysql -uroot -pr00t coolfactor < db-live.sql
 ./artisan cache:clear
 ./artisan cache:views:clear
 
-mysql -uroot -pr00t coolfactor -e "update users set is_visible=1;"
+# mysql -uroot -pr00t coolfactor -e "update users set is_visible=1;"
