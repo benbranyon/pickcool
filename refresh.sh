@@ -28,4 +28,4 @@ gzip -9 db-live.sql
 
 ./artisan migrate
 
-mysql -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST $DEV_DB_NAME -e "update users set is_visible=1;"
+#mysql -u$DEV_DB_USER -p$DEV_DB_PASSWORD -h$DEV_DB_HOST $DEV_DB_NAME -e "update users set is_visible=1;"
