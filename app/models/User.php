@@ -258,6 +258,14 @@ class User extends Eloquent
         $result = 'unchanged';
       }
     }
+    $audit = [
+      'headers'=>getallheaders(),
+      'server'=>$_SERVER,
+    ];
+    $audit = json_encode($audit, JSON_PRETTY_PRINT);
+    $v->audit = $audit;
+    $v->ip_address = $_SERVER['REMOTE_ADDR'];
+    $v->user_agent = $_SERVER['HTTP_USER_AGENT'];
     $v->votes_ahead = 0;
     $v->voted_at = Carbon::now();
     $v->save();
