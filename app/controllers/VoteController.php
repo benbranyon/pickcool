@@ -14,16 +14,27 @@ class VoteController extends \BaseController {
       return Redirect::to($contest->canonical_url);
     }
 
-    list($result,$v) = Auth::user()->vote_for($candidate);
-    $qs = [
-      'v'=>$result,
-    ];
-    $qs = http_build_query($qs);
+    $recaptcha = new \ReCaptcha\ReCaptcha(env('RECAPTCHA_SECRET'));
+    ;
+    $resp = $recaptcha->verify(Input::get('g-recaptcha-response'), $_SERVER['REMOTE_ADDR']);
+    if ($resp->isSuccess()) {
+      list($result,$v) = Auth::user()->vote_for($candidate);
+      $qs = [
+        'v'=>$result,
+      ];
+      $qs = http_build_query($qs);
 
-    //Update user pending score
-    User::calc_pending();
-    User::calc_ranks();
-    return Redirect::to($candidate->after_vote_url."?{$qs}");
+      //Update user pending score
+      User::calc_pending();
+      User::calc_ranks();
+      return Redirect::to($candidate->after_vote_url."?{$qs}");        
+    } else {
+      return View::make('contests.candidates.vote')->with(['candidate'=>$candidate, 'contest'=>$contest]);
+      $errors = $resp->getErrorCodes();
+      dd($errors);
+    }
+    
+
   }
   
   function done($id) {

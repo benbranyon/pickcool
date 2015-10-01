@@ -31,7 +31,8 @@
     "guzzlehttp/guzzle": "^6.1",
     "artdarek/oauth-4-laravel": "dev-master",
      "dflydev/apache-mime-types": "dev-master",
-    "anahkiasen/flatten": "^0.5.1"
+    "anahkiasen/flatten": "^0.5.1",
+    "google/recaptcha": "^1.1"
   },
   "require-dev": {
     "panique/laravel-sass": "dev-master"
