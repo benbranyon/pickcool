@@ -21,14 +21,14 @@
   "require": {
     "laravel/framework": "4.2.*",
     "vlucas/phpdotenv": "1.0.*",
-    "facebook/php-sdk-v4" : "4.0.*",
+    "facebook/php-sdk-v4" : "~5.0",
     "codesleeve/stapler": "dev-master as 1.0.0",
     "benallfree/laravel-stapler-images": "dev-master",
     "cocur/slugify": "1.*",
     "arvenil/ninja-mutex": "dev-master",
     "bugsnag/bugsnag-laravel": "1.*",
     "graham-campbell/markdown": "~2.0",
-    "guzzlehttp/guzzle": "~5.0",
+    "guzzlehttp/guzzle": "^6.1",
     "artdarek/oauth-4-laravel": "dev-master",
      "dflydev/apache-mime-types": "dev-master",
     "anahkiasen/flatten": "^0.5.1"
