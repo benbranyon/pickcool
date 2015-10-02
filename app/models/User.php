@@ -264,12 +264,26 @@ class User extends Eloquent
     ];
     $audit = json_encode($audit, JSON_PRETTY_PRINT);
     $v->audit = $audit;
-    $v->ip_address = $_SERVER['REMOTE_ADDR'];
+    $v->ip_address = $this->get_ip();
     $v->user_agent = $_SERVER['HTTP_USER_AGENT'];
     $v->votes_ahead = 0;
     $v->voted_at = Carbon::now();
     $v->save();
     return [$result, $v];
+  }
+  
+  function get_ip()
+  {
+    $vars = [
+      'HTTP_CF_CONNECTING_IP',
+      'HTTP_X_FORWARDED_FOR',
+      'REMOTE_ADDR',
+    ];
+    foreach($vars as $var)
+    {
+      if(isset($_SERVER[$var])) return $_SERVER[$var];
+    }
+    return null;
   }
   
   function unvote_for($c)
